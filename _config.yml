@@ -1,7 +1,7 @@
 # Basic
 title: 追风少年
-subtitle: 个人站
-description: 欢迎来到我的个人站~
+subtitle: 个人博客
+description: 欢迎来到我的博客~
 # 头像里面的标题
 avatarTitle: hejx
 # 头像里面的描述
@@ -15,10 +15,9 @@ comment:
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
+    github: hejx1
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: doubihah@foxmail.com
 
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
