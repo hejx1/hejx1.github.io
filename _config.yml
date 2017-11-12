@@ -10,7 +10,7 @@ url: ""
 
 # Comment
 comment:
-    disqus: leopard
+    # disqus: leopard
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
