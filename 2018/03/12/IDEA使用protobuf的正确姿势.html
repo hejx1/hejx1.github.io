@@ -25,22 +25,22 @@
 <meta name="keywords" content="IDEA,protobuf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IDEA中使用Protobuf的正确姿势">
-<meta property="og:url" content="http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html">
+<meta property="og:url" content="http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="protobuf 简介protocolbuffer(以下简称PB)是google 的一种数据交换的格式，它独立于语言，独立于平台。google 提供了多种语言的实现：java、c#、c++、go 和 python，每一种实现都包含了相应语言的编译器以及库文件。由于它是一种二进制的格式，比使用 xml 进行数据交换快许多。可以把它用于分布式应用之间的数据通信或者异构环境下的数据交换。作为一种效率和兼">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://aixiaodenanhai.gitee.io/blog/img/posts/ideaProtobuf/1.png">
-<meta property="og:image" content="http://aixiaodenanhai.gitee.io/blog/img/posts/ideaProtobuf/2.png">
-<meta property="og:image" content="http://aixiaodenanhai.gitee.io/blog/img/posts/ideaProtobuf/3.png">
-<meta property="og:updated_time" content="2018-04-28T15:42:48.000Z">
+<meta property="og:image" content="http://hejx1.github.io/img/posts/ideaProtobuf/1.png">
+<meta property="og:image" content="http://hejx1.github.io/img/posts/ideaProtobuf/2.png">
+<meta property="og:image" content="http://hejx1.github.io/img/posts/ideaProtobuf/3.png">
+<meta property="og:updated_time" content="2018-04-28T22:29:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IDEA中使用Protobuf的正确姿势">
 <meta name="twitter:description" content="protobuf 简介protocolbuffer(以下简称PB)是google 的一种数据交换的格式，它独立于语言，独立于平台。google 提供了多种语言的实现：java、c#、c++、go 和 python，每一种实现都包含了相应语言的编译器以及库文件。由于它是一种二进制的格式，比使用 xml 进行数据交换快许多。可以把它用于分布式应用之间的数据通信或者异构环境下的数据交换。作为一种效率和兼">
-<meta name="twitter:image" content="http://aixiaodenanhai.gitee.io/blog/img/posts/ideaProtobuf/1.png">
+<meta name="twitter:image" content="http://hejx1.github.io/img/posts/ideaProtobuf/1.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/blog/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
-    <link rel="shortcut icon" href="/blog/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 
@@ -57,10 +57,10 @@
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
     </a>
-    <div class="brand-wrap" style="background-image:url(/blog/img/brand.jpg)">
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
-        <a href="/blog/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/blog/img/avatar.jpg">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">何俊鑫</h5>
@@ -72,21 +72,21 @@
       <ul class="nav">
         
             <li class="waves-block waves-effect">
-              <a href="/blog/"  >
+              <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 主页
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/blog/archives"  >
+              <a href="/archives"  >
                 <i class="icon icon-lg icon-archives"></i>
                 Archives
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/blog/tags"  >
+              <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 Tags
               </a>
@@ -191,7 +191,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/blog/img/posts/ideaProtobuf/1.png" alt="" title="">
+                    <img src="/img/posts/ideaProtobuf/1.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -200,7 +200,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/blog/img/posts/ideaProtobuf/2.png" alt="" title="">
+                    <img src="/img/posts/ideaProtobuf/2.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -217,7 +217,7 @@
 
 
 <p>最后使用maven进行编译,如图所示:</p>
-<p><img src="/blog/img/posts/ideaProtobuf/3.png" alt=""></p>
+<p><img src="/img/posts/ideaProtobuf/3.png" alt=""></p>
 <p>现在我们就可以愉快的使用protobuf了。</p>
 
         </div>
@@ -227,18 +227,18 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T15:42:48.000Z" itemprop="dateUpdated">2018-04-28 23:42:48</time>
+    最后更新时间：<time datetime="2018-04-28T22:29:10.000Z" itemprop="dateUpdated">2018-04-29 06:29:10</time>
 </span><br>
 
 
         
-        原文链接：<a href="/blog/2018/03/12/IDEA使用protobuf的正确姿势.html" target="_blank" rel="external">http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html</a>
+        原文链接：<a href="/2018/03/12/IDEA使用protobuf的正确姿势.html" target="_blank" rel="external">http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html</a>
         
     </div>
     
     <footer>
-        <a href="http://aixiaodenanhai.gitee.io/blog">
-            <img src="/blog/img/avatar.jpg" alt="何俊鑫">
+        <a href="http://hejx1.github.io">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
     </footer>
@@ -253,7 +253,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/protobuf/">protobuf</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protobuf/">protobuf</a></li></ul>
 
 
             
@@ -263,7 +263,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&pic=http://aixiaodenanhai.gitee.io/blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -273,22 +273,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&via=http://aixiaodenanhai.gitee.io/blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&via=http://hejx1.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -311,7 +311,7 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/blog/2018/04/10/IDEA将已有项目添加到git.html" id="post-prev" class="post-nav-link">
+      <a href="/2018/04/10/IDEA将已有项目添加到git.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
         <h4 class="title">IDEA将已有项目添加到git</h4>
       </a>
@@ -353,12 +353,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" src="/blog/img/wechat.png" alt="打赏二维码">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/blog/img/wechat.png" data-alipay="/blog/img/alipay.png">
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -388,7 +388,7 @@
 
         <p>
             
-                <span><a href="/blog/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
@@ -412,7 +412,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&pic=http://aixiaodenanhai.gitee.io/blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -422,22 +422,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&title=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html&via=http://aixiaodenanhai.gitee.io/blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA中使用Protobuf的正确姿势》 — Junxin's Blog&url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html&via=http://hejx1.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://aixiaodenanhai.gitee.io/blog/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2018/03/12/IDEA使用protobuf的正确姿势.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -448,7 +448,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADLUlEQVR42u3awW7bQAwE0P7/T6dA0VsbZWYpAxb9dAoUZa23AkKTo1+/4uPrz/Hd+evfTla+61MOD2xsbOyHsL8uj+9uIsf8e/31Z12vkNxnsj42Njb2PnZeQvJCcl2ErsHtRuQWbGxs7E9mt03CNfisIOUrY2NjY2O3xebea85GV9jY2NifzM4LSXIm37K7tv6FszRsbGzst2e3Qe87//zCfBsbGxv7Ldlf5TH5q3aElDch9f1gY2NjL2InAW0S5bZf9/N4IK9EbWCAjY2NvYmdL5QXpLYInY2Q6kgAGxsbex07IU2C2Dw8SNhnLcp/7gcbGxt7ETsPaPPR/OS3eVnNy+0PQyVsbGzsh7MnQ6K8JZiP/u9qmW6YjWFjY2O/GfuszchH8Gch7iQwLjYXGxsbewW7DVnzgDZZMx/9581GFDBjY2NjL2In5aeNEJJWpF3trleCohwYGxsb+1HsVwx62qFP3kLkj6fovbCxsbFXsNvBUH7NvG1ot7gOerGxsbFXsNsv+slwP2915sFA3q5gY2Nj72O3o5+zmHZSfvJwN98abGxs7K3stoC1MUAeEp/FCYehAjY2NvbD2ZOCMYl4b35i88YDGxsb+7HsZLiTf7mfNCH3Poxoi7GxsbEXsc/C3Tb6TTa3HT/N18fGxsbewZ68WDMpb+367Ub8sAXY2NjYq9mveCknD4zPSlp7z9jY2Ng72O3wpeVNAoA2iigeHjY2NvY69qQNOBtF3VWWrvHY2NjYn8bOI9I2QD2MXYNRVPvYsLGxsT+HnXzFz5uBNmDI12xL3d/z2NjY2IvY86A3H/qf3W5yb4dNETY2NvYK9nyJ9mWddlBVNBh5SIyNjY29jj0Hzzdo8mpmHUJgY2Njr2PnRxsqnAXGeb/QBhtRf4ONjY39KHb9r38QGOTxbbtNZ1diY2Njb2KfFa1kU653OmlO8ranbmCwsbGx17HzotUO6CcxbZ1a5w8DGxsb+yPZk3LSvkZ5V0vzQyuCjY2N/ZHseWuRD4PaDS1KHTY2NvY6dtIwTM5PQoV7B17Y2NjY+9hns/T845M2IylX+Ss7+QALGxsb++Hs3xhWB0o11SZrAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACyklEQVR42u3aQY7jQAgF0Nz/0j3SrEZK7HygSHqk51XUtsv1vDA08HjEx8/fIz/788/x/Jfnv1/de3/lsQMPDw+vtfWr43npqw3lW7w6e/VqrvaQrIaHh4e3x7v/3L9ZIqAmgHydZM94eHh4v4F3n69Ws9lq0oyHh4f3P/KSZDdJrHtX4uHh4f02XvLJzmF5UTh/7nqtBQ8PDy/m9Tb03d+L/T08PDy8QVc9DxL5KEDy9N7eXqyDh4eHt8DLW1b5iEA+HJCMZ1Xvanbk8PDw8GJePmKVLJdf0ysB5wHpMu7h4eHhjXl5AaI6DlUdvcobYNXUHA8PD2+D12t69coT1bvyltjlnvHw8PAWeG9OHC3U9lLwJBQVmmF4eHh4Y948MCSPSc6Ws/5qSMDDw8M7xMs/4nlZYXvN8ovGw8PDO8TLP9a9MYJ8uKpaII5eIh4eHt4Cr1eWzZPmefk1Dy2FXBsPDw9vwMs33StV5Ml0dWArKlvg4eHhrfEmJdQqsjqwNdohHh4e3gd5+dJJqMgT96iVFYcNPDw8vE/yki0mpYH8I95LrKMqNR4eHt5R3iQ5vm9f5c2zPJDkT4zaYHh4eHgDXv6wR+sol1+LCX2hVo2Hh4c35vUKpknKOxlH6DXDXtyLh4eHt8CrFgKSx+ewXpEi3yceHh7eBi8vQFSbT3n6O3mtx+Ya8PDw8Iq8vOiQh4QJZpLKvxgdwMPDwzvKK1/aSsrnAwR5wHhTzMXDw8Mb8yZjAfnvDdKjtzQeHh7eGi9pg+X/7/eKsAfKGXh4eHgLvN7g1KlgU23CrZR68fDw8Fq8ans+CRV56SFppI1KHnh4eHhrvPvH50tXU97q4EK1LYeHh4f3XV41CT6bZOcjC83AgIeHh7fMS4oUvRR5zjsQGPDw8PACXjUt7qXL1Vfz0TIuHh4e3pcaYHk7f150OHbg4eHhpTv5A8LEAye6I+DnAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
@@ -456,7 +456,7 @@
 
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/blog/', SHARE: true, REWARD: true };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 </script>

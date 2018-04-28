@@ -25,7 +25,7 @@
 <meta name="keywords" content="网络安全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RSA的公钥和私钥的使用详解">
-<meta property="og:url" content="http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html">
+<meta property="og:url" content="http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="什么是RSARSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。 这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。 使用场景 签名  使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但是不能">
 <meta property="og:locale" content="zh-CN">
@@ -34,9 +34,9 @@
 <meta name="twitter:title" content="RSA的公钥和私钥的使用详解">
 <meta name="twitter:description" content="什么是RSARSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。 这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。 使用场景 签名  使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但是不能">
     
-        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/blog/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
-    <link rel="shortcut icon" href="/blog/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 
@@ -53,10 +53,10 @@
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
     </a>
-    <div class="brand-wrap" style="background-image:url(/blog/img/brand.jpg)">
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
-        <a href="/blog/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/blog/img/avatar.jpg">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">何俊鑫</h5>
@@ -68,21 +68,21 @@
       <ul class="nav">
         
             <li class="waves-block waves-effect">
-              <a href="/blog/"  >
+              <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 主页
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/blog/archives"  >
+              <a href="/archives"  >
                 <i class="icon icon-lg icon-archives"></i>
                 Archives
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/blog/tags"  >
+              <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 Tags
               </a>
@@ -208,13 +208,13 @@
 
 
         
-        原文链接：<a href="/blog/2018/04/27/RSA的公钥和私钥的使用详解.html" target="_blank" rel="external">http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html</a>
+        原文链接：<a href="/2018/04/27/RSA的公钥和私钥的使用详解.html" target="_blank" rel="external">http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html</a>
         
     </div>
     
     <footer>
-        <a href="http://aixiaodenanhai.gitee.io/blog">
-            <img src="/blog/img/avatar.jpg" alt="何俊鑫">
+        <a href="http://hejx1.github.io">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
     </footer>
@@ -229,7 +229,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/网络安全/">网络安全</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
 
 
             
@@ -239,7 +239,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&pic=http://aixiaodenanhai.gitee.io/blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -249,22 +249,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&via=http://aixiaodenanhai.gitee.io/blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&via=http://hejx1.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -287,7 +287,7 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/blog/2018/04/28/hello-world.html" id="post-prev" class="post-nav-link">
+      <a href="/2018/04/28/hello-world.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
         <h4 class="title">Hello World</h4>
       </a>
@@ -296,7 +296,7 @@
 
   
     <div class="waves-block waves-effect next">
-      <a href="/blog/2018/04/27/混合加密算法(RSA和DES).html" id="post-next" class="post-nav-link">
+      <a href="/2018/04/27/混合加密算法(RSA和DES).html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
         <h4 class="title">混合加密算法(RSA和DES)</h4>
       </a>
@@ -336,12 +336,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" src="/blog/img/wechat.png" alt="打赏二维码">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/blog/img/wechat.png" data-alipay="/blog/img/alipay.png">
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -371,7 +371,7 @@
 
         <p>
             
-                <span><a href="/blog/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
@@ -395,7 +395,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&pic=http://aixiaodenanhai.gitee.io/blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -405,22 +405,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&title=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html&via=http://aixiaodenanhai.gitee.io/blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RSA的公钥和私钥的使用详解》 — Junxin's Blog&url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html&via=http://hejx1.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://aixiaodenanhai.gitee.io/blog/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2018/04/27/RSA的公钥和私钥的使用详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -431,7 +431,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADMUlEQVR42u3aS27bQBAFQN//0so2QCL6vW4JEEfFlUGQnKkx4HZ/fn7i6/HXdf3Mv88/e+v6fvKF6++84MLGxsa+CftxebWMZ2/lh5jsJFnxlz1jY2NjH8dOAtLsrdmVHFyyz6f3sbGxsb+evVnyOqTl4fM6vGFjY2NjJwnAJrTkX2iTH2xsbOzvZM9KOS1+tvVkP2+spWFjY2N/PDvvin7+z2/pb2NjY2N/MHtTsp+lE5twlbSNIwU2Njb2Qew8ACS8dut5MahNhKL9Y2NjYx/BbotHUdl9VOKfhcYky6jrWNjY2Ni3Yrefm43jtCX+WSgdhjdsbGzsm7PrQsyiTD9LeNpkJtotNjY29nHsJA1oR2GSzW0SofZXNcx+sLGxsT+enQSh/DhycPJkO2nTDh5hY2Njn8Ruq1D7bSUBaTa+kxSesLGxsU9i54WYDWOWC7z2y7+M7GBjY2Pflp2nBBv8O4LlpiiGjY2NfTZ7n1q0AeZljPLosbGxsc9gb4ZvNqX52aDP7LjrkR1sbGzsW7E3SUK76Tw5yQtDObJoGGBjY2Pfij37c9+Gt2TgMi9s7VfBxsbGPok9G6CZBY/kyNqDaFOgooeMjY2NfUN2/o9+u62ktdA2fWdN6Lq/jY2Njf3x7HykJg85+f39d4ZtYGxsbOyD2LOyfr7MpvGw73W0SQs2Njb23dn5yy0yf2ZfTqrfwsbGxr45u230toWhtvEwGxVq18LGxsb+Bvb1hvI0Y5Ns7FOdOoBhY2Nj35ydLJwHuba4s3lr1ejFxsbGvjm7Le7kB9G2kGcJTN5IWNW0sLGxsW/FTrY1a+XOyv2zBkC0c2xsbOyj2fkys/ZwOxzZHl+0W2xsbOzj2JtEIi8G5UfWhs+6GYyNjY19BPtRXvnRJMu35aq2xTssJ2FjY2Pfij0r5bSN1TbUvSo12owQYWNjY9+LPQsqSUirx2hGY0D5EWNjY2Ofzc4LQDlgn1rkq6xqadjY2Nhfz06C1n4MqN1hlIpgY2NjfyV7Bn4Hvg1m2NjY2Gez2+bujJckM9drzdoD/1kXGxsb+yB2W6DZhLG8VdwmRXkLARsbG/sg9h96cAw392u0JwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aW3LCQAwEwNz/0uQENjOSN1Cp5oviYbb3wxKz+vmJH6/bx9Unr65z9cr99a+u+cADDw8P78DS719JlnL1bgtutxsPDw/vHO/+Jp4/L344xiSbcvk6Hh4e3hfw2k+ubut4eHh4/443KwxJqbhv0/Hw8PC+gZeHC23jOysbm63Ew8PDO83LT5G+5/mR8z08PDy89an65vApaaA38W60Wjw8PLwDvPyGm8ess4GDe3zeLuPh4eF9ltce4c8WOlt0MViAh4eHd4DXDgG0bW6+0IfDWTw8PLzDvFkZ2MS+be6aDAq8KQl4eHh4a95+uclAwKxI5Js+rHJ4eHh4a17S4ObLemoIoA2F8fDw8P6Gtx9+2h9otQ10dAU8PDy8A7y2JDx7u89b85ZaVBg8PDy8ES8JT/OWOi8JbUTbHqHh4eHhneDlA09545sUgFl5qMMRPDw8vGO8zULbcai2jU5a5yLGxcPDw/sTXt5qt9+dnVIVR3F4eHh4B3izAtCGvPUNfVRO6kgXDw8Pb8TL49RZDNE2zbONjiYj8PDw8B7iteHsbCgqX1C+xcWG4uHh4R3g5QvNQ4TTrfPmV/Dw8PA2vFmz++zWzILgqGXHw8PDO8DL/+TnbW4e194faM3GGt6MEeDh4eE9xJthkuHR5N28Rc7XUKcUeHh4eGtee6OfDVfNGvG2rcfDw8M7x2uDiSRiyG/rSaS7aqnx8PDwHuK9ykc+IjA7EstLS3RlPDw8vAO89lgroc7a7rY44eHh4X2WNysGCbttxGdb/KYFx8PDwzvGmx2M5cUjCYhXtSvKdPHw8PA+w8uXlY8IbFr5N7+Fh4eH9wW8/FuzheaDBVHxwMPDwzvGaw/+24BgP1LQbgQeHh7eOd7mH30+ENDGsm1IsQov8PDw8FLeLyIyNcpRA0LdAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
@@ -439,7 +439,7 @@
 
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/blog/', SHARE: true, REWARD: true };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 </script>
