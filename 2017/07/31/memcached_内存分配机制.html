@@ -25,16 +25,16 @@
 <meta name="keywords" content="memcached">
 <meta property="og:type" content="article">
 <meta property="og:title" content="memcached 内存分配机制">
-<meta property="og:url" content="http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html">
+<meta property="og:url" content="https://smilexin.cn/2017/07/31/memcached_内存分配机制.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。 这种空闲且无法再利用的内存现象，称为++内存的碎片化++ memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存 Slab Allocation 首先，像一般的内存池一样,  从操作系统分配到">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hejx1.github.io/img/posts/memcached/1.jpg">
+<meta property="og:image" content="https://smilexin.cn/img/posts/memcached/1.jpg">
 <meta property="og:updated_time" content="2018-04-28T22:47:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="memcached 内存分配机制">
 <meta name="twitter:description" content="内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。 这种空闲且无法再利用的内存现象，称为++内存的碎片化++ memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存 Slab Allocation 首先，像一般的内存池一样,  从操作系统分配到">
-<meta name="twitter:image" content="http://hejx1.github.io/img/posts/memcached/1.jpg">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/memcached/1.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -213,12 +213,12 @@
 
 
         
-        原文链接：<a href="/2017/07/31/memcached_内存分配机制.html" target="_blank" rel="external">http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html</a>
+        原文链接：<a href="/2017/07/31/memcached_内存分配机制.html" target="_blank" rel="external">https://smilexin.cn/2017/07/31/memcached_内存分配机制.html</a>
         
     </div>
     
     <footer>
-        <a href="http://hejx1.github.io">
+        <a href="https://smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -244,7 +244,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -254,22 +254,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&via=http://hejx1.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -292,18 +292,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/07/31/Redis集群概念.html" id="post-prev" class="post-nav-link">
+      <a href="/2017/07/31/memcached_过期数据删除机制.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Redis 集群概念</h4>
+        <h4 class="title">memcached 过期数据删除机制</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/07/31/memcached_过期数据删除机制.html" id="post-next" class="post-nav-link">
+      <a href="/2017/07/26/JAVA位运算符的应用积累.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">memcached 过期数据删除机制</h4>
+        <h4 class="title">JAVA位运算符的应用积累</h4>
       </a>
     </div>
   
@@ -400,7 +400,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -410,22 +410,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html&via=http://hejx1.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -436,7 +436,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqElEQVR42u3aQW7jMBAEwPz/0841wMZWN4dUtEDxFBi2xGIAatTDr694vH6M5Dvvvv/uk5+f//t3cvfRwMPDwxtM/d3l1qb7edITXjJnPDw8vNO8dzvq2uSSpWkn+m4OFxY8PDy8x/A+b+j3XAEPDw/vf+ElRXayxefRBh4eHt4zeUkYMYl3240+eUhszlrw8PDwYl7eRXrO30f6e3h4eHjjrnpbFr8GI1nQ+pp4eHh4B3j5hvsajzpEWHow4OHh4d3JW3vVTz6ZHMZqD2b9Mgc8PDy8rby1AvrzRCel+VrZPcqn8fDw8JZ4bcN+sq1Pli8pxC/eFfDw8PC28lpYHlgkhXsbVUSlPB4eHt4BXhIT7Cqdo6ksRRJRAwwPDw9vEy/f+ttGVP5omUQPFwU9Hh4e3gHerhBhXiInhfKov4eHh4e3iZcEBJPDqe2G3t7rYlHw8PDwDvPWCtn28Og8CC7ugoeHh3eAVzeTlgBt62tS4vfnC/Dw8PCmvDZmTaKKtWMHk+/g4eHh3clbiyTa4HWNlM85Kqnx8PDwlnht8fo02EVUgYeHh3eANwkg2qJ8EjQkc8PDw8O7k5e/3rdRbB5V5NdvHyR4eHh4J3jtjydHtdpeVbsERacODw8Pb8xLYoi8ldVeOV+mpAkXPR7w8PDwBrx2Q1+7WX7Qqj2qFf3H8PDw8A7w2p/l082Difa4QBIc4+Hh4Z3jta/3uwrffNJrzTk8PDy8vbxXOe4PLEZHtfDw8PAO8NoNNwfnN25L7cljAw8PD28Xby1yTcKC+aGBtYXAw8PDu4eX3LINc/OHyq4wAg8PD+/5vM9bdo5p22ZFQY+Hh4f3GF59+GnQcps00vDw8PDO8daC2jk7v8tiaw0PDw/vAG8tZs2bW+2v/mDg4eHhpeMbw45BBY3kRKwAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3cwY4aQQwE0P3/nyZSTomShSq7GxLpzQktA/Trw9iqtvbrK74eP6/knl/vfPxxPf/OxzdXvobhhYeHhzda+uyr20UnC32+Tfma8fDw8G7zni89/7H2EZ+8Tt799u94eHh4H+XlS0ke95u2Hg8PD+9/4bWNchtDbMoGHh4e3vt5SRP8/OG+aazzYPdi1oKHh4cX8zbt7KdeXzzfw8PDw1ucqidXElvkwUQ+TBCtDQ8PD+8Cbxawti3y7M7nW1AUDDw8PLyjvFkImz/Kn5eNPOBoy89vdQ8PDw/vAm9/nN+Gs3tAUn7w8PDwbvDag/x8ie24wCyAiDYCDw8P7y28HPOe8CLZxKIw4OHh4S14yVjVLJJoy8asYLx4Fw8PD+8CL2lk8yY72azZoddmQ/Hw8PDO8vJjqvYAbDYQ0EYh0UwEHh4e3mVeXgDa0ag2zkha/BdrxsPDw7vAyz/QbkS7rDbwHc5H4OHh4R3izQ6x9sFuG3zMNhoPDw/vLO9eTJC015vfiu7Ew8PDu8xLGuJNBJwMEOwHF/4yGYGHh4d3mTf7yc3QwL6hLwoDHh4e3smJqeE/tW9j2bbkzFb44hgMDw8Pb8FrAafYeWM9O9bCw8PDu82rP1Y2320bnYwd1DMReHh4eId4+dfly8oXFEWxQTT8YhPx8PDwLvDyUGCG3MQTxybI8PDw8I7ykpKQF4/28d1+dlUS8PDw8I7y8sfuLFbIi0Rbir5mi8DDw8M7BMsPnzaL20cP9aAVHh4e3iFe+4xtQ4GzgwVXMhg8PDy8EW8WreYHZglj3/oPqx8eHh7egpcfZW3GAtoC0LLx8PDw/n1eu+hksKBtyl/cj4eHh/dRXjtE1Ya/+6EBPDw8vHfyNoNTSfh7Nra4krXg4eHhdSspDsDyDWrb66RRbptyPDw8vKO8H4w8xTrZxYrVAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

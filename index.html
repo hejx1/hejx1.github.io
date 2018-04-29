@@ -25,7 +25,7 @@
 <meta name="keywords" content="何俊鑫,博客,Junxin,blog,Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Junxin&#39;s Blog">
-<meta property="og:url" content="http://hejx1.github.io/index.html">
+<meta property="og:url" content="https://smilexin.cn/index.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="A good memory is worse than a rotten keyboard.">
 <meta property="og:locale" content="zh-CN">
@@ -595,7 +595,7 @@ l...
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-装饰者模式"
+            <article id="post-观察者模式"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -611,7 +611,7 @@ l...
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/11/07/装饰者模式.html">装饰者模式</a>
+      <a class="post-title-link" href="/2017/11/07/观察者模式.html">观察者模式</a>
     </h3>
   
 
@@ -621,12 +621,14 @@ l...
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。
-动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。
-认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及...
+        观察者模式有一个模式可以帮你的对象知悉现况，不会错过该对象感兴趣的事。对象甚至在运行时可决定是否要继续被通知。观察者模式是JDK中使用最多的模式之一，非常有用。我们也会一并介绍一对多关系，以及松耦合（对，没错,我们说耦合）。有了观察者，你将会消息灵通。
+认识观察者模式我们看看报纸和杂志的订阅是怎么回事：
+
+报社的业务就是出版报纸。
+向某家报社订阅报纸，只要他们有新报纸出版，就会给你送来。只要...
     
 
-        <a href="/2017/11/07/装饰者模式.html" class="post-more waves-effect waves-button">
+        <a href="/2017/11/07/观察者模式.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -692,7 +694,7 @@ l...
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://hejx1.github.io/&title=Junxin's Blog&pic=http://hejx1.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/&title=Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -702,22 +704,22 @@ l...
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://hejx1.github.io/&title=Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/&title=Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://hejx1.github.io/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Junxin's Blog&url=http://hejx1.github.io/&via=http://hejx1.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Junxin's Blog&url=https://smilexin.cn/&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://hejx1.github.io/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -728,7 +730,7 @@ l...
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABSElEQVR42u3aOxKDMAxFUfa/adLS4Fx9XGBdV0xmAofCsnnWdeFxP8b6l/V185Al6yDWvRxvCPL49X3eniVL1mTW2wzlE56zyH9lyZLFJz8ByZIla1+ByFFkyZK1ZpFN83oZJi+wZS8vS9YRLJ7q1K+35FuyZH2cdQcHWW7JEv7nKbJkDWPxCVw5SsndX5asaax6mJs7EOWlR5asCSweAHVNfvSqsmSNYXFKvTSQOEmWLFm7iaWKJUvW0SzevpPbEFdCYVmyprGiX7ddkW6gesmSNYzFmwNImeCBL+qDkCVrDKtSAupNDMmlWpasj7MqDQecSD59ZcmazKr0xdU/VhuGLFkHsaKNd7nrcMgrS9ZIVrQBqHcDHc6rZMkaz4qmPcllW5YsWTiK7e0QkCVLVv34hLxeIEKSJWsYK7eDJQeWzWmWLFlnsn7DMqZ+Y8XfMgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABVElEQVR42u3awQ6EIAxFUf//p53ELULea+sk0MtqggyejbW2XJc87meMM+P8eHW2pmDAgnUQ616OkaWvV+andFiwWrLWQWG2tRI+1iun87BgwTKDgkKEBQtWbYBwU2pYsGDpLD0JVtCZhBsWrJ4st5CU+f1hfQsWrG1Zd2jU1mZf9ocFqxlLaZOsb6M3VPQEGhaszizl9us0Ot/sfAkQsGA1YLkPs8JyQ4PxkoYF61CWcstYuTYTVmDB6sbKl2g/KenCgtWMVbWpnnwbR4hgwWrGir0l9Q/UP7UzYcHanFV1wE6ZN/aBBaslK/jnqrqyW2mGBesgVuwoQKbBKYUbWLCasTLJtJIoux/DBTk+LFjbstygECv4ui0cWLB6sr7rNurtVViwYOms2k9cWLBguSx3ZfAsEixYjVlK0hxrfOoHZ2HB6syKBRGFpVwtq2/BgrUr6wf4rX21HEXYagAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
