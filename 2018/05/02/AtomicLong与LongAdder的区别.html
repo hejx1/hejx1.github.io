@@ -14,30 +14,25 @@
     
     
     
-    <title>Mysql 数据库死锁问题处理方案 | Junxin&#39;s Blog | A good memory is worse than a rotten keyboard.</title>
+    <title>AtomicLong与LongAdder的区别 | Junxin&#39;s Blog | A good memory is worse than a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Mysql">
-    <meta name="description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="keywords" content="Mysql">
+    <meta name="keywords" content="并发,高并发,Atomic,计数器">
+    <meta name="description" content="AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。 LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。 其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值，当前">
+<meta name="keywords" content="并发,高并发,Atomic,计数器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql 数据库死锁问题处理方案">
-<meta property="og:url" content="https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html">
+<meta property="og:title" content="AtomicLong与LongAdder的区别">
+<meta property="og:url" content="https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
+<meta property="og:description" content="AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。 LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。 其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值，当前">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/2.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/3.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/4.png">
-<meta property="og:updated_time" content="2018-04-28T23:56:38.000Z">
+<meta property="og:updated_time" content="2018-05-02T12:28:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql 数据库死锁问题处理方案">
-<meta name="twitter:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="twitter:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
+<meta name="twitter:title" content="AtomicLong与LongAdder的区别">
+<meta name="twitter:description" content="AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。 LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。 其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值，当前">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -118,7 +113,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mysql 数据库死锁问题处理方案</div>
+        <div class="flex-col header-title ellipsis">AtomicLong与LongAdder的区别</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -140,11 +135,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="title">AtomicLong与LongAdder的区别</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-12-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-12-23
+                <time datetime="2018-05-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-02
 </time>
 
 
@@ -163,18 +158,18 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#先查找死锁病因"><span class="post-toc-number">1.</span> <span class="post-toc-text">先查找死锁病因</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#把内容复制出来-里面有查询id"><span class="post-toc-number">2.</span> <span class="post-toc-text">把内容复制出来,里面有查询id</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拿着query-id-去查相应的sql语句"><span class="post-toc-number">3.</span> <span class="post-toc-text">拿着query id,去查相应的sql语句</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AtomicLong"><span class="post-toc-number">1.</span> <span class="post-toc-text">AtomicLong</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#LongAdder"><span class="post-toc-number">2.</span> <span class="post-toc-text">LongAdder</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Mysql_数据库死锁问题处理"
+<article id="post-AtomicLong与LongAdder的区别"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="post-card-title">AtomicLong与LongAdder的区别</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-12-23 00:00:00" datetime="2017-12-22T16:00:00.000Z"  itemprop="datePublished">2017-12-23</time>
+            <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
 
             
 
@@ -187,38 +182,16 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="先查找死锁病因"><a href="#先查找死锁病因" class="headerlink" title="先查找死锁病因"></a>先查找死锁病因</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engine innodb status;</span><br></pre></td></tr></table></figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/1.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="把内容复制出来-里面有查询id"><a href="#把内容复制出来-里面有查询id" class="headerlink" title="把内容复制出来,里面有查询id"></a>把内容复制出来,里面有查询id</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/2.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="拿着query-id-去查相应的sql语句"><a href="#拿着query-id-去查相应的sql语句" class="headerlink" title="拿着query id,去查相应的sql语句"></a>拿着query id,去查相应的sql语句</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/3.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>Info里就是sql</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/4.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>红线框选的就是造成死锁的sql语句</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>根据此sql可以查出死锁的表，如果死锁在这个表，那么就需要去审查这张表相关的业务逻辑的代码。查明死锁的原因！</p>
+            <h1 id="AtomicLong"><a href="#AtomicLong" class="headerlink" title="AtomicLong"></a>AtomicLong</h1><p>AtomicLong是依靠<strong>Unsafe</strong>通过CAS来保证Long类型操作的原子性。</p>
+<h1 id="LongAdder"><a href="#LongAdder" class="headerlink" title="LongAdder"></a>LongAdder</h1><p>LongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。</p>
+<p><strong>其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值，当前对象的实际值由所有的cell累计合成。</strong></p>
+<p>这样就将热点进行了有效的分离并提高了并行度，这样一来LongAdder就相当于在AtomicLong的基础上将单点的更新压力分散到各个节点上。在低并发的时候通过对base的直接更新也可以很好的保障和AtomicLong性能基本一致，而在高并发的时候则通过热点分散提高了性能。</p>
+<p><strong>LongAdder的缺点</strong>是在统计的时候如果有并发更新，也就是说我这边在统计各个单元cell的总值，你那边又在做更新操作，就可能导致统计的数据有所误差。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>AtomicLong还有compareAndSet一类的CAS方法，需要精确控制某个值的并发增减的场景都要用AtomicLong。</li>
+<li>LongAdder 个人认为只能作为一个累加器来使用，它的类名已经说明了这个事实。</li>
+</ul>
+<p>总的来说：<strong>AtomicLong相对于LongAdder来说应用场景更为广泛。</strong></p>
 
         </div>
 
@@ -227,12 +200,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T23:56:38.000Z" itemprop="dateUpdated">2018-04-29 07:56:38</time>
+    最后更新时间：<time datetime="2018-05-02T12:28:36.000Z" itemprop="dateUpdated">2018-05-02 20:28:36</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/12/23/Mysql_数据库死锁问题处理.html" target="_blank" rel="external">https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html</a>
+        原文链接：<a href="/2018/05/02/AtomicLong与LongAdder的区别.html" target="_blank" rel="external">https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html</a>
         
     </div>
     
@@ -253,7 +226,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Atomic/">Atomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计数器/">计数器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
 
 
             
@@ -263,7 +236,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -273,22 +246,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -308,21 +281,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/03/12/IDEA使用protobuf的正确姿势.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">IDEA中使用Protobuf的正确姿势</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" id="post-next" class="post-nav-link">
+      <a href="/2018/05/02/并发与高并发的基本概念.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mysql 使用自增id和uuid作为主键的优劣比较</h4>
+        <h4 class="title">并发与高并发的基本概念</h4>
       </a>
     </div>
   
@@ -419,7 +385,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -429,22 +395,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -455,7 +421,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACoklEQVR42u3aW64iMQwFQPa/aWYBV8A5doIYqfKFGvpRQWpbth+PeD3/rL/H3x959Xn27eGFh4eHt370lpFgXt0x/+X7u//9DR4eHt5t3qtLv/rNqyP58WSLZ9uBh4eH95u8nJ1sR/ItHh4e3v/Oe45Wft9Nso6Hh4f3HV77Is4LrJuiw/vrHK614OHh4cW8vIv0O5+v9Pfw8PDw1l31PLXdlBVmSXb0tHh4eHgXePkL97leeYq8GbrCw8PD+w5vMwrw/oHaVlYSftryBx4eHt5Z3ibBbQNJu4mzrXy0l8bDw8MrefmLOw8Am4LFJpDUowN4eHh4C96p4YD9Ns1CURED8fDw8Na82ThUUnQYVkTKNPpD8MDDw8O7wMsDQ37jWfmg3bj2Cnh4eHineG37atby37TZDqfUeHh4eGteW5jIW1+nNqg9Fw8PD+82b3Zy28pqi8X5+nBfPDw8vGu89rFm4NkwQb4dH2IUHh4e3hd5bTLdntuOcxV/DB4eHt4FXlIknQ1XtQ2zPAXPxw7w8PDwbvDa1DbBzJCbAYUPowN4eHh4R3mz0sD+Eeu0uBxKwMPDw7vH26e5s5S6baTNEn08PDy8G7w2/c2DwX5Ua5bWR7VqPDw8vEO8ZOW3n5WA8wS6Dgx4eHh4l3nJcFVbpMgLE8WjzzJuPDw8vAu8usm0/rbFFEg8PDy8a7ykpZQEjySotFv52Cw8PDy8o7xnudrS6uy1fizw4OHh4V3gzd6xs+Jse3w2pIWHh4f3HV6e4G7aVJuBqtWQFh4eHt41Xv5SbguvbfLdbtkHKh4eHt4P8PYDBLPyRJtq4+Hh4f0mL3+J58lxflZ0HTw8PLxrvHbcKikH5OwkeLR/CR4eHt493qbwOmPnRYpT24GHh4d3iPcP94lpzosaEUoAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3ay27CUAwFQP7/p1up25bk+HGBSsOqKoF4vMg1th+P+PX187p+9/fr2Wd/X3P9bUkMoxceHh5eK/RJiNeB5qRnV17/5yYSPDw8vGO85Ja9oK9vnyQ0PyTw8PDwPo2XBHd95VZZj4eHh/dfeFVq0h+YH054eHh47+IlzYi8zE1SkASaxLPWa8HDw8OLeZNy9l1/H5zv4eHh4Q2m6tUDo3cY5O+WI8TDw8M7wEuGWFsrWfm71YWtm8jx8PDwjvGqo6ZJ+yC5b29N4Y/vwcPDw3sJr4fM275b61zR8YaHh4d3mFddn0oOg17bIm+FPHpZx8PDwxvwtg6D6pLBVloLLRU8PDy8MW/SPkjK5aRhMdkEuCmp8fDw8I7x8uWqrfJ6PoQr/1bAw8PDW+IloedN3slAq3r3QjMXDw8Pb5XXG1Pl6wL587maguhnAB4eHt4xXjXc6vpUdSQ2WTvAw8PDexdvEmL+0N9tiCy0cfHw8PDiqVN16NUbdPWGbUkr5OZ6PDw8vFVetekwGVz1iubq+lfUa8HDw8Mb8F5TLueP+0lqniYCDw8P74W8+fJTuXFQjCFC4uHh4a3ymo/a+P/zxOVFf/Mr8PDw8Aa8vBSuwvK1g+ra1k0K8PDw8A7wekVzdXBVTUq+mDVpK+Ph4eHNeXlhnS9C7Rb0eTP30TuR8PDw8GJe8pCtLktN1gXy1ETv4uHh4R3jJWVrr3lRLZd7w7Dy3gEeHh7eAVh+GEwmUPNW8tPY8PDw8A7westV1aWo6i3nDRE8PDy807z8MJhnK/9UcpxEScTDw8M7xquGUm3RJt/WK4tvrsfDw8P7GF6+dlBNSnXuf3M9Hh4e3lt5eVu293yeDNvw8PDwXs/rLVcVmgKD9E1ayXh4eHgneFtDqa30VRu4yTGDh4eHt8T7Bgv6NcqM7VktAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
