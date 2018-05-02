@@ -14,25 +14,25 @@
     
     
     
-    <title>memcached 过期数据删除机制 | Junxin&#39;s Blog | A good memory is worse than a rotten keyboard.</title>
+    <title>并发与高并发的基本概念 | Junxin&#39;s Blog | A good memory is worse than a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="memcached">
-    <meta name="description" content="memcached过期数据删除机制 当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息 当某个新值去占用它的位置时，当成空chunk来占用 当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了  即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性失效。">
-<meta name="keywords" content="memcached">
+    <meta name="keywords" content="并发,高并发">
+    <meta name="description" content="并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。 高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处理很多">
+<meta name="keywords" content="并发,高并发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="memcached 过期数据删除机制">
-<meta property="og:url" content="https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html">
+<meta property="og:title" content="并发与高并发的基本概念">
+<meta property="og:url" content="https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="memcached过期数据删除机制 当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息 当某个新值去占用它的位置时，当成空chunk来占用 当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了  即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性失效。">
+<meta property="og:description" content="并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。 高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处理很多">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-28T22:50:39.000Z">
+<meta property="og:updated_time" content="2018-05-02T04:41:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="memcached 过期数据删除机制">
-<meta name="twitter:description" content="memcached过期数据删除机制 当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息 当某个新值去占用它的位置时，当成空chunk来占用 当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了  即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性失效。">
+<meta name="twitter:title" content="并发与高并发的基本概念">
+<meta name="twitter:description" content="并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。 高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处理很多">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -113,7 +113,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">memcached 过期数据删除机制</div>
+        <div class="flex-col header-title ellipsis">并发与高并发的基本概念</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -135,11 +135,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">memcached 过期数据删除机制</h1>
+        <h1 class="title">并发与高并发的基本概念</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-07-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-07-31
+                <time datetime="2018-05-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-02
 </time>
 
 
@@ -158,18 +158,18 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#memcached过期数据删除机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">memcached过期数据删除机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LRU"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">LRU</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#并发"><span class="post-toc-number">1.</span> <span class="post-toc-text">并发</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#高并发"><span class="post-toc-number">2.</span> <span class="post-toc-text">高并发</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#并发与高并发的区别"><span class="post-toc-number">3.</span> <span class="post-toc-text">并发与高并发的区别</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-memcached_过期数据删除机制"
+<article id="post-并发与高并发的基本概念"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">memcached 过期数据删除机制</h1>
+        <h1 class="post-card-title">并发与高并发的基本概念</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+            <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
 
             
 
@@ -182,21 +182,9 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="memcached过期数据删除机制"><a href="#memcached过期数据删除机制" class="headerlink" title="memcached过期数据删除机制"></a>memcached过期数据删除机制</h1><ol>
-<li>当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息</li>
-<li>当某个新值去占用它的位置时，当成空chunk来占用</li>
-<li>当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了</li>
-</ol>
-<p>即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性失效。</p>
-<p>好处：节省 CPU 时间和检测的成本</p>
-<h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>如果以 122Byte 大小的 chunk 举例，122 的chunk都满了，又有新的值（长度为120byte）要加入，要挤掉谁？<br>memcached 此处使用的 LRU 删除机制 （操作系统的内存管理，常用 FIFO,LRU 删除）</p>
-<ul>
-<li>LRU：Least Recently Used 最近最少使用</li>
-<li>FIFO：first in first out</li>
-</ul>
-<p>原理：当某个单元被请求时，维护一个计数器，通过计数器来判断最近谁最少被使用。</p>
-<p>注：即使某个key是设置的永久有效期，也一样会被踢出来！</p>
-<p>即：老数据被踢现象</p>
+            <h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p>同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。</p>
+<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><p>高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够<strong>同时并行处理</strong>很多请求。</p>
+<h1 id="并发与高并发的区别"><a href="#并发与高并发的区别" class="headerlink" title="并发与高并发的区别"></a>并发与高并发的区别</h1><p>当我们说多线程并发时，其实我们更多的是讨论多个线程操作了相同的资源，这时我们讨论点更多的是落在保证线程安全以及合理分配和使用资源上。而高并发主要指系统运行过程中遇到“短时间内遇到大量操作请求”的情况，主要发生在系统集中收到大量请求（例如：12306的抢票情况；天猫双十一活动）。当我们说高并发时，我们谈的是是如何提高现有程序的性能，更多的是对高并发场景的一些解决方案，思路啦、手段等等。如果高并发处理不好，不仅仅降低了用户的体验度（请求响应时间过长），同时可能导致系统宕机，严重的甚至导致OOM异常，系统停止工作等。</p>
 
         </div>
 
@@ -205,12 +193,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T22:50:39.000Z" itemprop="dateUpdated">2018-04-29 06:50:39</time>
+    最后更新时间：<time datetime="2018-05-02T04:41:30.000Z" itemprop="dateUpdated">2018-05-02 12:41:30</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/07/31/memcached_过期数据删除机制.html" target="_blank" rel="external">https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html</a>
+        原文链接：<a href="/2018/05/02/并发与高并发的基本概念.html" target="_blank" rel="external">https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html</a>
         
     </div>
     
@@ -231,7 +219,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
 
 
             
@@ -241,7 +229,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&title=《并发与高并发的基本概念》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -251,22 +239,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&title=《并发与高并发的基本概念》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《并发与高并发的基本概念》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -286,21 +274,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/07/31/memcached_内存分配机制.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">memcached 内存分配机制</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/07/26/JAVA位运算符的应用积累.html" id="post-next" class="post-nav-link">
+      <a href="/2018/04/27/混合加密算法(RSA和DES).html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">JAVA位运算符的应用积累</h4>
+        <h4 class="title">混合加密算法(RSA和DES)</h4>
       </a>
     </div>
   
@@ -397,7 +378,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&title=《并发与高并发的基本概念》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -407,22 +388,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&title=《并发与高并发的基本概念》 — Junxin's Blog&source=A good memory is worse than a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《并发与高并发的基本概念》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -433,7 +414,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aQZIiMQwEQP7/6dnrXhqqJHuCicg+EdDQTh9sUfLrFV8/D9fTp+0v/H9Pfv+xCw8PD+/Q0POHPd35Hv/0+j04HzMeHh7ebd7mp2dDSbaE9++8HzMeHh7e9/DyMrrdftoiHg8PD++v8PLF/VTwMSvB8fDw8G7z2rgh3zzeT0obBF/MWvDw8PC6CjZarL/n9ZX+Hh4eHt66qz5brPNpamH1aPHw8PAu8NphtYcMZiX7fvrw8PDwbvOS8DQ5OpA8bL8xtJ/i4eHhneXNyui8RM6jjVkT7nVqN8PDw8NbZJ4JPoft21qblhseHh7eb/LyI02bAwf5lLWFOx4eHt5v8vIQNg8d8snaxyKrGBcPDw+v5LWPn0W3CWm/aeHh4eHd4+WbQV5Y5wV0HgcPJxQPDw/vAq8tTPPYdBbg5m25YpfDw8PDO8pr/97PgoBNIy05ZPD4Dh4eHt4FXvu1duHeHwLIy/1ie8DDw8Nb8NpBnAoj2jA3P1LwIYbAw8PDW/Nmi3VS7OaFdd3yb6cPDw8P7xqvLXzbFtfsuEDOePw1PDw8vMu8ZIibuKFthrVHwT5sDHh4eHiHeKf67K/RdSqAKCJdPDw8vAWvLWfbxXoW8m4iEjw8PLzbvDwYvbEjbcr3+jfx8PDwjvL2bad8uJs7h0/Ew8PDu8bLF/dj0Wo5cW2TDA8PD+82r12y2+J7FkBsAmI8PDy8G7yf8poV1qc2m3oq8fDw8C7wNg3+TYSRt7Xa7w63Ezw8PLySN9sMNgt6ElIkh8CizQYPDw/vGi9f0PNIog1kr4QpeHh4eF/A2xTWefs/P6L6YZvBw8PD+wLerN80OyLwnhFNLh4eHt413uxg6J7UNrfq0hwPDw/vAq/9w99GrnksOwuLjx3PwsPDw/vM+wd0mCvwxsl3ewAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrElEQVR42u3aQU4DMQwF0N7/0rAFQdpvOxZFerNCdJjJC1Ls2n484uvjx1X9q6+/mX96+cLDw8MbL/306Oe85AnVpefrOa4NDw8Pb413evTpntPjqsEj2ZpkPcff4+Hh4b0Nb/7iBJOEGTw8PLz/wsuP72rwyJNyPDw8vL/lVUsJvTJuElry8HO51oKHh4cX8/KFvs/PK/09PDw8vHFXvdp8ulWirYaB4/Px8PDwFnjVdDYv5uZFhyqpvE48PDy8NV7eiEoW12tl5bzCRuPh4eFd5U2GnHqDpHvNsKg+jYeHhzfmTRr81YZWsh1VcHl0AA8PD+8Sb5Ii56Xb5EDvbXH0D8DDw8O7xKuWGPLG1fxwr4aQX9aJh4eHt8xLktq8nJqHmVGi/HxT8PDw8NZ4eaqdH9a9QJK/N9oaPDw8vDXeheQ1CB7zd41aX3h4eHhrvF5rapJY55tYXSceHh7eBq/XMcsP8Y1ycG+UAQ8PD+8Wr1ce7QWM6rt6xd9v9+Ph4eGt8SaFgLwMcffQj0q6eHh4eAu8nJQkzdViaw+ff4qHh4e3x8tHBHpJdlLkrQ5pVZ+Gh4eHd4uXJKa9EatJYt1Lr48RDw8PD+8qb148rSa+k5ZbUsJ48Y0BDw8P7xIvaeH3GlpJCl4oyLbweHh4eBu8W8XZvEgxSbvLI194eHh4y7xqUSAPG9U2W37/qHyNh4eHN+BVm169p+WMybACHh4e3h7vo3j1qJOi7ahhhoeHh7fAq4409Q79vXGEcgMMDw8P7xKvWn7NBw56gSEpHOeNOjw8PLw9Xq+8Wz2sqwFj3pbDw8PDewdePiY1WfS1UTA8PDy8N+D17qmWFfIA82LL8PDw8NZ4k0Z+NYTkCXF13Krc5cPDw8Nr8Xpf+B/jKw8Y1cQdDw8Pb433CfIdFttqlr2XAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
