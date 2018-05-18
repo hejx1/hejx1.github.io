@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://smilexin.cn/"/>
-  <updated>2018-05-18T13:06:12.000Z</updated>
+  <updated>2018-05-18T13:08:12.000Z</updated>
   <id>https://smilexin.cn/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>并发与高并发的基本概念</title>
+    <title>高并发场景解决方案-应用限流</title>
     <link href="https://smilexin.cn/2018/05/18/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%9C%BA%E6%99%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-%E5%BA%94%E7%94%A8%E9%99%90%E6%B5%81.html"/>
     <id>https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html</id>
     <published>2018-05-17T16:00:00.000Z</published>
-    <updated>2018-05-18T13:06:12.000Z</updated>
+    <updated>2018-05-18T13:08:12.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="限流说明"><a href="#限流说明" class="headerlink" title="限流说明"></a>限流说明</h1><p>限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。</p><h1 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h1><p>之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了Redis里面，主要是通过缓存来保证用户看到数据的准确性与实时性，这个应对在分时线处理上没有什么问题。但是分时线处理完了不代表没有其他问题了，因为我们还需要看最近几天的数据分析图，通常是5天，我们称为五日K线图。这个时候就需要使用当日的分时数据加上最近4个交易日的分时数据合在一起来作成趋势图，那么最近4个交易日的数据从哪里来呢？</p><p>很显然历史数据从数据库里面来拿更合适一些，拿多少天都能拿到，这个时候就要求我们在每个闭市之后把当前这个交易日里的每支股票的分时数据全部存储到数据库中，我大致统计了一下一个交易日下来所有股票的分时数据大约在 <strong>130W~140W</strong> 之间，意思是我每天在盘后需要有130W~140W的数据需要插入到数据库里面，如果你没有做限流，直接将这些数据插入到数据库中会有以下问题出现：</p><ol><li>数据库的主库将会突然接收到130W左右的插入操作，这个首先是网络上的开销，很可能直接把你的带宽打满，导致其他请求无法正常的传输和处理。</li><li>其次他可能带来数据库负载突然增高导致无法处理某些数据库操作，也可能出现没有足够的连接，导致某些数据插入失败或者查询失败，也就是影响其他服务正常运行。</li><li>还有一点就是我们现在的数据库都做了主从设计,插入到主库的数据还需要同步给从库，这时瞬间插入了大量的数据会带来从库和主库的延迟特别大，这时通过从库查询到的数据不准确的概率也会跟着提升</li></ol><p>而如果我们使用特定的手段放慢插入数据库的速度，又会是怎么样呢？</p><p>比如这里我们以一个数据库肯定可以接受的恒定速率（假设每秒400条进行插入），这个时候数据库插入到数据库主库的速率会很正常，这时候主库表现也会正常，同步到从库也很正常，网络消耗我们也可以接受，也不会影响到其他服务。这时我们可以计算出插入完成的大致时间。</p><p>这里我们约定了恒定速率最多每秒400条，那么每分钟它将会插入将近24000条，总共需要的时间可以算出 130W / 2.4W ≈ 54.17 分钟可以插入完成。</p><p>通过这个场景的分析处理我们可以看出来限流在高并发场景下使用合理的话可以解决很关键的问题，<strong>这里需要注意的是刚才我这里提到的每秒400条恒定速率是我和DBA根据系统情况确定好的值，也是经过实际数据的一些计算，实际中大家可以使用多大也是需要拿实际的场景和数据来说话的。</strong></p><p>回顾一下，关于股票K线图这个高并发场景涉及到的解决方案，为了当前的高并发场景能够更好的运行不出问题，我在缓存、应用拆分、限流里分别从不同的角度对这个场景进行了优化，这些其实并不是全部，在数据插入数据库时我还引入了线程池来协助更好的调度进行插入。同时因为每天插入的数据量太大（每天插入的数据量是百万级别的）因此我还引入了数据库分表将8000多支股票的分时数据插入到相似的512张表中，来保证每张表的数据量增长都不是特别的快。这样在查询数据的时候才会更快，具体我将在后面分表的文章中详细介绍。</p><p>这里是希望大家能明白一个道理，高并发场景下并不是直接选择某个方案处理下就可以了，而是要深究各个细节，不同的小场景可能会使用不同的方案，也可能是多个方案的组合使用。因此大家需要能清楚的了解可以使用哪些解决方案，不同的解决方案要解决的是什么问题，然后分析你遇到的高并发场景它适合运用哪些解决方案。</p><h1 id="限流总结"><a href="#限流总结" class="headerlink" title="限流总结"></a>限流总结</h1><p>一般开发高并发常用的限流大概包括以下几种：</p><ul><li>限制总并发数</li><li>限制瞬时的并发数</li><li>限制时间窗口内的平均速率</li></ul><p>缓存+限流来应付618、双11这些高并发流量，在处理高并发问题上可以说是如虎添翼，不用担心瞬间流量导致系统挂掉或者雪崩，最终做到有损服务而不是不服务。但是限流需要评估好，它不可以乱用，否则会使正常流量出现一些奇怪的问题而导致用户抱怨。</p>]]></content>
     
@@ -328,29 +328,6 @@
   </entry>
   
   <entry>
-    <title>websocket 简介</title>
-    <link href="https://smilexin.cn/2018/03/12/websocket%E7%AE%80%E4%BB%8B.html"/>
-    <id>https://smilexin.cn/2018/03/12/websocket简介.html</id>
-    <published>2018-03-11T16:00:00.000Z</published>
-    <updated>2018-04-28T23:37:53.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="websocket-简介"><a href="#websocket-简介" class="headerlink" title="websocket 简介"></a>websocket 简介</h1><p>在我们做web项目的过程中，经常需要做的一个模块是消息模块。典型的场景：一个商城系统的后台管理，我想实现如果前台有客户下单，后台就会接到消息，以便尽快发货处理。</p><p>要实现上述的功能，我们有几种备选的方案。</p><p>方案1.使用ajax短轮询，比如每隔1分钟去请求一次服务器，让服务器去数据库去查询，看看有无新的未处理的订单，然后返回给客户端。</p><p>方案2.长轮询，长轮询的原理与上述类似，只不过采取了阻塞响应（response）的方法，也就是说只要服务器没有响应，这个请求就不断开，一直等到服务器有响应为止。</p><p><strong>ajax短轮询好比客户端每隔一段时间打一个电话给服务器，服务器不管有没有数据都要响应给客户端，响应完以后就挂掉电话，然后周而复始；</strong></p><p><strong>长轮询则是客户端打一个电话，开始一直等，直到服务器有响应，如果服务器一直不响应，这个请求就一直挂在那边。</strong></p><p>很显然，这两种方案都有各自弊端。</p><p>方案1：每隔一定时间去轮询服务器，这个时间的设置很关键，太长了，即时性得不到保证，太短了，有可能会造成服务器性能的浪费（主要是cpu）,假设在一个小时之内都没有一个订单，但是客户端还是不间断的每分钟发一次请求，这些请求就是浪费。</p><p>方案2：方案2的出现本来是为了解决方案1这种盲目不确定地发送请求造成浪费的弊端，但是它自己同样也有弊端，首先，它采取阻塞的方式来强迫连接长时间保持，而对于服务器而言，在同一个时间里面能处理的连接数（我们称之为程序的并发数）是有限的，而长轮询方式很容易造成服务端达到并发的限制，因为它不像短轮询一样会很快释放掉连接。</p><p>它们的共同的缺点是，每一次请求和响应，处理处理真正有用的数据，服务器和客户端还要交换一堆请求头，响应头等东西，信息交换的效率不高。事实上可以说，长轮询是一种伪长连接，它还是需要遵循http连接的规则：客户端请求–服务器响应–释放连接，顺便交换了一些相同的无用的信息。（造成带宽浪费）</p><p>websocket的原理网上有很多人也介绍了，简单来说，它就是html5中的一种协议，我的理解是，他是对html的长连接的一种升级。你也可以将它理解成一种长连接。只不过这种长连接相对于方案2的长轮询有以下优越之处。</p><p>1.首先，websocket连接只需要建立一次，在第一次连接的时候，客户端和服务器会交换必要的信息，如下所示：</p><p><img src="/img/posts/websocket/1.png" alt=""></p><p>可以看到，websocket连接成功后返回的状态码是101.在请求头处，传递过来的connection类型是keep_alive，upgrade。也就是说是keep_alive的升级版。首先keep_alive是属于http1.1协议的范畴。大概的意思就是，在http1.0时代，我建立一个连接就是对应一次request–response的过程。而在1.1时代，新增加了keep-alive，我们可以保持这个连接的生命周期（可以通过nginx等服务器设置keepalive-timeout这个参数来实现），这样做的好处是可以自定义一个连接的存活时间，使得一个连接可以处理多个请求，而不是单单一次请求。设置了keepalive-timeout以后，当一个请求结束以后，我们在等keepalive-timeout这么长的时间，如果没有新的请求，就关闭这个连接。</p><p>说到http1.1，我们来看一个http的连接的请求头和响应头。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/posts/websocket/2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>看到了吧，不一样的地方就在于那个upgrade。所以我们可以这么说，websocket也是一个长连接。但是因为它是升级版，<strong>所以它有个好处，就是它只需要建立一次连接，传递一次必要的请求头和响应头信息，之后再传递数据的时候就不需要在交换这些信息了。节省了带宽。</strong></p><p>2.<strong>websocket是双向的，这也是他跟另外两种方法最大的不同，不管是ajax还是长轮询，他们都是通过客户端发送请求，服务器响应的形式完成信息的交换，这种模式下服务器处于一种被动的角色。而websocket不存在这个问题，websocket的链接一旦建立，服务器和客户端都可以互推信息。</strong></p><p>有了这两个优点，在做一些需要即时通信的功能时候，我们首选就是用websocket。</p><p>参考链接：<a href="http://www.cnblogs.com/roy-blog/p/7210484.html" target="_blank" rel="noopener">http://www.cnblogs.com/roy-blog/p/7210484.html</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;websocket-简介&quot;&gt;&lt;a href=&quot;#websocket-简介&quot; class=&quot;headerlink&quot; title=&quot;websocket 简介&quot;&gt;&lt;/a&gt;websocket 简介&lt;/h1&gt;&lt;p&gt;在我们做web项目的过程中，经常需要做的一个模块是消息模块。
-      
-    
-    </summary>
-    
-    
-      <category term="websocket" scheme="https://smilexin.cn/tags/websocket/"/>
-    
-  </entry>
-  
-  <entry>
     <title>websocket 应用示例</title>
     <link href="https://smilexin.cn/2018/03/12/websocket%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B.html"/>
     <id>https://smilexin.cn/2018/03/12/websocket应用示例.html</id>
@@ -395,6 +372,29 @@
       <category term="IDEA" scheme="https://smilexin.cn/tags/IDEA/"/>
     
       <category term="protobuf" scheme="https://smilexin.cn/tags/protobuf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>websocket 简介</title>
+    <link href="https://smilexin.cn/2018/03/12/websocket%E7%AE%80%E4%BB%8B.html"/>
+    <id>https://smilexin.cn/2018/03/12/websocket简介.html</id>
+    <published>2018-03-11T16:00:00.000Z</published>
+    <updated>2018-04-28T23:37:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="websocket-简介"><a href="#websocket-简介" class="headerlink" title="websocket 简介"></a>websocket 简介</h1><p>在我们做web项目的过程中，经常需要做的一个模块是消息模块。典型的场景：一个商城系统的后台管理，我想实现如果前台有客户下单，后台就会接到消息，以便尽快发货处理。</p><p>要实现上述的功能，我们有几种备选的方案。</p><p>方案1.使用ajax短轮询，比如每隔1分钟去请求一次服务器，让服务器去数据库去查询，看看有无新的未处理的订单，然后返回给客户端。</p><p>方案2.长轮询，长轮询的原理与上述类似，只不过采取了阻塞响应（response）的方法，也就是说只要服务器没有响应，这个请求就不断开，一直等到服务器有响应为止。</p><p><strong>ajax短轮询好比客户端每隔一段时间打一个电话给服务器，服务器不管有没有数据都要响应给客户端，响应完以后就挂掉电话，然后周而复始；</strong></p><p><strong>长轮询则是客户端打一个电话，开始一直等，直到服务器有响应，如果服务器一直不响应，这个请求就一直挂在那边。</strong></p><p>很显然，这两种方案都有各自弊端。</p><p>方案1：每隔一定时间去轮询服务器，这个时间的设置很关键，太长了，即时性得不到保证，太短了，有可能会造成服务器性能的浪费（主要是cpu）,假设在一个小时之内都没有一个订单，但是客户端还是不间断的每分钟发一次请求，这些请求就是浪费。</p><p>方案2：方案2的出现本来是为了解决方案1这种盲目不确定地发送请求造成浪费的弊端，但是它自己同样也有弊端，首先，它采取阻塞的方式来强迫连接长时间保持，而对于服务器而言，在同一个时间里面能处理的连接数（我们称之为程序的并发数）是有限的，而长轮询方式很容易造成服务端达到并发的限制，因为它不像短轮询一样会很快释放掉连接。</p><p>它们的共同的缺点是，每一次请求和响应，处理处理真正有用的数据，服务器和客户端还要交换一堆请求头，响应头等东西，信息交换的效率不高。事实上可以说，长轮询是一种伪长连接，它还是需要遵循http连接的规则：客户端请求–服务器响应–释放连接，顺便交换了一些相同的无用的信息。（造成带宽浪费）</p><p>websocket的原理网上有很多人也介绍了，简单来说，它就是html5中的一种协议，我的理解是，他是对html的长连接的一种升级。你也可以将它理解成一种长连接。只不过这种长连接相对于方案2的长轮询有以下优越之处。</p><p>1.首先，websocket连接只需要建立一次，在第一次连接的时候，客户端和服务器会交换必要的信息，如下所示：</p><p><img src="/img/posts/websocket/1.png" alt=""></p><p>可以看到，websocket连接成功后返回的状态码是101.在请求头处，传递过来的connection类型是keep_alive，upgrade。也就是说是keep_alive的升级版。首先keep_alive是属于http1.1协议的范畴。大概的意思就是，在http1.0时代，我建立一个连接就是对应一次request–response的过程。而在1.1时代，新增加了keep-alive，我们可以保持这个连接的生命周期（可以通过nginx等服务器设置keepalive-timeout这个参数来实现），这样做的好处是可以自定义一个连接的存活时间，使得一个连接可以处理多个请求，而不是单单一次请求。设置了keepalive-timeout以后，当一个请求结束以后，我们在等keepalive-timeout这么长的时间，如果没有新的请求，就关闭这个连接。</p><p>说到http1.1，我们来看一个http的连接的请求头和响应头。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/posts/websocket/2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>看到了吧，不一样的地方就在于那个upgrade。所以我们可以这么说，websocket也是一个长连接。但是因为它是升级版，<strong>所以它有个好处，就是它只需要建立一次连接，传递一次必要的请求头和响应头信息，之后再传递数据的时候就不需要在交换这些信息了。节省了带宽。</strong></p><p>2.<strong>websocket是双向的，这也是他跟另外两种方法最大的不同，不管是ajax还是长轮询，他们都是通过客户端发送请求，服务器响应的形式完成信息的交换，这种模式下服务器处于一种被动的角色。而websocket不存在这个问题，websocket的链接一旦建立，服务器和客户端都可以互推信息。</strong></p><p>有了这两个优点，在做一些需要即时通信的功能时候，我们首选就是用websocket。</p><p>参考链接：<a href="http://www.cnblogs.com/roy-blog/p/7210484.html" target="_blank" rel="noopener">http://www.cnblogs.com/roy-blog/p/7210484.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;websocket-简介&quot;&gt;&lt;a href=&quot;#websocket-简介&quot; class=&quot;headerlink&quot; title=&quot;websocket 简介&quot;&gt;&lt;/a&gt;websocket 简介&lt;/h1&gt;&lt;p&gt;在我们做web项目的过程中，经常需要做的一个模块是消息模块。
+      
+    
+    </summary>
+    
+    
+      <category term="websocket" scheme="https://smilexin.cn/tags/websocket/"/>
     
   </entry>
   
