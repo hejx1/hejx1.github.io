@@ -14,30 +14,25 @@
     
     
     
-    <title>Mysql 数据库死锁问题处理方案 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>SpringBoot test | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Mysql">
-    <meta name="description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="keywords" content="Mysql">
+    <meta name="keywords" content="SpringBoot">
+    <meta name="description" content="hello">
+<meta name="keywords" content="SpringBoot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql 数据库死锁问题处理方案">
-<meta property="og:url" content="https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html">
+<meta property="og:title" content="SpringBoot test">
+<meta property="og:url" content="https://smilexin.cn/2018/07/02/test springboot.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
+<meta property="og:description" content="hello">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/2.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/3.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/4.png">
-<meta property="og:updated_time" content="2018-04-28T23:56:38.000Z">
+<meta property="og:updated_time" content="2018-07-10T13:35:39.470Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql 数据库死锁问题处理方案">
-<meta name="twitter:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="twitter:image" content="https://smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
+<meta name="twitter:title" content="SpringBoot test">
+<meta name="twitter:description" content="hello">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -118,7 +113,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mysql 数据库死锁问题处理方案</div>
+        <div class="flex-col header-title ellipsis">SpringBoot test</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -140,11 +135,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="title">SpringBoot test</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-12-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-12-23
+                <time datetime="2018-07-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-07-02
 </time>
 
 
@@ -160,21 +155,14 @@
 
 <div class="container body-wrap">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#先查找死锁病因"><span class="post-toc-number">1.</span> <span class="post-toc-text">先查找死锁病因</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#把内容复制出来-里面有查询id"><span class="post-toc-number">2.</span> <span class="post-toc-text">把内容复制出来,里面有查询id</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拿着query-id-去查相应的sql语句"><span class="post-toc-number">3.</span> <span class="post-toc-text">拿着query id,去查相应的sql语句</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
-        </nav>
-    </aside>
 
-
-<article id="post-Mysql_数据库死锁问题处理"
+<article id="post-test springboot"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="post-card-title">SpringBoot test</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-12-23 00:00:00" datetime="2017-12-22T16:00:00.000Z"  itemprop="datePublished">2017-12-23</time>
+            <time class="post-time" title="2018-07-02 00:00:00" datetime="2018-07-01T16:00:00.000Z"  itemprop="datePublished">2018-07-02</time>
 
             
 
@@ -187,38 +175,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="先查找死锁病因"><a href="#先查找死锁病因" class="headerlink" title="先查找死锁病因"></a>先查找死锁病因</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engine innodb status;</span><br></pre></td></tr></table></figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/1.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="把内容复制出来-里面有查询id"><a href="#把内容复制出来-里面有查询id" class="headerlink" title="把内容复制出来,里面有查询id"></a>把内容复制出来,里面有查询id</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/2.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="拿着query-id-去查相应的sql语句"><a href="#拿着query-id-去查相应的sql语句" class="headerlink" title="拿着query id,去查相应的sql语句"></a>拿着query id,去查相应的sql语句</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/3.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>Info里就是sql</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/4.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>红线框选的就是造成死锁的sql语句</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>根据此sql可以查出死锁的表，如果死锁在这个表，那么就需要去审查这张表相关的业务逻辑的代码。查明死锁的原因！</p>
+            <p>hello </p>
 
         </div>
 
@@ -227,12 +184,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T23:56:38.000Z" itemprop="dateUpdated">2018-04-29 07:56:38</time>
+    最后更新时间：<time datetime="2018-07-10T13:35:39.470Z" itemprop="dateUpdated">2018-07-10 21:35:39</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/12/23/Mysql_数据库死锁问题处理.html" target="_blank" rel="external">https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html</a>
+        原文链接：<a href="/2018/07/02/test springboot.html" target="_blank" rel="external">https://smilexin.cn/2018/07/02/test springboot.html</a>
         
     </div>
     
@@ -253,7 +210,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
 
 
             
@@ -263,7 +220,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/07/02/test springboot.html&title=《SpringBoot test》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -273,22 +230,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/07/02/test springboot.html&title=《SpringBoot test》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/07/02/test springboot.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot test》 — Junxin's Blog&url=https://smilexin.cn/2018/07/02/test springboot.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/07/02/test springboot.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -311,18 +268,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/03/12/websocket简介.html" id="post-prev" class="post-nav-link">
+      <a href="/2018/07/02/SpringBoot jar包部署实践.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">websocket 简介</h4>
+        <h4 class="title">SpringBoot jar包部署实践</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" id="post-next" class="post-nav-link">
+      <a href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mysql 使用自增id和uuid作为主键的优劣比较</h4>
+        <h4 class="title">SpringBoot 2.0 jpa多数据源配置</h4>
       </a>
     </div>
   
@@ -419,7 +376,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/07/02/test springboot.html&title=《SpringBoot test》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -429,22 +386,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/07/02/test springboot.html&title=《SpringBoot test》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/07/02/test springboot.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot test》 — Junxin's Blog&url=https://smilexin.cn/2018/07/02/test springboot.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/07/02/test springboot.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -455,7 +412,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACoklEQVR42u3aW64iMQwFQPa/aWYBV8A5doIYqfKFGvpRQWpbth+PeD3/rL/H3x959Xn27eGFh4eHt370lpFgXt0x/+X7u//9DR4eHt5t3qtLv/rNqyP58WSLZ9uBh4eH95u8nJ1sR/ItHh4e3v/Oe45Wft9Nso6Hh4f3HV77Is4LrJuiw/vrHK614OHh4cW8vIv0O5+v9Pfw8PDw1l31PLXdlBVmSXb0tHh4eHgXePkL97leeYq8GbrCw8PD+w5vMwrw/oHaVlYSftryBx4eHt5Z3ibBbQNJu4mzrXy0l8bDw8MrefmLOw8Am4LFJpDUowN4eHh4C96p4YD9Ns1CURED8fDw8Na82ThUUnQYVkTKNPpD8MDDw8O7wMsDQ37jWfmg3bj2Cnh4eHineG37atby37TZDqfUeHh4eGteW5jIW1+nNqg9Fw8PD+82b3Zy28pqi8X5+nBfPDw8vGu89rFm4NkwQb4dH2IUHh4e3hd5bTLdntuOcxV/DB4eHt4FXlIknQ1XtQ2zPAXPxw7w8PDwbvDa1DbBzJCbAYUPowN4eHh4R3mz0sD+Eeu0uBxKwMPDw7vH26e5s5S6baTNEn08PDy8G7w2/c2DwX5Ua5bWR7VqPDw8vEO8ZOW3n5WA8wS6Dgx4eHh4l3nJcFVbpMgLE8WjzzJuPDw8vAu8usm0/rbFFEg8PDy8a7ykpZQEjySotFv52Cw8PDy8o7xnudrS6uy1fizw4OHh4V3gzd6xs+Jse3w2pIWHh4f3HV6e4G7aVJuBqtWQFh4eHt41Xv5SbguvbfLdbtkHKh4eHt4P8PYDBLPyRJtq4+Hh4f0mL3+J58lxflZ0HTw8PLxrvHbcKikH5OwkeLR/CR4eHt493qbwOmPnRYpT24GHh4d3iPcP94lpzosaEUoAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3azW6EMAxF4Xn/l6ZSV10McK4dKuGcrCqYMvmo5MY/nw9ex++6vvv3M8fJOvv89fVlS4YMGa9lHJfrjJFulG+RvI4vz5EhQ8YGDP44sq2zV5C+MvJ8GTJkyEgDLseTrcuQIUNGJ+CSYErSXRkyZMjgDB46eRjtHwcfycVlyJDxQkbaGPjPnx/sb8iQIeMljCNcna/vhO+bXcmQIWM047qURiJbWkTjafD1FTQPIkOGjKEMki7WEto0ZeVDaTJkyNiTsSoop80DUkoLAq4MGTIGMWrh+Im7tX8JMmTImM1Y1VWoAZaNZciQIWM0gxz7ajGbFM5qJTYZMmTsxlg7dJU2QdMi3SlehgwZ2zD6m6u1GdJEWoYMGXsyasX3JwC1Q6oMGTL2ZFwH3LQ8R1JZ3lL98rsyZMjYgNHZYq2U32kVfLkiQ4aMDRhpytpn8+cgqgwZMjZgkEBJUlPe+ExbpEHVUIYMGeMYfOghDcFxcb80ohFPeciQIeOFDD4MkcKCg13YlojLbTJkyBjBSMNumpSmsT9+ETJkyBjN6BTLOIZ8stZMvfmbyJAhYwSj0waoFdr4OAVviMqQIWM2Y1WQTQPuqqOhDBky9mHUxinSQMyDZvF9y5AhYwNGJ5jWSmnpQo1MGTJkbM/otwFIUsrHPhafNGXIkDGOkQZQshV+PehvyJAhYxCDNwP4XT5Yxg+CNwFXhgwZQxn9BLLTtiSlt+vwLUOGjNGMH+2IqHbL07JzAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
