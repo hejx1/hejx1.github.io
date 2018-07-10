@@ -198,7 +198,7 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-springboot2.0 jpa多数据源配置"
+            <article id="post-SpringBoot 2.0 jpa多数据源配置"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -214,7 +214,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/06/16/springboot2.0 jpa多数据源配置.html">springboot2.0 jpa多数据源配置</a>
+      <a class="post-title-link" href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html">SpringBoot 2.0 jpa多数据源配置</a>
     </h3>
   
 
@@ -229,14 +229,14 @@
 12345678910111213&lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;    &lt;artifactId&...
     
 
-        <a href="/2018/06/16/springboot2.0 jpa多数据源配置.html" class="post-more waves-effect waves-button">
+        <a href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/druid/">druid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/druid/">druid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li></ul>
 
     </div>
     
@@ -477,56 +477,6 @@ ReentrantLock与synchronized的区别
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-深入剖析volatile关键字"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/03/深入剖析volatile关键字.html">深入剖析volatile关键字</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义
-
-保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的
-禁止进行指令重排序
-
-先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!s...
-    
-
-        <a href="/2018/05/03/深入剖析volatile关键字.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-单例模式详解"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -613,6 +563,56 @@ ReentrantLock与synchronized的区别
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步锁/">同步锁</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-深入剖析volatile关键字"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/03/深入剖析volatile关键字.html">深入剖析volatile关键字</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义
+
+保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的
+禁止进行指令重排序
+
+先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!s...
+    
+
+        <a href="/2018/05/03/深入剖析volatile关键字.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
 
     </div>
     
