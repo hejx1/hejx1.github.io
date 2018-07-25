@@ -21,18 +21,18 @@
     
     
     <meta name="keywords" content="部署,Linux,shell">
-    <meta name="description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时候后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
+    <meta name="description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
 <meta name="keywords" content="部署,Linux,shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nohup 日志过大的处理策略">
 <meta property="og:url" content="https://smilexin.cn/2018/07/24/nohup日志过大的处理策略.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时候后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
+<meta property="og:description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-24T06:41:06.837Z">
+<meta property="og:updated_time" content="2018-07-25T01:31:09.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nohup 日志过大的处理策略">
-<meta name="twitter:description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时候后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
+<meta name="twitter:description" content="问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅… 解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件 实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。 注意事">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -182,12 +182,12 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h1><p>使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时候后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅…</p>
+            <h1 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h1><p>使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅…</p>
 <h1 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h1><p>在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件</p>
 <h1 id="实现策略"><a href="#实现策略" class="headerlink" title="实现策略"></a>实现策略</h1><p>使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。</p>
 <p><strong>注意事项：因为Linux只认服务一开始创建的那个文件，删除之后程序输出日志不会再新建一个日志文件，手工新建日志文件之后也不再往里面写日志。 所以只有清空以前的日志文件。</strong></p>
 <h1 id="编写shell脚本"><a href="#编写shell脚本" class="headerlink" title="编写shell脚本"></a>编写shell脚本</h1><p>脚本放置在 nohup.out 文件的同级目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#description: Partition backup script for nohup.out</span><br><span class="line">this_path=$(cd `dirname $0`;pwd)</span><br><span class="line">cd $this_path</span><br><span class="line">#echo $this_path</span><br><span class="line">current_date=`date -d &quot;-1 day&quot; &quot;+%Y%m%d&quot;`</span><br><span class="line">#echo $current_date</span><br><span class="line">if [ ! -d &quot;$&#123;this_path&#125;/nohup&quot; ];then</span><br><span class="line">    mkdir $&#123;this_path&#125;/nohup</span><br><span class="line">else</span><br><span class="line">    echo &quot;$&#123;this_path&#125;/nohup existed&quot;</span><br><span class="line">fi</span><br><span class="line">cp -f nohup.out $&#123;this_path&#125;/nohup/nohup_$&#123;current_date&#125;</span><br><span class="line">cat /dev/null &gt; nohup.out</span><br></pre></td></tr></table></figure></p>
-<h1 id="定时执行"><a href="#定时执行" class="headerlink" title="定时执行"></a>定时执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -e # 设置定时任务计划</span><br><span class="line"># 每天凌晨1点执行备份</span><br><span class="line">0 1 * * * /data/appjar/myapp/myShell.sh</span><br></pre></td></tr></table></figure>
+<h1 id="定时执行"><a href="#定时执行" class="headerlink" title="定时执行"></a>定时执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -e # 设置定时任务计划</span><br><span class="line"># 每天凌晨1点执行备份</span><br><span class="line">0 1 * * * sh /data/appjar/myapp/myShell.sh</span><br></pre></td></tr></table></figure>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样就能够实现按天保存历史的日志记录，如果服务每天的日志异常巨大则可以考虑使用更细粒度的时间划分，我这里使用天就足够了</p>
 
         </div>
@@ -197,7 +197,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-07-24T06:41:06.837Z" itemprop="dateUpdated">2018-07-24 14:41:06</time>
+    最后更新时间：<time datetime="2018-07-25T01:31:09.077Z" itemprop="dateUpdated">2018-07-25 09:31:09</time>
 </span><br>
 
 
