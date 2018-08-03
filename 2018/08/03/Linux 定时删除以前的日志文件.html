@@ -14,27 +14,25 @@
     
     
     
-    <title>memcached 内存分配机制 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>Linux 定时删除以前的日志文件 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="memcached">
-    <meta name="description" content="内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。 这种空闲且无法再利用的内存现象，称为++内存的碎片化++ memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存 Slab Allocation 首先，像一般的内存池一样,  从操作系统分配到">
-<meta name="keywords" content="memcached">
+    <meta name="keywords" content="运维,Linux,shell">
+    <meta name="description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
+<meta name="keywords" content="运维,Linux,shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="memcached 内存分配机制">
-<meta property="og:url" content="https://smilexin.cn/2017/07/31/memcached_内存分配机制.html">
+<meta property="og:title" content="Linux 定时删除以前的日志文件">
+<meta property="og:url" content="https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。 这种空闲且无法再利用的内存现象，称为++内存的碎片化++ memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存 Slab Allocation 首先，像一般的内存池一样,  从操作系统分配到">
+<meta property="og:description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://smilexin.cn/img/posts/memcached/1.jpg">
-<meta property="og:updated_time" content="2018-04-28T22:47:03.000Z">
+<meta property="og:updated_time" content="2018-08-03T06:34:13.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="memcached 内存分配机制">
-<meta name="twitter:description" content="内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。 这种空闲且无法再利用的内存现象，称为++内存的碎片化++ memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存 Slab Allocation 首先，像一般的内存池一样,  从操作系统分配到">
-<meta name="twitter:image" content="https://smilexin.cn/img/posts/memcached/1.jpg">
+<meta name="twitter:title" content="Linux 定时删除以前的日志文件">
+<meta name="twitter:description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -115,7 +113,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">memcached 内存分配机制</div>
+        <div class="flex-col header-title ellipsis">Linux 定时删除以前的日志文件</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -137,11 +135,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">memcached 内存分配机制</h1>
+        <h1 class="title">Linux 定时删除以前的日志文件</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-07-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-07-31
+                <time datetime="2018-08-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-03
 </time>
 
 
@@ -160,18 +158,18 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#内存的碎片化"><span class="post-toc-number">1.</span> <span class="post-toc-text">内存的碎片化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#memcached是如何缓解内存的碎片化的？"><span class="post-toc-number">2.</span> <span class="post-toc-text">memcached是如何缓解内存的碎片化的？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Slab-Allocation"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Slab Allocation</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Slab-Allocation的主要术语"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Slab Allocation的主要术语</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#注意项"><span class="post-toc-number">3.</span> <span class="post-toc-text">注意项</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题场景"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题场景</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实现策略"><span class="post-toc-number">2.</span> <span class="post-toc-text">实现策略</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#编写shell脚本"><span class="post-toc-number">3.</span> <span class="post-toc-text">编写shell脚本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定时执行"><span class="post-toc-number">4.</span> <span class="post-toc-text">定时执行</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-memcached_内存分配机制"
+<article id="post-Linux 定时删除以前的日志文件"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">memcached 内存分配机制</h1>
+        <h1 class="post-card-title">Linux 定时删除以前的日志文件</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+            <time class="post-time" title="2018-08-03 00:00:00" datetime="2018-08-02T16:00:00.000Z"  itemprop="datePublished">2018-08-03</time>
 
             
 
@@ -184,22 +182,11 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="内存的碎片化"><a href="#内存的碎片化" class="headerlink" title="内存的碎片化"></a>内存的碎片化</h1><p>如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。</p>
-<p>这种空闲且无法再利用的内存现象，称为++内存的碎片化++</p>
-<h1 id="memcached是如何缓解内存的碎片化的？"><a href="#memcached是如何缓解内存的碎片化的？" class="headerlink" title="memcached是如何缓解内存的碎片化的？"></a>memcached是如何缓解内存的碎片化的？</h1><p>memcached 用 Slab Allocation 机制来管理内存</p>
-<h2 id="Slab-Allocation"><a href="#Slab-Allocation" class="headerlink" title="Slab Allocation"></a>Slab Allocation</h2><ol>
-<li><p>首先，像一般的内存池一样,  从操作系统分配到一大块内存。</p>
-</li>
-<li><p>将分配的内存分割成各种尺寸的块（chunk），并把尺寸相同的块分成组（chunk的集合），chunk的大小按照一定比例逐渐递增（图1）。<br><img src="/img/posts/memcached/1.jpg" alt="图1 Slab Allocation的构造图"></p>
-</li>
-</ol>
-<p>而且，slab allocator还有重复使用已分配的内存的目的。也就是说，分配到的内存不会释放，而是重复利用。</p>
-<h2 id="Slab-Allocation的主要术语"><a href="#Slab-Allocation的主要术语" class="headerlink" title="Slab Allocation的主要术语"></a>Slab Allocation的主要术语</h2><ul>
-<li>Page  ：分配给Slab的内存空间，默认是1MB。分配给Slab之后根据slab的大小切分成chunk。</li>
-<li>Chunk：用于缓存记录的内存空间。</li>
-<li>Slab Class：特定大小的chunk的组。</li>
-</ul>
-<h1 id="注意项"><a href="#注意项" class="headerlink" title="注意项"></a>注意项</h1><p>如果有 100byte 的内容要存，但122byte大小的仓库中的chunk满了，并不会寻找更大的，如144byte的仓库来存储，防止内存浪费的现象。而是把122仓库中的旧数据踢掉！</p>
+            <h1 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h1><p>磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。</p>
+<h1 id="实现策略"><a href="#实现策略" class="headerlink" title="实现策略"></a>实现策略</h1><p>使用crontab,每天凌晨删除以前的日志文件</p>
+<h1 id="编写shell脚本"><a href="#编写shell脚本" class="headerlink" title="编写shell脚本"></a>编写shell脚本</h1><p>auto-del-180-days-ago-log.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#description: Auto remove 6 months ago log file</span><br><span class="line"># 删除180天前的nohup文件</span><br><span class="line">find /data/appjar/*/nohup -mtime +180 -name &quot;nohup_*&quot; -exec rm &#123;&#125; \;</span><br><span class="line"># 删除180天前的log文件</span><br><span class="line">find /data/appjar/*/log -mtime +180 -name &quot;*.log&quot; -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure></p>
+<p>命令解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 这里的文件名需要根据应用的实际备份脚本生成的文件名称进行筛选</span><br><span class="line">find 对应目录 -mtime +天数 -name &quot;文件名&quot; -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure></p>
+<h1 id="定时执行"><a href="#定时执行" class="headerlink" title="定时执行"></a>定时执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -e # 设置定时任务计划</span><br><span class="line"># 每天凌晨1点执行备份</span><br><span class="line">0 1 * * * sh /usr/script/auto-del-180-days-ago-log.sh</span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -208,12 +195,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T22:47:03.000Z" itemprop="dateUpdated">2018-04-29 06:47:03</time>
+    最后更新时间：<time datetime="2018-08-03T06:34:13.897Z" itemprop="dateUpdated">2018-08-03 14:34:13</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/07/31/memcached_内存分配机制.html" target="_blank" rel="external">https://smilexin.cn/2017/07/31/memcached_内存分配机制.html</a>
+        原文链接：<a href="/2018/08/03/Linux 定时删除以前的日志文件.html" target="_blank" rel="external">https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html</a>
         
     </div>
     
@@ -234,7 +221,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
 
 
             
@@ -244,7 +231,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -254,22 +241,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 定时删除以前的日志文件》 — Junxin's Blog&url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -289,21 +276,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/07/31/Redis集群概念.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Redis 集群概念</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/07/31/Redis_持久化.html" id="post-next" class="post-nav-link">
+      <a href="/2018/07/30/url中jsessionid问题处理.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Redis 持久化</h4>
+        <h4 class="title">URL中jsessionid问题处理</h4>
       </a>
     </div>
   
@@ -400,7 +380,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -410,22 +390,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&title=《memcached 内存分配机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 内存分配机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 定时删除以前的日志文件》 — Junxin's Blog&url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_内存分配机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -436,7 +416,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3cwY4aQQwE0P3/nyZSTomShSq7GxLpzQktA/Trw9iqtvbrK74eP6/knl/vfPxxPf/OxzdXvobhhYeHhzda+uyr20UnC32+Tfma8fDw8G7zni89/7H2EZ+8Tt799u94eHh4H+XlS0ke95u2Hg8PD+9/4bWNchtDbMoGHh4e3vt5SRP8/OG+aazzYPdi1oKHh4cX8zbt7KdeXzzfw8PDw1ucqidXElvkwUQ+TBCtDQ8PD+8Cbxawti3y7M7nW1AUDDw8PLyjvFkImz/Kn5eNPOBoy89vdQ8PDw/vAm9/nN+Gs3tAUn7w8PDwbvDag/x8ie24wCyAiDYCDw8P7y28HPOe8CLZxKIw4OHh4S14yVjVLJJoy8asYLx4Fw8PD+8CL2lk8yY72azZoddmQ/Hw8PDO8vJjqvYAbDYQ0EYh0UwEHh4e3mVeXgDa0ag2zkha/BdrxsPDw7vAyz/QbkS7rDbwHc5H4OHh4R3izQ6x9sFuG3zMNhoPDw/vLO9eTJC015vfiu7Ew8PDu8xLGuJNBJwMEOwHF/4yGYGHh4d3mTf7yc3QwL6hLwoDHh4e3smJqeE/tW9j2bbkzFb44hgMDw8Pb8FrAafYeWM9O9bCw8PDu82rP1Y2320bnYwd1DMReHh4eId4+dfly8oXFEWxQTT8YhPx8PDwLvDyUGCG3MQTxybI8PDw8I7ykpKQF4/28d1+dlUS8PDw8I7y8sfuLFbIi0Rbir5mi8DDw8M7BMsPnzaL20cP9aAVHh4e3iFe+4xtQ4GzgwVXMhg8PDy8EW8WreYHZglj3/oPqx8eHh7egpcfZW3GAtoC0LLx8PDw/n1eu+hksKBtyl/cj4eHh/dRXjtE1Ya/+6EBPDw8vHfyNoNTSfh7Nra4krXg4eHhdSspDsDyDWrb66RRbptyPDw8vKO8H4w8xTrZxYrVAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACxElEQVR42u3ay04DMRAEQP7/p0HihEQcusd2AKn2FJF9uIy04/T47S0+3j+P1d+/frv6vLrb98/JVYcPPDw8vNHQV8fqnHY6kmuTp+djxsPDw7vNS17fzwe9+nZWWpK/RMUDDw8P71d5OT5ht9OBh4eH9395ecGol7/xMh0PDw/vL/CSMGI2iKQwJEXletaCh4eHd+ZtXBeJ13y+2N/Dw8PD2+iq70e0eYsrDyOK0eLh4eFd4OVL2Dy8aBtXs40IydPx8PDwbvBml+0EB/kyvd0K9uDOeHh4eJd5O438ZLncBruzQvLgFwMeHh7eZV7bDNspBvlWg3a68fDw8F7Ja1++ecM+KQl5LBI9HQ8PD+8Cr201JXFtctVsj0PSPFum1Hh4eHiHePkrvg1q29i35W1tusLDw8Pb5rWtr3x7wazAzBblP8S4eHh4eJd5yWNmk9Iu39uFdbE7DA8PD2/Ea6OHnfbVTmOsHVsRSeDh4eGNeHkzPolu8zu05STfmoCHh4d3jzdr5+fxQR7C5rFvURjw8PDwLvDyFtcsSE2WzvlUzoJmPDw8vLO8GSlfFuekndKynBQ8PDy8C7yd4KB9QL51YGc6lt/i4eHhHeK1i+NkcG1IMWuD1f8xPDw8vEO8tiTk7J2A43CIjIeHh3eNly9k82BifzrasPjBHfDw8PCO8naa8XnosNPomk09Hh4e3mt4w5/68dBPxbtFUcHDw8O7wMsZycNORbQ7EXC0dQAPDw9vg3fqhd5eNWuJ1a04PDw8vAu8/cc8Pyf5PNuO0Dbt8PDw8M7y8iZ9u4A+FQrnS/nlbwU8PDy8C7ykGBTZRhDUttsUDtQ0PDw8vJfzWkzSysrPmU0cHh4e3t/h5e38dumcnx8t/fHw8PCu8dowYrZpoI2A83Xy8g54eHh4F3izX/Sz2DcpJPlAD3T28PDw8DreB+C8St/totKgAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
