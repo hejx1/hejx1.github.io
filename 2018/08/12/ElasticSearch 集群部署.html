@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>ElasticSearch 集群部署 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ElasticSearch,全文搜索">
+    <meta name="description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+<meta name="keywords" content="ElasticSearch,全文搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch 集群部署">
+<meta property="og:url" content="https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster2.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster3.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster4.png">
+<meta property="og:updated_time" content="2018-08-12T11:08:16.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElasticSearch 集群部署">
+<meta name="twitter:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ElasticSearch 集群部署</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ElasticSearch 集群部署</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署master"><span class="post-toc-number">1.</span> <span class="post-toc-text">部署master</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署slave节点"><span class="post-toc-number">2.</span> <span class="post-toc-text">部署slave节点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#slave1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">slave1</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#slave2"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">slave2</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#集群配置详解-重要"><span class="post-toc-number">3.</span> <span class="post-toc-text">集群配置详解(重要)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#属性组合"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">属性组合</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实用建议"><span class="post-toc-number">4.</span> <span class="post-toc-text">实用建议</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ElasticSearch 集群部署"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ElasticSearch 集群部署</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-12 00:00:00" datetime="2018-08-11T16:00:00.000Z"  itemprop="datePublished">2018-08-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。</p>
+<h1 id="部署master"><a href="#部署master" class="headerlink" title="部署master"></a>部署master</h1><p>这里我的master直接使用<a href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html">之前安装的ElasticSearch</a>,启动head插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 建立集群文件夹</span><br><span class="line">mkdir es_cluster</span><br><span class="line"># 将之前安装的es直接拷贝过去做master</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master</span><br></pre></td></tr></table></figure>
+<p>修改配置让它成为一个master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_master$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
+<p>在文件末尾加上以下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 集群的名称</span><br><span class="line">cluster.name: smile</span><br><span class="line"># 节点名称,这里就命名为master,这样就可以一眼看出它是master</span><br><span class="line">node.name: master</span><br><span class="line"># 该节点可以竞争master</span><br><span class="line">node.master: true</span><br><span class="line"># 该节点不存储数据</span><br><span class="line">node.data: false</span><br><span class="line"># 设置绑定的ip,端口默认9200</span><br><span class="line">network.host: 127.0.0.1</span><br></pre></td></tr></table></figure></p>
+<p>启动master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_master$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p>
+<p>进入es-head查看集群情况<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/ElasticSearch/es_cluster1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>使用原生api查看es集群名称<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/ElasticSearch/es_cluster2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>我这里只配置了一台master,实际使用时最好配置多台master,配置步骤同上。</p>
+<h1 id="部署slave节点"><a href="#部署slave节点" class="headerlink" title="部署slave节点"></a>部署slave节点</h1><p>我这里slave节点都设置为不竞选master,只做数据存储,也就是数据节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 建立一个专门放置slave节点的文件夹</span><br><span class="line">/es_cluster$ mkdir es_slave</span><br><span class="line"># 将elasticsearch安装包拷贝到es_slave文件夹待用</span><br><span class="line">cp elasticsearch-6.3.2.tar.gz es_cluster/es_slave</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">/es_cluster/es_slave$ tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 复制成 slave1 和 slave2</span><br><span class="line">/es_cluster/es_slave$ cp -r elasticsearch-6.3.2 es_slave1</span><br><span class="line">/es_cluster/es_slave$ cp -r elasticsearch-6.3.2 es_slave2</span><br></pre></td></tr></table></figure></p>
+<h2 id="slave1"><a href="#slave1" class="headerlink" title="slave1"></a>slave1</h2><p>修改slave1配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd es_slave1</span><br><span class="line">/es_cluster/es_slave/es_slave1$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
+<p>文档最后添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 集群名称,需配置为同master一致</span><br><span class="line">cluster.name: smile</span><br><span class="line"># 节点名称</span><br><span class="line">node.name: slave1</span><br><span class="line"># 该节点不竞争master</span><br><span class="line">node.master: false</span><br><span class="line"># 该节点存储数据,默认为true,我这里显式表明</span><br><span class="line">node.data: true</span><br><span class="line"># 绑定的ip</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line"># 默认的端口为9200,这里不做配置的话就会与master端口冲突,因为master的端口是9200</span><br><span class="line">http.port: 9201</span><br><span class="line"></span><br><span class="line"># 这个配置主要作用是找寻master,如果不做配置,此节点会游离于集群之外</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>启动slave1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_slave/es_slave1$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p>
+<p>查看集群信息<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/ElasticSearch/es_cluster3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="slave2"><a href="#slave2" class="headerlink" title="slave2"></a>slave2</h2><p>直接copy slave1进行修改会有问题,各个节点都需要从elasticsearch-6.3.2复制出来修改配置文件,配置步骤参考slave1,我这里直接启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_slave/es_slave2$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/ElasticSearch/es_cluster4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="集群配置详解-重要"><a href="#集群配置详解-重要" class="headerlink" title="集群配置详解(重要)"></a>集群配置详解(重要)</h1><p>在生产环境下，如果不修改elasticsearch节点的角色信息，在高数据量，高并发的场景下集群容易出现脑裂等问题。</p>
+<p>默认情况下，elasticsearch集群中每个节点都有成为主节点的资格，也都存储数据，还可以提供查询服务。<br>这些功能是由两个属性控制的。</p>
+<ul>
+<li>node.master</li>
+<li>node.data<br>默认情况下这两个属性的值都是true。</li>
+</ul>
+<p>下面详细介绍一下这两个属性的含义以及不同组合可以达到的效果。</p>
+<ul>
+<li><p>node.master：这个属性表示节点是否具有成为主节点的资格<br>  注意：此属性的值为true，并不意味着这个节点就是主节点。<br>  因为真正的主节点，是由多个具有主节点资格的节点进行选举产生的。<br>  所以，这个属性只是代表这个节点是不是具有主节点选举资格。</p>
+</li>
+<li><p>node.data：这个属性表示节点是否存储数据。</p>
+</li>
+</ul>
+<h2 id="属性组合"><a href="#属性组合" class="headerlink" title="属性组合"></a>属性组合</h2><p>这两个属性可以有四种组合：<br>第一种：这种组合表示这个节点即有成为主节点的资格，又存储数据，这个时候如果某个节点被选举成为了真正的主节点，那么他还要存储数据，这样对于这个节点的压力就比较大了。<br><strong>elasticsearch默认每个节点都是这样的配置，在测试环境下这样做没问题。实际工作中建议不要这样设置，这样相当于主节点和数据节点的角色混合到一块了。</strong></p>
+<ul>
+<li>node.master: true</li>
+<li>node.data: true</li>
+</ul>
+<p>第二种：这种组合表示这个节点没有成为主节点的资格，也就不参与选举，只会存储数据。<br>这个节点我们称为data(数据)节点。在集群中需要单独设置几个这样的节点负责存储数据。后期提供存储和查询服务。</p>
+<ul>
+<li>node.master: false</li>
+<li>node.data: true</li>
+</ul>
+<p>第三种：这种组合表示这个节点不会存储数据，有成为主节点的资格，可以参与选举，有可能成为真正的主节点。<br>这个节点我们称为master节点<br>node.master: true<br>node.data: false</p>
+<p>第四种：这种组合表示这个节点即不会成为主节点，也不会存储数据，这个节点的意义是作为一个client(客户端)节点，主要是针对海量请求的时候可以进行负载均衡。<br>node.master: false<br>node.data: false</p>
+<h1 id="实用建议"><a href="#实用建议" class="headerlink" title="实用建议"></a>实用建议</h1><p>默认情况下，每个节点都有成为主节点的资格，也会存储数据，还会处理客户端的请求。<br>在一个生产集群中我们可以对这些节点的职责进行划分。<br>建议集群中设置3台以上的节点作为master节点【node.master: true node.data: false】<br>这些节点只负责成为主节点，维护整个集群的状态。</p>
+<p>再根据数据量设置一批data节点【node.master: false node.data: true】<br>这些节点只负责存储数据，后期提供建立索引和查询索引的服务，这样的话如果用户请求比较频繁，这些节点的压力也会比较大所以在集群中建议再设置一批client节点【node.master: false node.data: false】<br>这些节点只负责处理用户请求，实现请求转发，负载均衡等功能。</p>
+<p>master节点：普通服务器即可(CPU 内存 消耗一般)<br>data节点：主要消耗磁盘，内存<br>client节点：普通服务器即可(如果要进行分组聚合操作的话，建议这个节点内存也分配多一点)</p>
+<p><strong>当然,如果总共的机器才两三台的话,就可以直接使用默认配置【node.master: true node.data: true】,让它们互相依靠。</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-08-12T11:08:16.016Z" itemprop="dateUpdated">2018-08-12 19:08:16</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/08/12/ElasticSearch 集群部署.html" target="_blank" rel="external">https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/全文搜索/">全文搜索</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 集群部署》 — Junxin's Blog&url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/12/ElasticSearch 安装.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ElasticSearch 安装</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 集群部署》 — Junxin's Blog&url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQW6FMAxFUfa/aTpthYD7bKiEczOqfvmND5WsvCTbhsd+GL8/Pz559t3rz8+efGzIkCHjs4z9chyLIxhSLnkRpDYZMmSswzibnpd+PQ2nkhckQ4YMGZxBSudLQBkyZMjoM9Ip00UkmVeGDBkrM0iI7RRNloy8rcuQIWM1Bt91//+fXznfkCFDxqcYe3vUFnOkKQc1yJAhYzSjNgEPwP14HCxPZciQMZpRi4tk+qdCaRBfZciQMZSRboT1F5Hp4jL+P8iQIWMcgzdffv0rLZ3H3WBjToYMGSMYaQTl8ZK30QeOKGTIkLEMo9P+OKl2nHDz92XIkLEAI9iTA62zswQsXr+QIUPGAox0G46/Ar7448E4WOHKkCFjEKPWIjvl1l7WKUmGDBkLMDpXHDrHBvwl3lQiQ4aM0YxaHuQXMjqNtQiQIUPGOEZ6qau/id9prKe1yZAhYzSDH1jWGnT/u/GNNhkyZIxj1A4jSQvmVzRqIVmGDBnrMNIgWou76UFpcV4ZMmQMZdRaJ79+UdtQS7fkZMiQMZuBfo23xvrXwtIn/3xLhgwZQxl7OAigf8zAn5chQ8YKjHQTP6VyNt+q2zpDhgwZn2WkTZZPkLbj64Z7E3RlyJCxAIOn3jeOJB/L4jJkyFiekT5Zi7ivN1wZMmSMZqQHBk+1b1SPDBkyFmCkITaNrzU2D9IyZMiYzahFx6euX1yX0om7MmTIGMH4AXDVrWP6arcmAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

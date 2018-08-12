@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://smilexin.cn/"/>
-  <updated>2018-08-12T08:34:52.215Z</updated>
+  <updated>2018-08-12T11:08:16.016Z</updated>
   <id>https://smilexin.cn/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ElasticSearch 集群部署</title>
+    <link href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html"/>
+    <id>https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html</id>
+    <published>2018-08-11T16:00:00.000Z</published>
+    <updated>2018-08-12T11:08:16.016Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。</p><h1 id="部署master"><a href="#部署master" class="headerlink" title="部署master"></a>部署master</h1><p>这里我的master直接使用<a href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html">之前安装的ElasticSearch</a>,启动head插件。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 建立集群文件夹</span><br><span class="line">mkdir es_cluster</span><br><span class="line"># 将之前安装的es直接拷贝过去做master</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master</span><br></pre></td></tr></table></figure><p>修改配置让它成为一个master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_master$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p><p>在文件末尾加上以下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 集群的名称</span><br><span class="line">cluster.name: smile</span><br><span class="line"># 节点名称,这里就命名为master,这样就可以一眼看出它是master</span><br><span class="line">node.name: master</span><br><span class="line"># 该节点可以竞争master</span><br><span class="line">node.master: true</span><br><span class="line"># 该节点不存储数据</span><br><span class="line">node.data: false</span><br><span class="line"># 设置绑定的ip,端口默认9200</span><br><span class="line">network.host: 127.0.0.1</span><br></pre></td></tr></table></figure></p><p>启动master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_master$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p><p>进入es-head查看集群情况<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/es_cluster1.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>使用原生api查看es集群名称<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/es_cluster2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>我这里只配置了一台master,实际使用时最好配置多台master,配置步骤同上。</p><h1 id="部署slave节点"><a href="#部署slave节点" class="headerlink" title="部署slave节点"></a>部署slave节点</h1><p>我这里slave节点都设置为不竞选master,只做数据存储,也就是数据节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 建立一个专门放置slave节点的文件夹</span><br><span class="line">/es_cluster$ mkdir es_slave</span><br><span class="line"># 将elasticsearch安装包拷贝到es_slave文件夹待用</span><br><span class="line">cp elasticsearch-6.3.2.tar.gz es_cluster/es_slave</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">/es_cluster/es_slave$ tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 复制成 slave1 和 slave2</span><br><span class="line">/es_cluster/es_slave$ cp -r elasticsearch-6.3.2 es_slave1</span><br><span class="line">/es_cluster/es_slave$ cp -r elasticsearch-6.3.2 es_slave2</span><br></pre></td></tr></table></figure></p><h2 id="slave1"><a href="#slave1" class="headerlink" title="slave1"></a>slave1</h2><p>修改slave1配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd es_slave1</span><br><span class="line">/es_cluster/es_slave/es_slave1$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p><p>文档最后添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 集群名称,需配置为同master一致</span><br><span class="line">cluster.name: smile</span><br><span class="line"># 节点名称</span><br><span class="line">node.name: slave1</span><br><span class="line"># 该节点不竞争master</span><br><span class="line">node.master: false</span><br><span class="line"># 该节点存储数据,默认为true,我这里显式表明</span><br><span class="line">node.data: true</span><br><span class="line"># 绑定的ip</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line"># 默认的端口为9200,这里不做配置的话就会与master端口冲突,因为master的端口是9200</span><br><span class="line">http.port: 9201</span><br><span class="line"></span><br><span class="line"># 这个配置主要作用是找寻master,如果不做配置,此节点会游离于集群之外</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1&quot;]</span><br></pre></td></tr></table></figure></p><p>启动slave1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_slave/es_slave1$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p><p>查看集群信息<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/es_cluster3.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><h2 id="slave2"><a href="#slave2" class="headerlink" title="slave2"></a>slave2</h2><p>直接copy slave1进行修改会有问题,各个节点都需要从elasticsearch-6.3.2复制出来修改配置文件,配置步骤参考slave1,我这里直接启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_slave/es_slave2$ ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/es_cluster4.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><h1 id="集群配置详解-重要"><a href="#集群配置详解-重要" class="headerlink" title="集群配置详解(重要)"></a>集群配置详解(重要)</h1><p>在生产环境下，如果不修改elasticsearch节点的角色信息，在高数据量，高并发的场景下集群容易出现脑裂等问题。</p><p>默认情况下，elasticsearch集群中每个节点都有成为主节点的资格，也都存储数据，还可以提供查询服务。<br>这些功能是由两个属性控制的。</p><ul><li>node.master</li><li>node.data<br>默认情况下这两个属性的值都是true。</li></ul><p>下面详细介绍一下这两个属性的含义以及不同组合可以达到的效果。</p><ul><li><p>node.master：这个属性表示节点是否具有成为主节点的资格<br>  注意：此属性的值为true，并不意味着这个节点就是主节点。<br>  因为真正的主节点，是由多个具有主节点资格的节点进行选举产生的。<br>  所以，这个属性只是代表这个节点是不是具有主节点选举资格。</p></li><li><p>node.data：这个属性表示节点是否存储数据。</p></li></ul><h2 id="属性组合"><a href="#属性组合" class="headerlink" title="属性组合"></a>属性组合</h2><p>这两个属性可以有四种组合：<br>第一种：这种组合表示这个节点即有成为主节点的资格，又存储数据，这个时候如果某个节点被选举成为了真正的主节点，那么他还要存储数据，这样对于这个节点的压力就比较大了。<br><strong>elasticsearch默认每个节点都是这样的配置，在测试环境下这样做没问题。实际工作中建议不要这样设置，这样相当于主节点和数据节点的角色混合到一块了。</strong></p><ul><li>node.master: true</li><li>node.data: true</li></ul><p>第二种：这种组合表示这个节点没有成为主节点的资格，也就不参与选举，只会存储数据。<br>这个节点我们称为data(数据)节点。在集群中需要单独设置几个这样的节点负责存储数据。后期提供存储和查询服务。</p><ul><li>node.master: false</li><li>node.data: true</li></ul><p>第三种：这种组合表示这个节点不会存储数据，有成为主节点的资格，可以参与选举，有可能成为真正的主节点。<br>这个节点我们称为master节点<br>node.master: true<br>node.data: false</p><p>第四种：这种组合表示这个节点即不会成为主节点，也不会存储数据，这个节点的意义是作为一个client(客户端)节点，主要是针对海量请求的时候可以进行负载均衡。<br>node.master: false<br>node.data: false</p><h1 id="实用建议"><a href="#实用建议" class="headerlink" title="实用建议"></a>实用建议</h1><p>默认情况下，每个节点都有成为主节点的资格，也会存储数据，还会处理客户端的请求。<br>在一个生产集群中我们可以对这些节点的职责进行划分。<br>建议集群中设置3台以上的节点作为master节点【node.master: true node.data: false】<br>这些节点只负责成为主节点，维护整个集群的状态。</p><p>再根据数据量设置一批data节点【node.master: false node.data: true】<br>这些节点只负责存储数据，后期提供建立索引和查询索引的服务，这样的话如果用户请求比较频繁，这些节点的压力也会比较大所以在集群中建议再设置一批client节点【node.master: false node.data: false】<br>这些节点只负责处理用户请求，实现请求转发，负载均衡等功能。</p><p>master节点：普通服务器即可(CPU 内存 消耗一般)<br>data节点：主要消耗磁盘，内存<br>client节点：普通服务器即可(如果要进行分组聚合操作的话，建议这个节点内存也分配多一点)</p><p><strong>当然,如果总共的机器才两三台的话,就可以直接使用默认配置【node.master: true node.data: true】,让它们互相依靠。</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。&lt;/p&gt;
+&lt;h1 id=&quot;部署master&quot;&gt;&lt;a href=&quot;#部署master&quot; class=&quot;headerlink&quot; title=&quot;部署master&quot;&gt;&lt;/a&gt;部署mas
+      
+    
+    </summary>
+    
+    
+      <category term="ElasticSearch" scheme="https://smilexin.cn/tags/ElasticSearch/"/>
+    
+      <category term="全文搜索" scheme="https://smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ElasticSearch 安装</title>
     <link href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html"/>
     <id>https://smilexin.cn/2018/08/12/ElasticSearch 安装.html</id>
     <published>2018-08-11T16:00:00.000Z</published>
-    <updated>2018-08-12T08:34:52.215Z</updated>
+    <updated>2018-08-12T09:00:12.156Z</updated>
     
     <content type="html"><![CDATA[<h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><ul><li>MacOS 10.13.6</li><li>jdk 1.8+ # es5.x 之后jdk的依赖版本最低1.8</li><li>nodejs v8.11.1 # es-head插件最低依赖 6.0</li></ul><h1 id="安装Elasticsearch"><a href="#安装Elasticsearch" class="headerlink" title="安装Elasticsearch"></a>安装Elasticsearch</h1><p>进入<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch官网</a>找寻最新版本的ElasticSearch进行下载安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 进入指定目录</span><br><span class="line">cd /MyDownloads</span><br><span class="line"># 下载elasticsearch</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line">cd elasticsearch-6.3.2 # 进入es</span><br><span class="line"># 启动es,将会打印大量日志信息,看到started就是启动成功了,es的默认端口是9200</span><br><span class="line">sh ./bin/elasticsearch</span><br></pre></td></tr></table></figure></p><p>浏览器访问: <a href="http://127.0.0.1:9200/" target="_blank" rel="noopener">http://127.0.0.1:9200/</a><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/1.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br>见到当前Elasticsearch信息就是启动成功了</p><h1 id="es核心目录介绍"><a href="#es核心目录介绍" class="headerlink" title="es核心目录介绍"></a>es核心目录介绍</h1><ul><li>bin: 存放es的启动脚本的</li><li>config: 存放es配置文件的目录 </li><li>lib: es依赖的第三方类库的目录</li><li>modules: 模块目录</li><li>plugins: 存放第三方插件的目录</li></ul><h1 id="安装head插件"><a href="#安装head插件" class="headerlink" title="安装head插件"></a>安装head插件</h1><p>es返回信息是json结构,不够友好,head插件提供了友好的web界面,可以实现基本信息的查看,rest请求的模拟,以及数据的基本检索</p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p><a href="https://github.com/mobz/elasticsearch-head" target="_blank" rel="noopener">elasticsearch-head</a> 进去下载zip包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 解压</span><br><span class="line">unzip elasticsearch-head-master.zip</span><br><span class="line"># 安装</span><br><span class="line">cd elasticsearch-head-master</span><br><span class="line">/elasticsearch-head-master$ node -v # 查看nodejs版本是否为6.0以上</span><br><span class="line">/elasticsearch-head-master$ npm install # 安装插件elasticsearch-head</span><br><span class="line">/elasticsearch-head-master$ npm run start # 启动head插件</span><br><span class="line">/elasticsearch-head-master$ npm run start</span><br><span class="line"></span><br><span class="line">&gt; elasticsearch-head@0.0.0 start /elasticsearch-head-master</span><br><span class="line">&gt; grunt server</span><br><span class="line"></span><br><span class="line">(node:8433) ExperimentalWarning: The http2 module is an experimental API.</span><br><span class="line">Running &quot;connect:server&quot; (connect) task</span><br><span class="line">Waiting forever...</span><br><span class="line">Started connect web server on http://localhost:9100</span><br></pre></td></tr></table></figure></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p><strong>这里状态是未连接是因为我现在没启动es</strong></p><h2 id="集群状态"><a href="#集群状态" class="headerlink" title="集群状态"></a>集群状态</h2><ul><li>green: 代表es的服务正常运行</li><li>yellow: 代表集群健康不是很好,但是集群可以正常使用</li><li>red: 代表集群健康很差,这个时候可能有的虽然可以正常搜索数据但是已经出现了丢失数据的问题</li></ul><h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>因为ElasticSearch和elasticsearch-head本身是属于两个独立的进程的,他们之间的访问是有跨域问题的,所以需要进行跨域的配置修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config/elasticsearch.yml # 修改配置文件</span><br></pre></td></tr></table></figure></p><p>在elasticsearch.yml文件的末尾添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#action.destructive_requires_name: true</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure></p><h1 id="启动es和head插件"><a href="#启动es和head插件" class="headerlink" title="启动es和head插件"></a>启动es和head插件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/elasticsearch-6.3.2$ ./bin/elasticsearch -d</span><br><span class="line">/elasticsearch-6.3.2$ cd ../elasticsearch-head-master</span><br><span class="line">/Develop/elasticsearch-head-master$ npm run start</span><br></pre></td></tr></table></figure><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/3.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><h1 id="关闭ElasticSearch的几种方式"><a href="#关闭ElasticSearch的几种方式" class="headerlink" title="关闭ElasticSearch的几种方式"></a>关闭ElasticSearch的几种方式</h1><p>如何不再使用CTRL+C关闭Elasticsearch</p><h2 id="CTRL-C"><a href="#CTRL-C" class="headerlink" title="CTRL+C"></a>CTRL+C</h2><p>当es在控制台运行的时候可以使用CTRL+C来关闭它</p><h2 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep elastic # 查看所有es进程信息</span><br><span class="line">kill pid</span><br></pre></td></tr></table></figure><p>进入需要关闭的es文件夹中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /elasticsearch-6.3.2</span><br><span class="line">/elasticsearch-6.3.2$ ps -ef | grep `pwd` # 查看es进程信息</span><br><span class="line">kill pid</span><br></pre></td></tr></table></figure></p>]]></content>
     
@@ -421,6 +447,31 @@
   </entry>
   
   <entry>
+    <title>并发与高并发的基本概念</title>
+    <link href="https://smilexin.cn/2018/05/02/%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%AB%98%E5%B9%B6%E5%8F%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.html"/>
+    <id>https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html</id>
+    <published>2018-05-01T16:00:00.000Z</published>
+    <updated>2018-05-02T04:41:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p>同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。</p><h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><p>高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够<strong>同时并行处理</strong>很多请求。</p><h1 id="并发与高并发的区别"><a href="#并发与高并发的区别" class="headerlink" title="并发与高并发的区别"></a>并发与高并发的区别</h1><p>当我们说多线程并发时，其实我们更多的是讨论多个线程操作了相同的资源，这时我们讨论点更多的是落在保证线程安全以及合理分配和使用资源上。而高并发主要指系统运行过程中遇到“短时间内遇到大量操作请求”的情况，主要发生在系统集中收到大量请求（例如：12306的抢票情况；天猫双十一活动）。当我们说高并发时，我们谈的是是如何提高现有程序的性能，更多的是对高并发场景的一些解决方案，思路啦、手段等等。如果高并发处理不好，不仅仅降低了用户的体验度（请求响应时间过长），同时可能导致系统宕机，严重的甚至导致OOM异常，系统停止工作等。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;并发&quot;&gt;&lt;a href=&quot;#并发&quot; class=&quot;headerlink&quot; title=&quot;并发&quot;&gt;&lt;/a&gt;并发&lt;/h1&gt;&lt;p&gt;同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程
+      
+    
+    </summary>
+    
+    
+      <category term="并发" scheme="https://smilexin.cn/tags/%E5%B9%B6%E5%8F%91/"/>
+    
+      <category term="高并发" scheme="https://smilexin.cn/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>AtomicLong与LongAdder的区别</title>
     <link href="https://smilexin.cn/2018/05/02/AtomicLong%E4%B8%8ELongAdder%E7%9A%84%E5%8C%BA%E5%88%AB.html"/>
     <id>https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html</id>
@@ -446,31 +497,6 @@
       <category term="Atomic" scheme="https://smilexin.cn/tags/Atomic/"/>
     
       <category term="计数器" scheme="https://smilexin.cn/tags/%E8%AE%A1%E6%95%B0%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>并发与高并发的基本概念</title>
-    <link href="https://smilexin.cn/2018/05/02/%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%AB%98%E5%B9%B6%E5%8F%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.html"/>
-    <id>https://smilexin.cn/2018/05/02/并发与高并发的基本概念.html</id>
-    <published>2018-05-01T16:00:00.000Z</published>
-    <updated>2018-05-02T04:41:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p>同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。</p><h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><p>高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够<strong>同时并行处理</strong>很多请求。</p><h1 id="并发与高并发的区别"><a href="#并发与高并发的区别" class="headerlink" title="并发与高并发的区别"></a>并发与高并发的区别</h1><p>当我们说多线程并发时，其实我们更多的是讨论多个线程操作了相同的资源，这时我们讨论点更多的是落在保证线程安全以及合理分配和使用资源上。而高并发主要指系统运行过程中遇到“短时间内遇到大量操作请求”的情况，主要发生在系统集中收到大量请求（例如：12306的抢票情况；天猫双十一活动）。当我们说高并发时，我们谈的是是如何提高现有程序的性能，更多的是对高并发场景的一些解决方案，思路啦、手段等等。如果高并发处理不好，不仅仅降低了用户的体验度（请求响应时间过长），同时可能导致系统宕机，严重的甚至导致OOM异常，系统停止工作等。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;并发&quot;&gt;&lt;a href=&quot;#并发&quot; class=&quot;headerlink&quot; title=&quot;并发&quot;&gt;&lt;/a&gt;并发&lt;/h1&gt;&lt;p&gt;同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程
-      
-    
-    </summary>
-    
-    
-      <category term="并发" scheme="https://smilexin.cn/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-      <category term="高并发" scheme="https://smilexin.cn/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
@@ -518,32 +544,6 @@
     
     
       <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA将已有项目添加到git</title>
-    <link href="https://smilexin.cn/2018/04/10/IDEA%E5%B0%86%E5%B7%B2%E6%9C%89%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E5%88%B0git.html"/>
-    <id>https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html</id>
-    <published>2018-04-09T16:00:00.000Z</published>
-    <updated>2018-04-28T21:39:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="场景介绍"><a href="#场景介绍" class="headerlink" title="场景介绍"></a>场景介绍</h1><p>将本地正在开发的项目添加到远程Git仓库</p><h1 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h1><ol><li>在远程仓库创建项目,拿到项目的HTTP链接</li><li>进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 若本地项目不是git项目,则需要执行init进行初始化git项目</span><br><span class="line">git init</span><br><span class="line"># 给项目设置远程Git仓库</span><br><span class="line">git remote add origin https://gitee.com/***/***.git</span><br><span class="line"># 抓取远程仓库数据，并自动合并远程分支</span><br><span class="line">git pull origin master</span><br><span class="line"># 将项目所有文件添加到git管理</span><br><span class="line">git add .</span><br><span class="line"># 提交到本地</span><br><span class="line">git commit -m &quot;提交信息&quot;</span><br><span class="line"># 推送到远程仓库</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;场景介绍&quot;&gt;&lt;a href=&quot;#场景介绍&quot; class=&quot;headerlink&quot; title=&quot;场景介绍&quot;&gt;&lt;/a&gt;场景介绍&lt;/h1&gt;&lt;p&gt;将本地正在开发的项目添加到远程Git仓库&lt;/p&gt;
-&lt;h1 id=&quot;详细步骤&quot;&gt;&lt;a href=&quot;#详细步骤&quot; class=&quot;
-      
-    
-    </summary>
-    
-    
-      <category term="IDEA" scheme="https://smilexin.cn/tags/IDEA/"/>
-    
-      <category term="git" scheme="https://smilexin.cn/tags/git/"/>
     
   </entry>
   

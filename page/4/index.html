@@ -152,6 +152,54 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Redis中的事务"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-10-02 00:00:00" datetime="2017-10-01T16:00:00.000Z"  itemprop="datePublished">2017-10-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/10/02/Redis中的事务.html">Redis中的事务</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Redis中的事务Redis支持简单的事务
+操作MysqlRedis开启start transactionmuitl语句普通sql普通命令失败rollback 回滚discard 取消成功commitexec
+
+注: rollback与discard 的区别如果已经成功执行了2条语句, 第3条语句出错.Rollback后,前2条的语句影响消失.Discard只是结束本次事务,前2条语句造成的...
+    
+
+        <a href="/2017/10/02/Redis中的事务.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-设计模式_设计原则"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -303,7 +351,7 @@ Dub...
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Redis集群概念"
+            <article id="post-memcached_内存分配机制"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -319,7 +367,7 @@ Dub...
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
+      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
     </h3>
   
 
@@ -329,19 +377,21 @@ Dub...
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
-redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
-Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
+        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
+这种空闲且无法再利用的内存现象，称为++内存的碎片化++
+memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
+Slab Allocation
+首先，像一般的内存池一样,  从操作系统...
     
 
-        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
 
     </div>
     
@@ -398,7 +448,7 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
+            <article id="post-Redis集群概念"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -414,7 +464,7 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
     </h3>
   
 
@@ -424,21 +474,19 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
+        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
+redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
     
 
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
 
     </div>
     
@@ -571,60 +619,6 @@ Slab Allocation
     
 
         <a href="/2017/07/04/Dubbo_demo项目（五).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（三)"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（三).html">Dubbo demo项目 (三) 搭建业务中心项目</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        业务中心
-业务中心是整个 Dubbo 的核心所在
-业务中心的搭建需要配置许多的开发包
-
-搭建业务中心的开发环境
-首先建立一个 service 的项目，作为业务中心的存在：cn.hejx.service
-修改 parent/pom.xml 配置文件导入所需要 Dubbo 的开发类库
-
-修改 parent/pom.xml 配置文件主要是新增开发包的属性配置
-1234567891011121314...
-    
-
-        <a href="/2017/07/03/Dubbo_demo项目（三).html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
