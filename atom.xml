@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://smilexin.cn/"/>
-  <updated>2018-08-07T07:05:29.896Z</updated>
+  <updated>2018-08-12T08:34:52.215Z</updated>
   <id>https://smilexin.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ElasticSearch 安装</title>
+    <link href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html"/>
+    <id>https://smilexin.cn/2018/08/12/ElasticSearch 安装.html</id>
+    <published>2018-08-11T16:00:00.000Z</published>
+    <updated>2018-08-12T08:34:52.215Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><ul><li>MacOS 10.13.6</li><li>jdk 1.8+ # es5.x 之后jdk的依赖版本最低1.8</li><li>nodejs v8.11.1 # es-head插件最低依赖 6.0</li></ul><h1 id="安装Elasticsearch"><a href="#安装Elasticsearch" class="headerlink" title="安装Elasticsearch"></a>安装Elasticsearch</h1><p>进入<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch官网</a>找寻最新版本的ElasticSearch进行下载安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 进入指定目录</span><br><span class="line">cd /MyDownloads</span><br><span class="line"># 下载elasticsearch</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line">cd elasticsearch-6.3.2 # 进入es</span><br><span class="line"># 启动es,将会打印大量日志信息,看到started就是启动成功了,es的默认端口是9200</span><br><span class="line">sh ./bin/elasticsearch</span><br></pre></td></tr></table></figure></p><p>浏览器访问: <a href="http://127.0.0.1:9200/" target="_blank" rel="noopener">http://127.0.0.1:9200/</a><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/1.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br>见到当前Elasticsearch信息就是启动成功了</p><h1 id="es核心目录介绍"><a href="#es核心目录介绍" class="headerlink" title="es核心目录介绍"></a>es核心目录介绍</h1><ul><li>bin: 存放es的启动脚本的</li><li>config: 存放es配置文件的目录 </li><li>lib: es依赖的第三方类库的目录</li><li>modules: 模块目录</li><li>plugins: 存放第三方插件的目录</li></ul><h1 id="安装head插件"><a href="#安装head插件" class="headerlink" title="安装head插件"></a>安装head插件</h1><p>es返回信息是json结构,不够友好,head插件提供了友好的web界面,可以实现基本信息的查看,rest请求的模拟,以及数据的基本检索</p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p><a href="https://github.com/mobz/elasticsearch-head" target="_blank" rel="noopener">elasticsearch-head</a> 进去下载zip包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 解压</span><br><span class="line">unzip elasticsearch-head-master.zip</span><br><span class="line"># 安装</span><br><span class="line">cd elasticsearch-head-master</span><br><span class="line">/elasticsearch-head-master$ node -v # 查看nodejs版本是否为6.0以上</span><br><span class="line">/elasticsearch-head-master$ npm install # 安装插件elasticsearch-head</span><br><span class="line">/elasticsearch-head-master$ npm run start # 启动head插件</span><br><span class="line">/elasticsearch-head-master$ npm run start</span><br><span class="line"></span><br><span class="line">&gt; elasticsearch-head@0.0.0 start /elasticsearch-head-master</span><br><span class="line">&gt; grunt server</span><br><span class="line"></span><br><span class="line">(node:8433) ExperimentalWarning: The http2 module is an experimental API.</span><br><span class="line">Running &quot;connect:server&quot; (connect) task</span><br><span class="line">Waiting forever...</span><br><span class="line">Started connect web server on http://localhost:9100</span><br></pre></td></tr></table></figure></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p><strong>这里状态是未连接是因为我现在没启动es</strong></p><h2 id="集群状态"><a href="#集群状态" class="headerlink" title="集群状态"></a>集群状态</h2><ul><li>green: 代表es的服务正常运行</li><li>yellow: 代表集群健康不是很好,但是集群可以正常使用</li><li>red: 代表集群健康很差,这个时候可能有的虽然可以正常搜索数据但是已经出现了丢失数据的问题</li></ul><h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>因为ElasticSearch和elasticsearch-head本身是属于两个独立的进程的,他们之间的访问是有跨域问题的,所以需要进行跨域的配置修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config/elasticsearch.yml # 修改配置文件</span><br></pre></td></tr></table></figure></p><p>在elasticsearch.yml文件的末尾添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#action.destructive_requires_name: true</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure></p><h1 id="启动es和head插件"><a href="#启动es和head插件" class="headerlink" title="启动es和head插件"></a>启动es和head插件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/elasticsearch-6.3.2$ ./bin/elasticsearch -d</span><br><span class="line">/elasticsearch-6.3.2$ cd ../elasticsearch-head-master</span><br><span class="line">/Develop/elasticsearch-head-master$ npm run start</span><br></pre></td></tr></table></figure><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ElasticSearch/3.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><h1 id="关闭ElasticSearch的几种方式"><a href="#关闭ElasticSearch的几种方式" class="headerlink" title="关闭ElasticSearch的几种方式"></a>关闭ElasticSearch的几种方式</h1><p>如何不再使用CTRL+C关闭Elasticsearch</p><h2 id="CTRL-C"><a href="#CTRL-C" class="headerlink" title="CTRL+C"></a>CTRL+C</h2><p>当es在控制台运行的时候可以使用CTRL+C来关闭它</p><h2 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep elastic # 查看所有es进程信息</span><br><span class="line">kill pid</span><br></pre></td></tr></table></figure><p>进入需要关闭的es文件夹中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /elasticsearch-6.3.2</span><br><span class="line">/elasticsearch-6.3.2$ ps -ef | grep `pwd` # 查看es进程信息</span><br><span class="line">kill pid</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;安装环境&quot;&gt;&lt;a href=&quot;#安装环境&quot; class=&quot;headerlink&quot; title=&quot;安装环境&quot;&gt;&lt;/a&gt;安装环境&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;MacOS 10.13.6&lt;/li&gt;
+&lt;li&gt;jdk 1.8+ # es5.x 之后jdk的依赖版本最低1.8&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="ElasticSearch" scheme="https://smilexin.cn/tags/ElasticSearch/"/>
+    
+      <category term="全文搜索" scheme="https://smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringBoot 定时任务</title>
@@ -448,29 +475,6 @@
   </entry>
   
   <entry>
-    <title>RSA的公钥和私钥的使用详解</title>
-    <link href="https://smilexin.cn/2018/04/27/RSA%E7%9A%84%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3.html"/>
-    <id>https://smilexin.cn/2018/04/27/RSA的公钥和私钥的使用详解.html</id>
-    <published>2018-04-26T16:00:00.000Z</published>
-    <updated>2018-04-28T15:45:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="什么是RSA"><a href="#什么是RSA" class="headerlink" title="什么是RSA"></a>什么是RSA</h1><p>RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。</p><p>这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。</p><h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><ul><li>签名</li></ul><p>使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但是不能用来保证内容不被他人获得。</p><ul><li>加密</li></ul><p>用公钥进行加密，私钥进行解密，用于向公钥所有者发布信息，这个信息可能被他人篡改，但是无法被他人获得</p><p>如果甲想给乙发一个安全的保密的数据,那么应该甲乙各自有一个私钥,甲先用乙的公钥加密这段数据,再用自己的私钥加密这段加密后的数据<strong>.</strong>最后再发给乙,这样确保了内容即不会被读取,也不会被篡改.</p><p>甲用乙方的公钥进行加密，是为了只有乙方能够解密，保证了数据的安全性； 甲用自己的私钥进行加密，发送给乙方后，乙方用甲方的公钥进行解密，可以唯一识别这是甲方发过来的数据，且甲方不能抵赖。因为一对公钥和私钥是唯一的。 这样既保证了安全性，也保证了唯一性。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>你只要想：既然是加密，那肯定是不希望别人知道我的消息，所以只有我才能解密，所以可得出<strong>公钥负责加密，私钥负责解密</strong>；同理，既然是签名，那肯定是不希望有人冒充我发消息，只有我才能发布这个签名，所以可得出<strong>私钥负责签名，公钥负责验证</strong>。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;什么是RSA&quot;&gt;&lt;a href=&quot;#什么是RSA&quot; class=&quot;headerlink&quot; title=&quot;什么是RSA&quot;&gt;&lt;/a&gt;什么是RSA&lt;/h1&gt;&lt;p&gt;RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解
-      
-    
-    </summary>
-    
-    
-      <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
     <title>混合加密算法(RSA和DES)</title>
     <link href="https://smilexin.cn/2018/04/27/%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95(RSA%E5%92%8CDES).html"/>
     <id>https://smilexin.cn/2018/04/27/混合加密算法(RSA和DES).html</id>
@@ -485,6 +489,29 @@
       
         &lt;h1 id=&quot;混合加密的理由&quot;&gt;&lt;a href=&quot;#混合加密的理由&quot; class=&quot;headerlink&quot; title=&quot;混合加密的理由&quot;&gt;&lt;/a&gt;混合加密的理由&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;由于随着计算机系统能力的不断发展，DES的安全性比它刚出现时会弱得多，追溯历史破解DES
+      
+    
+    </summary>
+    
+    
+      <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RSA的公钥和私钥的使用详解</title>
+    <link href="https://smilexin.cn/2018/04/27/RSA%E7%9A%84%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3.html"/>
+    <id>https://smilexin.cn/2018/04/27/RSA的公钥和私钥的使用详解.html</id>
+    <published>2018-04-26T16:00:00.000Z</published>
+    <updated>2018-04-28T15:45:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="什么是RSA"><a href="#什么是RSA" class="headerlink" title="什么是RSA"></a>什么是RSA</h1><p>RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。</p><p>这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。</p><h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><ul><li>签名</li></ul><p>使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但是不能用来保证内容不被他人获得。</p><ul><li>加密</li></ul><p>用公钥进行加密，私钥进行解密，用于向公钥所有者发布信息，这个信息可能被他人篡改，但是无法被他人获得</p><p>如果甲想给乙发一个安全的保密的数据,那么应该甲乙各自有一个私钥,甲先用乙的公钥加密这段数据,再用自己的私钥加密这段加密后的数据<strong>.</strong>最后再发给乙,这样确保了内容即不会被读取,也不会被篡改.</p><p>甲用乙方的公钥进行加密，是为了只有乙方能够解密，保证了数据的安全性； 甲用自己的私钥进行加密，发送给乙方后，乙方用甲方的公钥进行解密，可以唯一识别这是甲方发过来的数据，且甲方不能抵赖。因为一对公钥和私钥是唯一的。 这样既保证了安全性，也保证了唯一性。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>你只要想：既然是加密，那肯定是不希望别人知道我的消息，所以只有我才能解密，所以可得出<strong>公钥负责加密，私钥负责解密</strong>；同理，既然是签名，那肯定是不希望有人冒充我发消息，只有我才能发布这个签名，所以可得出<strong>私钥负责签名，公钥负责验证</strong>。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;什么是RSA&quot;&gt;&lt;a href=&quot;#什么是RSA&quot; class=&quot;headerlink&quot; title=&quot;什么是RSA&quot;&gt;&lt;/a&gt;什么是RSA&lt;/h1&gt;&lt;p&gt;RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解
       
     
     </summary>
@@ -517,31 +544,6 @@
       <category term="IDEA" scheme="https://smilexin.cn/tags/IDEA/"/>
     
       <category term="git" scheme="https://smilexin.cn/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA中使用Protobuf的正确姿势</title>
-    <link href="https://smilexin.cn/2018/03/12/IDEA%E4%BD%BF%E7%94%A8protobuf%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF.html"/>
-    <id>https://smilexin.cn/2018/03/12/IDEA使用protobuf的正确姿势.html</id>
-    <published>2018-03-11T16:00:00.000Z</published>
-    <updated>2018-04-28T22:29:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="protobuf-简介"><a href="#protobuf-简介" class="headerlink" title="protobuf 简介"></a>protobuf 简介</h1><p><strong>protocolbuffer</strong>(以下简称PB)是google 的一种数据交换的格式，它独立于语言，<a href="https://baike.baidu.com/item/%E7%8B%AC%E7%AB%8B/3259" target="_blank" rel="noopener">独立</a>于平台。google 提供了多种语言的实现：java、<a href="https://baike.baidu.com/item/c%23" target="_blank" rel="noopener">c#</a>、<a href="https://baike.baidu.com/item/c%2B%2B" target="_blank" rel="noopener">c++</a>、go 和 <a href="https://baike.baidu.com/item/python" target="_blank" rel="noopener">python</a>，每一种实现都包含了相应语言的<a href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%99%A8" target="_blank" rel="noopener">编译器</a>以及库文件。由于它是一种二进制的格式，比使用 <a href="https://baike.baidu.com/item/xml" target="_blank" rel="noopener">xml</a> 进行数据交换快许多。可以把它用于<a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">分布式应用</a>之间的数据通信或者异构环境下的数据交换。作为一种效率和兼容性都很优秀的二进制数据传输格式，可以用于诸如网络传输、配置文件、数据存储等诸多领域。</p><h1 id="安装-Protobuf-Support-插件"><a href="#安装-Protobuf-Support-插件" class="headerlink" title="安装 Protobuf Support 插件"></a>安装 Protobuf Support 插件</h1><p>依次点击IDEA中的“Preferences”–&gt;”Plugins”–&gt;”Browse repositories”，输入Protobuf 进行查找安装，也可以下载离线安装包，如图所示：</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ideaProtobuf/1.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>IDEA plugins地址：<a href="https://plugins.jetbrains.com/idea" target="_blank" rel="noopener">IDEA plugins</a> </p><p>搜索 Protobuf Support 插件，进行下载，下载完成后点击 <em>Install plugin from disk</em> 进行安装，如图所示：</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/ideaProtobuf/2.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>安装完后，重启Intellij IDEA，查看.proto文件，会发现已经支持语法高亮显示。</p><h1 id="将-proto-文件转成-Java-类"><a href="#将-proto-文件转成-Java-类" class="headerlink" title="将 .proto 文件转成 Java 类"></a>将 .proto 文件转成 Java 类</h1><p>一般的做法是执行protoc命令,依次将.proto文件转成Java类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc.exe -I=d:/tmp --java_out=d:/tmp d:/tmp/monitor_data.proto</span><br></pre></td></tr></table></figure><p>也可以写个批处理文件进行处理，具体如下:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">set Path=Path;%cd%</span><br><span class="line">set PATH_DEST=H:\server\gamehall\protocol\src\main\java</span><br><span class="line">set PATH_PO1=H:\server\Protocol\ClientProto</span><br><span class="line">set PATH_PO2=H:\server\Protocol\ServerProto</span><br><span class="line"></span><br><span class="line">cd %PATH_PO1%</span><br><span class="line">pushd %PATH_PO1% </span><br><span class="line">for %%a in (*.proto) do (</span><br><span class="line">    echo %%a</span><br><span class="line">    protoc --java_out=%PATH_DEST% -I=. %%a</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">cd %PATH_PO2%</span><br><span class="line">pushd %PATH_PO2% </span><br><span class="line">for %%a in (*.proto) do (</span><br><span class="line">    echo %%a</span><br><span class="line">    protoc --java_out=%PATH_DEST% -I=. %%a</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure><p>不过gRPC官方推荐了一种更优雅的使用姿势，可以通过maven轻松搞定</p><p>pom.xml 增加依赖</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;protobuf.version&gt;2.5.0&lt;/protobuf.version&gt;</span><br><span class="line">    &lt;grpc.version&gt;1.6.1&lt;/grpc.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;io.grpc&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;grpc-netty&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;grpc.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;io.grpc&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;grpc-protobuf&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;grpc.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;io.grpc&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;grpc-stub&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;grpc.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;protobuf-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;protobuf.version&#125;&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">&lt;build&gt;</span><br><span class="line">        &lt;extensions&gt;</span><br><span class="line">            &lt;extension&gt;</span><br><span class="line">                &lt;groupId&gt;kr.motd.maven&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;os-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;1.5.0.Final&lt;/version&gt;</span><br><span class="line">            &lt;/extension&gt;</span><br><span class="line">        &lt;/extensions&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;0.5.0&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;protocArtifact&gt;com.google.protobuf:protoc:$&#123;protobuf.version&#125;:exe:$&#123;os.detected.classifier&#125;&lt;/protocArtifact&gt;</span><br><span class="line">                    &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;</span><br><span class="line">                    &lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:$&#123;grpc.version&#125;:exe:$&#123;os.detected.classifier&#125;&lt;/pluginArtifact&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">                &lt;executions&gt;</span><br><span class="line">                    &lt;execution&gt;</span><br><span class="line">                        &lt;goals&gt;</span><br><span class="line">                            &lt;goal&gt;compile&lt;/goal&gt;</span><br><span class="line">                            &lt;goal&gt;compile-custom&lt;/goal&gt;</span><br><span class="line">                        &lt;/goals&gt;</span><br><span class="line">                    &lt;/execution&gt;</span><br><span class="line">                &lt;/executions&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br></pre></td></tr></table></figure><font style="color:red;"><br><br>注意事项：.proto文件需要放置在src/main/proto包下<br><br></font><p>最后使用maven进行编译,如图所示:</p><p><img src="/img/posts/ideaProtobuf/3.png" alt=""></p><p>现在我们就可以愉快的使用protobuf了。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;protobuf-简介&quot;&gt;&lt;a href=&quot;#protobuf-简介&quot; class=&quot;headerlink&quot; title=&quot;protobuf 简介&quot;&gt;&lt;/a&gt;protobuf 简介&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;protocolbuffer&lt;/strong&gt;(以下
-      
-    
-    </summary>
-    
-    
-      <category term="IDEA" scheme="https://smilexin.cn/tags/IDEA/"/>
-    
-      <category term="protobuf" scheme="https://smilexin.cn/tags/protobuf/"/>
     
   </entry>
   
