@@ -21,22 +21,22 @@
     
     
     <meta name="keywords" content="ElasticSearch,全文搜索">
-    <meta name="description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+    <meta name="description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个slave。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
 <meta name="keywords" content="ElasticSearch,全文搜索">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ElasticSearch 集群部署">
 <meta property="og:url" content="https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+<meta property="og:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个slave。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster2.png">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster3.png">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster4.png">
-<meta property="og:updated_time" content="2018-08-12T11:08:16.016Z">
+<meta property="og:updated_time" content="2018-08-12T11:14:21.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch 集群部署">
-<meta name="twitter:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
+<meta name="twitter:description" content="这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个slave。 部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。 1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_master">
 <meta name="twitter:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
@@ -187,7 +187,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个sleve。</p>
+            <p>这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个slave。</p>
 <h1 id="部署master"><a href="#部署master" class="headerlink" title="部署master"></a>部署master</h1><p>这里我的master直接使用<a href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html">之前安装的ElasticSearch</a>,启动head插件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 建立集群文件夹</span><br><span class="line">mkdir es_cluster</span><br><span class="line"># 将之前安装的es直接拷贝过去做master</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master</span><br></pre></td></tr></table></figure>
 <p>修改配置让它成为一个master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/es_cluster/es_master$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
@@ -264,7 +264,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-08-12T11:08:16.016Z" itemprop="dateUpdated">2018-08-12 19:08:16</time>
+    最后更新时间：<time datetime="2018-08-12T11:14:21.110Z" itemprop="dateUpdated">2018-08-12 19:14:21</time>
 </span><br>
 
 
@@ -345,14 +345,21 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/12/ElasticSearch 安装.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ElasticSearch 安装</h4>
+      </a>
+    </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/08/12/ElasticSearch 安装.html" id="post-next" class="post-nav-link">
+      <a href="/2018/08/07/SpringBoot 定时任务.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">ElasticSearch 安装</h4>
+        <h4 class="title">SpringBoot 定时任务</h4>
       </a>
     </div>
   
