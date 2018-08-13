@@ -228,9 +228,9 @@ nodejs v8.11.1 # es-head插件最低依赖 6.0
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        这里我建立一个elasticsearch集群,里面包含3个节点,1个master,2个slave。
-部署master这里我的master直接使用之前安装的ElasticSearch,启动head插件。
-1234# 建立集群文件夹mkdir es_cluster# 将之前安装的es直接拷贝过去做mastercp -r elasticsearch-6.3.2 es_cluster/es_mast...
+        集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合
+
+node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多...
     
 
         <a href="/2018/08/12/ElasticSearch 集群部署.html" class="post-more waves-effect waves-button">
