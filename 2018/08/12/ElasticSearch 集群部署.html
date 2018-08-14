@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster2.png">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster3.png">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster4.png">
-<meta property="og:updated_time" content="2018-08-13T11:07:18.900Z">
+<meta property="og:updated_time" content="2018-08-14T06:10:20.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch 集群部署">
 <meta name="twitter:description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
@@ -192,7 +192,9 @@
 <li><p>node.master：这个属性表示节点是否具有成为主节点的资格<br>  注意：此属性的值为true,并不意味着这个节点就是主节点。<br>  因为真正的主节点,是由多个具有主节点资格的节点进行选举产生的。<br>  所以,这个属性只是代表这个节点是不是具有主节点选举资格。</p>
 </li>
 <li><p>node.data：这个属性表示节点是否存储数据。</p>
-<h2 id="全能节点-默认"><a href="#全能节点-默认" class="headerlink" title="全能节点(默认)"></a>全能节点(默认)</h2></li>
+</li>
+</ul>
+<h2 id="全能节点-默认"><a href="#全能节点-默认" class="headerlink" title="全能节点(默认)"></a>全能节点(默认)</h2><ul>
 <li>node.master: true</li>
 <li>node.data: true<br>这种组合表示这个节点即有成为主节点的资格,又存储数据,这个时候如果某个节点被选举成为了真正的主节点,那么他还要存储数据,这样对于这个节点的压力就比较大了。<br><strong>elasticsearch默认每个节点都是这样的配置</strong></li>
 </ul>
@@ -271,7 +273,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-08-13T11:07:18.900Z" itemprop="dateUpdated">2018-08-13 19:07:18</time>
+    最后更新时间：<time datetime="2018-08-14T06:10:20.184Z" itemprop="dateUpdated">2018-08-14 14:10:20</time>
 </span><br>
 
 
