@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://smilexin.cn/"/>
-  <updated>2018-08-12T09:00:12.156Z</updated>
+  <updated>2018-08-16T07:05:51.094Z</updated>
   <id>https://smilexin.cn/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>thymeleaf 常用标签</title>
+    <link href="https://smilexin.cn/2018/08/16/thymeleaf%20%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE.html"/>
+    <id>https://smilexin.cn/2018/08/16/thymeleaf 常用标签.html</id>
+    <published>2018-08-15T16:00:00.000Z</published>
+    <updated>2018-08-16T07:05:51.094Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录自己常用的thymeleaf标签</p><h1 id="th-value"><a href="#th-value" class="headerlink" title="th:value"></a>th:value</h1><p>属性赋值,常用于表单回显<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input th:value=&quot;$&#123;user.name&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-checked"><a href="#th-checked" class="headerlink" title="th:checked"></a>th:checked</h1><p>选中为true,未选中为false,用于数据回显。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;</span><br><span class="line">&lt;label class=&quot;layui-form-label&quot;&gt;议价规则&lt;/label&gt;</span><br><span class="line">&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">&lt;input th:checked=&quot;$&#123;productInfo.is_bargain==0&#125;&quot; lay-filter=&quot;is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;0&quot; title=&quot;不支持议价&quot;&gt;</span><br><span class="line">&lt;input th:checked=&quot;$&#123;productInfo.is_bargain==1&#125;&quot; lay-filter=&quot;is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;1&quot; title=&quot;支持议价&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-selected"><a href="#th-selected" class="headerlink" title="th:selected"></a>th:selected</h1><p>给页面select下拉框赋值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-inline&quot;&gt;</span><br><span class="line">&lt;label class=&quot;layui-form-label&quot;&gt;商品单位&lt;/label&gt;</span><br><span class="line">&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">&lt;select id=&quot;product_unit&quot; name=&quot;product_unit&quot; lay-filter=&quot;product_unit&quot;&gt;</span><br><span class="line">&lt;option th:selected=&quot;$&#123;productInfo.product_unit==&apos;吨&apos;&#125;&quot; value=&quot;吨&quot; &gt;吨&lt;/option&gt;</span><br><span class="line">&lt;option th:selected=&quot;$&#123;productInfo.product_unit==&apos;千克&apos;&#125;&quot; value=&quot;千克&quot; &gt;千克&lt;/option&gt;</span><br><span class="line">&lt;option th:selected=&quot;$&#123;productInfo.product_unit==&apos;斤&apos;&#125;&quot; value=&quot;斤&quot; &gt;斤&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-utext"><a href="#th-utext" class="headerlink" title="th:utext"></a>th:utext</h1><p>支持html的文本替换,可用于百度编辑器ueditor的数据回显<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p th:utext=&quot;$&#123;htmlcontent&#125;&quot;&gt;conten&lt;/p&gt;</span><br><span class="line">&lt;script id=&quot;editor&quot; th:utext=&quot;$&#123;productInfo.product_content&#125;&quot; type=&quot;text/plain&quot; style=&quot;width:500px;height:600px;&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-inline"><a href="#th-inline" class="headerlink" title="th:inline"></a>th:inline</h1><p>定义js脚本可以使用变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; th:inline=&quot;javascript&quot;&gt;</span><br><span class="line">    var productInfo = [[$&#123;productInfo&#125;]]; // productInfo 为后台传递过来的对象参数</span><br><span class="line">    $().ready( function() &#123;</span><br><span class="line">        if(productInfo)&#123;</span><br><span class="line">            console.log(&quot;productInfo:&quot;,productInfo);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-if"><a href="#th-if" class="headerlink" title="th:if"></a>th:if</h1><p>判断条件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a th:if=&quot;$&#123;userId == collect.userId&#125;&quot; &gt;</span><br></pre></td></tr></table></figure></p><h1 id="th-unless"><a href="#th-unless" class="headerlink" title="th:unless"></a>th:unless</h1><p>和th:if判断相反<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a th:href=&quot;@&#123;/login&#125;&quot; th:unless=$&#123;session.user != null&#125;&gt;Login&lt;/a&gt;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;记录自己常用的thymeleaf标签&lt;/p&gt;
+&lt;h1 id=&quot;th-value&quot;&gt;&lt;a href=&quot;#th-value&quot; class=&quot;headerlink&quot; title=&quot;th:value&quot;&gt;&lt;/a&gt;th:value&lt;/h1&gt;&lt;p&gt;属性赋值,常用于表单回显&lt;br&gt;&lt;fig
+      
+    
+    </summary>
+    
+    
+      <category term="thymeleaf" scheme="https://smilexin.cn/tags/thymeleaf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>layui 表单数据回显问题处理</title>
+    <link href="https://smilexin.cn/2018/08/16/layui%20%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86.html"/>
+    <id>https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html</id>
+    <published>2018-08-15T16:00:00.000Z</published>
+    <updated>2018-08-16T07:10:37.047Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>后台编辑页面的数据回显,时好时坏!（多发生于单选框）</p><p>尝试使用setTimeout进行延时填充数据,效果还是时好时坏,并不能有效解决问题!</p><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;</span><br><span class="line">&lt;label class=&quot;layui-form-label&quot;&gt;议价规则&lt;/label&gt;</span><br><span class="line">&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">&lt;input lay-filter=&quot;is_bargain&quot; ng-model=&quot;entity.is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;0&quot; title=&quot;不支持议价&quot;&gt;</span><br><span class="line">&lt;input lay-filter=&quot;is_bargain&quot; ng-model=&quot;entity.is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;1&quot; title=&quot;支持议价&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure><h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 我这里还做了延时装载,效果不理想</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">UE.getEditor(&apos;editor&apos;).setContent($scope.entity.product_content);</span><br><span class="line">layui.use(&apos;form&apos;, function()&#123;</span><br><span class="line">var form = layui.form;</span><br><span class="line">form.val(&apos;inputForm&apos;, &#123;</span><br><span class="line">&quot;is_bargain&quot;: $scope.entity.is_bargain,</span><br><span class="line">&quot;is_advance&quot;: $scope.entity.is_advance,</span><br><span class="line">&quot;freight_type&quot;: $scope.entity.freight_type,</span><br><span class="line">&quot;product_state&quot;: $scope.entity.product_state,</span><br><span class="line">&quot;product_unit&quot;: $scope.entity.product_unit</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;,500);</span><br></pre></td></tr></table></figure><h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>因为是页面异步加载数据,所以可能存在加载数据的时候,layui组件没有完全加载完毕的情况。所以数据装载失败。</p><h1 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h1><p>我没有在layui官方API中找到相关组件加载完毕的回调方法,所以这里改为HTML同步数据填充,让layui加载完成后直接显示HTML的内容即可。</p><p><strong>原因是数据装载的时候,layui相关组件没有加载完毕造成装载数据失败! 后改为使用thymeleaf标签实现html的同步加载</strong></p><h2 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h2><h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private final String PAGE_PREFIX = &quot;product/&quot;; // 页面前缀</span><br><span class="line"></span><br><span class="line">@RequestMapping(value = &quot;inputPage&quot;)</span><br><span class="line">public String inputPage(String id, ModelMap modelMap)&#123;</span><br><span class="line">String tempId = &quot;none&quot;;</span><br><span class="line">if(StringUtils.isNotBlank(id)) &#123; // 修改</span><br><span class="line">ParamsMap productInfo = this.findProductInfo(id); // 查询需要修改的实体信息</span><br><span class="line">modelMap.put(&quot;productInfo&quot;, productInfo);</span><br><span class="line">tempId = id;</span><br><span class="line">&#125; else &#123; // 新增</span><br><span class="line">ParamsMap entity = initEntity();</span><br><span class="line">modelMap.put(&quot;productInfo&quot;, entity);</span><br><span class="line">&#125;</span><br><span class="line">return PAGE_PREFIX + &quot;input&quot;;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> * 初始化实体(用于新增)</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">private ParamsMap initEntity()&#123;</span><br><span class="line">String json = &quot;JSON对象字符串&quot;;</span><br><span class="line">return new ParamsMap(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;</span><br><span class="line">&lt;label class=&quot;layui-form-label&quot;&gt;预付款&lt;/label&gt;</span><br><span class="line">&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">&lt;input th:checked=&quot;$&#123;productInfo.is_advance==0&#125;&quot; lay-filter=&quot;is_advance&quot; type=&quot;radio&quot; name=&quot;is_advance&quot; value=&quot;0&quot; title=&quot;全款&quot;&gt;</span><br><span class="line">&lt;input th:checked=&quot;$&#123;productInfo.is_advance==1&#125;&quot; lay-filter=&quot;is_advance&quot; type=&quot;radio&quot; name=&quot;is_advance&quot; value=&quot;1&quot; title=&quot;支持预付款&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;layui-form-item&quot;&gt;</span><br><span class="line">&lt;label class=&quot;layui-form-label&quot;&gt;编辑内容&lt;/label&gt;</span><br><span class="line">&lt;div class=&quot;layui-input-inline&quot; style=&quot;padding-left: 20px;&quot;&gt;</span><br><span class="line">&lt;!-- 百度编辑器 --&gt;</span><br><span class="line">&lt;script id=&quot;editor&quot; th:utext=&quot;$&#123;productInfo.product_content&#125;&quot; type=&quot;text/plain&quot; style=&quot;width:500px;height:600px;&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot; th:inline=&quot;javascript&quot;&gt;</span><br><span class="line">    var productInfo = [[$&#123;productInfo&#125;]]; // 可以让相关JS操作该对象</span><br><span class="line">    $().ready( function() &#123;</span><br><span class="line">        if(productInfo)&#123;</span><br><span class="line">            console.log(&quot;productInfo:&quot;,productInfo);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;后台编辑页面的数据回显,时好时坏!（多发生于单选框）&lt;/p&gt;
+&lt;p&gt;尝试使用setTimeout进行延时填充数据,效果还是时
+      
+    
+    </summary>
+    
+    
+      <category term="layui" scheme="https://smilexin.cn/tags/layui/"/>
+    
+  </entry>
   
   <entry>
     <title>ElasticSearch 安装</title>
@@ -255,9 +303,9 @@
     
       <category term="高并发" scheme="https://smilexin.cn/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
-      <category term="分布式" scheme="https://smilexin.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
       <category term="应用拆分" scheme="https://smilexin.cn/tags/%E5%BA%94%E7%94%A8%E6%8B%86%E5%88%86/"/>
+    
+      <category term="分布式" scheme="https://smilexin.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
@@ -282,9 +330,9 @@
     
       <category term="高并发" scheme="https://smilexin.cn/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
-      <category term="限流" scheme="https://smilexin.cn/tags/%E9%99%90%E6%B5%81/"/>
-    
       <category term="分布式" scheme="https://smilexin.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="限流" scheme="https://smilexin.cn/tags/%E9%99%90%E6%B5%81/"/>
     
   </entry>
   
@@ -496,53 +544,6 @@
       <category term="Atomic" scheme="https://smilexin.cn/tags/Atomic/"/>
     
       <category term="计数器" scheme="https://smilexin.cn/tags/%E8%AE%A1%E6%95%B0%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>混合加密算法(RSA和DES)</title>
-    <link href="https://smilexin.cn/2018/04/27/%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95(RSA%E5%92%8CDES).html"/>
-    <id>https://smilexin.cn/2018/04/27/混合加密算法(RSA和DES).html</id>
-    <published>2018-04-26T16:00:00.000Z</published>
-    <updated>2018-04-28T15:45:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="混合加密的理由"><a href="#混合加密的理由" class="headerlink" title="混合加密的理由"></a>混合加密的理由</h1><ul><li>由于随着计算机系统能力的不断发展，DES的安全性比它刚出现时会弱得多，追溯历史破解DES的案例层出不穷，一台实际的机器可以在数天内破解DES是让某些人相信他们不能依赖DES的安全性的唯一方法。而相对于DES，RSA的安全性则相对高些，虽然破解RSA的案例也有，但其所付出的代价是相对大的(相对DES)，如今RSA的密钥也在升级，这说明破解RSA的难度也在增大。</li><li>在RSA加解密算法中提及到RSA加密明文会受密钥的长度限制，这就说明用RSA加密的话明文长度是有限制的，而在实际情况我们要进行加密的明文长度或许会大于密钥长度，这样一来我们就不得不舍去RSA加密了。对此，DES加密则没有此限制。</li></ul><p>鉴于以上两点(个人观点)，单独的使用DES或RSA加密可能没有办法满足实际需求，所以就采用了RSA和DES加密方法相结合的方式来实现数据的加密。</p><h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h1><ol><li>发送方使用DES密钥加密信息(明文)。</li></ol><ol start="2"><li>发送方使用接收方的RSA公钥加密前面的DES密钥串信息。</li></ol><p>　最终将混合信息进行传递。</p><p>　而接收方接收到信息后：</p><ol><li>接收方自己的用RSA私钥解密DES密钥信息。</li><li>再用RSA解密获取到的密钥信息解密密文信息。</li></ol><p>　　最终就可以得到我们要的信息(明文)。</p><h1 id="实现例子"><a href="#实现例子" class="headerlink" title="实现例子"></a>实现例子</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// RSA和DES混合加密</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;data&quot;&gt;待加密数据&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;publicKey&quot;&gt;RSA公钥&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">public Param Encrypt(string data, string publicKey)</span><br><span class="line">&#123;</span><br><span class="line">    //加密数据</span><br><span class="line">    DESSecurity DES = new DESSecurity();</span><br><span class="line">    string DESKey = DES.GenerateKey();</span><br><span class="line">    string encryptData = DES.Encrypt(data, DESKey);</span><br><span class="line"></span><br><span class="line">    //加密DESkey</span><br><span class="line">    RSASecurity RSA = new RSASecurity();</span><br><span class="line">    string encryptDESKey = RSA.Encrypt(DESKey, publicKey);</span><br><span class="line"></span><br><span class="line">    Param mixParam = new Param();</span><br><span class="line">    mixParam.DESKey = encryptDESKey;</span><br><span class="line">    mixParam.Data = encryptData;</span><br><span class="line">    return mixParam;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// RSA和DES混合解密</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;data&quot;&gt;待解密数据&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;key&quot;&gt;带解密的DESKey&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;privateKey&quot;&gt;RSA私钥&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">public string Decrypt(string data, string key, string privateKey)</span><br><span class="line">&#123;</span><br><span class="line">    //解密DESKey</span><br><span class="line">    RSASecurity RSA = new RSASecurity();</span><br><span class="line">    string DESKey = RSA.Decrypt(key, privateKey);</span><br><span class="line"></span><br><span class="line">    //解密数据</span><br><span class="line">    DESSecurity DES = new DESSecurity();</span><br><span class="line">    return DES.Decrypt(data, DESKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;混合加密的理由&quot;&gt;&lt;a href=&quot;#混合加密的理由&quot; class=&quot;headerlink&quot; title=&quot;混合加密的理由&quot;&gt;&lt;/a&gt;混合加密的理由&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;由于随着计算机系统能力的不断发展，DES的安全性比它刚出现时会弱得多，追溯历史破解DES
-      
-    
-    </summary>
-    
-    
-      <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RSA的公钥和私钥的使用详解</title>
-    <link href="https://smilexin.cn/2018/04/27/RSA%E7%9A%84%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3.html"/>
-    <id>https://smilexin.cn/2018/04/27/RSA的公钥和私钥的使用详解.html</id>
-    <published>2018-04-26T16:00:00.000Z</published>
-    <updated>2018-04-28T15:45:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="什么是RSA"><a href="#什么是RSA" class="headerlink" title="什么是RSA"></a>什么是RSA</h1><p>RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。</p><p>这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。</p><h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><ul><li>签名</li></ul><p>使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但是不能用来保证内容不被他人获得。</p><ul><li>加密</li></ul><p>用公钥进行加密，私钥进行解密，用于向公钥所有者发布信息，这个信息可能被他人篡改，但是无法被他人获得</p><p>如果甲想给乙发一个安全的保密的数据,那么应该甲乙各自有一个私钥,甲先用乙的公钥加密这段数据,再用自己的私钥加密这段加密后的数据<strong>.</strong>最后再发给乙,这样确保了内容即不会被读取,也不会被篡改.</p><p>甲用乙方的公钥进行加密，是为了只有乙方能够解密，保证了数据的安全性； 甲用自己的私钥进行加密，发送给乙方后，乙方用甲方的公钥进行解密，可以唯一识别这是甲方发过来的数据，且甲方不能抵赖。因为一对公钥和私钥是唯一的。 这样既保证了安全性，也保证了唯一性。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>你只要想：既然是加密，那肯定是不希望别人知道我的消息，所以只有我才能解密，所以可得出<strong>公钥负责加密，私钥负责解密</strong>；同理，既然是签名，那肯定是不希望有人冒充我发消息，只有我才能发布这个签名，所以可得出<strong>私钥负责签名，公钥负责验证</strong>。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;什么是RSA&quot;&gt;&lt;a href=&quot;#什么是RSA&quot; class=&quot;headerlink&quot; title=&quot;什么是RSA&quot;&gt;&lt;/a&gt;什么是RSA&lt;/h1&gt;&lt;p&gt;RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解
-      
-    
-    </summary>
-    
-    
-      <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
