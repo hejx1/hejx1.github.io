@@ -30,7 +30,7 @@
 <meta property="og:description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
-<meta property="og:updated_time" content="2018-08-18T02:43:18.073Z">
+<meta property="og:updated_time" content="2018-08-18T02:48:48.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch 集群部署">
 <meta name="twitter:description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
@@ -208,7 +208,6 @@
 <li>node.data: false<br>这种组合表示这个节点即不会成为主节点,也不会存储数据,这个节点的意义是作为一个client(客户端)节点,主要是针对海量请求的时候可以进行负载均衡。该类型节点只提供搜索结果的二级聚合功能。</li>
 </ul>
 <p>master节点：普通服务器即可(CPU 内存 消耗一般)<br>data节点：主要消耗磁盘,内存<br>client节点：普通服务器即可(如果要进行分组聚合操作的话,建议这个节点内存也分配多一点)</p>
-<p>这里我建立一个elasticsearch集群,里面包含3个节点,都是全能节点。</p>
 <h1 id="部署集群"><a href="#部署集群" class="headerlink" title="部署集群"></a>部署集群</h1><p>我这里集群设置3个全能节点,让它们互相依靠,因为我这里只有一台物理机🤣。<br><a href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html">下载ElasticSearch安装包</a>,启动head插件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 建立集群文件夹</span><br><span class="line">mkdir -p es_cluster/es_master</span><br><span class="line"># 将elasticsearch安装包拷贝到es_master文件夹待用</span><br><span class="line">cp elasticsearch-6.3.2.tar.gz es_cluster/es_master</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 复制成 slave1 和 slave2</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master1</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master2</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master3</span><br></pre></td></tr></table></figure>
 <p>修改节点配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd es_cluster/es_master/es_master1</span><br><span class="line">/es_master1$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
@@ -249,7 +248,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-08-18T02:43:18.073Z" itemprop="dateUpdated">2018-08-18 10:43:18</time>
+    最后更新时间：<time datetime="2018-08-18T02:48:48.151Z" itemprop="dateUpdated">2018-08-18 10:48:48</time>
 </span><br>
 
 
