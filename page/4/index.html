@@ -152,53 +152,6 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-装饰者模式"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-11-07 00:00:00" datetime="2017-11-06T16:00:00.000Z"  itemprop="datePublished">2017-11-07</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/11/07/装饰者模式.html">装饰者模式</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。
-动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。
-认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及...
-    
-
-        <a href="/2017/11/07/装饰者模式.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-观察者模式"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -233,6 +186,53 @@
     
 
         <a href="/2017/11/07/观察者模式.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-装饰者模式"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-11-07 00:00:00" datetime="2017-11-06T16:00:00.000Z"  itemprop="datePublished">2017-11-07</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/11/07/装饰者模式.html">装饰者模式</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。
+动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。
+认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及...
+    
+
+        <a href="/2017/11/07/装饰者模式.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -446,6 +446,55 @@ Dub...
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-memcached_内存分配机制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
+这种空闲且无法再利用的内存现象，称为++内存的碎片化++
+memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
+Slab Allocation
+首先，像一般的内存池一样,  从操作系统...
+    
+
+        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-memcached_过期数据删除机制"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -496,7 +545,7 @@ Dub...
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
+            <article id="post-Redis集群概念"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -512,7 +561,7 @@ Dub...
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
     </h3>
   
 
@@ -522,21 +571,19 @@ Dub...
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
+        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
+redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
     
 
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
 
     </div>
     
@@ -578,53 +625,6 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
     
 
         <a href="/2017/07/31/Redis_持久化.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Redis集群概念"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
-redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
-Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
-    
-
-        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
