@@ -1,0 +1,17 @@
+{
+  //"version": "1.1.6",
+  //"resourceUrl": "http://game.res.qumeifu.com.cn/",
+  "version": "1.1.2",
+  "resourceUrl": "https://smilexin.cn/config/GameConfig.txt",
+  
+  "loginServerList": [
+    {
+      "name": "===内网服===",
+      "serverId": "s1",
+      "serverline": "1区",
+      "ip": "free.idcfengye.com",
+      "port": 13626,
+      "status": 0
+    }
+  ]
+}
