@@ -14,25 +14,25 @@
     
     
     
-    <title>IDEA将已有项目添加到git | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>ActiveMQ的消息重试机制 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="IDEA,git">
-    <meta name="description" content="场景介绍将本地正在开发的项目添加到远程Git仓库 详细步骤 在远程仓库创建项目,拿到项目的HTTP链接 进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令  123456789101112# 若本地项目不是git项目,则需要执行init进行初始化git项目git init# 给项目设置远程Git仓库">
-<meta name="keywords" content="IDEA,git">
+    <meta name="keywords" content="ActiveMQ">
+    <meta name="description" content="消费端处理失败时的消息重发机制 处理失败 指的是MessageListener的onMessage方法里抛出RuntimeException。 Message头里有两个相关字段：Redelivered默认为false，redeliveryCounter默认为0。 消息先由broker发送给consumer，consumer调用listener，如果处理失败，本地redeliveryCounter+">
+<meta name="keywords" content="ActiveMQ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IDEA将已有项目添加到git">
-<meta property="og:url" content="https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html">
+<meta property="og:title" content="ActiveMQ的消息重试机制">
+<meta property="og:url" content="https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="场景介绍将本地正在开发的项目添加到远程Git仓库 详细步骤 在远程仓库创建项目,拿到项目的HTTP链接 进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令  123456789101112# 若本地项目不是git项目,则需要执行init进行初始化git项目git init# 给项目设置远程Git仓库">
+<meta property="og:description" content="消费端处理失败时的消息重发机制 处理失败 指的是MessageListener的onMessage方法里抛出RuntimeException。 Message头里有两个相关字段：Redelivered默认为false，redeliveryCounter默认为0。 消息先由broker发送给consumer，consumer调用listener，如果处理失败，本地redeliveryCounter+">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-28T21:39:14.000Z">
+<meta property="og:updated_time" content="2018-09-01T00:58:13.459Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IDEA将已有项目添加到git">
-<meta name="twitter:description" content="场景介绍将本地正在开发的项目添加到远程Git仓库 详细步骤 在远程仓库创建项目,拿到项目的HTTP链接 进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令  123456789101112# 若本地项目不是git项目,则需要执行init进行初始化git项目git init# 给项目设置远程Git仓库">
+<meta name="twitter:title" content="ActiveMQ的消息重试机制">
+<meta name="twitter:description" content="消费端处理失败时的消息重发机制 处理失败 指的是MessageListener的onMessage方法里抛出RuntimeException。 Message头里有两个相关字段：Redelivered默认为false，redeliveryCounter默认为0。 消息先由broker发送给consumer，consumer调用listener，如果处理失败，本地redeliveryCounter+">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -113,7 +113,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">IDEA将已有项目添加到git</div>
+        <div class="flex-col header-title ellipsis">ActiveMQ的消息重试机制</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -135,11 +135,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">IDEA将已有项目添加到git</h1>
+        <h1 class="title">ActiveMQ的消息重试机制</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-04-09T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2018-04-10
+                <time datetime="2018-08-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-09-01
 </time>
 
 
@@ -158,18 +158,18 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#场景介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">场景介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#详细步骤"><span class="post-toc-number">2.</span> <span class="post-toc-text">详细步骤</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#消费端处理失败时的消息重发机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">消费端处理失败时的消息重发机制</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-IDEA将已有项目添加到git"
+<article id="post-ActiveMQ_消息重试机制"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">IDEA将已有项目添加到git</h1>
+        <h1 class="post-card-title">ActiveMQ的消息重试机制</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-04-10 00:00:00" datetime="2018-04-09T16:00:00.000Z"  itemprop="datePublished">2018-04-10</time>
+            <time class="post-time" title="2018-09-01 00:00:00" datetime="2018-08-31T16:00:00.000Z"  itemprop="datePublished">2018-09-01</time>
 
             
 
@@ -182,12 +182,14 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="场景介绍"><a href="#场景介绍" class="headerlink" title="场景介绍"></a>场景介绍</h1><p>将本地正在开发的项目添加到远程Git仓库</p>
-<h1 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h1><ol>
-<li>在远程仓库创建项目,拿到项目的HTTP链接</li>
-<li>进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令</li>
+            <h1 id="消费端处理失败时的消息重发机制"><a href="#消费端处理失败时的消息重发机制" class="headerlink" title="消费端处理失败时的消息重发机制"></a>消费端处理失败时的消息重发机制</h1><ol>
+<li>处理失败 指的是MessageListener的onMessage方法里抛出RuntimeException。</li>
+<li>Message头里有两个相关字段：Redelivered默认为false，redeliveryCounter默认为0。</li>
+<li>消息先由broker发送给consumer，consumer调用listener，如果处理失败，本地redeliveryCounter++，给broker一个特定应答，broker端的message里redeliveryCounter++，延迟一点时间继续调用，默认1s。超过6次，则给broker另一个特定应答，broker就直接发送消息到DLQ。</li>
+<li>如果失败2次，consumer重启，则broker再推过来的消息里，redeliveryCounter=2，本地只能再重试4次即会进入DLQ。</li>
+<li>重试的特定应答发送到broker，broker即会在内存将消息的redelivered设置为true，redeliveryCounter++，但是这两个字段都没有持久化，即没有修改存储中的消息记录。所以broker重启时这两个字段会被重置为默认值。</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 若本地项目不是git项目,则需要执行init进行初始化git项目</span><br><span class="line">git init</span><br><span class="line"># 给项目设置远程Git仓库</span><br><span class="line">git remote add origin https://gitee.com/***/***.git</span><br><span class="line"># 抓取远程仓库数据，并自动合并远程分支</span><br><span class="line">git pull origin master</span><br><span class="line"># 将项目所有文件添加到git管理</span><br><span class="line">git add .</span><br><span class="line"># 提交到本地</span><br><span class="line">git commit -m &quot;提交信息&quot;</span><br><span class="line"># 推送到远程仓库</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -195,12 +197,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-28T21:39:14.000Z" itemprop="dateUpdated">2018-04-29 05:39:14</time>
+    最后更新时间：<time datetime="2018-09-01T00:58:13.459Z" itemprop="dateUpdated">2018-09-01 08:58:13</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2018/04/10/IDEA将已有项目添加到git.html" target="_blank" rel="external">https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html</a>
+        原文链接：<a href="/2018/09/01/ActiveMQ_消息重试机制.html" target="_blank" rel="external">https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html</a>
         
     </div>
     
@@ -221,7 +223,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li></ul>
 
 
             
@@ -231,7 +233,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&title=《IDEA将已有项目添加到git》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&title=《ActiveMQ的消息重试机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -241,22 +243,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&title=《IDEA将已有项目添加到git》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&title=《ActiveMQ的消息重试机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA将已有项目添加到git》 — Junxin's Blog&url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ActiveMQ的消息重试机制》 — Junxin's Blog&url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -276,21 +278,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/04/27/混合加密算法(RSA和DES).html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">混合加密算法(RSA和DES)</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/03/12/websocket应用示例.html" id="post-next" class="post-nav-link">
+      <a href="/2018/08/17/SpringBoot 配置加密.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">websocket 应用示例</h4>
+        <h4 class="title">SpringBoot 配置加密</h4>
       </a>
     </div>
   
@@ -387,7 +382,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&title=《IDEA将已有项目添加到git》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&title=《ActiveMQ的消息重试机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -397,22 +392,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&title=《IDEA将已有项目添加到git》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&title=《ActiveMQ的消息重试机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA将已有项目添加到git》 — Junxin's Blog&url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ActiveMQ的消息重试机制》 — Junxin's Blog&url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html&via=https://smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/04/10/IDEA将已有项目添加到git.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -423,7 +418,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3aUU4rMRAEwNz/0iDxi+J0j+0EpNqvpwR2XX7SztCexyO+vn6u35/8vp59++xu69999snhCw8PD2+09Ha5OWlN3Qe/uD8eHh7eNV7+yLMVaV1y1utJ7oaHh4f3Wd66X83BszYaDw8P77/z2iY7eWJeQvDw8PD+Ai9ZaBIc5EvZ2eIrWQseHh5ezNt5KX/q3xfP9/Dw8PA2TtXzIpE3zW2bvrVaPDw8vAu85HArCWHzA7Mk6s1XEt0TDw8P7ygv+WN+NkqVF4/9Y7CnT8fDw8O7wJvFqcm3bTHYHzKInoKHh4e3zTs76rQzTNCSosAXDw8P7xqvLQN569yOSeUDAdG4AB4eHt4FXvuKnx1cFYlyubbh/yceHh7eNi95EedlYFYeZsFEVNLw8PDwjvKSRbQjUHmj3GbM9abj4eHhXeAV1aMMbfOC0Q4Q5M09Hh4e3g3e7Qfn41Z5w13EJXh4eHiXebPhqvbFvZMS1L+Fh4eHd4HXhgVr6s7rvt3EfMvw8PDw3sNri8TsCC2PNvKNiAoDHh4e3gavjRt2SkU+TNAWhmjcCg8PD+8obzZQlXw727i2RD3y2oWHh4d3jZf/zKyxnsUZbUHCw8PDu8Fb3+LFwVJ5wN9+PmvH8fDw8N7Dy5vgJH5tt2ZnhCtaMx4eHt5R3rr93QkOkrY4CR2SUoSHh4f3WV6LbIOJvITstONR7cLDw8Mb8doQoW2sd4a3zp5z4eHh4Z3ifZXXLBoY7vQoqoj2Hg8PD2+Dd6q2zNridZlJxsLw8PDwPsWbFYMkAjh75yJ0wMPDw3sLLy8GeQibH4kl9z9Q0/Dw8PDezpsVgGSMoJgRa1eIh4eH9wd4s1GA9oltUXkxH4GHh4d3gbcTBLThbB7dJi341gABHh4e3og3+4t+tui2kKwXeiy2wMPDw0t53wEdiL35IXWDAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3a0WpqMRAFUP//p1vo0wWr7j1zor2wzlMpGrMiJOPO3G7x8/Xz3P/n3//fv+b5aPcj3I8zG79+8PDw8EZTf/QkE3r+8c8ByXuT+TycGx4eHt4x3vNpPRp6cyQk733Oi5YYDw8P76O85GPawrfd+vHw8PD+R147uVn5/rGDAQ8PDy/mzTbitgRPQofZmBdkLXh4eHgxr70A+wt/H7zfw8PDw1vcqudPO618i1/NCg8PD+8Ary1/r2q9Sq7T2oaGKGvBw8PDW/M2wWsOaIOPWeNC8b3h4eHhrXmb66vZErRF9rAZCw8PD+8YLz8GkgJ6Fj1sjqKHM8TDw8N7O68tl9sptq0AdWGNh4eHd5h3VZCaL0QeQAwLcTw8PLwDvH2Zu9nEN8tRLCseHh7epbx8q51dTc1ijnzhXvwYwMPDwzvG20er+fGwiTDqizc8PDy8A7zZRp8X0PlV1mbhbm1vLB4eHt4x3mb73jQB7FsN8PDw8M7x2u04v3batw7Mmht+ud/Dw8PDu5SXB7izQnkz9X2gjIeHh3eaN7sG20y6aJwatbfi4eHhneBtNvq8JSs/KmYHVfGLAQ8PD2/Ny6fehrxtE2qyQLPCHQ8PD+80ry2jk/I3bzvIg9pVYwEeHh7egtdeye8vsWYR7fDowsPDwzvAy1/UBrWzELZddDw8PLz385Jtet9AkE999v28+Mbw8PDwLuUlBWt7AdaGDqvUJI5R8PDw8K7ifZXPrARvG7mSJYsKdDw8PLwDvHbD3bRGzVoQksJ6f5zg4eHhtby84Wm2TbdRbxJSFAEHHh4e3jHeJn7NR7ggL4nZeHh4eH+Htz8Yrhq/uOXDw8PD+xCv/YDkXclGn0TGeHh4eO/n5WHE5jV5uJDHyi8WEQ8PD+8Ar70Ay5sG8hh3H3YMb/bw8PDwOt4374Cd0mJo/I8AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
