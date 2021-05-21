@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>装饰者模式 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="设计模式">
+    <meta name="description" content="装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。 动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。 认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及基类加">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰者模式">
+<meta property="og:url" content="https://smilexin.cn/2017/11/07/装饰者模式.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。 动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。 认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及基类加">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.321Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="装饰者模式">
+<meta name="twitter:description" content="装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。 动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。 认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及基类加">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">装饰者模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">装饰者模式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-11-07
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#装饰者模式"><span class="post-toc-number">1.</span> <span class="post-toc-text">装饰者模式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#认识装饰者模式"><span class="post-toc-number">2.</span> <span class="post-toc-text">认识装饰者模式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#以装饰者模式构造饮料订单"><span class="post-toc-number">3.</span> <span class="post-toc-text">以装饰者模式构造饮料订单</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建基类"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">创建基类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Beverage"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">Beverage</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CondimentDecorator"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">CondimentDecorator</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现饮料"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">实现饮料</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Espresso"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">Espresso</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现调料装饰"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">实现调料装饰</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mocha"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">Mocha</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Whip"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">Whip</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#供应咖啡"><span class="post-toc-number">4.</span> <span class="post-toc-text">供应咖啡</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#这是用来下订单的一些测试代码"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">这是用来下订单的一些测试代码</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-装饰者模式"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">装饰者模式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-07 00:00:00" datetime="2017-11-06T16:00:00.000Z"  itemprop="datePublished">2017-11-07</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h1><p>我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使<br>用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的<br>技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋<br>予新的职责。</p>
+<p>动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。</p>
+<h1 id="认识装饰者模式"><a href="#认识装饰者模式" class="headerlink" title="认识装饰者模式"></a>认识装饰者模式</h1><p>我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问<br>题有：类数量爆炸、设计死板，以及基类加入的新功能并不适用于所<br>有的子类。<br>所以，在这里要采用不一样的做法：我们要以饮料为主体，然后在运<br>行时以调料来“装饰”（decorate）饮料。比方说，如果顾客想要摩卡<br>和奶泡深焙咖啡，那么，要做的是：</p>
+<ul>
+<li>拿一个深焙咖啡（DarkRoast）对象</li>
+<li>以摩卡（Mocha）对象装饰它</li>
+<li>以奶泡（Whip）对象装饰它</li>
+<li>调用cost()方法，并依赖委托（delegate）将调料的价钱加上去。</li>
+</ul>
+<p>好了！但是如何“装饰”一个对象，而“委托”又要如何与此搭配使<br>用呢？给一个暗示：把装饰者对象当成“包装者”。让我们看看这是<br>如何工作的…… </p>
+<p>装饰者和被装饰对象有相同的超类型。</p>
+<ul>
+<li>你可以用一个或多个装饰者包装一个对象。</li>
+<li>既然装饰者和被装饰对象有相同的超类型，所以在任何需要原始对象（被包装的）的场合，可以用装饰过的对象代替它。</li>
+<li><strong>装饰者可以在所委托被装饰者的行为之前 (与/或) 之后，加上自己的行为，以达到特定的目的。</strong></li>
+<li>对象可以在任何时候被装饰，所以可以在运行时动态地、不限量地用你喜欢的装饰者来装饰对象。</li>
+</ul>
+<h1 id="以装饰者模式构造饮料订单"><a href="#以装饰者模式构造饮料订单" class="headerlink" title="以装饰者模式构造饮料订单"></a>以装饰者模式构造饮料订单</h1><h2 id="创建基类"><a href="#创建基类" class="headerlink" title="创建基类"></a>创建基类</h2><h3 id="Beverage"><a href="#Beverage" class="headerlink" title="Beverage"></a>Beverage</h3><p>Beverage（饮料）是一个抽象类，店内所提供的饮料都必须继承自此类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * Beverage（饮料）是一个抽象类，店内所提供的饮料都必须继承自此类。</span><br><span class="line"> * Beverage是一个抽象类，有两个方法：getDescription()及cost()。</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 11:47</span><br><span class="line"> **/</span><br><span class="line">public abstract class Beverage &#123;</span><br><span class="line"></span><br><span class="line">    protected String description = &quot;Unknown Beverage&quot;;</span><br><span class="line"></span><br><span class="line">    protected int cupSize = Beverage.TALL;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 大杯</span><br><span class="line">     */</span><br><span class="line">    public static final int TALL = 1;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 超大杯</span><br><span class="line">     */</span><br><span class="line">    public static final int GRANDE = 2;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 超超大杯</span><br><span class="line">     */</span><br><span class="line">    public static final int VENTI = 3;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 设置杯量</span><br><span class="line">     * @param cupSize</span><br><span class="line">     */</span><br><span class="line">    public void setCupSize(int cupSize)&#123;</span><br><span class="line">        this.cupSize = cupSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getCupSize() &#123;</span><br><span class="line">        return cupSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * getDescription()已经在此实现了，但是cost()必须在子类中实现。</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 计算价钱</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public abstract double cost();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CondimentDecorator"><a href="#CondimentDecorator" class="headerlink" title="CondimentDecorator"></a>CondimentDecorator</h3><p>Condiment（调料） 抽象类，也就是装饰者类吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz.condiment;</span><br><span class="line"></span><br><span class="line">import hejx.demo.starbuzz.Beverage;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * Condiment（调料） 抽象类，也就是装饰者类吧</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 12:05</span><br><span class="line"> **/</span><br><span class="line">public abstract class CondimentDecorator extends Beverage&#123;</span><br><span class="line">    /**</span><br><span class="line">     * 饮料变量</span><br><span class="line">     */</span><br><span class="line">    protected Beverage beverage;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getCupSize() &#123;</span><br><span class="line">        return beverage.getCupSize();</span><br><span class="line">    &#125;</span><br><span class="line">    public abstract String getDescription();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实现饮料"><a href="#实现饮料" class="headerlink" title="实现饮料"></a>实现饮料</h2><h3 id="Espresso"><a href="#Espresso" class="headerlink" title="Espresso"></a>Espresso</h3><p>先从浓缩咖啡（Espresso）开始。别忘了，我们需要为具体的饮料设置描述，而且还必须实现cost()方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz.drink;</span><br><span class="line"></span><br><span class="line">import hejx.demo.starbuzz.Beverage;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * 浓咖啡</span><br><span class="line"> * 让Espresso扩展自 Beverage类，因为Espresso是一种饮料。</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 12:07</span><br><span class="line"> **/</span><br><span class="line">public class Espresso extends Beverage&#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 为了要设置饮料的描述，我们写了一个构造器。记住，description实例变量继承自 Beverage。</span><br><span class="line">     */</span><br><span class="line">    public Espresso() &#123;</span><br><span class="line">        description = &quot;Espresso&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 最后，需要计算Espresso的价钱，现在不需要管调料的价钱，直接把Espresso的价格$1.99返回即可。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public double cost() &#123;</span><br><span class="line">        return 1.99;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实现调料装饰"><a href="#实现调料装饰" class="headerlink" title="实现调料装饰"></a>实现调料装饰</h2><h3 id="Mocha"><a href="#Mocha" class="headerlink" title="Mocha"></a>Mocha</h3><p>摩卡 Mocha<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz.condiment;</span><br><span class="line"></span><br><span class="line">import hejx.demo.starbuzz.Beverage;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * 摩卡是一个装饰者，所以让它扩展自CondimentDecorator。</span><br><span class="line"> * 要让Mocha能够引用一个Beverage，做法如下：</span><br><span class="line">     (1)用一个实例变量记录饮料，也就是被装饰者。</span><br><span class="line">     (2)想办法让被装饰者（饮料）被记录到实例变量中。这里的做法是：把</span><br><span class="line">     饮料当作构造器的参数，再由构造器将此饮料记录在实例变量中。</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 12:14</span><br><span class="line"> **/</span><br><span class="line">public class Mocha extends CondimentDecorator &#123;</span><br><span class="line"></span><br><span class="line">    public Mocha(Beverage beverage) &#123;</span><br><span class="line">        this.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return beverage.getDescription() + &quot;, Mocha&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 要计算带Mocha饮料的价钱。</span><br><span class="line">     * 首先把调用委托给被装饰对象，以计算价钱，然后再加上Mocha的价钱，得到最后结果。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public double cost() &#123;</span><br><span class="line">        double cost = beverage.cost();</span><br><span class="line">        if(getCupSize() == Beverage.TALL)&#123;</span><br><span class="line">            cost += 0.10;</span><br><span class="line">        &#125;else if(getCupSize() == Beverage.GRANDE)&#123;</span><br><span class="line">            cost += 0.15;</span><br><span class="line">        &#125;else if(getCupSize() == Beverage.VENTI)&#123;</span><br><span class="line">            cost += 0.20;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;Mocha $ &quot; + cost);</span><br><span class="line">        return cost;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Whip"><a href="#Whip" class="headerlink" title="Whip"></a>Whip</h3><p>奶泡 Whip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz.condiment;</span><br><span class="line"></span><br><span class="line">import hejx.demo.starbuzz.Beverage;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * 奶泡</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 12:19</span><br><span class="line"> **/</span><br><span class="line">public class Whip extends CondimentDecorator &#123;</span><br><span class="line"></span><br><span class="line">    public Whip(Beverage beverage) &#123;</span><br><span class="line">        this.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return beverage.getDescription() + &quot;, Whip&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public double cost() &#123;</span><br><span class="line">        System.out.println(&quot;Whip $ 0.16&quot;);</span><br><span class="line">        /**</span><br><span class="line">         * 要计算带Whip饮料的价钱。</span><br><span class="line">         * 首先把调用委托给被装饰对象，以计算价钱，然后再加上Whip的价钱，得到最后结果。</span><br><span class="line">         */</span><br><span class="line">        return beverage.cost() + .16;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="供应咖啡"><a href="#供应咖啡" class="headerlink" title="供应咖啡"></a>供应咖啡</h1><p>恭喜你，是时候舒服地坐下来，点一些咖啡，看看你利用装饰者模式设计出的灵活系统是多么神奇了。</p>
+<h2 id="这是用来下订单的一些测试代码"><a href="#这是用来下订单的一些测试代码" class="headerlink" title="这是用来下订单的一些测试代码"></a>这是用来下订单的一些测试代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package hejx.demo.starbuzz;</span><br><span class="line"></span><br><span class="line">import hejx.demo.starbuzz.condiment.Mocha;</span><br><span class="line">import hejx.demo.starbuzz.condiment.Whip;</span><br><span class="line">import hejx.demo.starbuzz.drink.DarkRoast;</span><br><span class="line">import hejx.demo.starbuzz.drink.Espresso;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * 这是用来下订单的一些测试代码</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017/11/7 12:21</span><br><span class="line"> **/</span><br><span class="line">public class StarbuzzCoffee &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 先来一杯浓咖啡,不需要调料,打印它的描述和价钱</span><br><span class="line">        Beverage beverage = new Espresso();</span><br><span class="line">        System.out.println(beverage.getDescription() + &quot; $&quot; + beverage.cost());</span><br><span class="line">        System.out.println(&quot;===========================&quot;);</span><br><span class="line">        // 再来一杯焦炒（深色）咖啡</span><br><span class="line">        Beverage beverage2 = new DarkRoast();</span><br><span class="line">        beverage2.setCupSize(Beverage.TALL);</span><br><span class="line">        beverage2 = new Mocha(beverage2); // 加一点摩卡</span><br><span class="line">        beverage2 = new Mocha(beverage2); // 再加一点摩卡</span><br><span class="line">        beverage2 = new Whip(beverage2); // 还来点奶泡</span><br><span class="line">        System.out.println(beverage2.getDescription() + &quot; $&quot; + beverage2.cost());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.321Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/11/07/装饰者模式.html" target="_blank" rel="external">https://smilexin.cn/2017/11/07/装饰者模式.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/11/07/装饰者模式.html&title=《装饰者模式》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/11/07/装饰者模式.html&title=《装饰者模式》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/11/07/装饰者模式.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《装饰者模式》 — Junxin's Blog&url=https://smilexin.cn/2017/11/07/装饰者模式.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/11/07/装饰者模式.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/12/05/留存用户统计.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mysql 留存用户统计</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/11/07/观察者模式.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">观察者模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/11/07/装饰者模式.html&title=《装饰者模式》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/11/07/装饰者模式.html&title=《装饰者模式》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/11/07/装饰者模式.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《装饰者模式》 — Junxin's Blog&url=https://smilexin.cn/2017/11/07/装饰者模式.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/11/07/装饰者模式.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS04DMRAFwNz/0kFih9CE9+wJgnZ5FYlh4vLC6d/jEa/n5/r++eqvV89cPfl9Pd6xMDAw/i0jeV3yBc+l9fqYCioGBsYBjPaSfX2Nrj3Zvg0DAwOjvfie26s9PgwMDIzXW0yuyCTgy/8LAwMDo70E19La5A1vz8UxMDD+IWOnMfDuz7/U38DAwPjDjJ1UMwrX4qbmTjKMgYExm9GGfW0imm8xH8uIcnEMDIxBjDX3vcWytcO6/N3AwMA4hpGHfe2I6k7B7nJXGBgYoxl5qpkkn+1B5A3O4kAxMDAOYLS197W2ZRsgJjwMDIyTGXlZrS3r33uhY2BgnMBYS0fbUtrOhV6/GQMDYwRjpzSWtyHzFkKbEn+pGmJgYAxl7KSpbQK8s/WiRYqBgTGU0Y4+POK1H6smZTsMDIzZjP2BsLXArj3paGYEAwNjKCMvzbfPrDU7c9IP1y4GBsYgRts+bBucSUKbj2VcfhcGBsYxjLsGJu6CFc1RDAyM0Yyd8a88vcxHx5LLHQMD4zRGXrjfaR6013odqmJgYIxmrKWj+XhEOxaWt0UxMDDOYTzL1TYg80Npy3CXoSEGBsY4RjvgtRNW7oSPeVCLgYExlZGX/ttyW56+5olrlJFjYGAMZewX99urs737fwhYMTAwMMoEtR25aIPCmy9cDAyMQYx2o20ImCe6GBgYZzLaJHYN0Kay+Q8ABgbGbMYNkxpLaepdR4OBgTGa8QFM1ISaPgoFUgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

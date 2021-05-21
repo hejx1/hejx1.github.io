@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>IDEA 代码补全操作技巧 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="IDEA">
+    <meta name="description" content="IDEA 有个很牛逼的功能，那就是代码补全，极大的方便了开发人员。 下面是我比较常用的 var 声明变量                                                                                                           null 判空">
+<meta name="keywords" content="IDEA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA 代码补全操作技巧">
+<meta property="og:url" content="https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="IDEA 有个很牛逼的功能，那就是代码补全，极大的方便了开发人员。 下面是我比较常用的 var 声明变量                                                                                                           null 判空">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/var.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/null.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/nn.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/for.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/fori.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/if.gif">
+<meta property="og:image" content="https://smilexin.cn/img/posts/idea1/cast.gif">
+<meta property="og:updated_time" content="2021-05-11T10:02:50.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IDEA 代码补全操作技巧">
+<meta name="twitter:description" content="IDEA 有个很牛逼的功能，那就是代码补全，极大的方便了开发人员。 下面是我比较常用的 var 声明变量                                                                                                           null 判空">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/idea1/var.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">IDEA 代码补全操作技巧</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">IDEA 代码补全操作技巧</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-05-10T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-05-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#var-声明变量"><span class="post-toc-number">1.</span> <span class="post-toc-text">var 声明变量</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#null-判空"><span class="post-toc-number">2.</span> <span class="post-toc-text">null 判空</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#nn-判非空"><span class="post-toc-number">3.</span> <span class="post-toc-text">nn 判非空</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#for-遍历"><span class="post-toc-number">4.</span> <span class="post-toc-text">for 遍历</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#fori-带索引的遍历"><span class="post-toc-number">5.</span> <span class="post-toc-text">fori 带索引的遍历</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#if-条件判断"><span class="post-toc-number">6.</span> <span class="post-toc-text">if 条件判断</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#cast-强转"><span class="post-toc-number">7.</span> <span class="post-toc-text">cast 强转</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-IDEA 代码补全操作技巧"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">IDEA 代码补全操作技巧</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-05-11 00:00:00" datetime="2021-05-10T16:00:00.000Z"  itemprop="datePublished">2021-05-11</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>IDEA 有个很牛逼的功能，那就是代码补全，极大的方便了开发人员。</p>
+<p>下面是我比较常用的</p>
+<h1 id="var-声明变量"><a href="#var-声明变量" class="headerlink" title="var 声明变量"></a>var 声明变量</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/var.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="null-判空"><a href="#null-判空" class="headerlink" title="null 判空"></a>null 判空</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/null.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="nn-判非空"><a href="#nn-判非空" class="headerlink" title="nn 判非空"></a>nn 判非空</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/nn.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="for-遍历"><a href="#for-遍历" class="headerlink" title="for 遍历"></a>for 遍历</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/for.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="fori-带索引的遍历"><a href="#fori-带索引的遍历" class="headerlink" title="fori 带索引的遍历"></a>fori 带索引的遍历</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/fori.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="if-条件判断"><a href="#if-条件判断" class="headerlink" title="if 条件判断"></a>if 条件判断</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/if.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="cast-强转"><a href="#cast-强转" class="headerlink" title="cast 强转"></a>cast 强转</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/idea1/cast.gif" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-05-11T10:02:50.304Z" itemprop="dateUpdated">2021-05-11 18:02:50</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/05/11/IDEA 代码补全操作技巧.html" target="_blank" rel="external">https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&title=《IDEA 代码补全操作技巧》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&title=《IDEA 代码补全操作技巧》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA 代码补全操作技巧》 — Junxin's Blog&url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2021/05/12/谁动了我的 Linux.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">谁动了我的 Linux？history 命令详解！</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/05/11/Nginx 配置详解.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Nginx 配置详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&title=《IDEA 代码补全操作技巧》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&title=《IDEA 代码补全操作技巧》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA 代码补全操作技巧》 — Junxin's Blog&url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpUlEQVR42u3aQW7DMAwEwPz/0+2lhx7qeEmKgQuMT0GQqhoZkIilXq/4+fr1zL95//nq/1795sCDh4eHN5j61XDzb6p/myzH+znj4eHhbfOudtTqb/KpJ+NM5oOHh4f3HN57RlIQJxt6Xprj4eHh/S9eL7DoBRB4eHh4T+MlYcSpz2fL7mNZCx4eHl7My7tIz/m80t/Dw8PDG3fVJ5t4L5I4Nc+f0fDw8PAWePmGWy1h86g3j4Cr88TDw8Pb4M2jhMnSnL2Y9cec8fDw8JZ5vdi0V0Yn7bek7I7yaTw8PLyjvGQLTq5DVUfrtceSBbrp7+Hh4eEt8PJwoYrsjXOgs4eHh4f3QV7v6lUSzp6dT9QAw8PDwzvEy0vnHrgXwvYOBjw8PLxP8nplcTUmmGDycv81SU3w8PDwamM2r9SPWvut2KIXZ+Dh4eFt8KplcS/MTWKL6nKM3iEeHh5ei1cNF6qXsSbfTJpteHh4eBu8asFavaRVLc3n4e9NZw8PDw9vzOtFovkx0DtmkunmBwkeHh7eNq8KyA+YPMCdRCF4eHh4n+flTf1Tx8Ok5dY89/Dw8PDGvGr0MGmbTQKI3jGGh4eHt8GbX4SqjtM7kPJLA5fvEA8PD+8oLymae5v4JKpI4t1k0fHw8PDO8pImU/W6wKlI98AS4+Hh4a3xqo2opCWW/6+EUS3E8fDw8LZ5k4CgGlVUS+r8uUlZ8PDw8Ma8r+KTD51fJsjfQ3Xh8PDw8DZ41Q03iRKqVxCqMUd1KfHw8PA2eJPWVLKJ965w5eybN4aHh4e3xstL5Gojan75YFLK4+Hh4T2BV93iq9HwZBw8PDy8Z/I2tvLqxa/kQgMeHh7eNq9a+FYvY/UCiF6gjIeHh7fNq27lk/b/JKQ4wMDDw8Ob8r4B0Rcr8MkUKloAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

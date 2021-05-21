@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>高并发场景解决方案-应用拆分 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="高并发,分布式,应用拆分">
+    <meta name="description" content="前言我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系统和产">
+<meta name="keywords" content="高并发,分布式,应用拆分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发场景解决方案-应用拆分">
+<meta property="og:url" content="https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="前言我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系统和产">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.322Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高并发场景解决方案-应用拆分">
+<meta name="twitter:description" content="前言我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系统和产">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">高并发场景解决方案-应用拆分</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">高并发场景解决方案-应用拆分</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-19T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#举例说明"><span class="post-toc-number">2.</span> <span class="post-toc-text">举例说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拆分原则"><span class="post-toc-number">3.</span> <span class="post-toc-text">拆分原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#业务优先"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">业务优先</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#循序渐进"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">循序渐进</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#兼顾技术：重构、分层"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">兼顾技术：重构、分层</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可靠测试"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">可靠测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#事前分析"><span class="post-toc-number">4.</span> <span class="post-toc-text">事前分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用之间的通信"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">应用之间的通信</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用之间的数据库设计"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">应用之间的数据库设计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#避免事务操作跨应用"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">避免事务操作跨应用</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-高并发场景解决方案-应用拆分"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">高并发场景解决方案-应用拆分</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-20 00:00:00" datetime="2018-05-19T16:00:00.000Z"  itemprop="datePublished">2018-05-20</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系统和产品系统等等。</p>
+<h1 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h1><p>这里使用我现在负责并参与过的股票系统拆分过程，让大家体会一下这里的应用拆分。</p>
+<p>最开始来公司的时候只有一个特别大的股票系统，这个系统包含了所有股票相关的功能，比如（用户查看股票行情数据、 用户在开市时间下单、用户查看订单信息、用户开户等等…），在深入的了解这个系统之后呢，我们发现这个系统许多功能在不同时间段内请求差别很大，比如大家都习惯在非开市期间开美股账户，在开市期间更多的是查看行情，在开市期间才能下单，查看订单信息个别时间段差别不是很大等等。</p>
+<p>这种设计有个很明显的问题，就是开市期间股票行情的数据量特别的大，进行交易和查看订单可能稍微少一点，而开户操作基本上就没有。换句话说开户这种操作本身就没有什么压力，每个用户一般就开户一次就够了，而如果这个时候股票行情在开市期间出现了问题，它可能会带来整个系统都没有办法使用了，比如系统出现了长时间的Full GC 而本质上这可能只是行情的某一块出现了问题。</p>
+<p>这种情况就非常有必要做应用拆分，同时对于拆分后，请求多压力大的应用我们可以多部署几台服务器来分担压力，这个效果会更好，实际改造中我们也是按照功能模块进行拆分。这个大系统被我们拆分出来很多应用，分别是：</p>
+<ul>
+<li>行情中心（定时任务[3]，流程处理）</li>
+<li>交易中心（股票买入和卖出）</li>
+<li>账户中心（流程处理，定时任务）</li>
+<li>用户中心（基础数据维护）</li>
+<li>通知中心（短信、邮件、推送）</li>
+</ul>
+<p>最开始的大系统基本上就只剩下接收API的请求了，拿到请求后调用各个系统提供的接口更新或者获取数据，这里我们各个系统之间调用使用的是dubbo,为了加深大家对拆分的理解我具体说一下拆分后的这些应用。</p>
+<p>行情中心是我们最重要的一个应用，它本身要做的事情相对于好理解一些，就是我之前介绍过8000多支股票,这些股票相关的各种数据，比如股票在每个交易日每分钟的价格，开盘价，收盘价，最高价，最低价。以及股票的历史数据包括统计数据、分析数据等等。它还负责用户请求不同行情数据，提供对应的处理好的数据。因此我们就把行情中心继续进行拆分,一个应用主要是做定时任务的（负责抓取和订阅股票的所有数据），另外一个应用是负责处理用户的请求返回对应的数据，其实到这里拆分并没有完全，我们发现开市过程中有两个订阅的数据量特别大,很可能在开市期间会出现问题，因此我们把那2个订阅单独拆分出来各自成为一个应用，这样一来这里的定时任务实际上又被拆分成了3个独立的应用，这个算是比较复杂的了，其他的就相对简单很多。</p>
+<p>我们这里都是使用分布式的任务，同时都是单独部署自成一个应用。主要原因是跑定时任务的系统和处理流程的系统他们通常差别还是挺大的，跑定时任务的系统它有时经常会需要更多的内存来处理。</p>
+<p>根据核心功能拆分完行情中心、交易中心、账户中心这三大块应用中心之后呢，我们又从这里面拆分出来用户中心和通知中心，用户中心主要做一些登录注册等基本信息的维护，通知中心则只做短信邮件以及APP推送相关的处理，这些都做完后，之前一个应用的压力被很多小应用分担。</p>
+<p>我们可以对这些拆分后的应用做更精准的监控。不同应用的压力，我们可以看得特别的清楚，更容易做一些处理。哪些应用有风险了我们也可以尽早发现，提前做好应对。拆分之后其实也更适合团队合作，每个人可以重点参与到指定的应用开发中，而且随着组内开发人员越来越多，可以根据负责的应用将大组拆分成小组专门负责。比如我现在就主要负责行情中心这一块，其他的应用偶尔也会参与一下，但是会少很多。</p>
+<p>当然应用拆分并不是只有好处而没有弊端的。我们简单说一下拆分完后不好的地方：</p>
+<ol>
+<li>管理成本：一个应用被拆分成了多个，它必然会带来管理上的复杂性，之前管理好一个应用就可以了，拆分完可能是几个十几个甚至几十个，管理成本会提升很多</li>
+<li>机器成本：这也带来了服务器成本的提升，比如一个大应用拆分成了十个小应用，在CPU内存以及硬盘上的花费，每个小应用肯定不会将成本降到之前的十分之一，这里也不排除拆分后的应用可能和拆分前的大应用使用相同的配置，甚至更高</li>
+<li>网络开销增多：应用多了势必会带来更多的网络开销，任何一个系统之间的调用都避免不了相应的网络开销，但这并不代表着有额外的网络开销我们就不能这样用了。<strong>大家平时使用的redis、数据库等等，其实每次调用也有一定的网络开销,但一般这里都不是瓶颈，尤其是系统之间调用，基本都是在局域网里面的</strong></li>
+</ol>
+<h1 id="拆分原则"><a href="#拆分原则" class="headerlink" title="拆分原则"></a>拆分原则</h1><h2 id="业务优先"><a href="#业务优先" class="headerlink" title="业务优先"></a>业务优先</h2><p>每个系统都会天然的按照业务功能分成多个模块，每个模块又包含许多业务相关的功能。在系统拆分时我们就可以优先考虑按照业务的边界进行切割，切割完成后再针对每个模块进行拆解，循序渐进，逐渐迭代深入，最终完成系统的拆解。这个过程类似庖丁解牛，要找到关键之处下刀方能事半功倍。</p>
+<h2 id="循序渐进"><a href="#循序渐进" class="headerlink" title="循序渐进"></a>循序渐进</h2><p>系统拆分过程中包含两个非常重要的工作（拆分和测试），二者缺一不可。并且二者是并行进行的，一定要边拆分边测试，每一步拆分完成都要保证系统功能是完整的，保证系统的测试是完整的。拆分需要小步前进，如此一来可以减少累积错误的发生。</p>
+<h2 id="兼顾技术：重构、分层"><a href="#兼顾技术：重构、分层" class="headerlink" title="兼顾技术：重构、分层"></a>兼顾技术：重构、分层</h2><p>系统不能为了分布式而分布式，系统拆分的代价相当的昂贵。当然如果有了拆分的需要的话，我们也不能白白浪费这么好的学习机会。</p>
+<p>首先第一个是重构，拆分过程中不仅仅是对业务梳理的过程，也是对系统进行重构的过程。通过系统的重构，我们可以使用一些设计模式让代码结构更加清晰。具有更好的可读性而且方便之后的修改。</p>
+<p>第二个是分层，拆分可以让系统分成许多功能单一的系统，这些系统可以根据需要使用不同的技术和架构进行实现。可以让熟悉不同技术的人做不同的事情，工作更高效，产品质量也可以提高。比如那些熟悉UI技术的人可以专注用户体验方面的研发，那些JAVA、C++方面的专家就可以把精力放在服务器端程序的开发上。那些熟悉数据库技术的人就可以把精力放在数据库的优化上。术业有专攻，让合适的人去做合适的事情。</p>
+<p>现在有些人为了分布式而分布式，网上有个词说的非常逗叫做<strong>面向简历编程</strong>，就是不管系统是不是真的需要使用某个框架，是不是真的需要拆分，反正他就是要用，要用最新的技术，哪怕成本高昂，应用根本还没到需要使用分布式的时候。<strong>希望大家能够根据具体的业务需求和场景信息选择合适的技术框架。</strong></p>
+<h2 id="可靠测试"><a href="#可靠测试" class="headerlink" title="可靠测试"></a>可靠测试</h2><p>拆分是在对系统进行一次大手术，每一次的改动都要保证系统保持原来的行为不变。测试使得我们能有足够的信心进行下一步的拆分或者重构。不至于在错误的道路上越走越远，以至于错误累积，测试与拆分是如影随形的，每一步都要有足够的测试。没有测试的拆分和重构我真的不敢想象结果会是什么样子。</p>
+<h1 id="事前分析"><a href="#事前分析" class="headerlink" title="事前分析"></a>事前分析</h1><p>在大家明确了拆分原则之后，我们在实际做应用拆分时，还需要做一些思考。</p>
+<h2 id="应用之间的通信"><a href="#应用之间的通信" class="headerlink" title="应用之间的通信"></a>应用之间的通信</h2><p>应用之间通信是选择RPC（Dubbo等）这种远程调用，还是通过消息队列进行调用，甚至是使用HTTP请求的形式(REST)，都需要具体场景做出相应的选择。</p>
+<p>通常消息通知适用于传输的数据包小，但是数据量大，对实时性要求不高的场景。比如下单成功之后需要通过短信通知一下用户这种的。而选择RPC框架的实时性更好一些。<strong>这里通常不会使用传统的HTTP或Webservice服务，原因是使用RPC调用远程的service方法无感知，在配置好以后，和本地调用方法很像，当然如果只是细微的服务提供其实HTTP可能会更合适。</strong></p>
+<h2 id="应用之间的数据库设计"><a href="#应用之间的数据库设计" class="headerlink" title="应用之间的数据库设计"></a>应用之间的数据库设计</h2><p>通常每个应用都有自己独立的数据库，如果是共同使用的技术信息，可以考虑放在一个common库中一起来使用。</p>
+<h2 id="避免事务操作跨应用"><a href="#避免事务操作跨应用" class="headerlink" title="避免事务操作跨应用"></a>避免事务操作跨应用</h2><p>尽量避免事务操作跨应用，分布式事务是一个很消耗资源的问题。应当在设计的时候尽量避免。这样是有好处的，比如应用和应用之间的耦合度降低，在一个应用挂了的情况下，其他的应用可以继续服务。同时开发过程中应用之间独立开发定义好服务接口就可以了，应用之间开发也会互不影响。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.322Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/20/高并发场景解决方案-应用拆分.html" target="_blank" rel="external">https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/应用拆分/">应用拆分</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&title=《高并发场景解决方案-应用拆分》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&title=《高并发场景解决方案-应用拆分》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高并发场景解决方案-应用拆分》 — Junxin's Blog&url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SpringBoot 2.0 jpa多数据源配置</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/18/高并发场景解决方案-应用限流.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">高并发场景解决方案-应用限流</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&title=《高并发场景解决方案-应用拆分》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&title=《高并发场景解决方案-应用拆分》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高并发场景解决方案-应用拆分》 — Junxin's Blog&url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/20/高并发场景解决方案-应用拆分.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvklEQVR42u3aQQ7bMAwEwPz/0ynQW1HE3SWltAXGp8B2HI0OprLU6xUf75/HpzPvxyN58u9Pe77n8IGHh4c3Gvrz4J7PPP98Pqx3cNQTioeHh3eN9zyslp1PQT7Q5+Lx8TweHh7eX+XNFsft9OUTh4eHh/e/8PK4YXZ1M914eHh43+Qlf/6fvzU7n0e317MWPDw8vHlP6tUWie9/vtjfw8PDw1s3nJIicSqkSJbgxWjx8PDwLvCSRXDyh79d/s6mo/0WHh4e3j1e+4XNRqi28LRXi9KFh4eHd5Q3nI8gPnguNnnJacF4eHh4p3h5+z/ZPHpqm2nbJPv4GQ8PD+8Cb//oPKLNn5NsCCgCDjw8PLxrvHZ7UxtYnG2kFYt+PDw8vAu8TYurDRH2wceBnWV4eHh4C14Sj7ZRRRLjzkpFPkF4eHh4t3nJH/tkKEnZaO/Jg2A8PDy8b/LaRfOmYdZut5qN5Jf+Hh4eHt4F3qxV3xaYJAjON1dFU4aHh4d3jZdHt+3re7MQb9tvH/eU4eHh4V3gbdpXSQIwSww2ITIeHh7e93nt5oB2KHmp2MQceHh4eDd4s21P7fJ3X1TaSVzt6sLDw8N75D0HAfmj8xKST2vbcqu3DuDh4eGtecnVttmfFIx24oroGQ8PD+8Cb9bab+/ZbAiYRRt4eHh493jJS3m2OJ4FFjPqH+oeHh4e3jVeW0lmd24KQ/4cPDw8vHu8tj2fl4FTg27bZnh4eHi3ee/y2Ee0eVsr30Dw8Vfw8PDwLvA2L99kQbyJg2cNttfswMPDwyt5mxZX/oR9tJEvu3+5ioeHh3eNlyxnTwUQ+Xt7Vs3w8PDw/h3e7NV8KuzIf6X+N4CHh4f3FV5+Tx5VtA25qJzg4eHhXeO1ccPsfF5IZjHHsawFDw8Pb9K1H65L9+Fsvrw+0NnDw8PD63g/AD5n0HVelg0EAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Java多线程并发最佳实践 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="并发,JDK,java">
+    <meta name="description" content="前言编写并发代码是比较难，尽管Java语言提供了许多同步和并发支持，但是最终写出没有Bug的Java并发代码还是需要依靠个人的勤奋与专业知识。Java多线程并发最佳实践是一组实践的好点子，有助于你快速开发出优质的并发代码。如果你是新手，需要熟悉一些基本概念，再来阅读本文会更有针对性。 使用本地变量(局部变量)应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作为变量">
+<meta name="keywords" content="并发,JDK,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程并发最佳实践">
+<meta property="og:url" content="https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="前言编写并发代码是比较难，尽管Java语言提供了许多同步和并发支持，但是最终写出没有Bug的Java并发代码还是需要依靠个人的勤奋与专业知识。Java多线程并发最佳实践是一组实践的好点子，有助于你快速开发出优质的并发代码。如果你是新手，需要熟悉一些基本概念，再来阅读本文会更有针对性。 使用本地变量(局部变量)应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作为变量">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.311Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java多线程并发最佳实践">
+<meta name="twitter:description" content="前言编写并发代码是比较难，尽管Java语言提供了许多同步和并发支持，但是最终写出没有Bug的Java并发代码还是需要依靠个人的勤奋与专业知识。Java多线程并发最佳实践是一组实践的好点子，有助于你快速开发出优质的并发代码。如果你是新手，需要熟悉一些基本概念，再来阅读本文会更有针对性。 使用本地变量(局部变量)应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作为变量">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java多线程并发最佳实践</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java多线程并发最佳实践</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-17
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用本地变量-局部变量"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用本地变量(局部变量)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用不可变类"><span class="post-toc-number">3.</span> <span class="post-toc-text">使用不可变类</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#最小化锁的作用域范围"><span class="post-toc-number">4.</span> <span class="post-toc-text">最小化锁的作用域范围</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用线程池的Excutor，而不是直接new-Thread执行"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用线程池的Excutor，而不是直接new Thread执行</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#宁可使用同步也不要使用线程的wait-notify"><span class="post-toc-number">6.</span> <span class="post-toc-text">宁可使用同步也不要使用线程的wait notify</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用BlockingQueue实现生产消费模式"><span class="post-toc-number">7.</span> <span class="post-toc-text">使用BlockingQueue实现生产消费模式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用并发集合Collection而不是加了同步锁的集合"><span class="post-toc-number">8.</span> <span class="post-toc-text">使用并发集合Collection而不是加了同步锁的集合</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用Semaphore创建有界的访问"><span class="post-toc-number">9.</span> <span class="post-toc-text">使用Semaphore创建有界的访问</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#宁可使用同步的代码块，也不要使用同步的方法"><span class="post-toc-number">10.</span> <span class="post-toc-text">宁可使用同步的代码块，也不要使用同步的方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#避免使用静态变量"><span class="post-toc-number">11.</span> <span class="post-toc-text">避免使用静态变量</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Java多线程并发最佳实践"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java多线程并发最佳实践</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-17 00:00:00" datetime="2018-05-16T16:00:00.000Z"  itemprop="datePublished">2018-05-17</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>编写并发代码是比较难，尽管Java语言提供了许多同步和并发支持，但是最终写出没有Bug的Java并发代码还是需要依靠个人的勤奋与专业知识。Java多线程并发最佳实践是一组实践的好点子，有助于你快速开发出优质的并发代码。如果你是新手，需要熟悉一些基本概念，再来阅读本文会更有针对性。</p>
+<h1 id="使用本地变量-局部变量"><a href="#使用本地变量-局部变量" class="headerlink" title="使用本地变量(局部变量)"></a>使用本地变量(局部变量)</h1><p>应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作为变量可以节省内存并可以重用，因为他们认为每次在方法中创建本地变量会消耗很多内存。下面代码的run()方法被多线程调用，为了实现一个新功能，你需要一个临时集合Collection，代码中这个临时集合作为静态类变量使用，然后在run方法的尾部清除这个集合以便下次重用，编写这段代码的人可能认为这是线程安全的，因为 <strong>CopyOnWriteArrayList</strong>是线程安全的，但是他没有意识到，这个方法run()是被多线程调用，那么可能多线程中一个线程看到另外一个线程的临时数据，即使使用<strong>Collections.synchronizedList</strong>也不能保证run()方法内的逻辑不变性，<strong>这个不变性是：这个集合是临时集合，只用来在每个线程执行内部可见即可，不能暴露给其他线程知晓。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Example1 implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">    private static List&lt;Integer&gt; temp = new CopyOnWriteArrayList();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // If need a temporary ArrayList here, should use local  variable</span><br><span class="line">        // List&lt;Integer&gt; temp = new ArrayList();</span><br><span class="line">        temp.add(55);</span><br><span class="line">        temp.add(12);</span><br><span class="line">        temp.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>要保证这段代码的不可变应该使用本地变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Example1 implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // If need a temporary ArrayList here, should use local  variable</span><br><span class="line">        List&lt;Integer&gt; temp = new ArrayList();</span><br><span class="line">        temp.add(55);</span><br><span class="line">        temp.add(12);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用不可变类"><a href="#使用不可变类" class="headerlink" title="使用不可变类"></a>使用不可变类</h1><p>不可变类比如String Integer等一旦创建，不再改变，不可变类可以降低代码中需要的同步数量。</p>
+<h1 id="最小化锁的作用域范围"><a href="#最小化锁的作用域范围" class="headerlink" title="最小化锁的作用域范围"></a>最小化锁的作用域范围</h1><p>任何在锁中的代码将不能被并发执行，如果你有5%代码在锁中，那么根据<strong>阿姆达尔定律</strong>，你的应用程序就不可能提高超过20倍，因为锁中这些代码只能顺序执行，降低锁的涵括范围，上锁和解锁之间的代码越少越好。</p>
+<h1 id="使用线程池的Excutor，而不是直接new-Thread执行"><a href="#使用线程池的Excutor，而不是直接new-Thread执行" class="headerlink" title="使用线程池的Excutor，而不是直接new Thread执行"></a>使用线程池的Excutor，而不是直接new Thread执行</h1><p>创建一个线程的代价是昂贵的，如果你要得到一个可伸缩的Java应用，那么你需要使用线程池，使用线程池管理线程。JDK提供了各种ThreadPool线程池和Executor。</p>
+<h1 id="宁可使用同步也不要使用线程的wait-notify"><a href="#宁可使用同步也不要使用线程的wait-notify" class="headerlink" title="宁可使用同步也不要使用线程的wait notify"></a>宁可使用同步也不要使用线程的wait notify</h1><p>从Java 1.5以后增加了许多的同步工具，比如CycicBariier, CountDownLatch 和 Sempahore，你应当优先使用这些同步工具，而不是去思考如何使用线程的wait和notify方法，通过BlockingQueue实现生产-消费的设计比使用线程的wait和notify要好得多，也可以使用CountDownLatch实现多个线程的等待等等…</p>
+<h1 id="使用BlockingQueue实现生产消费模式"><a href="#使用BlockingQueue实现生产消费模式" class="headerlink" title="使用BlockingQueue实现生产消费模式"></a>使用BlockingQueue实现生产消费模式</h1><p>大部分并发问题都可以使用producer-consumer生产-消费设计实现，而BlockingQueue是最好的实现方式，阻塞的队列不只可以处理单个生产单个消费，也可以处理多个生产和消费。</p>
+<h1 id="使用并发集合Collection而不是加了同步锁的集合"><a href="#使用并发集合Collection而不是加了同步锁的集合" class="headerlink" title="使用并发集合Collection而不是加了同步锁的集合"></a>使用并发集合Collection而不是加了同步锁的集合</h1><p>Java提供了 ConcurrentHashMap CopyOnWriteArrayList 和 CopyOnWriteArraySet以及BlockingQueue Deque and BlockingDeque五大并发集合，宁可使用这些集合，也不要使用Collections.synchronizedList之类加了同步锁的集合。</p>
+<ul>
+<li>CopyOnWriteArrayList 特别适合读很多写很少的应用场景</li>
+<li>ConcurrentHashMap更是经常使用的并发集合</li>
+</ul>
+<h1 id="使用Semaphore创建有界的访问"><a href="#使用Semaphore创建有界的访问" class="headerlink" title="使用Semaphore创建有界的访问"></a>使用Semaphore创建有界的访问</h1><p>为了建立可靠的稳定的系统，对于数据库 文件系统和socket等资源必须要做有界的访问。Semaphore是一个可以限制这些资源开销的选择，如果某个资源需要控制并发的访问，使用Semaphore可以以最低代价实现线程的等待</p>
+<h1 id="宁可使用同步的代码块，也不要使用同步的方法"><a href="#宁可使用同步的代码块，也不要使用同步的方法" class="headerlink" title="宁可使用同步的代码块，也不要使用同步的方法"></a>宁可使用同步的代码块，也不要使用同步的方法</h1><ul>
+<li>使用synchronized 同步代码块只会锁定一个对象，而不会将整个方法锁定</li>
+<li>如果更改共同的变量或类的字段，首先选择原子性变量，然后使用volatile</li>
+<li>如果你需要互斥锁，可以考虑使用ReentrantLock。</li>
+</ul>
+<h1 id="避免使用静态变量"><a href="#避免使用静态变量" class="headerlink" title="避免使用静态变量"></a>避免使用静态变量</h1><ul>
+<li>静态变量在并发执行环境会制造很多问题，如果你必须使用静态变量，那么优先让它成为final 常量</li>
+<li>如果用来保存集合Collection，那么考虑使用只读集合。否则的话一定要做同步处理以及并发处理</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.311Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/17/Java多线程并发最佳实践.html" target="_blank" rel="external">https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&title=《Java多线程并发最佳实践》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&title=《Java多线程并发最佳实践》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java多线程并发最佳实践》 — Junxin's Blog&url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/18/高并发场景解决方案-应用限流.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">高并发场景解决方案-应用限流</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/16/Executor 线程池详解.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Executor 线程池详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&title=《Java多线程并发最佳实践》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&title=《Java多线程并发最佳实践》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java多线程并发最佳实践》 — Junxin's Blog&url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/17/Java多线程并发最佳实践.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrUlEQVR42u3aQW4jMQwEQP//01lgTwGycbop0fECNScjgGWVDiOmyccjfj7+Pp8/J3/5+rld7evz2Hjw8PDwRlt/vlzyMwkp/+61I8DDw8Nb4+U/mW/9OTg5iOfHnayGh4eH97u889p1r0zHw8PDe2deUnbnjGiLeHh4eG/Ja0vYPLB4Dm6PbzFrwcPDw1voIr3P5/X+Hh4eHt4oPpiVzkkAMYt9693i4eHhLfDaUriNGNq/JwFucgtEJ4qHh4d3zLvbmprhkwujLfTx8PDw7vLuLtfGvm2eUB8uHh4e3hpv9lKeDV3lowOzoYR/XAx4eHh4V3mz1v55qywfGpjFGY8Wg4eHhxfz9lpZ+eWRHHfePCv+Y8DDw8Mb8dqLIV/0bkndtsGG9x4eHh5ezMsDhfxVnkQS5yV4/i08PDy8W7y7pe3dyyNf4dtLBQ8PD+/lvFstq7ZAzy+AH9bBw8PD+yXe86XbF3dbUrfHVF8MeHh4eMe8JDhoA4vkUsnxRcCBh4eHt8a7VcKehLBtcFyEEXh4eHgLvPOxqmSFYUfuYHwBDw8Pb4PXjl7l10AdHIzCi+LBw8PDu8TLG//5QFW+ifZA26PEw8PD2+C1La7ZdvNWWT1WlQ864OHh4V3l5cvlZXFy5eRhcd70wsPDw9vm5QvdilPb66cdC8PDw8N7JW/WBstf5Sd312wPeHh4eBu8lpF/ziPdvPjOV8DDw8Pb432Uz3YBfSuq+LakxsPDwzvmnY9kzWLfJFBoL6SahIeHh3fAyyOD9udnYUfdwUvGrfDw8PAWeG2Gkb+mZxFwXnbXdxoeHh7eC3ltGX0yfHAysIWHh4f3v/DyplpeEJ+MLODh4eFt8/IwIimyky3m0W3ekKsHCPDw8PBGvPO5rVmDvx0vmI0v4OHh4V3l/QERakrfCe0O5QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

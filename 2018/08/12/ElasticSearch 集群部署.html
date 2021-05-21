@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>ElasticSearch 集群部署 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ElasticSearch,全文搜索">
+    <meta name="description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
+<meta name="keywords" content="ElasticSearch,全文搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch 集群部署">
+<meta property="og:url" content="https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElasticSearch 集群部署">
+<meta name="twitter:description" content="集群节点角色默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。在一个生产集群中我们可以对这些节点的职责进行划分。集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合  node.master：这个属性表示节点是否具有成为主节点的资格  注意：此属性的值为true,并不意味着这个节点就是主节点。  因为真正的主节点,是由多个具有">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/ElasticSearch/es_cluster1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ElasticSearch 集群部署</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ElasticSearch 集群部署</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#集群节点角色"><span class="post-toc-number">1.</span> <span class="post-toc-text">集群节点角色</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全能节点-默认"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">全能节点(默认)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#data节点"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">data节点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#master节点"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">master节点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#client节点"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">client节点</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署集群"><span class="post-toc-number">2.</span> <span class="post-toc-text">部署集群</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动集群"><span class="post-toc-number">3.</span> <span class="post-toc-text">启动集群</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#合理配置避免脑裂现象"><span class="post-toc-number">4.</span> <span class="post-toc-text">合理配置避免脑裂现象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#discovery-zen-minimum-master-nodes"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">discovery.zen.minimum_master_nodes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#discovery-zen-ping-timeout"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">discovery.zen.ping.timeout</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#集群选型"><span class="post-toc-number">5.</span> <span class="post-toc-text">集群选型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#轻量型服务"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">轻量型服务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#高访问量服务"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">高访问量服务</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ElasticSearch 集群部署"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ElasticSearch 集群部署</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-12 00:00:00" datetime="2018-08-11T16:00:00.000Z"  itemprop="datePublished">2018-08-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="集群节点角色"><a href="#集群节点角色" class="headerlink" title="集群节点角色"></a>集群节点角色</h1><p>默认情况下,每个节点都有成为主节点的资格,也会存储数据,还会处理客户端的请求。<br>在一个生产集群中我们可以对这些节点的职责进行划分。<br>集群中节点可以分为4种类型,主要是node.master和node.data这两个属性的不同组合</p>
+<ul>
+<li><p>node.master：这个属性表示节点是否具有成为主节点的资格<br>  注意：此属性的值为true,并不意味着这个节点就是主节点。<br>  因为真正的主节点,是由多个具有主节点资格的节点进行选举产生的。<br>  所以,这个属性只是代表这个节点是不是具有主节点选举资格。</p>
+</li>
+<li><p>node.data：这个属性表示节点是否存储数据。</p>
+</li>
+</ul>
+<h2 id="全能节点-默认"><a href="#全能节点-默认" class="headerlink" title="全能节点(默认)"></a>全能节点(默认)</h2><ul>
+<li>node.master: true</li>
+<li>node.data: true<br>这种组合表示这个节点即有成为主节点的资格,又存储数据,这个时候如果某个节点被选举成为了真正的主节点,那么他还要存储数据,这样对于这个节点的压力就比较大了。<br><strong>elasticsearch默认每个节点都是这样的配置</strong></li>
+</ul>
+<h2 id="data节点"><a href="#data节点" class="headerlink" title="data节点"></a>data节点</h2><ul>
+<li>node.master: false</li>
+<li>node.data: true<br>这种组合表示这个节点没有成为主节点的资格,也就不参与选举,只会存储数据。<br>这个节点我们称为data(数据)节点。在集群中需要单独设置几个这样的节点负责存储数据。后期提供存储和查询服务。</li>
+</ul>
+<h2 id="master节点"><a href="#master节点" class="headerlink" title="master节点"></a>master节点</h2><ul>
+<li>node.master: true</li>
+<li>node.data: false<br>这种组合表示这个节点不会存储数据,有成为主节点的资格,可以参与选举,有可能成为真正的主节点。</li>
+</ul>
+<h2 id="client节点"><a href="#client节点" class="headerlink" title="client节点"></a>client节点</h2><ul>
+<li>node.master: false</li>
+<li>node.data: false<br>这种组合表示这个节点即不会成为主节点,也不会存储数据,这个节点的意义是作为一个client(客户端)节点,主要是针对海量请求的时候可以进行负载均衡。该类型节点只提供搜索结果的二级聚合功能。</li>
+</ul>
+<p>master节点：普通服务器即可(CPU 内存 消耗一般)<br>data节点：主要消耗磁盘,内存<br>client节点：普通服务器即可(如果要进行分组聚合操作的话,建议这个节点内存也分配多一点)</p>
+<h1 id="部署集群"><a href="#部署集群" class="headerlink" title="部署集群"></a>部署集群</h1><p>我这里集群设置3个全能节点,让它们互相依靠,因为我这里只有一台物理机🤣。<br><a href="/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html">下载ElasticSearch安装包</a>,启动head插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 建立集群文件夹</span><br><span class="line">mkdir -p es_cluster/es_master</span><br><span class="line"># 将elasticsearch安装包拷贝到es_master文件夹待用</span><br><span class="line">cp elasticsearch-6.3.2.tar.gz es_cluster/es_master</span><br><span class="line"># 解压elasticsearch</span><br><span class="line">tar -vxf elasticsearch-6.3.2.tar.gz</span><br><span class="line"># 复制成 slave1 和 slave2</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master1</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master2</span><br><span class="line">cp -r elasticsearch-6.3.2 es_cluster/es_master/es_master3</span><br></pre></td></tr></table></figure>
+<p>修改节点配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd es_cluster/es_master/es_master1</span><br><span class="line">/es_master1$ vim config/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
+<p>在文件末尾加上以下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 设置集群名称（唯一标识）</span><br><span class="line">cluster.name: smile</span><br><span class="line"># 设置节点名称</span><br><span class="line">node.name: master</span><br><span class="line"># 该节点可以竞争master</span><br><span class="line">node.master: true</span><br><span class="line"># 该节点存储数据</span><br><span class="line">node.data: true</span><br><span class="line"></span><br><span class="line"># 设置绑定的ip,端口默认9200</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line"># Elasticsearch 服务使用的端口。</span><br><span class="line">http.port: 9200</span><br><span class="line"># 设置集群中各个节点之间的通信端口</span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line"># 处理跨域问题</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line"></span><br><span class="line"># 这个配置主要作用是找寻master候选者,如果不做配置,此节点会游离于集群之外</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9300&quot;,&quot;127.0.0.1:9301&quot;,&quot;127.0.0.1:9302&quot;]</span><br><span class="line"># 当集群中Master候选者数量&gt;minimum_master_nodes数量时才执行选举行为</span><br><span class="line"># 推荐使用 int(master_eligible_nodes / 2) + 1</span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br></pre></td></tr></table></figure></p>
+<p><strong>同理修改Master2和Master3的配置文件,注意端口不要设置冲突了,主要就是修改以下三个配置</strong></p>
+<ul>
+<li>节点名称</li>
+<li>内部通信端口</li>
+<li>服务端口</li>
+</ul>
+<h1 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  es_master cd es_master1</span><br><span class="line">➜  es_master1 ./bin/elasticsearch -d</span><br><span class="line">➜  es_master cd es_master2</span><br><span class="line">➜  es_master2 ./bin/elasticsearch -d</span><br><span class="line">➜  es_master cd es_master3</span><br><span class="line">➜  es_master3 ./bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
+<p>进入es-head查看集群情况<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/ElasticSearch/es_cluster1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="合理配置避免脑裂现象"><a href="#合理配置避免脑裂现象" class="headerlink" title="合理配置避免脑裂现象"></a>合理配置避免脑裂现象</h1><p>elasticsearch集群一旦建立起来以后，会选举出一个master，其他都为slave节点。<br>但是具体操作的时候，每个节点都提供写和读的操作。就是说，你不论往哪个节点中做写操作，这个数据也会分配到集群上的所有节点中。</p>
+<p>这里有某个节点挂掉的情况，如果是slave节点挂掉了，那么首先关心，数据会不会丢呢？不会。如果你开启了replicate，那么这个数据一定在别的机器上是有备份的。<br>别的节点上的备份分片会自动升格为这份分片数据的主分片。这里要注意的是这里会有一小段时间的yellow状态时间。</p>
+<p>如果是主节点挂掉怎么办呢？当从节点们发现和主节点连接不上了，那么他们会自己决定再选举出一个节点为主节点。<br>但是这里有个脑裂的问题，假设有5台机器，3台在一个机房，2台在另一个机房，当两个机房之间的联系断了之后，每个机房的节点会自己聚会，推举出一个主节点。<br>这个时候就有两个主节点存在了，当机房之间的联系恢复了之后，这个时候就会出现数据冲突了。<br>解决的办法就是设置参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">discovery.zen.minimum_master_nodes: int(master_eligible_nodes / 2) + 1</span><br></pre></td></tr></table></figure></p>
+<h2 id="discovery-zen-minimum-master-nodes"><a href="#discovery-zen-minimum-master-nodes" class="headerlink" title="discovery.zen.minimum_master_nodes"></a>discovery.zen.minimum_master_nodes</h2><p>这个参数决定了要选举一个Master需要多少个节点（最少候选节点数）。默认值是1。根据一般经验这个一般设置成 N/2 + 1，N是集群中Master节点的数量,并不是网上其他朋友解释的所有节点总数。<br>官网有写明：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/discovery-settings.html#minimum_master_nodes" target="_blank" rel="noopener">官方文档说明</a></p>
+<blockquote>
+<p>To prevent data loss, it is vital to configure the discovery.zen.minimum_master_nodes setting so that each master-eligible node knows the minimum number of master-eligible nodes that must be visible in order to form a cluster.<br>Without this setting, a cluster that suffers a network failure is at risk of having the cluster split into two independent clusters — a split brain — which will lead to data loss. A more detailed explanation is provided in Avoiding split brain with minimum_master_nodesedit.<br>To avoid a split brain, this setting should be set to a quorum of master-eligible nodes:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(master_eligible_nodes / 2) + 1</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>In other words, if there are three master-eligible nodes, then minimum master nodes should be set to (3 / 2) + 1 or 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">discovery.zen.minimum_master_nodes: 2</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="discovery-zen-ping-timeout"><a href="#discovery-zen-ping-timeout" class="headerlink" title="discovery.zen.ping.timeout"></a>discovery.zen.ping.timeout</h2><p>discovery.zen.ping.timeout，等待ping响应的超时时间，默认值是3秒。如果网络缓慢或拥塞，建议略微调大这个值。这个参数不仅仅适应更高的网络延迟，也适用于在一个由于超负荷而响应缓慢的节点的情况。</p>
+<p>如果您刚开始使用elasticsearch，建议搭建拥有3个Master节点的集群，这种方式可以把discovery.zen.minimum_master_nodes设置成2，这样就限制了发生脑裂现象的可能，且保持着高度的可用性：如果你设置了副本，在丢失一个节点的情况下，集群仍可运行。</p>
+<h1 id="集群选型"><a href="#集群选型" class="headerlink" title="集群选型"></a>集群选型</h1><h2 id="轻量型服务"><a href="#轻量型服务" class="headerlink" title="轻量型服务"></a>轻量型服务</h2><p>全部节点可以直接使用默认配置【node.master: true node.data: true】,让它们互相依靠,可以更高的利用集群中机器的性能。</p>
+<h2 id="高访问量服务"><a href="#高访问量服务" class="headerlink" title="高访问量服务"></a>高访问量服务</h2><p>建议集群中设置3台以上的节点作为master节点【node.master: true node.data: false】这些节点只负责成为主节点，维护整个集群的状态。<br>其他的机器作为【node.master: false node.data: true】的数据索引机器，并根据集群中索引机器数量，合理的设置shard的数量，提高并发度，降低集群压力。shard = hash(routing) % number_of_primary_shards。<br>如果觉得检索性能还有瓶颈还可以考虑加入一些client类型机器【node.master=false node.data=false】,分担负载压力。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.308Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/08/12/ElasticSearch 集群部署.html" target="_blank" rel="external">https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/全文搜索/">全文搜索</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 集群部署》 — Junxin's Blog&url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/12/ElasticSearch 安装.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ElasticSearch 安装</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/07/SpringBoot 定时任务.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SpringBoot 定时任务</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&title=《ElasticSearch 集群部署》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 集群部署》 — Junxin's Blog&url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQW6FMAxFUfa/aTpthYD7bKiEczOqfvmND5WsvCTbhsd+GL8/Pz559t3rz8+efGzIkCHjs4z9chyLIxhSLnkRpDYZMmSswzibnpd+PQ2nkhckQ4YMGZxBSudLQBkyZMjoM9Ip00UkmVeGDBkrM0iI7RRNloy8rcuQIWM1Bt91//+fXznfkCFDxqcYe3vUFnOkKQc1yJAhYzSjNgEPwP14HCxPZciQMZpRi4tk+qdCaRBfZciQMZSRboT1F5Hp4jL+P8iQIWMcgzdffv0rLZ3H3WBjToYMGSMYaQTl8ZK30QeOKGTIkLEMo9P+OKl2nHDz92XIkLEAI9iTA62zswQsXr+QIUPGAox0G46/Ar7448E4WOHKkCFjEKPWIjvl1l7WKUmGDBkLMDpXHDrHBvwl3lQiQ4aM0YxaHuQXMjqNtQiQIUPGOEZ6qau/id9prKe1yZAhYzSDH1jWGnT/u/GNNhkyZIxj1A4jSQvmVzRqIVmGDBnrMNIgWou76UFpcV4ZMmQMZdRaJ79+UdtQS7fkZMiQMZuBfo23xvrXwtIn/3xLhgwZQxl7OAigf8zAn5chQ8YKjHQTP6VyNt+q2zpDhgwZn2WkTZZPkLbj64Z7E3RlyJCxAIOn3jeOJB/L4jJkyFiekT5Zi7ivN1wZMmSMZqQHBk+1b1SPDBkyFmCkITaNrzU2D9IyZMiYzahFx6euX1yX0om7MmTIGMH4AXDVrWP6arcmAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

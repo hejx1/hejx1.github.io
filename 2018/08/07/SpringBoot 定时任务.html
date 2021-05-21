@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>SpringBoot 定时任务 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="SpringBoot,定时任务">
+    <meta name="description" content="SpringBoot自带了一个定时任务工具,不需要过多配置就可以轻松实现任务调度的功能,可以动态改变执行状态。也可以使用cron表达式设置定时任务。 代码内容1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465">
+<meta name="keywords" content="SpringBoot,定时任务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot 定时任务">
+<meta property="og:url" content="https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="SpringBoot自带了一个定时任务工具,不需要过多配置就可以轻松实现任务调度的功能,可以动态改变执行状态。也可以使用cron表达式设置定时任务。 代码内容1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot 定时任务">
+<meta name="twitter:description" content="SpringBoot自带了一个定时任务工具,不需要过多配置就可以轻松实现任务调度的功能,可以动态改变执行状态。也可以使用cron表达式设置定时任务。 代码内容1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SpringBoot 定时任务</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">SpringBoot 定时任务</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-07
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码内容"><span class="post-toc-number">1.</span> <span class="post-toc-text">代码内容</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#EnableScheduling-注解"><span class="post-toc-number">2.</span> <span class="post-toc-text">@EnableScheduling 注解</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Scheduled-注解"><span class="post-toc-number">3.</span> <span class="post-toc-text">@Scheduled 注解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Cron表达式"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Cron表达式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rate-Delay表达式（毫秒值）"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Rate/Delay表达式（毫秒值）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多线程处理定时任务"><span class="post-toc-number">4.</span> <span class="post-toc-text">多线程处理定时任务</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-SpringBoot 定时任务"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SpringBoot 定时任务</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-07 00:00:00" datetime="2018-08-06T16:00:00.000Z"  itemprop="datePublished">2018-08-07</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>SpringBoot自带了一个定时任务工具,不需要过多配置就可以轻松实现任务调度的功能,可以动态改变执行状态。也可以使用cron表达式设置定时任务。</p>
+<h1 id="代码内容"><a href="#代码内容" class="headerlink" title="代码内容"></a>代码内容</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.scheduling.annotation.EnableScheduling;</span><br><span class="line">import org.springframework.scheduling.annotation.Scheduled;</span><br><span class="line">import org.springframework.scheduling.annotation.SchedulingConfigurer;</span><br><span class="line">import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;</span><br><span class="line">import org.springframework.scheduling.config.ScheduledTaskRegistrar;</span><br><span class="line"></span><br><span class="line">import java.util.Date;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年 on 2018/8/7.</span><br><span class="line"> * 定时任务管理</span><br><span class="line"> * @desc: 当任务线程池没有空闲线程的时候,之后的任务会等待线程池空闲后才运行</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">@Configuration</span><br><span class="line">@EnableScheduling</span><br><span class="line">public class TaskManager implements SchedulingConfigurer &#123;</span><br><span class="line"></span><br><span class="line">    public static final ThreadPoolTaskScheduler threadPoolTaskSchedule = new ThreadPoolTaskScheduler();</span><br><span class="line"></span><br><span class="line">    @Scheduled(cron = &quot;0 0 2 * * *&quot;)</span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        // 每天2点执行</span><br><span class="line">        log.info(&quot; running task1...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Scheduled(cron = &quot;*/10 * * * * *&quot;)</span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        log.info(&quot; running task2 10 秒运行一次...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Scheduled(cron = &quot;*/10 * * * * *&quot;)</span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        log.info(&quot; running task3 10 秒运行一次...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Scheduled(cron = &quot;*/10 * * * * *&quot;)</span><br><span class="line">    public void task4() &#123;</span><br><span class="line">        log.info(&quot; running task4 10 秒运行一次...&quot;);</span><br><span class="line">        int a = 10 / 0; // 任务异常终止不会影响后续任务执行</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Scheduled(cron = &quot;*/10 * * * * *&quot;)</span><br><span class="line">    public void task5() &#123;</span><br><span class="line">        log.info(&quot; running task5 10 秒运行一次...&quot;);</span><br><span class="line">        Date now = new Date();</span><br><span class="line">        // 动态添加执行计划</span><br><span class="line">        for (int i = 0; i &lt; 15; i++) &#123;</span><br><span class="line">            final int num = i;</span><br><span class="line">            threadPoolTaskSchedule.schedule(new Runnable() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void run() &#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        Thread.sleep(5000);</span><br><span class="line">                    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    log.info(&quot; ==============&gt; other task num:&#123;&#125;&quot;, num);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, now);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 配置任务执行线程池</span><br><span class="line">     * @param scheduledTaskRegistrar</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) &#123;</span><br><span class="line">        log.info(&quot;==========&gt; threadPoolTaskSchedule initializing&quot;);</span><br><span class="line">        threadPoolTaskSchedule.initialize();</span><br><span class="line">        threadPoolTaskSchedule.setPoolSize(4);</span><br><span class="line">        scheduledTaskRegistrar.setScheduler(threadPoolTaskSchedule);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="EnableScheduling-注解"><a href="#EnableScheduling-注解" class="headerlink" title="@EnableScheduling 注解"></a>@EnableScheduling 注解</h1><p><strong><br>注：这里的 @EnableScheduling  注解,它的作用是发现注解 @Scheduled的任务并由后台执行。没有它的话将无法执行定时任务。<br>引用官方文档原文：@EnableScheduling ensures that a background task executor is created. Without it, nothing gets scheduled.
+</strong></p>
+<h1 id="Scheduled-注解"><a href="#Scheduled-注解" class="headerlink" title="@Scheduled 注解"></a>@Scheduled 注解</h1><p>@Scheduled接受两种定时的设置：<br>Cron表达式和Rate/Delay表达式（毫秒值）</p>
+<h2 id="Cron表达式"><a href="#Cron表达式" class="headerlink" title="Cron表达式"></a>Cron表达式</h2><p>cron的表达式是字符串，实际上是由六个子表达式，描述个别细节的时间表。这些子表达式使用空格分割，从左到右依次代表：</p>
+<ol>
+<li>Seconds</li>
+<li>Minutes</li>
+<li>Hours</li>
+<li>Day-of-Month</li>
+<li>Month</li>
+<li>Day-of-Week</li>
+</ol>
+<p>例  “0 0 12 ? * WED” 在每星期三下午12:00 执行。</p>
+<p>个别子表达式可以包含范围, 例如，在前面的例子里(“WED”)可以替换成 “MON-FRI”, “MON, WED, FRI”甚至”MON-WED,SAT”.<br>Cron表达式在线生成器：<a href="http://cron.qqe2.com/" target="_blank" rel="noopener">http://cron.qqe2.com/</a></p>
+<h2 id="Rate-Delay表达式（毫秒值）"><a href="#Rate-Delay表达式（毫秒值）" class="headerlink" title="Rate/Delay表达式（毫秒值）"></a>Rate/Delay表达式（毫秒值）</h2><ul>
+<li>@Scheduled(fixedRate = 6000)：上一次开始执行时间点后每隔6秒执行一次。</li>
+<li>@Scheduled(fixedDelay = 6000)：上一次执行完毕时间点之后6秒再执行。</li>
+<li>@Scheduled(initialDelay=1000, fixedRate=6000)：第一次延迟1秒后执行，之后按fixedRate的规则每6秒执行一次。</li>
+</ul>
+<h1 id="多线程处理定时任务"><a href="#多线程处理定时任务" class="headerlink" title="多线程处理定时任务"></a>多线程处理定时任务</h1><p>SpringBoot定时任务都是通过一个线程来处理的，我估计是在定时任务的配置中设定了一个SingleThreadScheduledExecutor，于是看了源码，从ScheduledAnnotationBeanPostProcessor类开始一路找下去。果然，在ScheduledTaskRegistrar（定时任务注册类）中的ScheduleTasks中又这样一段判断：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(this.taskScheduler == null) &#123;</span><br><span class="line">	this.localExecutor = Executors.newSingleThreadScheduledExecutor();</span><br><span class="line">	this.taskScheduler = new ConcurrentTaskScheduler(this.localExecutor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这就说明如果taskScheduler为空，那么就给定时任务做了一个单线程的线程池，正好在这个类中还有一个设置taskScheduler的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void setScheduler(@Nullable Object scheduler) &#123;</span><br><span class="line">	if(scheduler == null) &#123;</span><br><span class="line">		this.taskScheduler = null;</span><br><span class="line">	&#125; else if(scheduler instanceof TaskScheduler) &#123;</span><br><span class="line">		this.taskScheduler = (TaskScheduler)scheduler;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		if(!(scheduler instanceof ScheduledExecutorService)) &#123;</span><br><span class="line">			throw new IllegalArgumentException(&quot;Unsupported scheduler type: &quot; + scheduler.getClass());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		this.taskScheduler = new ConcurrentTaskScheduler((ScheduledExecutorService)scheduler);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样问题就很简单了，我们只需用调用这个方法显式的设置一个ScheduledExecutorService就可以达到并发的效果了。我们要做的仅仅是实现SchedulingConfigurer接口，重写configureTasks方法就OK了；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.scheduling.annotation.EnableScheduling;</span><br><span class="line">import org.springframework.scheduling.annotation.Scheduled;</span><br><span class="line">import org.springframework.scheduling.annotation.SchedulingConfigurer;</span><br><span class="line">import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;</span><br><span class="line">import org.springframework.scheduling.config.ScheduledTaskRegistrar;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年 on 2018/8/7.</span><br><span class="line"> * 定时任务管理</span><br><span class="line"> * @desc: 当任务线程池没有空闲线程的时候,之后的任务会等待线程池空闲后才运行</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">@Configuration</span><br><span class="line">@EnableScheduling</span><br><span class="line">public class TaskManager implements SchedulingConfigurer &#123;</span><br><span class="line"></span><br><span class="line">    public static final ThreadPoolTaskScheduler threadPoolTaskSchedule = new ThreadPoolTaskScheduler();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 配置任务执行线程池</span><br><span class="line">     * @param scheduledTaskRegistrar</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) &#123;</span><br><span class="line">        log.info(&quot;==========&gt; threadPoolTaskSchedule initializing&quot;);</span><br><span class="line">        threadPoolTaskSchedule.initialize();</span><br><span class="line">        threadPoolTaskSchedule.setPoolSize(4);</span><br><span class="line">        scheduledTaskRegistrar.setScheduler(threadPoolTaskSchedule);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.315Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/08/07/SpringBoot 定时任务.html" target="_blank" rel="external">https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/定时任务/">定时任务</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&title=《SpringBoot 定时任务》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&title=《SpringBoot 定时任务》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot 定时任务》 — Junxin's Blog&url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/12/ElasticSearch 集群部署.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ElasticSearch 集群部署</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/03/Linux 定时删除以前的日志文件.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 定时删除以前的日志文件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&title=《SpringBoot 定时任务》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&title=《SpringBoot 定时任务》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot 定时任务》 — Junxin's Blog&url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/07/SpringBoot 定时任务.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS27DMAxF0ex/0y7QUScW7iOVAqKuRkXi2DouQIifzwev53e9ffL8WetP3r5df75tyZAh41jGs1yEsd7o2z333keGDBk3MNZBlsDI5giGPEWGDBky+O3WW+QYfgcZMmTI6KepaYJaC+syZMi4k0GS2PVNybc8HH8xF5chQ8aBjLQx8J9/f7G/IUOGjEMYT7j4r2rPKu5KhgwZoxm8PcmHJDol/nRoI5gHkSFDxjgGT03701kkVUaHRRkyZAxldJqUta3wV1PsbMiQIWM0gxf009J/7YAYFPtkyJBxASMdg6iNTWwIrG+vTIYMGaMZadDkx8G09NZJemXIkHEzgwdQXkTrtArQfmTIkDGOkW4ubR7wVDZtQsiQIeMeRrp4+poW7HaNfciQIWMeIw2F6chXrdkQh2YZMmRcwNh1FOMluX6SjDqxMmTIGMQgg1w8aHYCdLHZIEOGjAsY/EjXvzIdL0N3kyFDxmhGLYDy1LdTtuNPlyFDxmxG2jhMj3G1Ilrc05AhQ8YFjNoRjSecPGTXinoyZMiYzUgPf5y3N1lFVBkyZAxlPOHipX9yZafxEPwfZMiQcTiDr1pprJYq18Y1ZMiQMZuRlv75W9k7rvFJT44yZMgYx+iX/gmyGO9J0JchQ4YMXFar/aqWHhcDrgwZMi5gkCNjemV6lIz7sTJkyBjBSI90cUBsV/42d2JlyJBxFCNNINOBjLTcz19cq78hQ4aMMxg/7VXRP33pQk0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

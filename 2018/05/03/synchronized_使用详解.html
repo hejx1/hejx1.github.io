@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>synchronized 使用详解 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="并发,JDK,同步锁">
+    <meta name="description" content="synchronized 是什么？线程安全是并发编程中的重要关注点，应该注意到的是，造成线程安全问题的主要诱因有两点，一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。因此为了解决这个问题，我们可能需要这样一个方案，当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访">
+<meta name="keywords" content="并发,JDK,同步锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="synchronized 使用详解">
+<meta property="og:url" content="https://smilexin.cn/2018/05/03/synchronized_使用详解.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="synchronized 是什么？线程安全是并发编程中的重要关注点，应该注意到的是，造成线程安全问题的主要诱因有两点，一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。因此为了解决这个问题，我们可能需要这样一个方案，当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.318Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="synchronized 使用详解">
+<meta name="twitter:description" content="synchronized 是什么？线程安全是并发编程中的重要关注点，应该注意到的是，造成线程安全问题的主要诱因有两点，一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。因此为了解决这个问题，我们可能需要这样一个方案，当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">synchronized 使用详解</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">synchronized 使用详解</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#synchronized-是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">synchronized 是什么？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#同步代码块"><span class="post-toc-number">2.</span> <span class="post-toc-text">同步代码块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码示例"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">代码示例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用同一个对象进行调用"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">使用同一个对象进行调用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#代码"><span class="post-toc-number">2.1.1.1.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#运行结果"><span class="post-toc-number">2.1.1.2.</span> <span class="post-toc-text">运行结果</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用不同对象进行调用"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">使用不同对象进行调用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#代码-1"><span class="post-toc-number">2.1.2.1.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#运行结果-1"><span class="post-toc-number">2.1.2.2.</span> <span class="post-toc-text">运行结果</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结论"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">结论</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#同步方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">同步方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码示例-1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">代码示例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用同一对象进行调用"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">使用同一对象进行调用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#代码-2"><span class="post-toc-number">3.1.1.1.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#运行结果-2"><span class="post-toc-number">3.1.1.2.</span> <span class="post-toc-text">运行结果</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用不同对象进行调用-1"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">使用不同对象进行调用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#代码-3"><span class="post-toc-number">3.1.2.1.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#运行结果-3"><span class="post-toc-number">3.1.2.2.</span> <span class="post-toc-text">运行结果</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结论-1"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">结论</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#synchronized修饰静态方法"><span class="post-toc-number">4.</span> <span class="post-toc-text">synchronized修饰静态方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码示例-2"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">代码示例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行结果-4"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">运行结果</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论-2"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">结论</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#synchronized修饰类"><span class="post-toc-number">5.</span> <span class="post-toc-text">synchronized修饰类</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#synchronized关键字的继承问题"><span class="post-toc-number">6.</span> <span class="post-toc-text">synchronized关键字的继承问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#释放同步监视器的锁定"><span class="post-toc-number">7.</span> <span class="post-toc-text">释放同步监视器的锁定</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#synchronized-可见性"><span class="post-toc-number">8.</span> <span class="post-toc-text">synchronized 可见性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原子性对比"><span class="post-toc-number">9.</span> <span class="post-toc-text">原子性对比</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-synchronized_使用详解"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">synchronized 使用详解</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="synchronized-是什么？"><a href="#synchronized-是什么？" class="headerlink" title="synchronized 是什么？"></a>synchronized 是什么？</h1><p>线程安全是并发编程中的重要关注点，应该注意到的是，造成线程安全问题的主要诱因有两点，一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。因此为了解决这个问题，我们可能需要这样一个方案，当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。在 Java 中，关键字 synchronized可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时我们还应该注意到synchronized另外一个重要的作用，synchronized可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，可以替代Volatile功能），这点确实也是很重要的。</p>
+<p>synchronized修饰的对象主要有4种。</p>
+<ul>
+<li>修饰代码块：被修饰的代码称为<strong>同步代码块</strong>，线程开始执行同步代码块之前，必须先获得对同步监视器的锁定。任何时刻只能有一个线程可以获得对同步监视器的锁定，当同步代码块执行完成后，该线程会释放对该同步监视器的锁定。虽然java程序允许使用任何对象作为同步监视器，但 是同步监视器的目的就是为了阻止两个线程对同一个共享资源进行并发访问，因此通常推荐使用可能被并发访问的共享资源充当同步监视器。</li>
+<li>修饰方法：被修饰的方法称为<strong>同步方法</strong>，它作用的范围是整个方法，同步监视器的作用对象是<strong>调用这个方法的对象</strong></li>
+<li>修饰静态方法：作用范围是整个静态方法，同步监视器的作用对象是<strong>这个类的所有对象</strong></li>
+<li>修饰类：作用的范围是synchronized后面括号括起来的部分，同步监视器的作用对象<strong>是这个类的所有对象</strong></li>
+</ul>
+<h1 id="同步代码块"><a href="#同步代码块" class="headerlink" title="同步代码块"></a>同步代码块</h1><p>为了解决并发操作可能造成的异常，java的多线程支持引入了同步监视器来解决这个问题，使用同步监视器的通用方法就是同步代码块。其语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(obj)&#123;</span><br><span class="line">    //同步代码块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中obj就是同步监视器，它的含义是：线程开始执行同步代码块之前，必须先获得对同步监视器的锁定。任何时刻只能有一个线程可以获得对同步监视器的锁定，当同步代码块执行完成后，该线程会释放对该同步监视器的锁定。虽然java程序允许使用任何对象作为同步监视器，但是同步监视器的目的就是为了阻止两个线程对同一个共享资源进行并发访问，因此通常推荐使用可能被并发访问的共享资源充当同步监视器。</p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>示例代码同步监视器指定的是this，也就是调用该方法的对象</p>
+<h3 id="使用同一个对象进行调用"><a href="#使用同一个对象进行调用" class="headerlink" title="使用同一个对象进行调用"></a>使用同一个对象进行调用</h3><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public void test1()&#123;</span><br><span class="line">        /**</span><br><span class="line">        * 修饰一个代码块</span><br><span class="line">        * 作用范围：大括号括起的代码</span><br><span class="line">        * 作用对象：调用同步代码块的对象</span><br><span class="line">        **/</span><br><span class="line">        synchronized (this)&#123;</span><br><span class="line">            for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                log.info(&quot;test1 &#123;&#125;&quot;, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        /**</span><br><span class="line">        * 为了达到演示效果这里使用线程池来执行</span><br><span class="line">        **/</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test1();</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test1();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2018-05-03 11:08:47.791  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 0</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 3</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 4</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 5</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 6</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 7</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 8</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 9</span><br><span class="line">2018-05-03 11:08:47.795  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 0</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 3</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 4</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 5</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 6</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 7</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 8</span><br><span class="line">2018-05-03 11:08:47.796  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 9</span><br></pre></td></tr></table></figure>
+<h3 id="使用不同对象进行调用"><a href="#使用不同对象进行调用" class="headerlink" title="使用不同对象进行调用"></a>使用不同对象进行调用</h3><h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public void test1(int objN)&#123;</span><br><span class="line">        synchronized (this)&#123;</span><br><span class="line">            for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                log.info(&quot;test1 &#123;&#125; - &#123;&#125;&quot;, objN, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        SynchronizedExample1 example2 = new SynchronizedExample1();</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test1(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example2.test1(2);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2018-05-03 11:13:37.957  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 0</span><br><span class="line">2018-05-03 11:13:37.957  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 0</span><br><span class="line">2018-05-03 11:13:37.961  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 1</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 1</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 2</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 2</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 3</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 3</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 4</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 4</span><br><span class="line">2018-05-03 11:13:37.962  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 5</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 5</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 6</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 6</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 7</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 7</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 8</span><br><span class="line">2018-05-03 11:13:37.963  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 8</span><br><span class="line">2018-05-03 11:13:37.964  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    20 : test1 1 - 9</span><br><span class="line">2018-05-03 11:13:37.964  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    20 : test1 2 - 9</span><br></pre></td></tr></table></figure>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>结果正如我所料，因为这里同步监视器指定的是this，也就是调用该方法的对象，所以如果使用<strong>不同的对象调用同步代码块的时候，不同调用对象之间是相互不影响的</strong></p>
+<h1 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h1><p>同步方法就是使用synchronized关键字修饰某个方法，这个方法就是同步方法。这个同步方法(非static方法)无须显式指定同步监视器，同步方法的同步监视器是this，也就是调用该方法的对象。通过同步方法可以非常方便的实现线程安全的类，线程安全的类有如下特征：</p>
+<ul>
+<li>属于该类的共享对象可以方便的被多个线程安全的访问</li>
+<li>每个线程调用该对象的任意方法之后都能得到正确的结果</li>
+<li>每个线程调用该对象的任意方法之后，该对象状态依然能保持合理状态</li>
+</ul>
+<h2 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="使用同一对象进行调用"><a href="#使用同一对象进行调用" class="headerlink" title="使用同一对象进行调用"></a>使用同一对象进行调用</h3><h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public synchronized void test2()&#123;</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">            log.info(&quot;test2 &#123;&#125;&quot;, i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        SynchronizedExample1 example2 = new SynchronizedExample1();</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test2();</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test2();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行结果-2"><a href="#运行结果-2" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2018-05-03 11:41:11.313  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 0</span><br><span class="line">2018-05-03 11:41:11.316  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 3</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 4</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 5</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 6</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 7</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 8</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 9</span><br><span class="line">2018-05-03 11:41:11.317  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 0</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 3</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 4</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 5</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 6</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 7</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 8</span><br><span class="line">2018-05-03 11:41:11.318  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 9</span><br></pre></td></tr></table></figure>
+<h3 id="使用不同对象进行调用-1"><a href="#使用不同对象进行调用-1" class="headerlink" title="使用不同对象进行调用"></a>使用不同对象进行调用</h3><h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public synchronized void test2(int objN)&#123;</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">            log.info(&quot;test2 &#123;&#125; - &#123;&#125;&quot;, objN, i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        SynchronizedExample1 example2 = new SynchronizedExample1();</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test2(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example2.test2(2);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行结果-3"><a href="#运行结果-3" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2018-05-03 11:40:17.423  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 0</span><br><span class="line">2018-05-03 11:40:17.425  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 0</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 1</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 1</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 2</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 2</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 3</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 3</span><br><span class="line">2018-05-03 11:40:17.433  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 4</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 4</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 5</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 5</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 6</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 6</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 7</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 7</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 8</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 8</span><br><span class="line">2018-05-03 11:40:17.434  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 9</span><br><span class="line">2018-05-03 11:40:17.435  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 9</span><br></pre></td></tr></table></figure>
+<h3 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h3><p>同步方法的同步监视器是作用于<strong>调用方法的对象</strong>，多个调用对象之间是互相不影响的。</p>
+<h1 id="synchronized修饰静态方法"><a href="#synchronized修饰静态方法" class="headerlink" title="synchronized修饰静态方法"></a>synchronized修饰静态方法</h1><h2 id="代码示例-2"><a href="#代码示例-2" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public static synchronized void test2(int objN)&#123;</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">            log.info(&quot;test2 &#123;&#125; - &#123;&#125;&quot;, objN, i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        SynchronizedExample1 example2 = new SynchronizedExample1();</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test2(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example2.test2(2);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="运行结果-4"><a href="#运行结果-4" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2018-05-03 14:08:29.922  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 0</span><br><span class="line">2018-05-03 14:08:29.927  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 1</span><br><span class="line">2018-05-03 14:08:29.927  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 2</span><br><span class="line">2018-05-03 14:08:29.927  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 3</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 4</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 5</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 6</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 7</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 8</span><br><span class="line">2018-05-03 14:08:29.928  INFO [pool-2-thread-1] com.hejx.tes.sync.SynchronizedExample1    19 : test2 1 - 9</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 0</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 1</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 2</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 3</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 4</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 5</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 6</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 7</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 8</span><br><span class="line">2018-05-03 14:08:29.929  INFO [pool-2-thread-2] com.hejx.tes.sync.SynchronizedExample1    19 : test2 2 - 9</span><br></pre></td></tr></table></figure>
+<h2 id="结论-2"><a href="#结论-2" class="headerlink" title="结论"></a>结论</h2><p>因为synchronized修饰静态方法的时候，同步监视器的作用对象是<strong>这个类的所有对象</strong>，所以同一时刻只会有一个线程调用synchronized修饰的静态方法。</p>
+<h1 id="synchronized修饰类"><a href="#synchronized修饰类" class="headerlink" title="synchronized修饰类"></a>synchronized修饰类</h1><p>synchronized修饰类的同步监视器的作用对象也是<strong>这个类的所有对象</strong>,所以其造成的效果同synchronized修饰静态方法的效果是相同的，这里我偷下懒就写下相应的语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class SynchronizedExample1 &#123;</span><br><span class="line"></span><br><span class="line">    public void test2(int objN)&#123;</span><br><span class="line">        synchronized(SynchronizedExample1.class) &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                log.info(&quot;test2 &#123;&#125; - &#123;&#125;&quot;, objN, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample1 example1 = new SynchronizedExample1();</span><br><span class="line">        SynchronizedExample1 example2 = new SynchronizedExample1();</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example1.test2(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            example2.test2(2);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="synchronized关键字的继承问题"><a href="#synchronized关键字的继承问题" class="headerlink" title="synchronized关键字的继承问题"></a>synchronized关键字的继承问题</h1><p>我发现许多地方提及<strong>synchronized的关键字不能被继承</strong>，但是通过实验发现synchronized的关键字是能够被继承的。</p>
+<p>其实真相是这样的，“synchronized不能被继承”，这句话有2种不同意思，一种是比较正常的、很容易让人想到的意思；另一种是“不正常的”或者说是“java中文界”广泛认同了的意思。</p>
+<p>第一种理解方式（错误的）：<strong>父类中有个synchronized方法，子类继承了父类，但子类没覆写该方法。通过子类实例来使用该方法时，按“synchronized不能被继承”，意思就为：该子类的该方法就变成了非synchronized方法。</strong></p>
+<p>第二种理解方式：<strong>synchronized并不属于方法定义的一部分，不能被继承。子类覆写了该方法，如果在覆写时不明确写上synchronized，那这个方法就不是synchronized。换句话说，虽然继承了，但是没把synchronized继承下来，也就意味着“synchronized不能被继承”。</strong></p>
+<p>总的来说：<strong>synchronized方法，一定要显示标明，它是不能隐式标明的</strong></p>
+<h1 id="释放同步监视器的锁定"><a href="#释放同步监视器的锁定" class="headerlink" title="释放同步监视器的锁定"></a>释放同步监视器的锁定</h1><p>任何线程进入同步代码块，同步方法之前，必须先获得对同步监视器的锁定，那么如何释放对同步监视器的锁定呢，线程会在一下几种情况下释放同步监视器：</p>
+<ul>
+<li>当前线程的同步方法、同步代码块执行结束，当前线程即释放同步监视器；</li>
+<li>当前线程在同步代码块、同步方法中遇到break,return终止了该代码块、方法的继续执行；</li>
+<li>当前线程在同步代码块、同步方法中出现了未处理的Error或Exception，导致了该代码块、方法的异常结束；</li>
+<li>当前线程执行同步代码块或同步方法时，程序执行了同步监视器对象的wait()方法，则当前线程暂停，并释放同步监视器；</li>
+</ul>
+<p><strong>以下几种情况，线程不会释放同步监视器：</strong></p>
+<ul>
+<li>线程执行同步代码块或同步方法时，程序调用Thread.sleep(),Thread.yield()方法来暂停当前线程的执行，当前线程不会释放同步监视器</li>
+<li>线程执行同步代码块时，其他线程调用了该线程的suspend()方法将该线程挂起，该线程不会释放同步监视器，当然，程序应尽量避免使用suspend()和resume()方法来控制线程</li>
+</ul>
+<h1 id="synchronized-可见性"><a href="#synchronized-可见性" class="headerlink" title="synchronized 可见性"></a>synchronized 可见性</h1><p>synchronized 可见性主要依靠JMM关于synchronized的两条规定</p>
+<ul>
+<li>线程解锁前，必须把共享变量的最新值刷新到主内存</li>
+<li>线程加锁时，将清空工作内存中共享变量的值，从而使用共享变量时需要从主内存中重新读取最新的值（<strong>注意：加锁与解锁是同一把锁</strong>）</li>
+</ul>
+<h1 id="原子性对比"><a href="#原子性对比" class="headerlink" title="原子性对比"></a>原子性对比</h1><ul>
+<li><strong>synchronized是不可中断的锁</strong>，当代码执行到synchronized作用范围之内的时候是必须等待代码执行完的。</li>
+<li><strong>lock是可中断的锁</strong>，只要调用了unlock就可以解锁了。</li>
+<li>synchronized在竞争激烈的时候性能下降会特别的快，synchronized适合竞争不激烈的时候进行使用，可读性较好。</li>
+<li>lock在竞争激烈的时候依然能保持常态，编码时需要注意lock与unlock的一一对应关系。</li>
+<li>Atomic：竞争激烈的时候也能维持常态，性能比lock还要好，但是只能维护一个值。</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.318Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/03/synchronized_使用详解.html" target="_blank" rel="external">https://smilexin.cn/2018/05/03/synchronized_使用详解.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步锁/">同步锁</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/10/ReentrantLock与synchronized的区别.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ReentrantLock与synchronized的区别</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/03/单例模式详解.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">单例模式详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aQXbCMAwFwNz/0nTbTcyX7PQ19mTFg0A0XgjL0nXF12d45ff//nT8reuJCwMD47WMJMQ89Lt3xr+QP/c2BgwMjAMY47DGDx6/U82N+S9gYGBgrGX0QsfAwMDoMfJA8yXopWwMDIzTGKsOyMalbLJYj9fiGBgYL2Tkp+5///qR/gYGBsarGJ/iVd3qzSTcQlQYGBhbM/IElweab9167NunYGBgbMrI02hepubH/UlrISqMMTAwjmesTazVJBtFiIGBcQCjV4ImybTKyxsSGBgYpzGq28HqPclJfjU1f6nCMTAwtmOM0+78MER1+DUfisXAwDiB8VxjID8+m2k5PN7fwMDA+AeM8kBD60AtT+vJkd9tCxMDA+MAxhVfOTIvRPO2xJciFgMDYztGrwHQe+RMG6Cw0BgYGJsyeoMO+T0zsHz4AwMDY29G9bC+WqAmQeTla2HfioGBsRFj/ri/WgyvKoCn/jcwMDBezsi3cb0Qq4duhckRDAyMrRnV5mU+wtUbCyuXzRgYGMcw5mEz1GpjAAMD4zRGr7lYTZe9+6NNJwYGxqaMT/HqtRlmtpjRUmJgYGzNmAkrGRGrfpo0JBa0OTEwMF7ISEJMCtQ87VYHOJatNAYGxssZvWGLeXxvUAMDAwOjx8j3nqtapBgYGBg9Rv46325GJAwMjAMYSXBrD/qri/IFjIGBsTWjWjomSXbmKC1vJ2BgYBzA+AE99kupetJNdAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MongoDB 简介 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MongoDB">
+    <meta name="description" content="MongoDB简介 MongoDB是一个开源的，基于分布式的，面向文档存储的非关系型数据库。是非关系型数据库当中功能最丰富、最像关系数据库的。 MongoDB由C++编写，其名字来源于”humongous”这个单词，其宗旨在于处理大量数据。 MongoDB可以运行在Windows、unix、OSX、Solaris系统上，支持32位和64位应用，提供多种编程语言的驱动程序。 MongoDB支持的数据">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 简介">
+<meta property="og:url" content="https://smilexin.cn/2017/10/28/MongoDB 简介.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="MongoDB简介 MongoDB是一个开源的，基于分布式的，面向文档存储的非关系型数据库。是非关系型数据库当中功能最丰富、最像关系数据库的。 MongoDB由C++编写，其名字来源于”humongous”这个单词，其宗旨在于处理大量数据。 MongoDB可以运行在Windows、unix、OSX、Solaris系统上，支持32位和64位应用，提供多种编程语言的驱动程序。 MongoDB支持的数据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-14T12:23:54.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB 简介">
+<meta name="twitter:description" content="MongoDB简介 MongoDB是一个开源的，基于分布式的，面向文档存储的非关系型数据库。是非关系型数据库当中功能最丰富、最像关系数据库的。 MongoDB由C++编写，其名字来源于”humongous”这个单词，其宗旨在于处理大量数据。 MongoDB可以运行在Windows、unix、OSX、Solaris系统上，支持32位和64位应用，提供多种编程语言的驱动程序。 MongoDB支持的数据">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MongoDB 简介</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MongoDB 简介</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-10-28
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MongoDB简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">MongoDB简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MongoDB的特性"><span class="post-toc-number">2.</span> <span class="post-toc-text">MongoDB的特性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MongoDB的适用场景"><span class="post-toc-number">3.</span> <span class="post-toc-text">MongoDB的适用场景</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MongoDB不适用场景"><span class="post-toc-number">4.</span> <span class="post-toc-text">MongoDB不适用场景</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MongoDB 简介"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MongoDB 简介</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-28 00:00:00" datetime="2017-10-27T16:00:00.000Z"  itemprop="datePublished">2017-10-28</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="MongoDB简介"><a href="#MongoDB简介" class="headerlink" title="MongoDB简介"></a>MongoDB简介</h1><ul>
+<li>MongoDB是一个开源的，基于分布式的，面向文档存储的非关系型数据库。是非关系型数据库当中功能最丰富、最像关系数据库的。</li>
+<li>MongoDB由C++编写，其名字来源于”humongous”这个单词，其宗旨在于处理大量数据。</li>
+<li>MongoDB可以运行在Windows、unix、OSX、Solaris系统上，支持32位和64位应用，提供多种编程语言的驱动程序。</li>
+<li>MongoDB支持的数据结构非常松散，是类似json的BSON格式，通过键值对的形式存储数据，可以存储复杂的数据类型。</li>
+<li>MongoDB支持的数据类型有：null、boolean、String、objectId、32位整数、64位整数、64位浮点数、日期、正则表达式、js代码、二进制数据、数组、内嵌文档、最大值、最小值、未定义类型。</li>
+</ul>
+<p>其中，内嵌文档我理解的并不是.doc.txt等文件，这里所指的文档是MongoDB的一个存储单元(相当于关系型数据当中的记录)，在MongoDB中的表现形式为{key1:value1，key2：value2}，而内嵌文档则是这样的形式{key1:value1,key2:{key2.1:value2.1,key2.2:value2.2}}。<br>mongoDB最大的特点是他支持的查询语言非常强大，其语法有点类似于面向对象的查询语言，几乎可以实现类似关系数据库单表查询的绝大部分功能，而且还支持对数据建立索引。</p>
+<h1 id="MongoDB的特性"><a href="#MongoDB的特性" class="headerlink" title="MongoDB的特性"></a>MongoDB的特性</h1><ol>
+<li>面向集合存储。数据被分组到若干集合，每个集合可以包含无限个文档，可以将集合想象成RDBMS的表，区别是集合不需要进行模式定义。</li>
+<li>模式自由。集合中没有行和列的概念，每个文档可以有不同的key，key的值不要求一致的数据类型。</li>
+<li>支持动态查询。MongoDB支持丰富的查询表达式，查询指令使用json形式表达式。</li>
+<li>完整的索引支持。MongoDB的查询优化器会分析查询表达式，并生成一个高效的查询计划。</li>
+<li>高效的数据存储，支持二进制数据及大型对象（图片、视频等）。</li>
+<li>支持复制和故障恢复。</li>
+<li>自动分片以支持云级别的伸缩性，支持水平的数据库集群，可动态添加额外的服务器。</li>
+</ol>
+<h1 id="MongoDB的适用场景"><a href="#MongoDB的适用场景" class="headerlink" title="MongoDB的适用场景"></a>MongoDB的适用场景</h1><ol>
+<li>适合作为信息基础设施的持久化缓存层</li>
+<li>适合实时的插入、更新与查询，并具备应用程序实时数据存储所需的复制及高度伸缩性</li>
+<li>适合文档化格式的存储及查询</li>
+<li>适合由数十或数百台服务器组成的数据库</li>
+</ol>
+<h1 id="MongoDB不适用场景"><a href="#MongoDB不适用场景" class="headerlink" title="MongoDB不适用场景"></a>MongoDB不适用场景</h1><ol>
+<li>要求高度事务性的系统。例如对于银行或会计等需要大量原子性复杂事物的应用程序来说，还是需要关系型数据库的。</li>
+<li>传统的商业智能应用</li>
+<li>复杂的表级联查询</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-05-14T12:23:54.116Z" itemprop="dateUpdated">2021-05-14 20:23:54</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/10/28/MongoDB 简介.html" target="_blank" rel="external">https://smilexin.cn/2017/10/28/MongoDB 简介.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&title=《MongoDB 简介》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&title=《MongoDB 简介》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/10/28/MongoDB 简介.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MongoDB 简介》 — Junxin's Blog&url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/11/07/观察者模式.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">观察者模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/02/Redis中的事务.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Redis中的事务</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&title=《MongoDB 简介》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&title=《MongoDB 简介》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/10/28/MongoDB 简介.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MongoDB 简介》 — Junxin's Blog&url=https://smilexin.cn/2017/10/28/MongoDB 简介.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/10/28/MongoDB 简介.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3azW6rQAwG0Lz/S6fbSBXDZ5tUZTisrsgFfLqw/DOvV3y9P67fdz7vr///0a/r+5ddGBgYt2W8l1fy4fWbk68k313/4TAwMJ7ASIJIfj352PJt6zR9EjMGBgZGsfjLQ0yKSAwMDIweI0/E1VIPAwMDY9LE5kXhpMT8ei+OgYFxQ0Y+df/7f39lv4GBgXErxmRYv35DkkDz0dtJVBgYGFsz8gQ3bztHDWpw+AMDA2NXRnJ4Yp4QqyuBclQYGBgPYPQSX37AYjK2i0Z1GBgYWzPy4ObFYvU9Fy8AMDAwbs5IHp4sGtfFZa99xcDAeBqj18QmYX2jZcXAwHgaozfEz4f7vYNi+U7jcDGAgYGxHSNvPudrgMJmNU/xGBgYWzMmRWGOLKTO4ur0gtoWAwPj3zPylrK6VsxTee+gGAYGxjMZvTIuScH5U70UjIGBsTejmijnzWf1DeV1JgYGxtaM6sPzgX6vEByFjoGBcXPGVe1odSTXA5enhhgYGDdnVAvBya/ztcFhtBgYGA9gzBNuL/QqKerCMTAwNmVMxluTtjZ/9uQpDAyMTRm9A6lJQZmH2FtqYmBgPIdx1TJgAl6n9erxCwwMjF0ZSZLtBZenzl6yjipHDAyMjRh54ksWmZOyrxctBgYGxlUjua+sBDAwMDCKxVz1TjX08n4DAwNjI0b1KGrymXwYl6fpw6cwMDC2ZlQLvnwxOV9bNstEDAyMfRg/Cp28KvQ8XA8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

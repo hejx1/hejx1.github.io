@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Dubbo demo项目 (四) 定义业务中心配置文件 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Dubbo">
+    <meta name="description" content="业务实现类实现remoteapi中的IMessage接口 定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少年 *">
+<meta name="keywords" content="Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo demo项目 (四) 定义业务中心配置文件">
+<meta property="og:url" content="https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="业务实现类实现remoteapi中的IMessage接口 定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少年 *">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/dubbo/1.png">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.307Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo demo项目 (四) 定义业务中心配置文件">
+<meta name="twitter:description" content="业务实现类实现remoteapi中的IMessage接口 定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少年 *">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/dubbo/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Dubbo demo项目 (四) 定义业务中心配置文件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Dubbo demo项目 (四) 定义业务中心配置文件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#业务实现类"><span class="post-toc-number">1.</span> <span class="post-toc-text">业务实现类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义-Message-接口实现类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">定义 Message 接口实现类</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定义业务中心配置文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">定义业务中心配置文件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#项目结构图"><span class="post-toc-number">3.</span> <span class="post-toc-text">项目结构图</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Dubbo_demo项目（四)"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Dubbo demo项目 (四) 定义业务中心配置文件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="业务实现类"><a href="#业务实现类" class="headerlink" title="业务实现类"></a>业务实现类</h1><p>实现remoteapi中的IMessage接口</p>
+<h2 id="定义-Message-接口实现类"><a href="#定义-Message-接口实现类" class="headerlink" title="定义 Message 接口实现类"></a>定义 Message 接口实现类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package cn.hejx.service.impl;</span><br><span class="line"></span><br><span class="line">import cn.hejx.IMessage;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> *</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017-06-30 16:07</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">public class MessageImpl implements IMessage&#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String echo(String msg) &#123;</span><br><span class="line">        return &quot;ECHO:&quot; + msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时 <strong>MessageImpl</strong> 程序类定义的 Bean 的名称为 <strong>messageImpl</strong> ,首字母小写</p>
+<h1 id="定义业务中心配置文件"><a href="#定义业务中心配置文件" class="headerlink" title="定义业务中心配置文件"></a>定义业务中心配置文件</h1><ol>
+<li>在一个真实的项目之中必须要去考虑各种可能出现的不同的项目环境，所以一般会建立一个profiles目录，在这个目录下我们建立若干个子目录，例如：dev、beta、product</li>
+</ol>
+<ul>
+<li>“src/main/profiles/dev” ：描述开发环境下的相关属性</li>
+<li>“src/main/profiles/beta” ：描述测试环境下的相关属性</li>
+<li>“src/main/profiles/product” ：描述生产环境下的相关属性</li>
+</ul>
+<ol start="2">
+<li>由于本次项目使用了 logback 日志组件,所以还需要有一个 logback.xml 的配置文件存在,这个文件可以直接保存在 “src/main/profiles/{dev,beta,product}” 目录下</li>
+<li>在 “src/main/profiles/{dev,beta,product}/config” 目录,里面保存所有的 *.properties 文件</li>
+<li>定义一个 dubbo.properties 文件,主要的功能是进行 dubbo 相关的配置,而在实际开发之中还需要定义一个 database.properties 文件,进行数据库的连接项的信息配置</li>
+</ol>
+<p>建立一个 “src/main/resources” 目录，在这个目录之中一定要有一个 META-INF 的目录，里面可以保存具体的配置文件，例如：如果现在需要定义的是所有的 Spring 配置文件，那么可以将其目录设置为“src/main/resources/META-INF/spring”</p>
+<blockquote>
+<p>默认情况下 Dubbo 在进行配置文件加载的时候使用的就是 META-INF 作为加载配置文件的标记</p>
+</blockquote>
+<p>将之前建立的 resources 目录和 profiles/xx 目录设置为资源根目录</p>
+<p>修改 service/pom.xml 配置文件,重点在于构建 profile 编译的相关处理操作</p>
+<p>1.增加一个环境属性,描述 profile 的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;profiles.dir&gt;src/main/profiles&lt;/profiles.dir&gt;</span><br><span class="line">    &lt;maven.jar.plugin.version&gt;3.0.2&lt;/maven.jar.plugin.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure>
+<p>2.在 pom.xml 里面追加 profiles 和 resources 定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;profiles&gt;</span><br><span class="line">    &lt;profile&gt;</span><br><span class="line">        &lt;id&gt;dev&lt;/id&gt;</span><br><span class="line">        &lt;properties&gt;</span><br><span class="line">            &lt;profile.dir&gt;$&#123;profiles.dir&#125;/dev&lt;/profile.dir&gt;</span><br><span class="line">        &lt;/properties&gt;</span><br><span class="line">        &lt;activation&gt;</span><br><span class="line">            &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;</span><br><span class="line">        &lt;/activation&gt;</span><br><span class="line">    &lt;/profile&gt;</span><br><span class="line">    &lt;profile&gt;</span><br><span class="line">        &lt;id&gt;beta&lt;/id&gt;</span><br><span class="line">        &lt;properties&gt;</span><br><span class="line">            &lt;profile.dir&gt;$&#123;profiles.dir&#125;/beta&lt;/profile.dir&gt;</span><br><span class="line">        &lt;/properties&gt;</span><br><span class="line">        &lt;activation&gt;</span><br><span class="line">            &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;</span><br><span class="line">        &lt;/activation&gt;</span><br><span class="line">    &lt;/profile&gt;</span><br><span class="line">    &lt;profile&gt;</span><br><span class="line">        &lt;id&gt;product&lt;/id&gt;</span><br><span class="line">        &lt;properties&gt;</span><br><span class="line">            &lt;profile.dir&gt;$&#123;profiles.dir&#125;/product&lt;/profile.dir&gt;</span><br><span class="line">        &lt;/properties&gt;</span><br><span class="line">        &lt;activation&gt;</span><br><span class="line">            &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;</span><br><span class="line">        &lt;/activation&gt;</span><br><span class="line">    &lt;/profile&gt;</span><br><span class="line">&lt;/profiles&gt;</span><br><span class="line"></span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">    &lt;/resource&gt;</span><br><span class="line">    &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;$&#123;profile.dir&#125;&lt;/directory&gt;</span><br><span class="line">        &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">    &lt;/resource&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+<p>3.在 “src/main/resources/META-INF/spring” 目录下创建 spring-common.xml 配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置 Annotation 扫描包 --&gt;</span><br><span class="line">    &lt;context:component-scan base-package=&quot;cn.hejx.service&quot; /&gt;</span><br><span class="line">    &lt;!-- 定义所有要导入的属性文件的路径 --&gt;</span><br><span class="line">    &lt;context:property-placeholder location=&quot;classpath:config/*.properties&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>4.编辑 dubbo.properties 配置文件,追加相关的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 定义当前业务中心操作业务的名称</span><br><span class="line">dubbo.application.name=hejx-service</span><br><span class="line"># 定义dubbo的注册中心的地址项,本次利用ZooKeeper进行的dubbo数据保存</span><br><span class="line">dubbo.registry.address=zookeeper://192.168.2.233:2181</span><br><span class="line"># 定义dubbo在哪个端口上要进行服务的发布,10000以上随便写</span><br><span class="line">dubbo.protocol.port=19372</span><br><span class="line"># 要进行的是远程调用,那么就一定会有一个超时时间的问题</span><br><span class="line">dubbo.provider.timeout=3000</span><br><span class="line"># 定义远程服务的操作版本</span><br><span class="line">dubbo.interface.version=dev</span><br></pre></td></tr></table></figure>
+<p>5.在 “src/main/resources/META-INF/spring” 目录下创建 spring-dubbo.xml 配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xmlns:dubbo=&quot;http://code.alibabatech.com/schema/dubbo&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 定义当前应用的名称,主要是用于注册中心的信息保存,这个名称可以任意填写 --&gt;</span><br><span class="line">    &lt;dubbo:application name=&quot;$&#123;dubbo.application.name&#125;&quot; /&gt;</span><br><span class="line">    &lt;!-- 定义dubbo注册中心的地址 --&gt;</span><br><span class="line">    &lt;dubbo:registry protocol=&quot;zookeeper&quot; address=&quot;$&#123;dubbo.registry.address&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 定义dubbo所在的服务,执行时暴露给客户端的端口 --&gt;</span><br><span class="line">    &lt;dubbo:protocol name=&quot;dubbo&quot; port=&quot;$&#123;dubbo.protocol.port&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 定义远程服务提供者操作的超时时间 --&gt;</span><br><span class="line">    &lt;dubbo:provider timeout=&quot;$&#123;dubbo.provider.timeout&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 定义dubbo的远程服务的接口,这个接口定义的时候需要考虑到一个版本问题 --&gt;</span><br><span class="line">    &lt;dubbo:service interface=&quot;cn.hejx.remoteapi.IMessage&quot; ref=&quot;messageImpl&quot; version=&quot;$&#123;dubbo.interface.version&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>6.logback.xml 配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置IP地址 --&gt;</span><br><span class="line">    &lt;!--&lt;conversionRule conversionWord=&quot;ip&quot; converterClass=&quot;com.xyk.util.log4j.IpConvert&quot; /&gt;--&gt;</span><br><span class="line">    &lt;!-- Console 输出格式 --&gt;</span><br><span class="line">    &lt;property name=&quot;CONSOLE_LOG_PATTERN&quot;</span><br><span class="line">              value=&quot;%date&#123;yyyy-MM-dd HH:mm:ss&#125; %boldGreen | %highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 文件输出格式 --&gt;</span><br><span class="line">    &lt;property name=&quot;FILE_LOG_PATTERN&quot;</span><br><span class="line">              value=&quot;===%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %-5level %logger Line:%-3L - %msg%n&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Console 输出设置 --&gt;</span><br><span class="line">    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;</span><br><span class="line">                $&#123;CONSOLE_LOG_PATTERN&#125;</span><br><span class="line">            &lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;UTF-8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息--&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;</span><br><span class="line">            &lt;level&gt;debug&lt;/level&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--</span><br><span class="line">       说明：</span><br><span class="line">       1、日志级别及文件</span><br><span class="line">           日志记录采用分级记录，级别与日志文件名相对应，不同级别的日志信息记录到不同的日志文件中</span><br><span class="line">           例如：error级别记录到log_error_xxx.log或log_error.log（该文件为当前记录的日志文件），而log_error_xxx.log为归档日志，</span><br><span class="line">           日志文件按日期记录，同一天内，若日志文件大小等于或大于2M，则按0、1、2...顺序分别命名</span><br><span class="line">           例如log-level-2013-12-21.0.log</span><br><span class="line">           其它级别的日志也是如此。</span><br><span class="line">       2、文件路径</span><br><span class="line">           若开发、测试用，在Eclipse中运行项目，则到Eclipse的安装路径查找logs文件夹，以相对路径../logs。</span><br><span class="line">           若部署到Tomcat下，则在Tomcat下的logs文件中</span><br><span class="line">       3、Appender</span><br><span class="line">           FILEERROR对应error级别，文件名以log-error-xxx.log形式命名</span><br><span class="line">           FILEWARN对应warn级别，文件名以log-warn-xxx.log形式命名</span><br><span class="line">           FILEINFO对应info级别，文件名以log-info-xxx.log形式命名</span><br><span class="line">           FILEDEBUG对应debug级别，文件名以log-debug-xxx.log形式命名</span><br><span class="line">           stdout将日志信息输出到控制上，为方便开发测试使用</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;contextName&gt;dubboDemo&lt;/contextName&gt;</span><br><span class="line">    &lt;property name=&quot;LOG_PATH&quot; value=&quot;log/&quot; /&gt;</span><br><span class="line">    &lt;!--设置系统日志目录--&gt;</span><br><span class="line">    &lt;property name=&quot;APPDIR&quot; value=&quot;service&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志记录器，日期滚动记录 --&gt;</span><br><span class="line">    &lt;appender name=&quot;FILEERROR&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;</span><br><span class="line">        &lt;!-- 正在记录的日志文件的路径及文件名 --&gt;</span><br><span class="line">        &lt;file&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/log_error.log&lt;/file&gt;</span><br><span class="line">        &lt;!-- 日志记录器的滚动策略，按日期，按大小记录 --&gt;</span><br><span class="line">        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;</span><br><span class="line">            &lt;!-- 归档的日志文件的路径，例如今天是2013-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。</span><br><span class="line">            而2013-12-21的日志文件在由fileNamePattern指定。%d&#123;yyyy-MM-dd&#125;指定日期格式，%i指定索引 --&gt;</span><br><span class="line">            &lt;fileNamePattern&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/error/log-error-%d&#123;yyyy-MM-dd&#125;.%i.log&lt;/fileNamePattern&gt;</span><br><span class="line">            &lt;!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，</span><br><span class="line">            命名日志文件，例如log-error-2013-12-21.0.log --&gt;</span><br><span class="line">            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;</span><br><span class="line">                &lt;maxFileSize&gt;2MB&lt;/maxFileSize&gt;</span><br><span class="line">            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;</span><br><span class="line">        &lt;/rollingPolicy&gt;</span><br><span class="line">        &lt;!-- 追加方式记录日志 --&gt;</span><br><span class="line">        &lt;append&gt;true&lt;/append&gt;</span><br><span class="line">        &lt;!-- 日志文件的格式 --&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;FILE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf-8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;!-- 此日志文件只记录error级别的 --&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;</span><br><span class="line">            &lt;level&gt;error&lt;/level&gt;</span><br><span class="line">            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span><br><span class="line">            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志记录器，日期滚动记录 --&gt;</span><br><span class="line">    &lt;appender name=&quot;FILEWARN&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;</span><br><span class="line">        &lt;!-- 正在记录的日志文件的路径及文件名 --&gt;</span><br><span class="line">        &lt;file&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/log_warn.log&lt;/file&gt;</span><br><span class="line">        &lt;!-- 日志记录器的滚动策略，按日期，按大小记录 --&gt;</span><br><span class="line">        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;</span><br><span class="line">            &lt;!-- 归档的日志文件的路径，例如今天是2013-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。</span><br><span class="line">            而2013-12-21的日志文件在由fileNamePattern指定。%d&#123;yyyy-MM-dd&#125;指定日期格式，%i指定索引 --&gt;</span><br><span class="line">            &lt;fileNamePattern&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/warn/log-warn-%d&#123;yyyy-MM-dd&#125;.%i.log&lt;/fileNamePattern&gt;</span><br><span class="line">            &lt;!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，</span><br><span class="line">            命名日志文件，例如log-error-2013-12-21.0.log --&gt;</span><br><span class="line">            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;</span><br><span class="line">                &lt;maxFileSize&gt;2MB&lt;/maxFileSize&gt;</span><br><span class="line">            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;</span><br><span class="line">        &lt;/rollingPolicy&gt;</span><br><span class="line">        &lt;!-- 追加方式记录日志 --&gt;</span><br><span class="line">        &lt;append&gt;true&lt;/append&gt;</span><br><span class="line">        &lt;!-- 日志文件的格式 --&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;FILE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf-8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;!-- 此日志文件只记录warn级别的 --&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;</span><br><span class="line">            &lt;level&gt;warn&lt;/level&gt;</span><br><span class="line">            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span><br><span class="line">            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志记录器，日期滚动记录 --&gt;</span><br><span class="line">    &lt;appender name=&quot;FILEINFO&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;</span><br><span class="line">        &lt;!-- 正在记录的日志文件的路径及文件名 --&gt;</span><br><span class="line">        &lt;file&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/log_info.log&lt;/file&gt;</span><br><span class="line">        &lt;!-- 日志记录器的滚动策略，按日期，按大小记录 --&gt;</span><br><span class="line">        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;</span><br><span class="line">            &lt;!-- 归档的日志文件的路径，例如今天是2013-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。</span><br><span class="line">            而2013-12-21的日志文件在由fileNamePattern指定。%d&#123;yyyy-MM-dd&#125;指定日期格式，%i指定索引 --&gt;</span><br><span class="line">            &lt;fileNamePattern&gt;$&#123;LOG_PATH&#125;/$&#123;APPDIR&#125;/info/log-info-%d&#123;yyyy-MM-dd&#125;.%i.log&lt;/fileNamePattern&gt;</span><br><span class="line">            &lt;!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，</span><br><span class="line">            命名日志文件，例如log-error-2013-12-21.0.log --&gt;</span><br><span class="line">            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;</span><br><span class="line">                &lt;maxFileSize&gt;2MB&lt;/maxFileSize&gt;</span><br><span class="line">            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;</span><br><span class="line">        &lt;/rollingPolicy&gt;</span><br><span class="line">        &lt;!-- 追加方式记录日志 --&gt;</span><br><span class="line">        &lt;append&gt;true&lt;/append&gt;</span><br><span class="line">        &lt;!-- 日志文件的格式 --&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;FILE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf-8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;!-- 此日志文件只记录info级别的 --&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;</span><br><span class="line">            &lt;level&gt;info&lt;/level&gt;</span><br><span class="line">            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span><br><span class="line">            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;logger name=&quot;org.springframework&quot; level=&quot;WARN&quot; /&gt;</span><br><span class="line">    &lt;logger name=&quot;org.hibernate&quot; level=&quot;WARN&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 --&gt;</span><br><span class="line">    &lt;!--这里改level 生产环境改成ERROR 开发环境为INFO--&gt;</span><br><span class="line">    &lt;root level=&quot;INFO&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;FILEERROR&quot; /&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;FILEWARN&quot; /&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;FILEINFO&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 生产环境将请stdout,testfile去掉 --&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;STDOUT&quot; /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="项目结构图"><a href="#项目结构图" class="headerlink" title="项目结构图"></a>项目结构图</h1><p>这个图片有错误:profiles文件夹应该是在src/main文件夹下</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/dubbo/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>此时一个 Dubbo 业务中心就已经成功的实现了,之后就是调试和运行测试的的过程了</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.307Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/07/03/Dubbo_demo项目（四).html" target="_blank" rel="external">https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&title=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&title=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/03/Dubbo_demo项目（三).html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Dubbo demo项目 (三) 搭建业务中心项目</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/30/Dubbo_demo项目（一）.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Dubbo demo项目 (一) 定义父项规则</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&title=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&title=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dubbo demo项目 (四) 定义业务中心配置文件》 — Junxin's Blog&url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/03/Dubbo_demo项目（四).html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS3IDIQwFwNz/0pOqbBPb74lJJYZm5fKHoVnISOLjIx7X12hfJ9/8/pRHn94wMDAw3pZxPR2PHpws+vmc+ZZF82BgYBzAaKd7HiLbQDwLzRgYGBjJUlbCNAYGBsZvB9zkOJgnqBgYGBgJI19iUulKPr1r+zAwME5g/F5jYP31v+hvYGBg/CnjKses9Namr/WqMDAwtmbkRbEkFCaFs5VW6Is1YGBgbMrIU8r86JakrCsN0R/ewcDAOICRh7k8BZ0V3dpLYxgYGCcw8kL8rEmZX79ot+xFEouBgbEdY1Yaa5cyS3rzFgUGBsaujFlAvBeWtyIwMDAw2iXOyv0r/wwPn4uBgXEYoz2uta2FtjkabTQGBsbWjFlRLG8JvLjItXztAwMD4xzG+uFv5epYWxeMABgYGBsx8qXMCv1JWW3G+6HchoGBsTUjL8rn5bCVIlpbtsPAwNibsZ46tqGzvfJVl9swMDA2ZeQHuNmlrlnRf9b+xMDA2I9xBaNtSdY7Vx4xi73HwMDYiNF+J099W2obgjEwME5grCSiswZnVDib/QoDA2NTxlWOlfJc2wyo64UYGBibMlbyxFnrcWXmPM3GwMDYj9EG2TY0t0FzuN8YGBgHMNpkNb9yMTtWtqEZAwMDo01BV2Ye4jEwMDDKoli+3OTIGDU7MTAwDmDcm47mCWpbhos6sRgYGNsx2gQyv0y2fuy7GYOBgfF+jE+VYomH7R+VqAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

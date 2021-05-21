@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>layui 表单数据回显问题处理 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="layui">
+    <meta name="description" content="问题描述后台编辑页面的数据回显,时好时坏!（多发生于单选框） 尝试使用setTimeout进行延时填充数据,效果还是时好时坏,并不能有效解决问题! HTML1234567&amp;lt;div class=&amp;quot;layui-form-item&amp;quot; pane=&amp;quot;&amp;quot;&amp;gt;	&amp;lt;label class=&amp;quot;layui-form-label&amp;quot;&amp;gt;议价规">
+<meta name="keywords" content="layui">
+<meta property="og:type" content="article">
+<meta property="og:title" content="layui 表单数据回显问题处理">
+<meta property="og:url" content="https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="问题描述后台编辑页面的数据回显,时好时坏!（多发生于单选框） 尝试使用setTimeout进行延时填充数据,效果还是时好时坏,并不能有效解决问题! HTML1234567&amp;lt;div class=&amp;quot;layui-form-item&amp;quot; pane=&amp;quot;&amp;quot;&amp;gt;	&amp;lt;label class=&amp;quot;layui-form-label&amp;quot;&amp;gt;议价规">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="layui 表单数据回显问题处理">
+<meta name="twitter:description" content="问题描述后台编辑页面的数据回显,时好时坏!（多发生于单选框） 尝试使用setTimeout进行延时填充数据,效果还是时好时坏,并不能有效解决问题! HTML1234567&amp;lt;div class=&amp;quot;layui-form-item&amp;quot; pane=&amp;quot;&amp;quot;&amp;gt;	&amp;lt;label class=&amp;quot;layui-form-label&amp;quot;&amp;gt;议价规">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">layui 表单数据回显问题处理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">layui 表单数据回显问题处理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-16
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题描述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTML"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">HTML</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JS"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">JS</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">问题分析</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解决思路"><span class="post-toc-number">3.</span> <span class="post-toc-text">解决思路</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关代码"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">相关代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#后端"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">后端</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前端"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">前端</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-layui 表单数据回显问题处理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">layui 表单数据回显问题处理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-16 00:00:00" datetime="2018-08-15T16:00:00.000Z"  itemprop="datePublished">2018-08-16</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>后台编辑页面的数据回显,时好时坏!（多发生于单选框）</p>
+<p>尝试使用setTimeout进行延时填充数据,效果还是时好时坏,并不能有效解决问题!</p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;</span><br><span class="line">	&lt;label class=&quot;layui-form-label&quot;&gt;议价规则&lt;/label&gt;</span><br><span class="line">	&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">		&lt;input lay-filter=&quot;is_bargain&quot; ng-model=&quot;entity.is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;0&quot; title=&quot;不支持议价&quot;&gt;</span><br><span class="line">		&lt;input lay-filter=&quot;is_bargain&quot; ng-model=&quot;entity.is_bargain&quot; type=&quot;radio&quot; name=&quot;is_bargain&quot; value=&quot;1&quot; title=&quot;支持议价&quot;&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 我这里还做了延时装载,效果不理想</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">	UE.getEditor(&apos;editor&apos;).setContent($scope.entity.product_content);</span><br><span class="line">	layui.use(&apos;form&apos;, function()&#123;</span><br><span class="line">		var form = layui.form;</span><br><span class="line">		form.val(&apos;inputForm&apos;, &#123;</span><br><span class="line">			&quot;is_bargain&quot;: $scope.entity.is_bargain,</span><br><span class="line">			&quot;is_advance&quot;: $scope.entity.is_advance,</span><br><span class="line">			&quot;freight_type&quot;: $scope.entity.freight_type,</span><br><span class="line">			&quot;product_state&quot;: $scope.entity.product_state,</span><br><span class="line">			&quot;product_unit&quot;: $scope.entity.product_unit</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,500);</span><br></pre></td></tr></table></figure>
+<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>因为是页面异步加载数据,所以可能存在加载数据的时候,layui组件没有完全加载完毕的情况。所以数据装载失败。</p>
+<h1 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h1><p>我没有在layui官方API中找到相关组件加载完毕的回调方法,所以这里改为HTML同步数据填充,让layui加载完成后直接显示HTML的内容即可。</p>
+<p><strong>原因是数据装载的时候,layui相关组件没有加载完毕造成装载数据失败! 后改为使用thymeleaf标签实现html的同步加载</strong></p>
+<h2 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h2><h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private final String PAGE_PREFIX = &quot;product/&quot;; // 页面前缀</span><br><span class="line"></span><br><span class="line">@RequestMapping(value = &quot;inputPage&quot;)</span><br><span class="line">public String inputPage(String id, ModelMap modelMap)&#123;</span><br><span class="line">	String tempId = &quot;none&quot;;</span><br><span class="line">	if(StringUtils.isNotBlank(id)) &#123; // 修改</span><br><span class="line">		ParamsMap productInfo = this.findProductInfo(id); // 查询需要修改的实体信息</span><br><span class="line">		modelMap.put(&quot;productInfo&quot;, productInfo);</span><br><span class="line">		tempId = id;</span><br><span class="line">	&#125; else &#123; // 新增</span><br><span class="line">		ParamsMap entity = initEntity();</span><br><span class="line">		modelMap.put(&quot;productInfo&quot;, entity);</span><br><span class="line">	&#125;</span><br><span class="line">	return PAGE_PREFIX + &quot;input&quot;;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> * 初始化实体(用于新增)</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">private ParamsMap initEntity()&#123;</span><br><span class="line">	String json = &quot;JSON对象字符串&quot;;</span><br><span class="line">	return new ParamsMap(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;</span><br><span class="line">	&lt;label class=&quot;layui-form-label&quot;&gt;预付款&lt;/label&gt;</span><br><span class="line">	&lt;div class=&quot;layui-input-block&quot;&gt;</span><br><span class="line">		&lt;input th:checked=&quot;$&#123;productInfo.is_advance==0&#125;&quot; lay-filter=&quot;is_advance&quot; type=&quot;radio&quot; name=&quot;is_advance&quot; value=&quot;0&quot; title=&quot;全款&quot;&gt;</span><br><span class="line">		&lt;input th:checked=&quot;$&#123;productInfo.is_advance==1&#125;&quot; lay-filter=&quot;is_advance&quot; type=&quot;radio&quot; name=&quot;is_advance&quot; value=&quot;1&quot; title=&quot;支持预付款&quot;&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;layui-form-item&quot;&gt;</span><br><span class="line">	&lt;label class=&quot;layui-form-label&quot;&gt;编辑内容&lt;/label&gt;</span><br><span class="line">	&lt;div class=&quot;layui-input-inline&quot; style=&quot;padding-left: 20px;&quot;&gt;</span><br><span class="line">		&lt;!-- 百度编辑器 --&gt;</span><br><span class="line">		&lt;script id=&quot;editor&quot; th:utext=&quot;$&#123;productInfo.product_content&#125;&quot; type=&quot;text/plain&quot; style=&quot;width:500px;height:600px;&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot; th:inline=&quot;javascript&quot;&gt;</span><br><span class="line">    var productInfo = [[$&#123;productInfo&#125;]]; // 可以让相关JS操作该对象</span><br><span class="line">    $().ready( function() &#123;</span><br><span class="line">        if(productInfo)&#123;</span><br><span class="line">            console.log(&quot;productInfo:&quot;,productInfo);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.316Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/08/16/layui 表单数据回显问题处理.html" target="_blank" rel="external">https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/layui/">layui</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&title=《layui 表单数据回显问题处理》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&title=《layui 表单数据回显问题处理》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《layui 表单数据回显问题处理》 — Junxin's Blog&url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/17/SpringBoot 配置加密.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SpringBoot 配置加密</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/16/thymeleaf 常用标签.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">thymeleaf 常用标签</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&title=《layui 表单数据回显问题处理》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&title=《layui 表单数据回显问题处理》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《layui 表单数据回显问题处理》 — Junxin's Blog&url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3aMXIjMQwEQP//074qp761ZgBSdtAbqawTyd6A4A3x8RE/n1/P989Pf3n61dPz9Nuf5z324OHh4Y2W/vPETwtNxnn6Nn+JyWiPI+Ph4eFd4+XbertxJy9iNnsyFx4eHt7v8pIlbjb3tszg4eHh/X1eHge04UUyPh4eHt5f422ihDaizQtM+y0eHh7ee3ibjf63Pr/pfg8PDw+vvFVPisGsbCTh7Of6wcPDw7vB2zdR5ctqWwTyF/qibODh4eEd5SWx6f6CP79Iy2ePZsHDw8O7wNuQZq1UZ5sD8qKCh4eHd4rXbtmzQtIexNsA90XWgoeHh3eNN7tkyjf3zcV/wlulLHh4eHjdt8VmnW/Z7Ua/b5yKLsDw8PDwjvKS6dvScqppYHYVh4eHh3ePNwsXNnFtHgq3IxSlBQ8PD2/EO7VxJ+FCG8vWocP3lePh4eFd4+WxQttY0LZqbYKPIsDFw8PDO8QrNtzFsTsHtODHlAUPDw/vKG8T1CZLmZWE/JheWPDw8PAO8WYL3UcJ7dF52HaAh4eHd5nXbtN5A0Fdo4JXHx3i8fDw8K7xTkUPSaDQthG0o/2nMODh4eFd4LXD5YHFbOltI0IdRuDh4eEteEnAOisMs78k12/tb/Hw8PDO8j7LJ28vaJsJ2vGLzgg8PDy8C7y2iWoTE7TjbAJfPDw8vBu82XE2P6e312CzgjTsJsPDw8Mb8TbxaH6VVUeu5fM4Cx4eHt5l3uYQvA8pNm0Hj9dveHh4eBd4q5P46PD9cyE59RkPDw/vNu9G2Jr/m/xwn1+t4eHh4b2Hl0cPs4UmL2sT475ovcLDw8P7Jd7mhN42XeVxQ916hYeHh/d2Xn4RNWvMaq/iXhzl8fDw8K7xksk2S9y3F+TxBx4eHt5tXvtf/VkksWkpmBUqPDw8vAu8fzZjkpfWAprSAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

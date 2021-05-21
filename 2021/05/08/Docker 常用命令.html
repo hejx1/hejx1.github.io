@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Docker 常用命令 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Docker">
+    <meta name="description" content="Docker常用命令记录，方便查询 获取镜像 docker search [OPTIONS] 镜像名12# 查找stars数不低于10的centos镜像docker search -f stars=10 centos  1234# 查看本地的镜像$ docker images# 如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：$ dock">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 常用命令">
+<meta property="og:url" content="https://smilexin.cn/2021/05/08/Docker 常用命令.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="Docker常用命令记录，方便查询 获取镜像 docker search [OPTIONS] 镜像名12# 查找stars数不低于10的centos镜像docker search -f stars=10 centos  1234# 查看本地的镜像$ docker images# 如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：$ dock">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-09T02:29:17.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker 常用命令">
+<meta name="twitter:description" content="Docker常用命令记录，方便查询 获取镜像 docker search [OPTIONS] 镜像名12# 查找stars数不低于10的centos镜像docker search -f stars=10 centos  1234# 查看本地的镜像$ docker images# 如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：$ dock">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Docker 常用命令</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Docker 常用命令</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-05-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-05-08
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取镜像"><span class="post-toc-number">1.</span> <span class="post-toc-text">获取镜像</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查看容器"><span class="post-toc-number">2.</span> <span class="post-toc-text">查看容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动容器"><span class="post-toc-number">3.</span> <span class="post-toc-text">启动容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#停止容器"><span class="post-toc-number">4.</span> <span class="post-toc-text">停止容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#映射端口"><span class="post-toc-number">5.</span> <span class="post-toc-text">映射端口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进入容器"><span class="post-toc-number">6.</span> <span class="post-toc-text">进入容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#提交容器"><span class="post-toc-number">7.</span> <span class="post-toc-text">提交容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#推送镜像"><span class="post-toc-number">8.</span> <span class="post-toc-text">推送镜像</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Docker 常用命令"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Docker 常用命令</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-05-08 00:00:00" datetime="2021-05-07T16:00:00.000Z"  itemprop="datePublished">2021-05-08</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Docker常用命令记录，方便查询</p>
+<h1 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h1><blockquote>
+<p>docker search [OPTIONS] 镜像名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查找stars数不低于10的centos镜像</span><br><span class="line">docker search -f stars=10 centos</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查看本地的镜像</span><br><span class="line">$ docker images</span><br><span class="line"># 如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：</span><br><span class="line">$ docker pull ubuntu</span><br></pre></td></tr></table></figure>
+<h1 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps // 查看Docker正在运行的容器</span><br><span class="line">docker ps -a // 列出Docker所有容器</span><br><span class="line">docker ps -l // 列出最新创建的一个容器</span><br><span class="line">docker ps [-a][-l]</span><br><span class="line">docker inspect 容器名字|容器ID // 查看指定容器信息</span><br></pre></td></tr></table></figure>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><ul>
+<li>docker run:使用镜像启动对应的容器</li>
+</ul>
+<p>docker run 参数说明：</p>
+<ul>
+<li>-d :代表后台运行容器，返回容器ID</li>
+<li>–name: 自定义容器的名称，不加这命令docker会随便给一个名给你，所以建议打上这命令</li>
+<li>-p :代表映射的端口 本地端口:容器端口</li>
+<li>-i: 以交互模式运行容器，通常与 -t 同时使用；</li>
+<li>-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；</li>
+<li>-P: 随机端口映射，容器内部端口随机映射到主机的高端口</li>
+<li><p>–volume , -v: 挂载一个卷到容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 启动交互式容器</span><br><span class="line">docker run -it IMAGE_NAME /bin/bash</span><br><span class="line"># 使用nginx镜像启动一个容器，容器名称设置为mynginx</span><br><span class="line">docker run --name=mynginx -it nginx /bin/bash</span><br><span class="line"># 在大部分的场景下，我们希望 docker 的服务是在后台运行的，可以使用 -d 指定容器在后台运行。</span><br><span class="line"># 注：加了 -d 参数默认不会进入容器，想要进入容器需要使用指令 docker exec</span><br><span class="line">docker run --name=mynginx -d nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>docker start:启动停止的容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 启动一个容器名为nginx-1的容器</span><br><span class="line">docker start nginx-1</span><br><span class="line"># 启动两个容器，分别为容器名为nginx-1、容器ID为356466a99c7f的两个容器</span><br><span class="line">docker start nginx-1 356466a99c7f</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 优雅的停止容器</span><br><span class="line">docker stop 容器ID或容器名</span><br><span class="line"># 直接关闭容器</span><br><span class="line">docker kill 容器ID或容器名</span><br><span class="line"># 参数 -t：关闭容器的限时，如果超时未能关闭则用kill强制关闭，默认值10s，这个时间用于容器的自己保存状态</span><br><span class="line">docker stop -t 容器ID或容器名</span><br><span class="line">docker stop -t=60 容器ID或容器名</span><br></pre></td></tr></table></figure>
+<h1 id="映射端口"><a href="#映射端口" class="headerlink" title="映射端口"></a>映射端口</h1><p>容器中可以运行一些网络应用，要让外部也可以访问这些应用，可以通过 -P（大写） 或 -p （小写） 参数来指定端口映射。<br>（1）当使用 -P 标记时，Docker 会随机映射一个 49000~49900 的端口到内部容器开放的网络端口。<br>（2）-p（小写）则可以指定要映射的IP和端口，但是在一个指定端口上只可以绑定一个容器。-p 标记可以多次使用来绑定多个端口。<br>支持的格式有 hostPort:containerPort、ip:hostPort:containerPort、 ip::containerPort。</p>
+<p>hostPort:containerPort（映射所有接口地址）<br>将本地的 5000 端口映射到容器的 5000 端口，可以执行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 5000:5000 training/webapp python app.py</span><br></pre></td></tr></table></figure></p>
+<p>ip:hostPort:containerPort （映射指定地址的指定端口）<br>指定映射使用一个特定地址，比如 localhost 地址 127.0.0.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py</span><br></pre></td></tr></table></figure></p>
+<p>ip::containerPort （映射指定地址的任意端口）<br>绑定 localhost 的任意端口到容器的 5000 端口，本地主机会自动分配一个端口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 127.0.0.1::5000 training/webapp python app.py</span><br></pre></td></tr></table></figure></p>
+<p>还可以使用 udp 标记来指定 udp 端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 127.0.0.1:5000:5000/udp training/webapp python app.py</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 参数 -p 是指把镜像内的12345端口映射到宿主机的80端口</span><br><span class="line">$ docker run -d -p 80:12345 nginx</span><br><span class="line"># 不指定宿主机端口，随机映射出来</span><br><span class="line"># 查看容器c5b暴露的端口,27017是容器端口,37017是宿主机端口</span><br><span class="line">$ docker port c5b</span><br><span class="line">27017tcp -&gt; 0.0.0.0:37017</span><br><span class="line"># -p 标记可以多次使用来绑定多个端口</span><br><span class="line">$ docker run -d -p 5000:5000 -p 3000:80 nginx</span><br></pre></td></tr></table></figure>
+<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><p>在使用 -d 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：</p>
+<ul>
+<li>docker exec</li>
+<li>docker attach<br>使用attach的话，如果从这个容器退出，会导致容器的停止。推荐使用exec<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 进入id为243c32535da7的这个容器</span><br><span class="line">docker exec -it 243c32535da7 /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="提交容器"><a href="#提交容器" class="headerlink" title="提交容器"></a>提交容器</h1><p>在本地创建一个容器后，可以依据这个容器创建本地镜像，并可把这个镜像推送到Docker hub中，以便在网络上下载使用。<br>docker commit:从容器创建一个新的镜像。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]</span><br><span class="line"># 创建myubuntu:v1镜像</span><br><span class="line">$ docker commit -a &quot;hejx&quot; -m &quot;this is test&quot; 651a8541a47d myubuntu:v1</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>-a :提交的镜像作者；</li>
+<li>-c :使用Dockerfile指令来创建镜像；</li>
+<li>-m :提交时的说明文字；</li>
+<li>-p :在commit时，将容器暂停。</li>
+</ul>
+<h1 id="推送镜像"><a href="#推送镜像" class="headerlink" title="推送镜像"></a>推送镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 推送镜像到docker hub仓库</span><br><span class="line">$ docker push [OPTIONS] NAME[:TAG]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">首先是登录docker hub （用户名：hejx    密码:*******）</span><br><span class="line">[root@docker-test1 ~]# docker login</span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don&apos;t have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username (hejx): hejx</span><br><span class="line">Password:</span><br><span class="line">Login Succeeded</span><br><span class="line"> </span><br><span class="line">[root@docker-test1 ~]# docker push hejx/myubuntu:v1</span><br><span class="line">The push refers to a repository [docker.io/hejx/myubuntu]</span><br><span class="line">An image does not exist locally with the tag: docker.io/hejx/myubuntu</span><br><span class="line"> </span><br><span class="line">这里需要将ubuntu:v1镜像改名，在名称前加上自己的docker hub的Docker ID，即hejx</span><br><span class="line"> </span><br><span class="line">[root@docker-test1 ~]# docker tag 6ce4aedd12cd hejx/myubuntu:v1</span><br><span class="line">[root@docker-test1 ~]# docker images</span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">myubuntu             v1                  6ce4aedd12cd        6 minutes ago       84.1 MB</span><br><span class="line">hejx/myubuntu   v1                  6ce4aedd12cd        6 minutes ago       84.1 MB</span><br><span class="line">docker.io/ubuntu     16.04               7aa3602ab41e        5 weeks ago         115 MB</span><br><span class="line"> </span><br><span class="line">再次进行推送（注意：下面的v1的tag标签可以不打，默认是latest）。推送操作时间稍微会有一点长，耐心等待～</span><br><span class="line">[root@docker-test1 ~]# docker push hejx/myubuntu:v1           </span><br><span class="line">The push refers to a repository [docker.io/hejx/myubuntu]</span><br><span class="line">b5948ba9486d: Pushed</span><br><span class="line">8d7ea83e3c62: Mounted from library/ubuntu</span><br><span class="line">6a061ee02432: Mounted from library/ubuntu</span><br><span class="line">f73b2816c52a: Mounted from library/ubuntu</span><br><span class="line">6267b420796f: Mounted from library/ubuntu</span><br><span class="line">a30b835850bf: Mounted from library/ubuntu</span><br><span class="line">v1: digest: sha256:e9cd9075d262848a307c92751e1a5890d883b814a31abd118161442461a1ca2d size: 1564</span><br><span class="line"> </span><br><span class="line">最后登录自己的Docker Hub，即https://hub.docker.com/</span><br><span class="line">登录后，在Repositories里面就可以看到自己在上面推送的镜像hejx/myubuntu:v1了，这是个对外的镜像，可以在网络上下载。</span><br><span class="line">在Docker hub上可以看到这个镜像的下载命令（注意下载时跟上tag标签，如果是latest的默认tag可以不跟）</span><br><span class="line">也可以直接在Docker hub上删除这个镜像（Repositories-镜像-Settings-delete）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">比如在另一台服务器上下载这个镜像</span><br><span class="line">[root@kevin-test ~]# docker pull hejx/myubuntu</span><br><span class="line">Pulling repository hejx/myubuntu</span><br><span class="line">Repository not found</span><br><span class="line"> </span><br><span class="line">需要跟上tag标签</span><br><span class="line">[root@kevin-test ~]# docker pull hejx/myubuntu:v1</span><br><span class="line">v1: Pulling from hejx/myubuntu</span><br><span class="line">68e2a091ef24: Pull complete</span><br><span class="line">c393a882769e: Pull complete</span><br><span class="line">Digest: sha256:845fa3dcc9d0de1b9c701e1009918995da35a29012015f6c297a05edc489e018</span><br><span class="line">Status: Downloaded newer image for hejx/myubuntu:v1</span><br><span class="line">[root@kevin-test ~]# docker  images</span><br><span class="line">REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE</span><br><span class="line">hejx/myubuntu   v1                  c393a882769e        12 minutes ago      84.11 MB</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-05-09T02:29:17.238Z" itemprop="dateUpdated">2021-05-09 10:29:17</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/05/08/Docker 常用命令.html" target="_blank" rel="external">https://smilexin.cn/2021/05/08/Docker 常用命令.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&title=《Docker 常用命令》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&title=《Docker 常用命令》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/08/Docker 常用命令.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker 常用命令》 — Junxin's Blog&url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2021/05/09/Linux（Centos版本）快速安装Docker.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux（Centos版本）快速安装Docker</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/05/08/Linux 指定目录扩容.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 指定目录扩容</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&title=《Docker 常用命令》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&title=《Docker 常用命令》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/08/Docker 常用命令.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker 常用命令》 — Junxin's Blog&url=https://smilexin.cn/2021/05/08/Docker 常用命令.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/08/Docker 常用命令.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aS27DMAxFUe9/0+4CEsv3kU4BU1cjI3UjnQwI8XMceJ0fK/3886/rXY5fLBkyZLyWcS4XOdbVIcg3136OL1QZMmRswLiKYFfPV0chATQN3OuzyZAhQ8b6mRyuRpIhQ4aMDmMdItGWOEDLkCFDRprEPlvvWmN+mIvLkCHjhQxedf//55/0N2TIkPEqxhmuTpuTFNqKp5IhQ8ZoxlPXPlJW6yS3aCxDhgwZ2zB4KkvaA7VLIW+OHmnuK0OGjNcyal/H0850mKxWmJMhQ8ZsBrnkpc3F2o9Su2LKkCFjB0Z/0KHfmORJ7A1MhgwZ4xhpmT5NQddBMy3J3SSuMmTI2IDx1OgVT2j7mKATK0OGjJcz+NBDjVRsSfLLqAwZMkYz0nI/QXZKcvzoqLMhQ4aMQYx0YoG3JEm62ynwyZAhYzcGuZylCSpphfJgGsyMyJAhYxCDb0AOlLYk0zHWm1xchgwZQxn9gYlaES39PDiDDBkyNmDUQmE6yJW2S4P3ZciQMZSRAtJSWr9UhwKuDBkytmHwzZ5tJKSNgWJclyFDxggGvxT2xyzS4YmbNFuGDBlDGWe4eEjtH45fQGXIkDGbwRdvG/Q35kFchgwZ+zB4kE1L9vy/0qJb0D2QIUPGIEY81hC2MPnVs3ZaGTJkyOiETnLRrL0jQ4YMGTxlTVNTngYHb8qQIWMDRq0ZQEr5/TEyFI5lyJAxmtFKHUt9hrTQlo50yJAhYxDjDzTHvCq745A/AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>单例模式详解 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="设计模式">
+    <meta name="description" content="单例模式是什么？单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式。  意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 主要解决问题：一个全局使用的类频繁地创建与销毁">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式详解">
+<meta property="og:url" content="https://smilexin.cn/2018/05/03/单例模式详解.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="单例模式是什么？单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式。  意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 主要解决问题：一个全局使用的类频繁地创建与销毁">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单例模式详解">
+<meta name="twitter:description" content="单例模式是什么？单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式。  意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 主要解决问题：一个全局使用的类频繁地创建与销毁">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">单例模式详解</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">单例模式详解</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#单例模式是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">单例模式是什么？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意事项"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">注意事项</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#单例模式的几种实现方式"><span class="post-toc-number">2.</span> <span class="post-toc-text">单例模式的几种实现方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#懒汉模式"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">懒汉模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基本写法-线程不安全"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">基本写法-线程不安全</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#synchronized修饰工厂方法-线程安全-不推荐"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">synchronized修饰工厂方法-线程安全-不推荐</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#双重同步锁单例模式-线程安全"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">双重同步锁单例模式-线程安全</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意事项-1"><span class="post-toc-number">2.1.3.1.</span> <span class="post-toc-text">注意事项</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#饿汉模式"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">饿汉模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#枚举单例模式-比较推荐"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">枚举单例模式-比较推荐</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-单例模式详解"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">单例模式详解</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="单例模式是什么？"><a href="#单例模式是什么？" class="headerlink" title="单例模式是什么？"></a>单例模式是什么？</h1><p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式。</p>
+<ul>
+<li><strong>意图</strong>：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</li>
+<li><strong>主要解决问题</strong>：一个全局使用的类频繁地创建与销毁。</li>
+<li><strong>何时使用</strong>：当你想控制实例数目，节省系统资源的时候。</li>
+<li><strong>实现方式</strong>：判断系统是否已经有这个单例，如果有则返回，如果没有则创建。</li>
+<li><strong>关键代码</strong>：构造函数是私有的，对外提供访问唯一实例的静态方法</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>单例类只能有一个实例。</li>
+<li>单例类必须自己创建自己的唯一实例。</li>
+<li>单例类必须给所有其他对象提供这一实例。</li>
+</ol>
+<h1 id="单例模式的几种实现方式"><a href="#单例模式的几种实现方式" class="headerlink" title="单例模式的几种实现方式"></a>单例模式的几种实现方式</h1><p>单例模式的实现有多种方式，如下所示：</p>
+<h2 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h2><h3 id="基本写法-线程不安全"><a href="#基本写法-线程不安全" class="headerlink" title="基本写法-线程不安全"></a>基本写法-线程不安全</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 懒汉模式-线程不安全</span><br><span class="line"> * 单例实例在第一次使用时进行创建</span><br><span class="line"> */</span><br><span class="line">public class SingletonExample1 &#123;</span><br><span class="line"></span><br><span class="line">    // 私有构造函数</span><br><span class="line">    private SingletonExample1() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 单例对象</span><br><span class="line">    private static SingletonExample1 instance = null;</span><br><span class="line"></span><br><span class="line">    // 静态的工厂方法</span><br><span class="line">    public static SingletonExample1 getInstance() &#123;</span><br><span class="line">        if (instance == null) &#123; //a1</span><br><span class="line">            instance = new SingletonExample1(); //a2</span><br><span class="line">        &#125;//a3</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码在单线程下运行没有问题，但是在多线程环境下这段代码就会出现问题。<br>问题发生在 <strong>a1~a3</strong> 行代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (instance == null) &#123;</span><br><span class="line">    instance = new SingletonExample1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>比如2个线程同时访问这个方法，都访问到a1行代码的时候，分别拿到instance实例的值都是null，都去做 is null 判断，都去做一次实例化，这样的话就会生成2个不同的实例对象。<br>有些朋友可能会说，我这个方法里面就为了拿一个实例，以上代码就算实例化2次也不会影响最后的结果。<br>但是如果私有构造函数在实现的时候会做很多的操作，且包含只能做一次的操作（资源的处理，运算…），这个时候如果执行2次就会出现错误。<br>这里我只是表明这样写是<strong>线程不安全</strong>的。</p>
+<h3 id="synchronized修饰工厂方法-线程安全-不推荐"><a href="#synchronized修饰工厂方法-线程安全-不推荐" class="headerlink" title="synchronized修饰工厂方法-线程安全-不推荐"></a>synchronized修饰工厂方法-线程安全-不推荐</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 懒汉模式-线程安全</span><br><span class="line"> * 单例实例在第一次使用时进行创建</span><br><span class="line"> */</span><br><span class="line">public class SingletonExample3 &#123;</span><br><span class="line"></span><br><span class="line">    // 私有构造函数</span><br><span class="line">    private SingletonExample3() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 单例对象</span><br><span class="line">    private static SingletonExample3 instance = null;</span><br><span class="line"></span><br><span class="line">    // 静态的工厂方法</span><br><span class="line">    public synchronized static SingletonExample3 getInstance() &#123;</span><br><span class="line">        if (instance == null) &#123;</span><br><span class="line">            instance = new SingletonExample3();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取实例的静态工厂方法在添加了synchronized修饰后，它里面的代码在同一时间内只允许一个线程访问，因此它可以保证是线程安全的。<br><strong>这种写法并不推荐，因为用上synchronized修饰方法后，它通过同一时间内只允许一个线程访问来保证了线程安全，但是它却带来了性能的严重开销</strong></p>
+<h3 id="双重同步锁单例模式-线程安全"><a href="#双重同步锁单例模式-线程安全" class="headerlink" title="双重同步锁单例模式-线程安全"></a>双重同步锁单例模式-线程安全</h3><p>这种方式采用双锁机制，安全且在多线程情况下能保持高性能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 懒汉模式 -》 双重同步锁单例模式</span><br><span class="line"> * 单例实例在第一次使用时进行创建</span><br><span class="line"> */</span><br><span class="line">public class SingletonExample4 &#123;</span><br><span class="line"></span><br><span class="line">    // 私有构造函数</span><br><span class="line">    private SingletonExample4() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 单例对象 volatile &gt; 禁止指令重排</span><br><span class="line">    private volatile static SingletonExample4 instance = null;</span><br><span class="line"></span><br><span class="line">    // 静态的工厂方法</span><br><span class="line">    public static SingletonExample4 getInstance() &#123;</span><br><span class="line">        if (instance == null) &#123; // 双重检测机制        // B</span><br><span class="line">            synchronized (SingletonExample4.class) &#123; // 同步锁</span><br><span class="line">                if (instance == null) &#123;</span><br><span class="line">                    instance = new SingletonExample4(); // A - 3</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private volatile static SingletonExample4 instance = null;</span><br></pre></td></tr></table></figure>
+<p><strong>这里注意静态变量 instance 必须使用 volatile 修饰，不然会出现线程安全问题。</strong></p>
+<p>原因如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (SingletonExample4.class) &#123; // 同步锁</span><br><span class="line">    if (instance == null) &#123;</span><br><span class="line">        instance = new SingletonExample4(); // A - 3</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码在同一时间内只能有一个线程进行访问，而一个线程访问之后，当前这个<em>instance</em>已经被实例化了，当第二个线程再访问的时候发现<em>instance</em>已经有值了就不会再进行实例化了，就直接返回实例了。</p>
+<p>那么问题究竟出在哪呢？这个要从CPU的指令说起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">instance = new SingletonExample4();</span><br></pre></td></tr></table></figure></p>
+<p>当我们执行上面这行代码，它要执行以下操作：</p>
+<ol>
+<li>memory = allocate() 分配对象的内存空间</li>
+<li>ctorInstance() 初始化对象</li>
+<li>instance = memory 设置instance指向刚分配的内存</li>
+</ol>
+<p>在完成了这3步之后，instance就指向了它实际分配的内存地址了。</p>
+<p>在单线程下这3步执行完了这时候直接返回没有任何问题，<strong>指令重排</strong>对单线程是没有任何影响的，因为这3步随意调换不会对这个返回的instance发生任何影响。但是在多线程情况下就不一定了。</p>
+<p><strong>JVM和cpu优化，对以上3步发生了指令重排：</strong></p>
+<ol>
+<li>memory = allocate() 分配对象的内存空间</li>
+<li>instance = memory 设置instance指向刚分配的内存</li>
+<li>ctorInstance() 初始化对象</li>
+</ol>
+<p>因为第二步和第三步本质上没有前后依赖的关系，因此CPU和JVM的指令优化是可以让它们产生顺序变化的。在这个前提下我们再来看这里的双重检测机制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static SingletonExample4 getInstance() &#123;</span><br><span class="line">    if (instance == null) &#123; // 双重检测机制        // B</span><br><span class="line">        synchronized (SingletonExample4.class) &#123; // 同步锁</span><br><span class="line">            if (instance == null) &#123;</span><br><span class="line">                instance = new SingletonExample4(); // A</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果AB两个线程同时执行到这个方法，A已经走到了 <em>instance = new SingletonExample4();</em> 这行代码，而B才走到<em>if (instance == null)</em>第一个判断代码。且A已经设置instance指向刚分配的内存，但是还没有进行初始化对象，这时候B线程进行判断instance的值就会不等于null，直接返回。而线程B拿到这个还没有做初始化对象的instance之后一旦调用就会出现问题。<br>虽然这个发生的概率不大但是它也是有线程安全问题的。<br>上面这个问题是由指令重排造成的，而volatile可以限制指令重排。<strong>这就是为什么必须使用volatile修饰instance变量</strong>。</p>
+<p>当我们使用volatile之后就不会出现指令重排带来的对象未初始化的线程安全问题，它就变成线程安全的了。</p>
+<h2 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h2><p>饿汉模式的单一实例不是在第一次使用时进行创建的，而是在类装载的时候进行创建。由于是在类装载的时候进行创建，因此它能够保证是线程安全的。<br><strong>如果单例类的构造方法中没有包含过多的操作处理，饿汉模式其实是可以接受的</strong><br><strong>不足之处</strong>：</p>
+<ol>
+<li>如果单例类的构造方法包含过多的操作处理，就会使类加载的时候特别的慢，因此可能会引起性能问题。</li>
+<li>如果使用饿汉模式的话，只进行类的加载却没有进行实际的调用的话，它会造成资源的浪费。</li>
+</ol>
+<p>因此我们使用饿汉模式需要考虑两个问题：</p>
+<ol>
+<li>它的私有构造函数在实现的时候没有进行过多的处理</li>
+<li>这个类在实际的过程中肯定会被使用，这样的话就不会造成资源的浪费<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 饿汉模式-线程安全</span><br><span class="line"> * 单例实例在类装载时进行创建</span><br><span class="line"> */</span><br><span class="line">public class SingletonExample2 &#123;</span><br><span class="line"></span><br><span class="line">    // 私有构造函数</span><br><span class="line">    private SingletonExample2() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 单例对象</span><br><span class="line">    private static SingletonExample2 instance = new SingletonExample2();</span><br><span class="line"></span><br><span class="line">    // 静态的工厂方法</span><br><span class="line">    public static SingletonExample2 getInstance() &#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="枚举单例模式-比较推荐"><a href="#枚举单例模式-比较推荐" class="headerlink" title="枚举单例模式-比较推荐"></a>枚举单例模式-比较推荐</h2><p>可能很多人没见过使用枚举定义的这种写法，首先枚举的构造函数是JVM来保证这个方法只被调用一次，因此当我们通过枚举里面的一个值来调用<em>getInstance()</em>方法的时候它可以保证实例对象只被生成一次且在这个类被调用之前初始化的。</p>
+<ul>
+<li>对比懒汉模式：相比于懒汉模式在线程安全性方面更容易保证</li>
+<li>对比饿汉模式：它是在实际调用的时候才做实际对象的初始化不会造成资源的浪费<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 枚举模式：最安全</span><br><span class="line"> */</span><br><span class="line">public class SingletonExample5 &#123;</span><br><span class="line"></span><br><span class="line">    // 私有构造函数</span><br><span class="line">    private SingletonExample5() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static SingletonExample5 getInstance() &#123;</span><br><span class="line">        return Singleton.INSTANCE.getInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private enum Singleton &#123;</span><br><span class="line">        INSTANCE;</span><br><span class="line">        private SingletonExample5 singleton;</span><br><span class="line">        // JVM保证这个方法绝对只调用一次</span><br><span class="line">        Singleton() &#123;</span><br><span class="line">            singleton = new SingletonExample5();</span><br><span class="line">        &#125;</span><br><span class="line">        public SingletonExample5 getInstance() &#123;</span><br><span class="line">            return singleton;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>综合各点，个人比较推荐使用<strong>双重同步锁单例模式</strong>和<strong>枚举单例模式</strong>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.320Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/03/单例模式详解.html" target="_blank" rel="external">https://smilexin.cn/2018/05/03/单例模式详解.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/单例模式详解.html&title=《单例模式详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/单例模式详解.html&title=《单例模式详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/单例模式详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《单例模式详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/单例模式详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/单例模式详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/03/synchronized_使用详解.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">synchronized 使用详解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/03/深入剖析volatile关键字.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">深入剖析volatile关键字</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/单例模式详解.html&title=《单例模式详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/单例模式详解.html&title=《单例模式详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/单例模式详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《单例模式详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/单例模式详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/单例模式详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQXLCMAwFUO5/aTrTVTcOX7LpgPK8YtJA8rz4lS0/HvF4/o7V579XVtd73zo8MDAwvpbxvBzXjOTXVtORT9n1u2FgYNyHkf9c8oA8antThoGBgZGXgztBvBPuGBgYGPmysxrQefGHgYGB0VvEXmOqkZpv0h1ei2NgYHwhY78x8L7P/9rfwMDA+EjGszh2tu/371l+FwMDYzRjFXBJ8Zfn3qn2w4s4xsDAGMrYCbsdRt7gjKYAAwNjNKN6VCthnI3swj0YGBijGUmZmG/u5xGcl6fVFgUGBsYkxnVEVh/ZKyXz64VFLAYGxjjG2YIvbyTkByxebL1hYGCMZlQ3y3plYu/+KhIDA2M2Y2vVuz0FedGJgYFxT0Z0FqM49ieifOwDAwNjNKMabckRit7r9jYBMTAw7sCoxllOyg9J5O2E5bMwMDBGM/YbitUCMVk257+DgYFxH0Yv8qoF5dkWwnLXEAMDYyij10+oLkerxeLWvwEMDIxBjDzOqgfCqhFZbSGU19wYGBhfzuhtseXtgWqwlpugGBgYoxnVUmynmOvFa+FtMTAwhjKexVFtGPRitPxXDAyM0YxezPUiON//O1AmYmBgjGPsL1OThXGvkVmYdQwMjBswzh7tqh6b2Al9DAwMjGRDLW9Y9qI2wmNgYGAUwzcJ3B5+WThiYGDcgJEsYs9u1p9qZGJgYNyBcbYxsHPwK4/st7cwMTAwPoXxA+EAN/W+3bH/AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

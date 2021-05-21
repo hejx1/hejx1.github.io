@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>高并发场景解决方案-应用限流 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="高并发,限流,分布式">
+    <meta name="description" content="限流说明限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。 举例说明之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了Red">
+<meta name="keywords" content="高并发,限流,分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发场景解决方案-应用限流">
+<meta property="og:url" content="https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="限流说明限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。 举例说明之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了Red">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高并发场景解决方案-应用限流">
+<meta name="twitter:description" content="限流说明限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。 举例说明之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了Red">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">高并发场景解决方案-应用限流</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">高并发场景解决方案-应用限流</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-17T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-18
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#限流说明"><span class="post-toc-number">1.</span> <span class="post-toc-text">限流说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#举例说明"><span class="post-toc-number">2.</span> <span class="post-toc-text">举例说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#限流总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">限流总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-高并发场景解决方案-应用限流"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">高并发场景解决方案-应用限流</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-18 00:00:00" datetime="2018-05-17T16:00:00.000Z"  itemprop="datePublished">2018-05-18</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="限流说明"><a href="#限流说明" class="headerlink" title="限流说明"></a>限流说明</h1><p>限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。</p>
+<h1 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h1><p>之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了Redis里面，主要是通过缓存来保证用户看到数据的准确性与实时性，这个应对在分时线处理上没有什么问题。但是分时线处理完了不代表没有其他问题了，因为我们还需要看最近几天的数据分析图，通常是5天，我们称为五日K线图。这个时候就需要使用当日的分时数据加上最近4个交易日的分时数据合在一起来作成趋势图，那么最近4个交易日的数据从哪里来呢？</p>
+<p>很显然历史数据从数据库里面来拿更合适一些，拿多少天都能拿到，这个时候就要求我们在每个闭市之后把当前这个交易日里的每支股票的分时数据全部存储到数据库中，我大致统计了一下一个交易日下来所有股票的分时数据大约在 <strong>130W~140W</strong> 之间，意思是我每天在盘后需要有130W~140W的数据需要插入到数据库里面，如果你没有做限流，直接将这些数据插入到数据库中会有以下问题出现：</p>
+<ol>
+<li>数据库的主库将会突然接收到130W左右的插入操作，这个首先是网络上的开销，很可能直接把你的带宽打满，导致其他请求无法正常的传输和处理。</li>
+<li>其次他可能带来数据库负载突然增高导致无法处理某些数据库操作，也可能出现没有足够的连接，导致某些数据插入失败或者查询失败，也就是影响其他服务正常运行。</li>
+<li>还有一点就是我们现在的数据库都做了主从设计,插入到主库的数据还需要同步给从库，这时瞬间插入了大量的数据会带来从库和主库的延迟特别大，这时通过从库查询到的数据不准确的概率也会跟着提升</li>
+</ol>
+<p>而如果我们使用特定的手段放慢插入数据库的速度，又会是怎么样呢？</p>
+<p>比如这里我们以一个数据库肯定可以接受的恒定速率（假设每秒400条进行插入），这个时候数据库插入到数据库主库的速率会很正常，这时候主库表现也会正常，同步到从库也很正常，网络消耗我们也可以接受，也不会影响到其他服务。这时我们可以计算出插入完成的大致时间。</p>
+<p>这里我们约定了恒定速率最多每秒400条，那么每分钟它将会插入将近24000条，总共需要的时间可以算出 130W / 2.4W ≈ 54.17 分钟可以插入完成。</p>
+<p>通过这个场景的分析处理我们可以看出来限流在高并发场景下使用合理的话可以解决很关键的问题，<strong>这里需要注意的是刚才我这里提到的每秒400条恒定速率是我和DBA根据系统情况确定好的值，也是经过实际数据的一些计算，实际中大家可以使用多大也是需要拿实际的场景和数据来说话的。</strong></p>
+<p>回顾一下，关于股票K线图这个高并发场景涉及到的解决方案，为了当前的高并发场景能够更好的运行不出问题，我在缓存、应用拆分、限流里分别从不同的角度对这个场景进行了优化，这些其实并不是全部，在数据插入数据库时我还引入了线程池来协助更好的调度进行插入。同时因为每天插入的数据量太大（每天插入的数据量是百万级别的）因此我还引入了数据库分表将8000多支股票的分时数据插入到相似的512张表中，来保证每张表的数据量增长都不是特别的快。这样在查询数据的时候才会更快，具体我将在后面分表的文章中详细介绍。</p>
+<p>这里是希望大家能明白一个道理，高并发场景下并不是直接选择某个方案处理下就可以了，而是要深究各个细节，不同的小场景可能会使用不同的方案，也可能是多个方案的组合使用。因此大家需要能清楚的了解可以使用哪些解决方案，不同的解决方案要解决的是什么问题，然后分析你遇到的高并发场景它适合运用哪些解决方案。</p>
+<h1 id="限流总结"><a href="#限流总结" class="headerlink" title="限流总结"></a>限流总结</h1><p>一般开发高并发常用的限流大概包括以下几种：</p>
+<ul>
+<li>限制总并发数</li>
+<li>限制瞬时的并发数</li>
+<li>限制时间窗口内的平均速率</li>
+</ul>
+<p>缓存+限流来应付618、双11这些高并发流量，在处理高并发问题上可以说是如虎添翼，不用担心瞬间流量导致系统挂掉或者雪崩，最终做到有损服务而不是不服务。但是限流需要评估好，它不可以乱用，否则会使正常流量出现一些奇怪的问题而导致用户抱怨。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.323Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/18/高并发场景解决方案-应用限流.html" target="_blank" rel="external">https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/限流/">限流</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&title=《高并发场景解决方案-应用限流》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&title=《高并发场景解决方案-应用限流》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高并发场景解决方案-应用限流》 — Junxin's Blog&url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/20/高并发场景解决方案-应用拆分.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">高并发场景解决方案-应用拆分</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/17/Java多线程并发最佳实践.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java多线程并发最佳实践</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&title=《高并发场景解决方案-应用限流》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&title=《高并发场景解决方案-应用限流》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高并发场景解决方案-应用限流》 — Junxin's Blog&url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/18/高并发场景解决方案-应用限流.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvklEQVR42u3aQW7jMBAEQP//09lrgEDe7hky6wVKJ0OxRZYOJNMzr1d8fX27vt/5+fnpzs/nJE94+v7hCw8PD28x9ffDPw3zfuD9c5L5PL4CPDw8vGu8ZFrvv/M0ldlYyZ3o+Xh4eHgfwMuPufmhOT8J4+Hh4f2PvFlgkZA28QceHh7e7/PyhXi2GbRBQxtqHMha8PDw8GJeXkX6nM9X6nt4eHh466p6WwxrN4821Khni4eHh3eBtwka2gX9/Z0kvBjOEw8PD+8oL98ANgX+fNFvy29/+QcADw8P7wJvVshvC1p5i+qpjad4i3h4eHglrw0dWmR+jG43pOR14OHh4d3gRX84tD0kW0XRSrWp4OHh4eEtePuYIJluzsifFoW8eHh4eL/Ia2GzZql8osPIAw8PD+8yry3b50FA3SYVvIgorcXDw8O7xkuGmTUBJAt9/p38t6/2q3h4eHgjXn5QbsOFTUycbCSP88fDw8P7Fd7Z7aF9flskqzcGPDw8vDWvLSzlw7RRbBsB5+Pi4eHh3eNt7sxKWbOjed0VgIeHh3eUt4llc3DeQDALJurOCDw8PLwFL1929w1SeXNAu0m0B3E8PDy8PS+PFTZDtu+7fXGPLx0PDw/vKK89sG6W+NnReTY3PDw8vHu8ZHm9cbxuGxHarQgPDw/vNi9ZWJODbB7Ltq1XbfNB/Qg8PDy8BS+ZVlvE2uclq7AYDw8P7xovL8yfKlC1Iw7jYzw8PLyjvK/yao+2mzaC/BD/GDTj4eHhXeDt098k0s2LW+8nmn/Gw8PDu83LN4MkaMgP0O0LHRbb8PDw8K7xksPxJmiYtSnUycpT1oKHh4f3T3n5Yp2HF224UMwBDw8P7wN4bYtAflhvGdF2goeHh3eNd6p1YFb0mo0S3cfDw8O7wJv9wz/bBpJf5ZvN69SFh4eHl/L+AJGDP6TQmyInAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

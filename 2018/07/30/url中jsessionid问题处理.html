@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>URL中jsessionid问题处理 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="SpringBoot,session">
+    <meta name="description" content="问题描述当我从A系统中点击链接,使用内嵌iframe第一次跳转到B系统页面时,页面的ajax访问会出现如下异常,因为我这里的应用系统都是在同一台虚拟机上面的所以为了session的独立,我给每个系统设置了不同的session.cookie.name,所以这里url拼接的不是jsessionid而是我设置的cookiename">
+<meta name="keywords" content="SpringBoot,session">
+<meta property="og:type" content="article">
+<meta property="og:title" content="URL中jsessionid问题处理">
+<meta property="og:url" content="https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="问题描述当我从A系统中点击链接,使用内嵌iframe第一次跳转到B系统页面时,页面的ajax访问会出现如下异常,因为我这里的应用系统都是在同一台虚拟机上面的所以为了session的独立,我给每个系统设置了不同的session.cookie.name,所以这里url拼接的不是jsessionid而是我设置的cookiename">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/jsessionid/1.png">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.318Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="URL中jsessionid问题处理">
+<meta name="twitter:description" content="问题描述当我从A系统中点击链接,使用内嵌iframe第一次跳转到B系统页面时,页面的ajax访问会出现如下异常,因为我这里的应用系统都是在同一台虚拟机上面的所以为了session的独立,我给每个系统设置了不同的session.cookie.name,所以这里url拼接的不是jsessionid而是我设置的cookiename">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/jsessionid/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">URL中jsessionid问题处理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">URL中jsessionid问题处理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-29T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-07-30
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解决方案"><span class="post-toc-number">2.</span> <span class="post-toc-text">解决方案</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Springboot配置过滤器简介"><span class="post-toc-number">3.</span> <span class="post-toc-text">Springboot配置过滤器简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置-DisableUrlSessionFilter"><span class="post-toc-number">4.</span> <span class="post-toc-text">配置 DisableUrlSessionFilter</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-url中jsessionid问题处理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">URL中jsessionid问题处理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-30 00:00:00" datetime="2018-07-29T16:00:00.000Z"  itemprop="datePublished">2018-07-30</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>当我从A系统中点击链接,使用内嵌iframe第一次跳转到B系统页面时,页面的ajax访问会出现如下异常,因为我这里的应用系统都是在同一台虚拟机上面的所以为了session的独立,我给每个系统设置了不同的session.cookie.name,所以这里url拼接的不是jsessionid而是我设置的cookiename<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/jsessionid/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>打开一个新的浏览器窗口，<strong>第一次访问服务器时</strong>，encodeRedirectURL()会在url后面附加上一段jsessionid。<br>如果初始的url为:<a href="http://www.sina.com.cn" target="_blank" rel="noopener">http://www.sina.com.cn</a><br>最终得到的url为:<a href="http://www.sina.com.cn;jsessionid=2jcligmgi6fh。" target="_blank" rel="noopener">http://www.sina.com.cn;jsessionid=2jcligmgi6fh。</a><br>这样浏览器就会出现找不到服务器的异常信息。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>后台编写一个过滤器,来阻止url中jsessionid的出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import javax.servlet.http.HttpServletResponseWrapper;</span><br><span class="line">import javax.servlet.http.HttpSession;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年 on 2018/7/28.</span><br><span class="line"> * desc: 去除url中jsessionid</span><br><span class="line"> */</span><br><span class="line">public class DisableUrlSessionFilter implements Filter &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void init(FilterConfig filterConfig) throws ServletException &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException &#123;</span><br><span class="line">        // skip non-http requests</span><br><span class="line">        if (!(request instanceof HttpServletRequest)) &#123;</span><br><span class="line">            chain.doFilter(request, response);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HttpServletRequest httpRequest = (HttpServletRequest) request;</span><br><span class="line">        HttpServletResponse httpResponse = (HttpServletResponse) response;</span><br><span class="line"></span><br><span class="line">        // clear session if session id in URL</span><br><span class="line">        if (httpRequest.isRequestedSessionIdFromURL()) &#123;</span><br><span class="line">            HttpSession session = httpRequest.getSession();</span><br><span class="line">            if (session != null) session.invalidate();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // wrap response to remove URL encoding</span><br><span class="line">        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(httpResponse) &#123;</span><br><span class="line"></span><br><span class="line">            public String encodeRedirectURL(String url) &#123;</span><br><span class="line">                return url;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public String encodeURL(String url) &#123;</span><br><span class="line">                return url;</span><br><span class="line">            &#125;</span><br><span class="line">			</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        // process next request in chain</span><br><span class="line">        chain.doFilter(request, wrappedResponse);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void destroy() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Springboot配置过滤器简介"><a href="#Springboot配置过滤器简介" class="headerlink" title="Springboot配置过滤器简介"></a>Springboot配置过滤器简介</h1><ul>
+<li><p>注解配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 在SpringBoot中通过注解注册的方式简单的使用Filter</span><br><span class="line"> * @author chengxi</span><br><span class="line"> */</span><br><span class="line">@WebFilter(urlPatterns = &quot;/*&quot;, filterName = &quot;myfilter&quot;)</span><br><span class="line">public class FileterController implements Filter &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 配置过滤器</span><br><span class="line"> * @param registry</span><br><span class="line"> */</span><br><span class="line">@Bean</span><br><span class="line">public FilterRegistrationBean filterRegist() &#123;</span><br><span class="line">    FilterRegistrationBean frBean = new FilterRegistrationBean();</span><br><span class="line">    frBean.setFilter(new DisableUrlSessionFilter());</span><br><span class="line">    frBean.addUrlPatterns(&quot;/*&quot;);</span><br><span class="line">    return frBean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="配置-DisableUrlSessionFilter"><a href="#配置-DisableUrlSessionFilter" class="headerlink" title="配置 DisableUrlSessionFilter"></a>配置 DisableUrlSessionFilter</h1><p>因为我这个过滤器是写在spring扫描范围之外的,所以我这里手动配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import com.xx.xxxx.filter.DisableUrlSessionFilter;</span><br><span class="line">import org.springframework.boot.web.servlet.FilterRegistrationBean;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年 on 2018/7/30.</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">public class ComponentFilterOrderConfig &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 配置过滤器</span><br><span class="line">     * @param registry</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public FilterRegistrationBean filterRegist() &#123;</span><br><span class="line">        FilterRegistrationBean frBean = new FilterRegistrationBean();</span><br><span class="line">        frBean.setFilter(new DisableUrlSessionFilter());</span><br><span class="line">        frBean.addUrlPatterns(&quot;/*&quot;);</span><br><span class="line">        return frBean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.318Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/07/30/url中jsessionid问题处理.html" target="_blank" rel="external">https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&title=《URL中jsessionid问题处理》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&title=《URL中jsessionid问题处理》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《URL中jsessionid问题处理》 — Junxin's Blog&url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/03/Linux 定时删除以前的日志文件.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux 定时删除以前的日志文件</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/24/nohup日志过大的处理策略.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">nohup 日志过大的处理策略</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&title=《URL中jsessionid问题处理》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&title=《URL中jsessionid问题处理》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《URL中jsessionid问题处理》 — Junxin's Blog&url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/07/30/url中jsessionid问题处理.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3ay27cMBAEQP//TzvXABtL3TPiegOUToJXDxYNkFQPv77i4/uv46e/vx75la93vZ6/PvOxAw8PD2/R9OuX5YDkrqS5bXv+8Uw8PDy8Y7yfHn19vpkeZpi8zXh4eHifxkuaOOuC5I14eHh4/xfv+vVJ0zfLaDw8PLzP4bXBQT70t8vla/bBrAUPDw/vybE6CibeeX6kvoeHh4e3rqq3kcFm4ZtED3Vr8fDw8A7wTpTw8+VvGxa37cTDw8M7zWuDg+Tjf1O42mzewsPDwzvHm/VHEuDmyOTePEquK2l4eHh4I177wZ8gN4vgWWfdfCvg4eHhPcprw4UkONjUp6KtVO0L8PDw8B7itVuv8lcm+FmQcXBnGR4eHl7Q5pZUlJ1GG7aun5B36PA/hoeHhxfzZgN6/uts28E+nsDDw8M7wUuKTPkwvQl2kylhtTMCDw8P7yFeGzrMYoV8Gtgv7vHw8PDeyduEAklz20lotuCuk2A8PDy8SZvrgTsvVs0C3/0WBDw8PLxzvHbwnQ3c+QI9h0UdhIeHh3eAl1fYZwHusw2dldPw8PDwnuUVVbJNEBBvRGivvOkmPDw8vGO82eNm2w7y5+STTZRS4+Hh4R3j7Qtgbcg768ToaXh4eHgHeHn0UC9nRzFHXuIq2omHh4f3Rl67OWAWyOb3zroYDw8P7xwvr5i1G1LzRXN+fdFNeHh4eId5SQTQvj5n70NhPDw8vNO87/KYFatmmwCu74p+xcPDwzvAawfc/WDdTgnt+fDAw8PDK3mzyaAdxPNtCm04cgPGw8PDO8abFcb2ZbP93BXFuHh4eHi/ytsXq/aL5qKb8PDw8D6Gdz30P1VUS66/6WI8PDy8Y7wkjGiRm/Ci3gGR7IzAw8PDe4i3+eBvF8GzTsmLaqv6Hh4eHt497w9kgeQpvMd6LwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

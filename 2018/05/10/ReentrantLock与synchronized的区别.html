@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>ReentrantLock与synchronized的区别 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="并发,JDK,同步锁">
+    <meta name="description" content="ReentrantLockjava中有两类锁，一类是Synchronized，而另一类就是J.U.C中提供的锁。ReentrantLock与Synchronized都是可重入锁,本质上都是lock与unlock的操作。接下来介绍三种J.U.C中的锁，其中使用ReentrantLock与使用synchronized对比介绍。 ReentrantLock与synchronized的区别 可重入性：两者">
+<meta name="keywords" content="并发,JDK,同步锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReentrantLock与synchronized的区别">
+<meta property="og:url" content="https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="ReentrantLockjava中有两类锁，一类是Synchronized，而另一类就是J.U.C中提供的锁。ReentrantLock与Synchronized都是可重入锁,本质上都是lock与unlock的操作。接下来介绍三种J.U.C中的锁，其中使用ReentrantLock与使用synchronized对比介绍。 ReentrantLock与synchronized的区别 可重入性：两者">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReentrantLock与synchronized的区别">
+<meta name="twitter:description" content="ReentrantLockjava中有两类锁，一类是Synchronized，而另一类就是J.U.C中提供的锁。ReentrantLock与Synchronized都是可重入锁,本质上都是lock与unlock的操作。接下来介绍三种J.U.C中的锁，其中使用ReentrantLock与使用synchronized对比介绍。 ReentrantLock与synchronized的区别 可重入性：两者">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ReentrantLock与synchronized的区别</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ReentrantLock与synchronized的区别</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-09T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-10
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ReentrantLock"><span class="post-toc-number">1.</span> <span class="post-toc-text">ReentrantLock</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ReentrantLock与synchronized的区别"><span class="post-toc-number">2.</span> <span class="post-toc-text">ReentrantLock与synchronized的区别</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ReentrantLock独有的功能"><span class="post-toc-number">3.</span> <span class="post-toc-text">ReentrantLock独有的功能</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#是否放弃synchronized？"><span class="post-toc-number">4.</span> <span class="post-toc-text">是否放弃synchronized？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何使用ReentrantLock？"><span class="post-toc-number">5.</span> <span class="post-toc-text">如何使用ReentrantLock？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分析源码"><span class="post-toc-number">6.</span> <span class="post-toc-text">分析源码</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部分内置函数"><span class="post-toc-number">7.</span> <span class="post-toc-text">部分内置函数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#读写锁：ReentrantReadWriteLock读写锁"><span class="post-toc-number">8.</span> <span class="post-toc-text">读写锁：ReentrantReadWriteLock读写锁</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#票据锁：StempedLock"><span class="post-toc-number">9.</span> <span class="post-toc-text">票据锁：StempedLock</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何使用"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">如何使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#StampedLock-源码例子"><span class="post-toc-number">9.2.</span> <span class="post-toc-text">StampedLock 源码例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Condition的使用"><span class="post-toc-number">10.</span> <span class="post-toc-text">Condition的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例代码"><span class="post-toc-number">10.1.</span> <span class="post-toc-text">示例代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#执行结果"><span class="post-toc-number">10.2.</span> <span class="post-toc-text">执行结果</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析代码"><span class="post-toc-number">10.3.</span> <span class="post-toc-text">分析代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">11.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ReentrantLock与synchronized的区别"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ReentrantLock与synchronized的区别</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-10 00:00:00" datetime="2018-05-09T16:00:00.000Z"  itemprop="datePublished">2018-05-10</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h1><p>java中有两类锁，一类是Synchronized，而另一类就是J.U.C中提供的锁。ReentrantLock与Synchronized都是可重入锁,本质上都是lock与unlock的操作。接下来介绍三种J.U.C中的锁，其中使用ReentrantLock与使用synchronized对比介绍。</p>
+<h1 id="ReentrantLock与synchronized的区别"><a href="#ReentrantLock与synchronized的区别" class="headerlink" title="ReentrantLock与synchronized的区别"></a>ReentrantLock与synchronized的区别</h1><ul>
+<li>可重入性：两者的锁都是可重入的，差别不大，有线程进入锁，锁的计数器自增1，等下降为0时才可以释放锁</li>
+<li>锁的实现：synchronized是基于JVM实现的（用户很难见到，无法了解其实现），ReentrantLock是JDK代码实现的</li>
+<li>性能区别：在最初的时候，synchronized比ReentrantLock差很多，当synchronized引入了偏向锁、轻量级锁（自选锁）后，现在二者的性能差别不大，官方推荐synchronized（写法更容易、在优化时其实是借用了ReentrantLock的CAS技术，试图在用户态就把问题解决，避免进入内核态造成线程阻塞）</li>
+<li>功能区别：<ul>
+<li>便利性：synchronized更便利，它是由编译器保证加锁与释放。而ReentrantLock是需要手动释放锁，所以为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁</li>
+<li>锁的细粒度和灵活度，ReentrantLock优于synchronized</li>
+</ul>
+</li>
+</ul>
+<h1 id="ReentrantLock独有的功能"><a href="#ReentrantLock独有的功能" class="headerlink" title="ReentrantLock独有的功能"></a>ReentrantLock独有的功能</h1><ol>
+<li>可以指定是公平锁还是非公平锁，sync只能是非公平锁。（所谓公平锁就是先等待的线程先获得锁）</li>
+<li>提供了一个Condition类，可以用来实现分组唤醒需要唤醒的线程。而不是像synchronized要么随机唤醒一个线程，要么唤醒全部线程</li>
+<li>提供能够中断等待锁的线程的机制，通过 lock.lockInterruptibly() 实现这种机制。 ReentrantLock是一种自选锁，通过循环调用CAS操作来实现加锁。性能比较好的原因是避免了进入内核态的阻塞状态</li>
+</ol>
+<h1 id="是否放弃synchronized？"><a href="#是否放弃synchronized？" class="headerlink" title="是否放弃synchronized？"></a>是否放弃synchronized？</h1><p>从上边的介绍，看上去ReentrantLock不仅拥有synchronized的所有功能，而且有一些功能synchronized无法实现的特性。性能方面，ReentrantLock也不比synchronized差，那么到底我们要不要放弃使用synchronized呢？</p>
+<p><strong>个人认为不要放弃synchronized</strong></p>
+<p>J.U.C包中的锁定类是用于高级情况和高级用户的工具，一般来说除非你对Lock的某个高级特性有明确的需要或者有明确的证据（不包括怀疑）表明同步已经成为可伸缩性的瓶颈的时候，否则我建议还是继续使用synchronized。</p>
+<p>原因如下：</p>
+<ol>
+<li>相比较这些高级的锁定类，synchronized还是有一些优势的，比如synchronized不可能忘记释放锁。在退出synchronized块的时候，JVM会为你做这件事情。而使用lock锁需要自己释放。当你的程序能够通过测试，但是在实际工作时会出现死锁，那时候就会很难找出原因，这也是为什么不建议初级开发人员使用lock的理由。</li>
+<li>当JVM使用synchronized管理锁定请求和释放时，JVM在生成线程转储时能够包括锁定信息，这些信息对调试非常有价值，因为它们可以标识死锁以及其他异常行为的来源。</li>
+<li>几乎每个开发人员都熟悉synchronized，它可以在JVM的所有版本中进行工作，在JDK5.0成为标准之前，用lock类将意味着要利用特性，而不是每个JVM都有的，而且不是每个开发人员都熟悉的。在实际的项目中大家遇到需要加锁的场景，其实大部分都可以使用synchronized来解决，那种特别高级的比较复杂的情况其实还是很少的。</li>
+</ol>
+<h1 id="如何使用ReentrantLock？"><a href="#如何使用ReentrantLock？" class="headerlink" title="如何使用ReentrantLock？"></a>如何使用ReentrantLock？</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.CountDownLatch;</span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.Semaphore;</span><br><span class="line">import java.util.concurrent.locks.Lock;</span><br><span class="line">import java.util.concurrent.locks.ReentrantLock;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> *</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2018/5/10 13:16.</span><br><span class="line"> **/</span><br><span class="line">@Slf4j</span><br><span class="line">public class LockExample &#123;</span><br><span class="line"></span><br><span class="line">    // 请求总数</span><br><span class="line">    public static int clientTotal = 5000;</span><br><span class="line"></span><br><span class="line">    // 同时并发执行的线程数</span><br><span class="line">    public static int threadTotal = 200;</span><br><span class="line"></span><br><span class="line">    public static int count = 0;</span><br><span class="line"></span><br><span class="line">    private final static Lock lock = new ReentrantLock();</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        final Semaphore semaphore = new Semaphore(threadTotal);</span><br><span class="line">        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);</span><br><span class="line">        for (int i = 0; i &lt; clientTotal ; i++) &#123;</span><br><span class="line">            executorService.execute(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    add();</span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    log.error(&quot;exception&quot;, e);</span><br><span class="line">                &#125;</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">        log.info(&quot;count:&#123;&#125;&quot;, count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void add() &#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//初始化方面：</span><br><span class="line">//在new ReentrantLock的时候默认给了一个不公平锁</span><br><span class="line">public ReentrantLock() &#123;</span><br><span class="line">    sync = new NonfairSync();</span><br><span class="line">&#125;</span><br><span class="line">//也可以加参数来初始化指定使用公平锁还是不公平锁</span><br><span class="line">public ReentrantLock(boolean fair) &#123;</span><br><span class="line">    sync = fair ? new FairSync() : new NonfairSync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="部分内置函数"><a href="#部分内置函数" class="headerlink" title="部分内置函数"></a>部分内置函数</h1><p>基础特性：</p>
+<ul>
+<li>tryLock()：仅在调用时锁定未被另一个线程保持的情况下才获取锁定</li>
+<li>tryLock(long timeout, TimeUnit unit)：如果锁定在给定的等待时间内没有被另一个线程保持且当前线程没有被中断，则获取这个锁定</li>
+<li>lockInterruptbily()：如果当前线程没有被中断的话，那么就获取锁定。如果中断了就抛出异常</li>
+<li>isLocked()：查询此锁定是否由任意线程保持</li>
+<li>isHeldByCurrentThread()：查询当前线程是否保持锁定状态</li>
+<li>isFair()：判断是不是公平锁<br>…</li>
+</ul>
+<p>Condition相关特性：</p>
+<ul>
+<li>hasQueuedThread(Thread)：查询指定线程是否在等待获取此锁定</li>
+<li>hasQueuedThreads()：查询是否有线程在等待获取此锁定</li>
+<li>getHoldCount()：查询当前线程保持锁定的个数，也就是调用lock()方法的个数<br>…</li>
+</ul>
+<h1 id="读写锁：ReentrantReadWriteLock读写锁"><a href="#读写锁：ReentrantReadWriteLock读写锁" class="headerlink" title="读写锁：ReentrantReadWriteLock读写锁"></a>读写锁：ReentrantReadWriteLock读写锁</h1><p>在没有任何读写锁的时候才可以取得写入锁(悲观读取，容易造成写线程饥饿)，<strong>也就是说如果一直存在读操作，那么写锁一直在等待没有读的情况出现，这样我的写锁就永远也获取不到，就会造成等待获取写锁的线程饥饿。 平时使用的场景并不多。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class LockExample2 &#123;</span><br><span class="line"></span><br><span class="line">    private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();</span><br><span class="line"></span><br><span class="line">    private final Lock readLock = lock.readLock(); //读锁</span><br><span class="line"></span><br><span class="line">    private final Lock writeLock = lock.writeLock(); //写锁</span><br><span class="line"></span><br><span class="line">    public Data get(String key) &#123;</span><br><span class="line">        readLock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            return map.get(key);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            readLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Set&lt;String&gt; getAllKeys() &#123;</span><br><span class="line">        readLock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            return map.keySet();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            readLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Data put(String key, Data value) &#123;</span><br><span class="line">        writeLock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            return map.put(key, value);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            writeLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Data &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="票据锁：StempedLock"><a href="#票据锁：StempedLock" class="headerlink" title="票据锁：StempedLock"></a>票据锁：StempedLock</h1><p>StempedLock控制锁有三种模式（写、读、乐观读）。一个StempedLock的状态是由版本和模式两个部分组成。锁获取方法返回一个数字作为票据（stamp），他用相应的锁状态表示并控制相关的访问。数字0表示没有写锁被授权访问，在读锁上分为悲观锁和乐观锁。</p>
+<p>乐观读： </p>
+<blockquote>
+<p>如果读的操作很多写的很少，我们可以乐观的认为读的操作与写的操作同时发生的情况很少，因此不悲观的使用完全的读取锁定。程序可以查看读取资料之后检查是否遭到写入资料的变更，再采取之后的措施。</p>
+</blockquote>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.CountDownLatch;</span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.Semaphore;</span><br><span class="line">import java.util.concurrent.locks.StampedLock;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> *</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2018/5/10 13:46.</span><br><span class="line"> **/</span><br><span class="line">@Slf4j</span><br><span class="line">public class LockExample4 &#123;</span><br><span class="line"></span><br><span class="line">    // 请求总数</span><br><span class="line">    public static int clientTotal = 5000;</span><br><span class="line"></span><br><span class="line">    // 同时并发执行的线程数</span><br><span class="line">    public static int threadTotal = 200;</span><br><span class="line"></span><br><span class="line">    public static int count = 0;</span><br><span class="line"></span><br><span class="line">    private final static StampedLock lock = new StampedLock();</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        final Semaphore semaphore = new Semaphore(threadTotal);</span><br><span class="line">        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);</span><br><span class="line">        for (int i = 0; i &lt; clientTotal ; i++) &#123;</span><br><span class="line">            executorService.execute(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    add();</span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    log.error(&quot;exception&quot;, e);</span><br><span class="line">                &#125;</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">        log.info(&quot;count:&#123;&#125;&quot;, count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void add() &#123;</span><br><span class="line">        long stamp = lock.writeLock();</span><br><span class="line">        try &#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock(stamp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="StampedLock-源码例子"><a href="#StampedLock-源码例子" class="headerlink" title="StampedLock 源码例子"></a>StampedLock 源码例子</h2><p>StampedLock 源码里面给了一个例子，这个例子大家自己看可能比较麻烦，我这里翻译了下放出来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public class LockExample3 &#123;</span><br><span class="line"></span><br><span class="line">    class Point &#123;</span><br><span class="line">        private double x, y;</span><br><span class="line">        private final StampedLock sl = new StampedLock();</span><br><span class="line"></span><br><span class="line">        void move(double deltaX, double deltaY) &#123; // an exclusively locked method</span><br><span class="line">            long stamp = sl.writeLock();</span><br><span class="line">            try &#123;</span><br><span class="line">                x += deltaX;</span><br><span class="line">                y += deltaY;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                sl.unlockWrite(stamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //下面看看乐观读锁案例</span><br><span class="line">        double distanceFromOrigin() &#123; // A read-only method</span><br><span class="line">            long stamp = sl.tryOptimisticRead(); //获得一个乐观读锁</span><br><span class="line">            double currentX = x, currentY = y;  //将两个字段读入本地局部变量</span><br><span class="line">            if (!sl.validate(stamp)) &#123; //检查发出乐观读锁后同时是否有其他写锁发生？</span><br><span class="line">                stamp = sl.readLock();  //如果没有，我们再次获得一个读悲观锁</span><br><span class="line">                try &#123;</span><br><span class="line">                    currentX = x; // 将两个字段读入本地局部变量</span><br><span class="line">                    currentY = y; // 将两个字段读入本地局部变量</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    sl.unlockRead(stamp);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return Math.sqrt(currentX * currentX + currentY * currentY);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //下面是悲观读锁案例</span><br><span class="line">        void moveIfAtOrigin(double newX, double newY) &#123; // upgrade</span><br><span class="line">            // Could instead start with optimistic, not read mode</span><br><span class="line">            long stamp = sl.readLock();</span><br><span class="line">            try &#123;</span><br><span class="line">                while (x == 0.0 &amp;&amp; y == 0.0) &#123; //循环，检查当前状态是否符合</span><br><span class="line">                    long ws = sl.tryConvertToWriteLock(stamp); //将读锁转为写锁</span><br><span class="line">                    if (ws != 0L) &#123; //这是确认转为写锁是否成功</span><br><span class="line">                        stamp = ws; //如果成功 替换票据</span><br><span class="line">                        x = newX; //进行状态改变</span><br><span class="line">                        y = newY;  //进行状态改变</span><br><span class="line">                        break;</span><br><span class="line">                    &#125; else &#123; //如果不能成功转换为写锁</span><br><span class="line">                        sl.unlockRead(stamp);  //我们显式释放读锁</span><br><span class="line">                        stamp = sl.writeLock();  //显式直接进行写锁 然后再通过循环再试</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                sl.unlock(stamp); //释放读锁或写锁</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Condition的使用"><a href="#Condition的使用" class="headerlink" title="Condition的使用"></a>Condition的使用</h1><p>Condition可以非常灵活的操作线程的唤醒，下面是一个线程等待与唤醒的例子，其中用1234序号标出了日志输出顺序</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class LockExample5 &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ReentrantLock reentrantLock = new ReentrantLock();</span><br><span class="line">        Condition condition = reentrantLock.newCondition();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;// 线程1</span><br><span class="line">            try &#123;</span><br><span class="line">                reentrantLock.lock();</span><br><span class="line">                log.info(&quot;wait signal&quot;); // 1</span><br><span class="line">                condition.await();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            log.info(&quot;get signal&quot;); // 4</span><br><span class="line">            reentrantLock.unlock();</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123; // 线程2</span><br><span class="line">            reentrantLock.lock();</span><br><span class="line">            log.info(&quot;get lock&quot;); // 2</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(3000);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            condition.signalAll();</span><br><span class="line">            log.info(&quot;send signal ~ &quot;); // 3</span><br><span class="line">            reentrantLock.unlock();</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2018-05-10 13:49:55.509  INFO [       Thread-0] com.hejx.tes.lock.LockExample5            29 : wait signal</span><br><span class="line">2018-05-10 13:49:55.512  INFO [       Thread-1] com.hejx.tes.lock.LockExample5            40 : get lock</span><br><span class="line">2018-05-10 13:49:58.512  INFO [       Thread-1] com.hejx.tes.lock.LockExample5            47 : send signal ~ </span><br><span class="line">2018-05-10 13:49:58.512  INFO [       Thread-0] com.hejx.tes.lock.LockExample5            34 : get signal</span><br></pre></td></tr></table></figure>
+<h2 id="分析代码"><a href="#分析代码" class="headerlink" title="分析代码"></a>分析代码</h2><p>线程1调用了reentrantLock.lock()方法，线程就加入到了AQS的等待队列里面去，线程1这时候会输出wait signal，一旦我们调用了condition.await();方法之后这个线程就从正常的AQS队列中移除了，对应的操作其实就是锁的释放。接着线程1马上就会加入到condition的等待队列里面去等待信号，线程2因为线程1释放锁的关系被唤醒，并判断它是否可以取到锁，于是线程2获取锁，也加入到了AQS的等待队列中，线程2在执行完之后调用了发送信号的方法condition.signalAll()，这时候condition队列里面有一个线程1的节点，于是它就被取出来了加入到AQS的等待队列里面去，<strong>需要注意的是这时候线程1并没有被唤醒，只是加到了AQS的等待队列里面去</strong>，当线程2发送完信号之后执行了unlock()方法释放锁，释放锁之后AQS中目前只有线程1，于是AQS释放锁按照从头到尾的顺序唤醒队列中的元素，线程1就被唤醒了继续开始执行condition.await();下面的语句，接着线程1释放锁reentrantLock.unlock();整个过程执行完毕。</p>
+<p>我们可以看到整个结构过程是靠线程节点在AQS的等待队列和condition的等待队列中来回移动来实现的，condition作为一个条件类很好的维护了一个等待信号的队列的，并在适时的时候将节点加入到AQS的等待队列中实现唤醒操作。</p>
+<p>通过我们代码执行的结果以及以上的分析可以看出来，condition也是一个多线程之间协调通讯的工具类，使得某个或者多个线程一起等待某个条件，只有该条件具备这些等待的线程才会被唤醒，这个条件就是信号。我们这里使用的是signalAll()也可以使用signal()来单个唤醒，这些等待的线程被唤醒之后重新争夺锁。condition主要是做这个事情。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>当只有少量竞争者，使用synchronized </li>
+<li>竞争者不少但是线程增长的趋势是能预估的，使用ReetrantLock</li>
+<li>StampedLock对吞吐量有巨大的改进，特别是在读线程越来越多的场景下，StampedLock有一个巨大的api，对于加锁操作它很容易利用其它的方法<br><strong>使用锁不是看哪个高级用哪一个，适合使用场景的才是最好的，尤其需要注意的是synchronized不会造成死锁，jvm会自动释放死锁，而其他的锁如果你使用不当是可能造成死锁的，一旦有lock就一定要有unlock</strong></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.314Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/10/ReentrantLock与synchronized的区别.html" target="_blank" rel="external">https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步锁/">同步锁</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&title=《ReentrantLock与synchronized的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&title=《ReentrantLock与synchronized的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ReentrantLock与synchronized的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/16/Executor 线程池详解.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Executor 线程池详解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/03/synchronized_使用详解.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">synchronized 使用详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&title=《ReentrantLock与synchronized的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&title=《ReentrantLock与synchronized的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ReentrantLock与synchronized的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/10/ReentrantLock与synchronized的区别.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3awU7DQAwE0P7/T8MVCVpm7F0VpJcTamnil0pZd7yPR3x8fDm+vpL8z7NPfX+3veKxAw8PD29R+vcjKT0B5LDXdeY14+Hh4d3mJad7/eCuLxyUntfz9HU8PDy8P8DLAe2CkYPx8PDw/i8vTwCiUspmHQ8PD++9vCSMyKOBzfLQLhXHshY8PDy8SSZQRKjv/fvKfA8PDw9vPVVvH7jJuCtvhfNl4Gm1eHh4eBd4+QO33V7QbizYhBq/jOXw8PDwjvKSh/UmVG2XjdffQ73xCw8PD+8CLz/RbDPW2a1U+batR3uf8PDw8GJe3s5uNj+1D/e2cX8qwsPDw7vMa0f+7TIwC4sPrHh4eHh413j5h9tGOX/l7C3Dw8PDu8ErpmQjalJKHn9sIhI8PDy8U7x2uDVreZNS2lgkCU3w8PDwbvBO/X7Pw992M9Y+JsbDw8M7y9uMsjbxwawpb+vBw8PDu8FrA9Z8lDVsecuQdzgGw8PDwzvE24/223B2NnKrbwoeHh7eNV4SBEQtbNz+tg10cgt+qBwPDw/vKC+/ZBK/tvd1NtZKzoaHh4d3m5c30HnR7aO/3eB17LcCHh4eXsnLG9+klDZ4nfHq1hwPDw/vKG/2qJ21ufca9+h7w8PDwzvEa0vfD/tnLfvmFTw8PLwbvOTysy1TxRQuPltbCR4eHt49Xt6Ftq1tUlC7eAzXOjw8PLzLvM1mrDwOzodnbcKAh4eHd4P3UR755oDhmH/Rjg83XeHh4eGVvPzI2cmNONua1xg8PDy8Na9dDPYhQnvmzQ3Cw8PDu8fbBLhtkDEcZcUNOh4eHt5/4W2CieJBH18dDw8P7+/w2kf82Xfz9h0PDw/vNq+NaGdDqTzUyBeSXz6Lh4eHd4HX/uBvtxEkTXBe9NkgAw8PD6/kfQKkKuQpjpMxjAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

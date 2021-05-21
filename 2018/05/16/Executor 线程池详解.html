@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Executor 线程池详解 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="并发,JDK,线程池">
+    <meta name="description" content="new Thread的弊端 每次 new Thread 都会新建对象，性能差 通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的 缺少更多功能，如更多执行、">
+<meta name="keywords" content="并发,JDK,线程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Executor 线程池详解">
+<meta property="og:url" content="https://smilexin.cn/2018/05/16/Executor 线程池详解.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="new Thread的弊端 每次 new Thread 都会新建对象，性能差 通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的 缺少更多功能，如更多执行、">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/executor/1.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/executor/2.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/executor/3.png">
+<meta property="og:image" content="https://smilexin.cn/img/posts/executor/4.png">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Executor 线程池详解">
+<meta name="twitter:description" content="new Thread的弊端 每次 new Thread 都会新建对象，性能差 通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的 缺少更多功能，如更多执行、">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/executor/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Executor 线程池详解</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Executor 线程池详解</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-05-16
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#new-Thread的弊端"><span class="post-toc-number">1.</span> <span class="post-toc-text">new Thread的弊端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线程池的好处"><span class="post-toc-number">2.</span> <span class="post-toc-text">线程池的好处</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线程池核心类-ThreadPoolExecutor"><span class="post-toc-number">3.</span> <span class="post-toc-text">线程池核心类-ThreadPoolExecutor</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#workQueue"><span class="post-toc-number">4.</span> <span class="post-toc-text">workQueue</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ThreadPoolExecutor-方法概述"><span class="post-toc-number">5.</span> <span class="post-toc-text">ThreadPoolExecutor-方法概述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线程池生命周期"><span class="post-toc-number">6.</span> <span class="post-toc-text">线程池生命周期</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RUNNING"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">RUNNING</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SHUTDOWN"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">SHUTDOWN</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#STOP"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">STOP</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TIDYING"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">TIDYING</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TERMINATED"><span class="post-toc-number">6.5.</span> <span class="post-toc-text">TERMINATED</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用-Executor-创建线程池"><span class="post-toc-number">7.</span> <span class="post-toc-text">使用 Executor 创建线程池</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#newCachedThreadPool"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">newCachedThreadPool</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码实现"><span class="post-toc-number">7.1.1.</span> <span class="post-toc-text">源码实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#newFixedThreadPool"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">newFixedThreadPool</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码实现-1"><span class="post-toc-number">7.2.1.</span> <span class="post-toc-text">源码实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#newSingleThreadExecutor"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">newSingleThreadExecutor</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码实现-2"><span class="post-toc-number">7.3.1.</span> <span class="post-toc-text">源码实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#newScheduledThreadPool"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">newScheduledThreadPool</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码实现-3"><span class="post-toc-number">7.4.1.</span> <span class="post-toc-text">源码实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ScheduledExecutorService使用方法"><span class="post-toc-number">7.4.2.</span> <span class="post-toc-text">ScheduledExecutorService使用方法</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线程池配置推荐"><span class="post-toc-number">8.</span> <span class="post-toc-text">线程池配置推荐</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">9.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Executor 线程池详解"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Executor 线程池详解</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-16 00:00:00" datetime="2018-05-15T16:00:00.000Z"  itemprop="datePublished">2018-05-16</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="new-Thread的弊端"><a href="#new-Thread的弊端" class="headerlink" title="new Thread的弊端"></a>new Thread的弊端</h1><ul>
+<li>每次 new Thread 都会新建对象，性能差</li>
+<li>通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的</li>
+<li>缺少更多功能，如更多执行、定期执行、线程中断</li>
+</ul>
+<h1 id="线程池的好处"><a href="#线程池的好处" class="headerlink" title="线程池的好处"></a>线程池的好处</h1><ul>
+<li>重用存在的线程，减少对象创建、消亡的开销，性能好</li>
+<li>可有效控制最大并发线程数，提高系统资源利用率，同时可以避免过多资源竞争，避免阻塞</li>
+<li>提供定时执行、定期执行、单线程、并发数控制等功能</li>
+</ul>
+<h1 id="线程池核心类-ThreadPoolExecutor"><a href="#线程池核心类-ThreadPoolExecutor" class="headerlink" title="线程池核心类-ThreadPoolExecutor"></a>线程池核心类-ThreadPoolExecutor</h1><p>ThreadPoolExecutor一共有七个参数，这七个参数配合起来，构成了线程池强大的功能</p>
+<ul>
+<li>corePoolSize：核心线程数量</li>
+<li>maximumPoolSize：线程最大线程数</li>
+<li>workQueue：阻塞队列，存储等待执行的任务，非常重要，会对线程池运行过程产生重大影响</li>
+<li>keepAliveTime：线程没有任务执行时最多保持多久时间终止（当线程中的线程数量大于corePoolSize的时候，如果这时没有新的任务提交核心线程外的线程不会立即销毁，而是等待，直到超过keepAliveTime）</li>
+<li>unit：keepAliveTime的时间单位</li>
+<li>threadFactory：线程工厂，用来创建线程，有一个默认的工场来创建线程，这样新创建出来的线程有相同的优先级，是非守护线程、同时也设置了线程名称</li>
+<li>rejectHandler：如果workQueue满了并且没有空闲的线程时，这时还继续提交任务，我们就需要采取一种策略来处理这个任务。线程池主要提供了4种策略。<ul>
+<li>AbortPolicy：直接抛出异常（默认策略）</li>
+<li>CallerRunsPolicy：用调用者所在的线程执行任务</li>
+<li>DiscardOldestPolicy：丢弃队列中最靠前的任务并执行当前任务</li>
+<li>DiscardPolicy：直接丢弃当前任务</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>如果运行的线程数少于corePoolSize的话就会直接创建新线程来处理任务，即时线程池之中的其他线程是空闲的。如果线程池中的线程数量 &gt;= corePoolSize 且 &lt; maximumPoolSize的时候，只有当workQueue队列满了的时候才创建新线程去处理任务。如果设置的corePoolSize和maximumPoolSize是相同的话，那么创建的线程池大小是固定的，这时候如果有新任务提交，workQueue还没满的时候就会放进workQueue等待有空闲的线程来执行，这时如果workQueue也已经满了，那么它就通过后面配置的拒绝策略来处理这个任务。</p>
+</blockquote>
+<p>所以判断的顺序主要为3个，第一个是corePoolSize，第二个是workQueue，第三个是maximumPoolSize。了解了这三个参数的关系之后，再来具体的介绍一下workQueue。</p>
+<h1 id="workQueue"><a href="#workQueue" class="headerlink" title="workQueue"></a>workQueue</h1><p>workQueue是保存等待执行的任务的一个阻塞队列，当我们提交一个任务到线程池以后，线程池会根据当前线程池之中正在运行的线程数量来决定该任务的处理方式。处理方式主要有以下三种</p>
+<ul>
+<li>直接切换（SynchronusQueue） </li>
+<li>无界队列（LinkedBlockingQueue）：如果使用这种方式，那能够创建的最大线程数为corePoolSize,这时maximumPoolSize就不会起作用了。当线程池中所有的核心线程都是运行状态的时候，新的任务提交就会放入等待队列中</li>
+<li>有界队列（ArrayBlockingQueue）：使用这种方式，可以将线程池的最大线程数量控制为maximumPoolSize，能够降低资源消耗，但是这种方式使得线程池对线程调度变的更困难。因为线程池与队列容量都是有限的。所以想让线程池的吞吐率和处理任务达到一个合理的范围，又想使我们的线程调度相对简单，并且还尽可能降低资源的消耗，我们就需要合理的限制这两个数量<br>  分配技巧： [如果想降低资源的消耗包括降低cpu使用率、操作系统资源的消耗、上下文切换的开销等等，可以设置一个较大的队列容量和较小的线程池容量，这样会降低线程池的吞吐量。如果我们提交的任务经常发生阻塞，我们可以调整maximumPoolSize。如果我们的队列容量较小，通常需要把线程池大小设置的大一些，这样cpu的使用率相对来说会高一些。但是如果线程池的容量设置的过大，提高任务的数量过多的时候，并发量会增加，那么线程之间的调度就是一个需要考虑的问题。这样反而可能会降低处理任务的吞吐量。]</li>
+</ul>
+<h1 id="ThreadPoolExecutor-方法概述"><a href="#ThreadPoolExecutor-方法概述" class="headerlink" title="ThreadPoolExecutor-方法概述"></a>ThreadPoolExecutor-方法概述</h1><p>初始化方法：由七个参数组合成四个初始化方法</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/executor/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>其他方法：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:center">方法名</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">execute()</td>
+<td style="text-align:center">提交任务，交给线程池执行</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">submit()</td>
+<td style="text-align:center">提交任务，能够返回执行结果 execute+Future</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">shutdown()</td>
+<td style="text-align:center">关闭线程池，等待任务都执行完</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">shutdownNow()</td>
+<td style="text-align:center">立刻关闭线程池，不等待任务执行完</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">getTaskCount()</td>
+<td style="text-align:center">线程池已执行和未执行的任务总数</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">getCompleteTaskCount()</td>
+<td style="text-align:center">已完成的任务数量</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">getPoolSize()</td>
+<td style="text-align:center">线程池当前的线程数量</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">getActiveCount()</td>
+<td style="text-align:center">当前线程池中正在执行任务的线程数量</td>
+</tr>
+</tbody>
+</table>
+<h1 id="线程池生命周期"><a href="#线程池生命周期" class="headerlink" title="线程池生命周期"></a>线程池生命周期</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/executor/2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="RUNNING"><a href="#RUNNING" class="headerlink" title="RUNNING"></a>RUNNING</h2><ul>
+<li>状态说明：线程池处在RUNNING状态时，能够接收新任务，也能处理阻塞队列中的任务</li>
+<li>状态切换：线程池的初始化状态是RUNNING。换句话说，线程池被一旦被创建，就处于RUNNING状态，并且线程池中的任务数为0!</li>
+</ul>
+<h2 id="SHUTDOWN"><a href="#SHUTDOWN" class="headerlink" title="SHUTDOWN"></a>SHUTDOWN</h2><ul>
+<li>状态说明：线程池处在SHUTDOWN状态时，不接收新任务，但是会继续处理阻塞队列中任务</li>
+<li>状态切换：调用线程池的shutdown()接口时，线程池由RUNNING -&gt; SHUTDOWN</li>
+</ul>
+<h2 id="STOP"><a href="#STOP" class="headerlink" title="STOP"></a>STOP</h2><ul>
+<li>状态说明：线程池处在STOP状态时，不接收新任务，也不处理阻塞队列中的任务，并且会中断正在处理的任务</li>
+<li>状态切换：调用线程池的shutdownNow()接口时，线程池由(RUNNING or SHUTDOWN ) -&gt; STOP</li>
+</ul>
+<h2 id="TIDYING"><a href="#TIDYING" class="headerlink" title="TIDYING"></a>TIDYING</h2><ul>
+<li>状态说明：当线程池变为TIDYING状态时，会执行钩子函数terminated()。terminated()在ThreadPoolExecutor类中是没有任何内容的，若用户想在线程池变为TIDYING时，进行相应的处理；可以通过重载terminated()函数来实现。 </li>
+<li>状态切换：当线程池在SHUTDOWN状态下，阻塞队列为空并且线程池中执行的任务也为空时，就会由 SHUTDOWN -&gt; TIDYING</li>
+</ul>
+<h2 id="TERMINATED"><a href="#TERMINATED" class="headerlink" title="TERMINATED"></a>TERMINATED</h2><ul>
+<li>状态说明：线程池彻底终止，就变成TERMINATED状态</li>
+<li>状态切换：线程池处在TIDYING状态时，执行完terminated()之后，就会由 TIDYING -&gt; TERMINATED</li>
+</ul>
+<h1 id="使用-Executor-创建线程池"><a href="#使用-Executor-创建线程池" class="headerlink" title="使用 Executor 创建线程池"></a>使用 Executor 创建线程池</h1><p>使用Executor可以创建四种线程池，都是使用的ThreadPoolExecutor的构造函数，只是参数的不同而已。使用Executor创建线程池只是使用比较方便，但是缺少了许多ThreadPoolExecutor实用的功能。比如以下函数的返回值是ExecutorService类型，该类型只包含基础的线程池方法，但却不包含线程监控相关方法，因此在使用返回值为ExecutorService的线程池类型创建新线程时要考虑到具体情况。 </p>
+<ul>
+<li>Executors.newCachedThreadPool()</li>
+<li>Executors.newFixedThreadPool()</li>
+<li>Executors.newSingleThreadExecutor()</li>
+</ul>
+<p><img src="/img/posts/executor/3.png" alt=""></p>
+<h2 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h2><p>创建一个可缓存的线程池，如果线程池的长度超过了处理的需要，可以灵活回收空闲线程。如果没有可回收的就新建线程。</p>
+<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newCachedThreadPool() &#123;</span><br><span class="line">    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,</span><br><span class="line">                                  60L, TimeUnit.SECONDS,</span><br><span class="line">                                  new SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h2><p>创建一个定长线程池，可以固定线程池的最大并发数，处理不及的任务在队列中排队。</p>
+<h3 id="源码实现-1"><a href="#源码实现-1" class="headerlink" title="源码实现"></a>源码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newFixedThreadPool(int nThreads) &#123;</span><br><span class="line">    return new ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  0L, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h2><p>单线程化的线程池，线程池之中只有一个线程执行任务，可以保证所有任务按指定顺序执行（FIFO、优先级…）</p>
+<h3 id="源码实现-2"><a href="#源码实现-2" class="headerlink" title="源码实现"></a>源码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newSingleThreadExecutor() &#123;</span><br><span class="line">    return new FinalizableDelegatedExecutorService</span><br><span class="line">        (new ThreadPoolExecutor(1, 1,</span><br><span class="line">                                0L, TimeUnit.MILLISECONDS,</span><br><span class="line">                                new LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="newScheduledThreadPool"><a href="#newScheduledThreadPool" class="headerlink" title="newScheduledThreadPool"></a>newScheduledThreadPool</h2><p>定长线程池，支持定时和周期任务执行，当线程数设置为1时，功能就与Timer类似</p>
+<h3 id="源码实现-3"><a href="#源码实现-3" class="headerlink" title="源码实现"></a>源码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) &#123;</span><br><span class="line">    return new ScheduledThreadPoolExecutor(corePoolSize);</span><br><span class="line">&#125;</span><br><span class="line">public ScheduledThreadPoolExecutor(int corePoolSize) &#123; // 此处super指的是ThreadPoolExecutor</span><br><span class="line">    super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,</span><br><span class="line">          new DelayedWorkQueue());</span><br><span class="line">&#125;</span><br><span class="line">public ThreadPoolExecutor(int corePoolSize,</span><br><span class="line">                          int maximumPoolSize,</span><br><span class="line">                          long keepAliveTime,</span><br><span class="line">                          TimeUnit unit,</span><br><span class="line">                          BlockingQueue&lt;Runnable&gt; workQueue) &#123;</span><br><span class="line">    this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</span><br><span class="line">         Executors.defaultThreadFactory(), defaultHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ScheduledExecutorService使用方法"><a href="#ScheduledExecutorService使用方法" class="headerlink" title="ScheduledExecutorService使用方法"></a>ScheduledExecutorService使用方法</h3><p>ScheduledExecutorService提供了与Timer类似的方法，具体有兴趣的可以自己去了解，我这里就不具体介绍了</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/executor/4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="线程池配置推荐"><a href="#线程池配置推荐" class="headerlink" title="线程池配置推荐"></a>线程池配置推荐</h1><p>线程池在配置的时候需要根据任务的类型来配置线程池的核心线程数，当然这里只是给出参考值，具体的设置还需要根据实际情况进行调整。<br>比如我们可以先将线程池设置为参考的值，然后根据运行情况、系统负载、资源利用率等等作出相应调整。</p>
+<ul>
+<li>CPU密集型任务：需要尽量压榨CPU，参考值可以设为 CPU数量+1</li>
+<li>IO密集型任务：参考值可以设置为 2 * CPU数量</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们使用线程池主要是为了重用已存在的线程，减少对象创建消亡，能有效的控制最大并发线程数，可以避免过多的资源竞争，避免阻塞，它也可以定时执行任务等控制线程的执行，性能比较好。当然这不代表我们就需要随时随地的使用线程池，一定要根据自己的实际场景来分析使用以及它的参数配置。</p>
+<p>之前学习线程池的时候有一个同学尝试去用线程池优化一个比较简单的ID算法，他的大致想法是因为线程池可以允许多个线程一起计算，理应就会加快算法的效率。但在实际中他使用1W的量级去验证时却发现使用线程池耗费的时间还没有直接计算结果快。主要原因如下：</p>
+<p><strong>当线程池里的任务粒度很小时，小到任务计算的时间和任务调度的时间已经很接近的时候，这时候如果你使用线程池，反而会变得效率低下。因为他的任务调度和任务管理的时间将会更多。线程池好用也很容易使用，但是需要根据具体场景来使用</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.308Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2018/05/16/Executor 线程池详解.html" target="_blank" rel="external">https://smilexin.cn/2018/05/16/Executor 线程池详解.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程池/">线程池</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/17/Java多线程并发最佳实践.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java多线程并发最佳实践</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/10/ReentrantLock与synchronized的区别.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ReentrantLock与synchronized的区别</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3awY6DMAxF0f7/TzNStxXhPhtGwrlZjVoKnCzeJLE/HzyO71h/fvyM9PPfa24eMmTIeC2D3I4/fv3b2nMRVYYMGRswSJhyEk9F8jn6ByBDhgwZywevX6U2NTJkyJDRCVx+TboolCFDhow1o7aZTI/n0rB+ZC8uQ4aMFzLSwsB//v1gfUOGDBkvYRylcRaanF2L19PfypAhYzSDvFAaxP0iwXr5iGJXhgwZoxlBwIXFADJNfCIuAleGDBmDGPwo/4kywHpqgg2tDBkyNmN0DsI6cbyO5osttAwZMrZhpBvOWjTX2sgu2jJkyJCxDYMfn6WbVb6g5EEfbGJlyJAxgpEu4NZxuV7qddrFZMiQsTODv2jncJ8sCtPA/aTZLEOGjJcz+jFa26AGBYCzO8uQIWM0I23tqh391yYipsqQIWMzBt9e8nDs3BM1dsiQIWMo48Cj1grGQ5wDZMiQsTODRGeKCbag4QLxtL4hQ4aMcQxepKyVJ9MJqmFkyJCxA4MD+IEab62oFVOL8yFDhoyXM3hjBPmWLP5qh3cXgStDhoyhjNqyr9OEUWu2QG1qMmTIGMc4wpEuH0ng8payeFEoQ4aMEQw+eGimxcgnniVDhox5jLTNghx+8aAsHq6lnSMyZMgYwei8Cik91ooNvKQqQ4YMGbwlIr2GlD/RfWTIkCEjXA6mgXtDk5kMGTI2YHRaLgj7ruYzGTJk7MlID+vTIuhdv0oP42TIkDGC8QdG/kHPjk9OiAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

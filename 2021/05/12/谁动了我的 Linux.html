@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>谁动了我的 Linux？history 命令详解！ | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux">
+    <meta name="description" content="当我们频繁使用 Linux 命令行时，有效地使用历史记录，可以大大提高工作效率。 在平时 Linux 操作过程中，很多命令是重复的，你一定不希望大量输入重复的命令。如果你是系统管理员，你可能需要对用户操作进行审计，管理好 Linux 命令历史记录显得非常重要。 今天我们来介绍一下，在 Linux 使用 history 来减少重复命令的几个实用技巧。 基本原理">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谁动了我的 Linux？history 命令详解！">
+<meta property="og:url" content="https://smilexin.cn/2021/05/12/谁动了我的 Linux.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="当我们频繁使用 Linux 命令行时，有效地使用历史记录，可以大大提高工作效率。 在平时 Linux 操作过程中，很多命令是重复的，你一定不希望大量输入重复的命令。如果你是系统管理员，你可能需要对用户操作进行审计，管理好 Linux 命令历史记录显得非常重要。 今天我们来介绍一下，在 Linux 使用 history 来减少重复命令的几个实用技巧。 基本原理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/bash_history/1.png">
+<meta property="og:updated_time" content="2021-05-12T02:42:24.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谁动了我的 Linux？history 命令详解！">
+<meta name="twitter:description" content="当我们频繁使用 Linux 命令行时，有效地使用历史记录，可以大大提高工作效率。 在平时 Linux 操作过程中，很多命令是重复的，你一定不希望大量输入重复的命令。如果你是系统管理员，你可能需要对用户操作进行审计，管理好 Linux 命令历史记录显得非常重要。 今天我们来介绍一下，在 Linux 使用 history 来减少重复命令的几个实用技巧。 基本原理">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/bash_history/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">谁动了我的 Linux？history 命令详解！</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">谁动了我的 Linux？history 命令详解！</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-05-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-05-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本原理"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用详解"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基础用法"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">基础用法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复执行命令"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">重复执行命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搜索历史命令"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">搜索历史命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#交互式搜索历史命令"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">交互式搜索历史命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复执行上条命令"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">重复执行上条命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#显示命令时间"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">显示命令时间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#控制历史记录总数"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">控制历史记录总数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#更改历史记录文件名"><span class="post-toc-number">2.8.</span> <span class="post-toc-text">更改历史记录文件名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#禁用历史记录"><span class="post-toc-number">2.9.</span> <span class="post-toc-text">禁用历史记录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#黑客必知的一个小技巧"><span class="post-toc-number">2.10.</span> <span class="post-toc-text">黑客必知的一个小技巧</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-谁动了我的 Linux"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">谁动了我的 Linux？history 命令详解！</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-05-12 00:00:00" datetime="2021-05-11T16:00:00.000Z"  itemprop="datePublished">2021-05-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>当我们频繁使用 Linux 命令行时，有效地使用历史记录，可以大大提高工作效率。</p>
+<p>在平时 Linux 操作过程中，很多命令是重复的，你一定不希望大量输入重复的命令。如果你是系统管理员，你可能需要对用户操作进行审计，管理好 Linux 命令历史记录显得非常重要。</p>
+<p>今天我们来介绍一下，在 Linux 使用 history 来减少重复命令的几个实用技巧。</p>
+<h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/bash_history/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>Linux 命令的历史记录，会持久化存储，默认位置是当前用户<code>home</code>目录的 <code>.bash_history</code> 文件。</p>
+<p>当 Linux 系统启动一个 Shell 时，Shell 会从 <code>.bash_history</code>文件中，读取历史记录，存储在相应内存的缓冲区中。</p>
+<p>我们平时所操作的 Linux 命令，都会记录在<strong>缓冲区</strong>中。包括 history 命令所执行的历史命令管理，都是记录在<strong>缓冲区</strong>，而不是直接记录到 <code>.bash_history</code> 文件。</p>
+<p>当我们退出 Shell，比如按下 <code>Ctrl+D</code> 时，Shell 进程会把缓冲区的内容，写回到 <code>.bash_history</code> 文件中去。</p>
+<h1 id="使用详解"><a href="#使用详解" class="headerlink" title="使用详解"></a>使用详解</h1><p>清楚了 <code>history</code> 的基本原理，我们来具体学习一下如何使用它。</p>
+<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><p>直接输入 history 命令，可以看到最近操作的所有命令都显示出来了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ history</span><br></pre></td></tr></table></figure></p>
+<p>有时候我不需要显示所有的历史命令，只显示最后的 10 条历史记录，可以在命令后加数字 <code>N</code> 即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ history 10</span><br></pre></td></tr></table></figure></p>
+<p>正常情况下，只有在 Shell 正常退出时，才会将缓冲区内容保存到文件。如果你想主动保存缓冲区的历史记录，执行 <code>-w</code> 选项即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ history -w</span><br></pre></td></tr></table></figure></p>
+<p>当然，如果你执行了一些敏感的命令操作，可以执行 <code>-c</code> 将缓冲区内容直接删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ history -c</span><br></pre></td></tr></table></figure></p>
+<h2 id="重复执行命令"><a href="#重复执行命令" class="headerlink" title="重复执行命令"></a>重复执行命令</h2><p>如果要重复执行一些命令，可以使用 <code>!</code> 来快速执行重复的命令。</p>
+<p>举个例子，重复执行第 <code>1024</code> 历史命令，可以执行如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ !1024</span><br></pre></td></tr></table></figure>
+<p><code>1024</code> 这个编号可以通过 <code>history</code> 查看</p>
+<p>重复执行上一条命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ !!</span><br></pre></td></tr></table></figure>
+<p>重复执行倒数第 6 条历史命令，可以通过负数表示，-6 表示倒数第 6 条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ !-6</span><br></pre></td></tr></table></figure>
+<h2 id="搜索历史命令"><a href="#搜索历史命令" class="headerlink" title="搜索历史命令"></a>搜索历史命令</h2><p>有时候，需要重复执行某字符串开头的最后一个命令，同样可以通过 ! 来操作，然后按 Enter 执行即可</p>
+<p>比如，刚才执行了一个很长命令，只记录命令开头是 <code>curl</code>，这时就可以通过 <code>!curl</code> 快速执行该命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ !curl</span><br></pre></td></tr></table></figure></p>
+<p>这个用法很高效，但存在不安全因素，因为有可能执行的命令不是你想要执行的，那就坏事了。可以通过 <code>:p</code> 来安全地执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ !curl:p</span><br><span class="line">curl www.sina.com.cn</span><br></pre></td></tr></table></figure></p>
+<p>加上 <code>:p</code> 后，只是打印出了搜索到的命令，如果要执行，请按 <code>Up</code> 键，然后回车即可。</p>
+<p>如果你只知道某条命令包含了 “hi” 信息，不是以 “hi” 开头，同样可以通过 ? 来执行包含字符串的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ !?hi</span><br></pre></td></tr></table></figure>
+<h2 id="交互式搜索历史命令"><a href="#交互式搜索历史命令" class="headerlink" title="交互式搜索历史命令"></a>交互式搜索历史命令</h2><p>在 Linux 搜索历史命令，还可以通过交互式的搜索方式，简直高效直接。在命令行输入 Ctrl+R 后，进入交互界面，键入需要搜索的关键字，如果匹配到多条命令，可以多次键入 Ctrl+R 来切换上一条匹配的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(reverse-i-search)`sina&apos;: echo sina</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，我输入了 sina 后，就自动匹配到最近一次和 sina 匹配的命令，这时按下回车就可以执行该命令。</p>
+<h2 id="重复执行上条命令"><a href="#重复执行上条命令" class="headerlink" title="重复执行上条命令"></a>重复执行上条命令</h2><p>在这里总结下多种重复执行上条命令的方式，你可以选择一种自己喜欢的就可以啦</p>
+<ul>
+<li>!!</li>
+<li>!-1</li>
+<li>Ctrl+p</li>
+<li>Up</li>
+</ul>
+<h2 id="显示命令时间"><a href="#显示命令时间" class="headerlink" title="显示命令时间"></a>显示命令时间</h2><p>有时候需要对 Linux 系统做审计，那为历史记录添加时间显示非常有用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ export HISTTIMEFORMAT=&apos;%F %T &apos;</span><br><span class="line">$ history 3</span><br><span class="line">    8  2021-05-12 10:29:48 echo sina</span><br><span class="line">    9  2021-05-12 10:32:13 export HISTTIMEFORMAT=&apos;%F %T &apos;</span><br><span class="line">   10  2021-05-12 10:32:17 history</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，历史记录已经显示了时间。其实这些对于审计需求，还不够，可以加上更详细的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ export HISTTIMEFORMAT=&quot;%F %T `who -u am i 2&gt;/dev/null| awk &apos;&#123;print $NF&#125;&apos;|sed \-e &apos;s/[()]//g&apos;` `whoami` &quot;</span><br><span class="line">  6  2021-04-18 16:07:48 14.116.240.195 root ls</span><br><span class="line">  7  2021-04-18 16:07:59 14.116.240.195 root pwd</span><br><span class="line">  8  2021-04-18 16:08:14 14.116.240.195 root history</span><br></pre></td></tr></table></figure></p>
+<h2 id="控制历史记录总数"><a href="#控制历史记录总数" class="headerlink" title="控制历史记录总数"></a>控制历史记录总数</h2><p>默认情况下，Linux 系统最多存储 1000 条历史记录，可以通过 <code>HISTSIZE</code> 环境变量查看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo $HISTSIZE</span><br><span class="line">1000</span><br></pre></td></tr></table></figure></p>
+<p>对于需要做审计的场景，1000 条历史记录可能会太少了，我们可以修改为合适的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export HISTSIZE=10000</span><br></pre></td></tr></table></figure></p>
+<p>注意，<code>HISTSIZE</code> 变量只能控制缓冲区中的历史记录数量，如果需要控制 <code>bash_history</code> 文件存储的最大记录数，可以通过 <code>HISTFILESIZE</code> 进行控制<br>上述命令行修改只在当前 Shell 环境生效，如果需要永久生效，需要写入配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;export HISTSIZE=10000&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ echo &quot;export HISTFILESIZE=200000&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ source ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<h2 id="更改历史记录文件名"><a href="#更改历史记录文件名" class="headerlink" title="更改历史记录文件名"></a>更改历史记录文件名</h2><p>有时，为了方便管理和备份，需要更改历史记录文件的路径和名称。简单，同样可以通过环境变量 <code>HISTFILE</code> 更改它的文件名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;export HISTFILE=/data/backup/chopin.bash_history&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ souce ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<h2 id="禁用历史记录"><a href="#禁用历史记录" class="headerlink" title="禁用历史记录"></a>禁用历史记录</h2><p>处于某种特殊环境，我们需要禁用历史记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;export HISTSIZE=0&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ echo &quot;export HISTFILESIZE=0&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>直接把上述两个变量的值设置为 0，就实现了禁用历史记录的功能</p>
+<h2 id="黑客必知的一个小技巧"><a href="#黑客必知的一个小技巧" class="headerlink" title="黑客必知的一个小技巧"></a>黑客必知的一个小技巧</h2><p>最后分享一个不为人知的，黑客必知的小技巧。</p>
+<p>在命令前额外多加一个空格，这样的命令是不会被记录到历史记录的，感觉是不是很酷</p>
+<p>这个技巧如果在你的系统不管用，请查看下环境变量 <code>HISTCONTROL</code> 是否包含 <code>ignorespace</code>，貌似 centos 系统默认没有设置这个值。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在 Linux 系统，<code>history</code> 命令可以非常方便，帮助我们管理历史命令，平时我们命令都会先记录在缓存区，在 Shell 退出时才会记录到文件中。</p>
+<p><code>history</code> 命令提供了很方便的管理功能，合理去配置和管理历史记录，可以让你的 Linux 系统更加健壮和安全。</p>
+<p>现在总结一下 <code>history</code> 命令常用方法</p>
+<ul>
+<li><code>history n</code>：只显示最近的 n 条历史记录</li>
+<li><code>history -c</code>：清除缓存区中的历史记录</li>
+<li><code>history -w</code>：将缓存区的历史记录保存到文件</li>
+<li><code>history -d N</code>：删除第 N 条历史记录<br>几种重复执行命令的方法：<code>!!</code>、<code>!N</code>、<code>!start</code> 等</li>
+</ul>
+<p>交互式历史命令搜索，请使用 Ctrl+R 快捷键</p>
+<p>合适使用几个相关的环境变量，让你的 Linux 系统更安全：</p>
+<ul>
+<li>HISTSIZE：控制缓冲区历史记录的最大个数</li>
+<li>HISTFILESIZE：控制历史记录文件中的最大个数</li>
+<li>HISTIGNORE：设置哪些命令不记录到历史记录</li>
+<li>HISTTIMEFORMAT：设置历史命令显示的时间格式</li>
+<li>HISTCONTROL：扩展的控制选项</li>
+</ul>
+<p>如果在生产环境，这些环境变量需要持久化到配置文件 <code>~/.bash_profile</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># ignorespace: 忽略空格开头的命令</span><br><span class="line"># ignoredups: 忽略连续重复命令</span><br><span class="line"># ignoreboth: 表示上述两个参数都设置</span><br><span class="line">export HISTCONTROL=ignoreboth</span><br><span class="line"></span><br><span class="line"># 设置追加而不是覆盖</span><br><span class="line">shopt -s histappend</span><br><span class="line"></span><br><span class="line">export HISTSIZE=1000</span><br><span class="line">export HISTFILESIZE=200000</span><br><span class="line">export HISTTIMEFORMAT=&quot;%F %T &quot;</span><br><span class="line">export HISTIGNORE=&quot;ls:history&quot;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-05-12T02:42:24.310Z" itemprop="dateUpdated">2021-05-12 10:42:24</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/05/12/谁动了我的 Linux.html" target="_blank" rel="external">https://smilexin.cn/2021/05/12/谁动了我的 Linux.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&title=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&title=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2021/05/12/Markdown 常用语法.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Markdown 常用语法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/05/11/IDEA 代码补全操作技巧.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">IDEA 代码补全操作技巧</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&title=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&title=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《谁动了我的 Linux？history 命令详解！》 — Junxin's Blog&url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2021/05/12/谁动了我的 Linux.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNklEQVR42u3aSW7DQAxEUd//0h0gW7uZqqIUWOyvlSEP0tOC5vR6ycf6Pd5f15/Zfev93fr8ZQcMGDAey1jlody6ctO736nPKPcGAwaMcxhuAHUDdH0TOnt7HgYMGDDKNE4Pu7vPZIEeBgwYMDo3oaSAbukLAwYMGErgU9pkShOtTjRvr8VhwIDxQEZnMHD363+ab8CAAeOLGcs8dGp9rU66+eFbMGDAGM3Qx4pu0y1bsFCSyO3DggEDxmiGmwgqJWi2fqG36qS/ARgwYIxguCsRyvPIAmvrMcGAAWM0wx1YXlWOui0241swYMAYx8gCblZquqFZL5thwIBxAkO/vP5utk4RXhEGDBijGXpS6I42sxAcBlwYMGCMZujjw7sHkFkaCgMGjHMY7lJXZ4VCb6sZPBgwYBzGcM9k21luiftHkw4GDBijGVmDXk/43PSx0/iDAQPGVEZWuLqLFP2mntQvhAEDxlBGpwXmjgH0MWeYjMKAAeMARhY63dUKvYVnP2IYMGAMZSzh0KNcFl47ySIMGDDOYbivO7fu/rI0OoUBA8ZoRqdYdRNKJby6o9ALam4YMGB8PWOZR5YaumVqfd0P78KAAWM0I1vtUtr6esssW/KwATBgwHg4I0v1soWMfsC1R5gwYMAYxNAbZ+5QUy9us6APAwYMGJ1SUy933TFA2DWEAQPGMYysfHXTTTd5hQEDxgkMpYh1BwadVQy7YoUBA8ZoRrbo4DbpjAWvRtCHAQPGOMYPuj8PLM/xrDoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

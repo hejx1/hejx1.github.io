@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Mysql 使用自增id和uuid作为主键的优劣比较 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Mysql,uuid,自增id">
+    <meta name="description" content="测试缘由一个开发同事做了一个框架，里面主键是uuid，我跟他建议说mysql不要用uuid用自增主键，自增主键效率高，他说不一定高，我说innodb的索引特性导致了自增id做主键是效率最好的，为了拿实际的案例来说服他，所以准备做一个详细的测试。 作为互联网公司，一定有用户表，而且用户表UC_USER基本会有百万记录，所以在这个表基础上准测试数据来进行测试 ​         测试过程是目前我想到的">
+<meta name="keywords" content="Mysql,uuid,自增id">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql 使用自增id和uuid作为主键的优劣比较">
+<meta property="og:url" content="https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="测试缘由一个开发同事做了一个框架，里面主键是uuid，我跟他建议说mysql不要用uuid用自增主键，自增主键效率高，他说不一定高，我说innodb的索引特性导致了自增id做主键是效率最好的，为了拿实际的案例来说服他，所以准备做一个详细的测试。 作为互联网公司，一定有用户表，而且用户表UC_USER基本会有百万记录，所以在这个表基础上准测试数据来进行测试 ​         测试过程是目前我想到的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql 使用自增id和uuid作为主键的优劣比较">
+<meta name="twitter:description" content="测试缘由一个开发同事做了一个框架，里面主键是uuid，我跟他建议说mysql不要用uuid用自增主键，自增主键效率高，他说不一定高，我说innodb的索引特性导致了自增id做主键是效率最好的，为了拿实际的案例来说服他，所以准备做一个详细的测试。 作为互联网公司，一定有用户表，而且用户表UC_USER基本会有百万记录，所以在这个表基础上准测试数据来进行测试 ​         测试过程是目前我想到的">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Mysql 使用自增id和uuid作为主键的优劣比较</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Mysql 使用自增id和uuid作为主键的优劣比较</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-12-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-12-19
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#测试缘由"><span class="post-toc-number">1.</span> <span class="post-toc-text">测试缘由</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#准备表以及数据"><span class="post-toc-number">2.</span> <span class="post-toc-text">准备表以及数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建自增id数据表"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">创建自增id数据表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建uuid数据表"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">创建uuid数据表</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#500w数据测试"><span class="post-toc-number">3.</span> <span class="post-toc-text">500w数据测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#空间容量"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">空间容量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单个数据走索引查询"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">单个数据走索引查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范围like查询"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">范围like查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写入测试"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">写入测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份和恢复"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">备份和恢复</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#500W总结"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">500W总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1000W数据测试"><span class="post-toc-number">4.</span> <span class="post-toc-text">1000W数据测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#空间容量-1"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">空间容量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单个数据走索引查询-1"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">单个数据走索引查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范围like查询-1"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">范围like查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写入测试-1"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">写入测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份和恢复-1"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">备份和恢复</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1000W总结"><span class="post-toc-number">4.6.</span> <span class="post-toc-text">1000W总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MySQL分布式架构的取舍"><span class="post-toc-number">5.</span> <span class="post-toc-text">MySQL分布式架构的取舍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自增ID主键-步长，适合中等规模的分布式场景"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">自增ID主键+步长，适合中等规模的分布式场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#UUID，适合小规模的分布式环境"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">UUID，适合小规模的分布式环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#雪花算法自造全局自增ID，适合大数据环境的分布式场景"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">雪花算法自造全局自增ID，适合大数据环境的分布式场景</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Mysql_使用自增id和uuid的优劣比较"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Mysql 使用自增id和uuid作为主键的优劣比较</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-12-19 00:00:00" datetime="2017-12-18T16:00:00.000Z"  itemprop="datePublished">2017-12-19</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="测试缘由"><a href="#测试缘由" class="headerlink" title="测试缘由"></a>测试缘由</h1><p>一个开发同事做了一个框架，里面主键是uuid，我跟他建议说mysql不要用uuid用自增主键，自增主键效率高，他说不一定高，我说innodb的索引特性导致了自增id做主键是效率最好的，为了拿实际的案例来说服他，所以准备做一个详细的测试。</p>
+<p>作为互联网公司，一定有用户表，而且用户表UC_USER基本会有百万记录，所以在这个表基础上准测试数据来进行测试</p>
+<p>​         测试过程是目前我想到的多方位的常用的几种类型的sql进行测试，当然可能不太完善，欢迎大家留言提出更加完善的测试方案或者测试sql语句。</p>
+<h1 id="准备表以及数据"><a href="#准备表以及数据" class="headerlink" title="准备表以及数据"></a>准备表以及数据</h1><h2 id="创建自增id数据表"><a href="#创建自增id数据表" class="headerlink" title="创建自增id数据表"></a>创建自增id数据表</h2><p>UC_USER，自增ID为主键，表结构类似如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `UC_USER` (</span><br><span class="line">  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;主键&apos;,</span><br><span class="line">  `USER_NAME` varchar(100) DEFAULT NULL COMMENT &apos;用户名&apos;,</span><br><span class="line">  `USER_PWD` varchar(200) DEFAULT NULL COMMENT &apos;密码&apos;,</span><br><span class="line">  `BIRTHDAY` datetime DEFAULT NULL COMMENT &apos;生日&apos;,</span><br><span class="line">  `NAME` varchar(200) DEFAULT NULL COMMENT &apos;姓名&apos;,</span><br><span class="line">  `USER_ICON` varchar(500) DEFAULT NULL COMMENT &apos;头像图片&apos;,</span><br><span class="line">  `SEX` char(1) DEFAULT NULL COMMENT &apos;性别, 1:男，2:女，3：保密&apos;,</span><br><span class="line">  `NICKNAME` varchar(200) DEFAULT NULL COMMENT &apos;昵称&apos;,</span><br><span class="line">  `STAT` varchar(10) DEFAULT NULL COMMENT &apos;用户状态，01:正常，02:冻结&apos;,</span><br><span class="line">  `USER_MALL` bigint(20) DEFAULT NULL COMMENT &apos;当前所属MALL&apos;,</span><br><span class="line">  `LAST_LOGIN_DATE` datetime DEFAULT NULL COMMENT &apos;最后登录时间&apos;,</span><br><span class="line">  `LAST_LOGIN_IP` varchar(100) DEFAULT NULL COMMENT &apos;最后登录IP&apos;,</span><br><span class="line">  `SRC_OPEN_USER_ID` bigint(20) DEFAULT NULL COMMENT &apos;来源的联合登录&apos;,</span><br><span class="line">  `EMAIL` varchar(200) DEFAULT NULL COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `MOBILE` varchar(50) DEFAULT NULL COMMENT &apos;手机&apos;,</span><br><span class="line">  `IS_DEL` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否删除&apos;,</span><br><span class="line">  `IS_EMAIL_CONFIRMED` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否绑定邮箱&apos;,</span><br><span class="line">  `IS_PHONE_CONFIRMED` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否绑定手机&apos;,</span><br><span class="line">  `CREATER` bigint(20) DEFAULT NULL COMMENT &apos;创建人&apos;,</span><br><span class="line">  `CREATE_DATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT &apos;注册时间&apos;,</span><br><span class="line">  `UPDATE_DATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT &apos;修改日期&apos;,</span><br><span class="line">  `PWD_INTENSITY` char(1) DEFAULT NULL COMMENT &apos;密码强度&apos;,</span><br><span class="line">  `MOBILE_TGC` char(64) DEFAULT NULL COMMENT &apos;手机登录标识&apos;,</span><br><span class="line">  `MAC` char(64) DEFAULT NULL COMMENT &apos;mac地址&apos;,</span><br><span class="line">  `SOURCE` char(1) DEFAULT &apos;0&apos; COMMENT &apos;1:WEB,2:IOS,3:ANDROID,4:WIFI,5:管理系统, 0:未知&apos;,</span><br><span class="line">  `ACTIVATE` char(1) DEFAULT &apos;1&apos; COMMENT &apos;激活，1：激活，0：未激活&apos;,</span><br><span class="line">  `ACTIVATE_TYPE` char(1) DEFAULT &apos;0&apos; COMMENT &apos;激活类型，0：自动，1：手动&apos;,</span><br><span class="line">  PRIMARY KEY (`ID`),</span><br><span class="line">  UNIQUE KEY `USER_NAME` (`USER_NAME`),</span><br><span class="line">  KEY `MOBILE` (`MOBILE`),</span><br><span class="line">  KEY `IDX_MOBILE_TGC` (`MOBILE_TGC`,`ID`),</span><br><span class="line">  KEY `IDX_EMAIL` (`EMAIL`,`ID`),</span><br><span class="line">  KEY `IDX_CREATE_DATE` (`CREATE_DATE`,`ID`),</span><br><span class="line">  KEY `IDX_UPDATE_DATE` (`UPDATE_DATE`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=7122681 DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="创建uuid数据表"><a href="#创建uuid数据表" class="headerlink" title="创建uuid数据表"></a>创建uuid数据表</h2><p>UC_USER_PK_VARCHAR表，字符串ID为主键，采用uuid</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `UC_USER_PK_VARCHAR_1` (</span><br><span class="line">  `ID` varchar(36) CHARACTER SET utf8mb4 NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;主键&apos;,</span><br><span class="line">  `USER_NAME` varchar(100) DEFAULT NULL COMMENT &apos;用户名&apos;,</span><br><span class="line">  `USER_PWD` varchar(200) DEFAULT NULL COMMENT &apos;密码&apos;,</span><br><span class="line">  `BIRTHDAY` datetime DEFAULT NULL COMMENT &apos;生日&apos;,</span><br><span class="line">  `NAME` varchar(200) DEFAULT NULL COMMENT &apos;姓名&apos;,</span><br><span class="line">  `USER_ICON` varchar(500) DEFAULT NULL COMMENT &apos;头像图片&apos;,</span><br><span class="line">  `SEX` char(1) DEFAULT NULL COMMENT &apos;性别, 1:男，2:女，3：保密&apos;,</span><br><span class="line">  `NICKNAME` varchar(200) DEFAULT NULL COMMENT &apos;昵称&apos;,</span><br><span class="line">  `STAT` varchar(10) DEFAULT NULL COMMENT &apos;用户状态，01:正常，02:冻结&apos;,</span><br><span class="line">  `USER_MALL` bigint(20) DEFAULT NULL COMMENT &apos;当前所属MALL&apos;,</span><br><span class="line">  `LAST_LOGIN_DATE` datetime DEFAULT NULL COMMENT &apos;最后登录时间&apos;,</span><br><span class="line">  `LAST_LOGIN_IP` varchar(100) DEFAULT NULL COMMENT &apos;最后登录IP&apos;,</span><br><span class="line">  `SRC_OPEN_USER_ID` bigint(20) DEFAULT NULL COMMENT &apos;来源的联合登录&apos;,</span><br><span class="line">  `EMAIL` varchar(200) DEFAULT NULL COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `MOBILE` varchar(50) DEFAULT NULL COMMENT &apos;手机&apos;,</span><br><span class="line">  `IS_DEL` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否删除&apos;,</span><br><span class="line">  `IS_EMAIL_CONFIRMED` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否绑定邮箱&apos;,</span><br><span class="line">  `IS_PHONE_CONFIRMED` char(1) DEFAULT &apos;0&apos; COMMENT &apos;是否绑定手机&apos;,</span><br><span class="line">  `CREATER` bigint(20) DEFAULT NULL COMMENT &apos;创建人&apos;,</span><br><span class="line">  `CREATE_DATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT &apos;注册时间&apos;,</span><br><span class="line">  `UPDATE_DATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT &apos;修改日期&apos;,</span><br><span class="line">  `PWD_INTENSITY` char(1) DEFAULT NULL COMMENT &apos;密码强度&apos;,</span><br><span class="line">  `MOBILE_TGC` char(64) DEFAULT NULL COMMENT &apos;手机登录标识&apos;,</span><br><span class="line">  `MAC` char(64) DEFAULT NULL COMMENT &apos;mac地址&apos;,</span><br><span class="line">  `SOURCE` char(1) DEFAULT &apos;0&apos; COMMENT &apos;1:WEB,2:IOS,3:ANDROID,4:WIFI,5:管理系统, 0:未知&apos;,</span><br><span class="line">  `ACTIVATE` char(1) DEFAULT &apos;1&apos; COMMENT &apos;激活，1：激活，0：未激活&apos;,</span><br><span class="line">  `ACTIVATE_TYPE` char(1) DEFAULT &apos;0&apos; COMMENT &apos;激活类型，0：自动，1：手动&apos;,</span><br><span class="line">  PRIMARY KEY (`ID`),</span><br><span class="line">  UNIQUE KEY `USER_NAME` (`USER_NAME`),</span><br><span class="line">  KEY `MOBILE` (`MOBILE`),</span><br><span class="line">  KEY `IDX_MOBILE_TGC` (`MOBILE_TGC`,`ID`),</span><br><span class="line">  KEY `IDX_EMAIL` (`EMAIL`,`ID`),</span><br><span class="line">  KEY `IDX_CREATE_DATE` (`CREATE_DATE`,`ID`),</span><br><span class="line">  KEY `IDX_UPDATE_DATE` (`UPDATE_DATE`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;;</span><br></pre></td></tr></table></figure>
+<h1 id="500w数据测试"><a href="#500w数据测试" class="headerlink" title="500w数据测试"></a>500w数据测试</h1><ul>
+<li>录入500w数据,自增id节省一半磁盘空间</li>
+</ul>
+<p>确定两个表数据量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">## 自增id为主键的表</span><br><span class="line"></span><br><span class="line">mysql&gt; select count(1) from UC_USER;</span><br><span class="line">+----------+</span><br><span class="line">| count(1) |</span><br><span class="line">+----------+</span><br><span class="line">|  5720112 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"> </span><br><span class="line">mysql&gt;</span><br><span class="line"> </span><br><span class="line">## uuid为主键的表</span><br><span class="line"></span><br><span class="line">mysql&gt; select count(1) from UC_USER_PK_VARCHAR_1;</span><br><span class="line">+----------+</span><br><span class="line">| count(1) |</span><br><span class="line">+----------+</span><br><span class="line">|  5720112 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (1.91 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="空间容量"><a href="#空间容量" class="headerlink" title="空间容量"></a>空间容量</h2><p>从占据的空间容量来看，自增ID比UUID小一半左右。</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>数据文件大小</strong></th>
+<th><strong>占据容量</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自增ID</td>
+<td>-rw-rw—- 1 mysql mysql 2.5G Aug 11 18:29 UC_USER.ibd</td>
+<td>2.5 G</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>-rw-rw—- 1 mysql mysql 5.4G Aug 15 15:11 UC_USER_PK_VARCHAR_1.ibd</td>
+<td>5.4 G</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单个数据走索引查询"><a href="#单个数据走索引查询" class="headerlink" title="单个数据走索引查询"></a>单个数据走索引查询</h2><p>单个数据走索引查询，自增id和uuid相差不大</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER t WHERE t.MOBILE =’14782121512’;</td>
+<td>0.118</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER_PK_VARCHAR_1  t WHERE t.MOBILE =’14782121512’;</td>
+<td>0.117</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER t WHERE t.MOBILE IN( ‘14782121512’,’13761460105’);</td>
+<td>0.049</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER_PK_VARCHAR_1 t WHERE t.MOBILE IN(‘14782121512’,’13761460105’);</td>
+<td>0.040</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER t WHERE t.CREATE_DATE=’2013-11-24 10:26:36’ ;</td>
+<td>0.139</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.UC_USER_PK_VARCHAR_1 t WHERE t.CREATE_DATE=’2013-11-24 10:26:43’ ;</td>
+<td>0.126</td>
+</tr>
+</tbody>
+</table>
+<h2 id="范围like查询"><a href="#范围like查询" class="headerlink" title="范围like查询"></a>范围like查询</h2><p>范围like查询，自增ID性能优于UUID</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>（1）模糊范围查询1000条数据，自增ID性能要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER</code> t WHERE t.<code>MOBILE</code> LIKE ‘147%’ LIMIT 1000;</td>
+<td>1.784</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>MOBILE</code> LIKE ‘147%’ LIMIT 1000;</td>
+<td>3.196</td>
+</tr>
+<tr>
+<td>（2）日期范围查询20条数据，自增ID稍微弱于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-08-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 20;</td>
+<td>0.601</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-08-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 20;</td>
+<td>0.543</td>
+</tr>
+<tr>
+<td>（3）范围查询200条数据，自增ID性能要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 200;</td>
+<td>2.314</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 200;</td>
+<td>3.229</td>
+</tr>
+<tr>
+<td>范围查询总数量，自增ID要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE COUNT(1) FROM test.<code>UC_USER</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’  ;</td>
+<td>0.514</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE COUNT(1) FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’  ;</td>
+<td>1.092</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PS：在有缓存的情况下，两者执行效率相差很小。</strong></p>
+<h2 id="写入测试"><a href="#写入测试" class="headerlink" title="写入测试"></a>写入测试</h2><p>写入测试，自增ID是UUID的4倍</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自增ID</td>
+<td>UPDATE test.<code>UC_USER</code> t SET t.<code>MOBILE_TGC</code>=’T2’ WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-05-03 10:26:36’ AND t.<code>CREATE_DATE</code> &lt;’2016-05-04 00:00:00’  ;</td>
+<td>1.419</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>UPDATE test.<code>UC_USER_PK_VARCHAR_1</code> t SET t.<code>MOBILE_TGC</code>=’T2’ WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-05-03 10:26:36’ AND t.<code>CREATE_DATE</code> &lt;’2016-05-04 00:00:00’  ;</td>
+<td>5.639</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>INSERT INTO test.<code>UC_USER</code>(   ID,   <code>USER_NAME</code>,   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>,   <code>MOBILE</code>,   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> ) SELECT       NULL,    CONCAT(‘110’,<code>USER_NAME</code>,8),   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>, CONCAT(‘110’,TRIM(<code>MOBILE</code>)),   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> FROM <code>test</code>.<code>UC_USER_1</code> LIMIT 100;</td>
+<td>0.105</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>INSERT INTO test.<code>UC_USER_PK_VARCHAR_1</code>(    ID,   <code>USER_NAME</code>,   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>,   <code>MOBILE</code>,   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> ) SELECT         UUID(),   CONCAT(‘110’,<code>USER_NAME</code>,8),   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>, CONCAT(‘110’,TRIM(<code>MOBILE</code>)),   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> FROM <code>test</code>.<code>UC_USER_1</code> LIMIT 100;</td>
+<td>0.424</td>
+</tr>
+</tbody>
+</table>
+<h2 id="备份和恢复"><a href="#备份和恢复" class="headerlink" title="备份和恢复"></a>备份和恢复</h2><p>备份和恢复，自增ID性能优于UUID</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mysql dump备份</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>time mysqldump -utim -ptimgood -h192.168.121.63 test UC_USER_500&gt; UC_USER_500.sql</td>
+<td>28.59秒</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>time mysqldump -utim -ptimgood -h192.168.121.63 test UC_USER_PK_VARCHAR_500&gt; UC_USER_PK_VARCHAR_500.sql</td>
+<td>31.08秒</td>
+</tr>
+<tr>
+<td><strong>MySQL恢复</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>time mysql  -utim -ptimgood -h192.168.121.63  test &lt; UC_USER_500.sql</td>
+<td>7m36.601s</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>time mysql  -utim -ptimgood -h192.168.121.63  test &lt; UC_USER_PK_VARCHAR_500.sql</td>
+<td>9m42.472s</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="500W总结"><a href="#500W总结" class="headerlink" title="500W总结"></a>500W总结</h2><p><strong>在500W记录表的测试下：</strong></p>
+<ol>
+<li>普通单条或者20条左右的记录检索，uuid为主键的相差不大几乎效率相同；</li>
+<li>但是范围查询特别是上百成千条的记录查询，自增id的效率要大于uuid；</li>
+<li>在范围查询做统计汇总的时候，自增id的效率要大于uuid；</li>
+<li>在存储上面，自增id所占的存储空间是uuid的1/2；</li>
+<li>在备份恢复上，自增ID主键稍微优于UUID。</li>
+</ol>
+<h1 id="1000W数据测试"><a href="#1000W数据测试" class="headerlink" title="1000W数据测试"></a>1000W数据测试</h1><h2 id="空间容量-1"><a href="#空间容量-1" class="headerlink" title="空间容量"></a>空间容量</h2><p>录入1000W条数据记录，查看存储空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">## 自增id为主键的表</span><br><span class="line">mysql&gt; use test;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; select count(1) from UC_USER_1;</span><br><span class="line">+----------+</span><br><span class="line">| count(1) |</span><br><span class="line">+----------+</span><br><span class="line">| 10698102 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (27.42 sec)</span><br><span class="line"> </span><br><span class="line">## uuid为主键的表</span><br><span class="line">mysql&gt; select count(1) from UC_USER_PK_VARCHAR_1;</span><br><span class="line">+----------+</span><br><span class="line">| count(1) |</span><br><span class="line">+----------+</span><br><span class="line">| 10698102 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"> </span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>占据的空间容量来看，自增ID比UUID小一半左右：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>数据文件大小</strong></th>
+<th><strong>占据容量  </strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自增ID</td>
+<td>-rw-rw—- 1 mysql mysql 4.2G Aug 20 23:08 UC_USER_1.ibd</td>
+<td>4.2 G</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>-rw-rw—- 1 mysql mysql 8.8G Aug 20 18:20 UC_USER_PK_VARCHAR_1.ibd</td>
+<td>8.8 G</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单个数据走索引查询-1"><a href="#单个数据走索引查询-1" class="headerlink" title="单个数据走索引查询"></a>单个数据走索引查询</h2><p>单个数据走索引查询，自增id和 uuid效率比是：(2~3):1</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单条记录查询</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_1</code> t WHERE t.<code>MOBILE</code> =’14782121512’;</td>
+<td>0.069</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>MOBILE</code> =’14782121512’;</td>
+<td>0.274</td>
+</tr>
+<tr>
+<td>小范围查询</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_1</code> t WHERE t.<code>MOBILE</code> IN( ‘14782121512’,’13761460105’);</td>
+<td>0.050</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>MOBILE</code> IN(‘14782121512’,’13761460105’);</td>
+<td>0.151</td>
+</tr>
+<tr>
+<td>根据日期查询</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_1</code> t WHERE t.<code>CREATE_DATE</code>=’2013-11-24 10:26:36’ ;</td>
+<td>0.269</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code>=’2013-11-24 10:26:43’ ;</td>
+<td>0.810</td>
+</tr>
+</tbody>
+</table>
+<h2 id="范围like查询-1"><a href="#范围like查询-1" class="headerlink" title="范围like查询"></a>范围like查询</h2><p>范围like查询，自增ID性能优于UUID，比值(1.5~2)：1</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>（1）模糊范围查询1000条数据，自增ID性能要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER</code> t WHERE t.<code>MOBILE</code> LIKE ‘147%’ LIMIT 1000;</td>
+<td>2.398</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>MOBILE</code> LIKE ‘147%’ LIMIT 1000;</td>
+<td>5.872</td>
+</tr>
+<tr>
+<td>（2）日期范围查询20条数据，自增ID稍微弱于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-08-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 20;</td>
+<td>0.765</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-08-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 20;</td>
+<td>1.090</td>
+</tr>
+<tr>
+<td>（3）范围查询200条数据，自增ID性能要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 200;</td>
+<td>1.569</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE t.* FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’ ORDER BY t.<code>UPDATE_DATE</code> DESC LIMIT 200;</td>
+<td>2.597</td>
+</tr>
+<tr>
+<td>范围查询总数量，自增ID要好于UUID</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>SELECT SQL_NO_CACHE COUNT(1) FROM test.<code>UC_USER_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’  ;</td>
+<td>1.129</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>SELECT SQL_NO_CACHE COUNT(1) FROM test.<code>UC_USER_PK_VARCHAR_1</code> t WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-07-01 10:26:36’  ;</td>
+<td>2.302</td>
+</tr>
+</tbody>
+</table>
+<h2 id="写入测试-1"><a href="#写入测试-1" class="headerlink" title="写入测试"></a>写入测试</h2><p>写入测试，自增ID比UUID效率高，比值(3~10)：1</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>修改一天的记录</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>UPDATE test.<code>UC_USER_1</code> t SET t.<code>MOBILE_TGC</code>=’T2’ WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-05-03 10:26:36’ AND t.<code>CREATE_DATE</code> &lt;’2016-05-04 00:00:00’  ;</td>
+<td>2.685</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>UPDATE test.<code>UC_USER_PK_VARCHAR_1</code> t SET t.<code>MOBILE_TGC</code>=’T2’ WHERE t.<code>CREATE_DATE</code> &gt; ‘2016-05-03 10:26:36’ AND t.<code>CREATE_DATE</code> &lt;’2016-05-04 00:00:00’  ;</td>
+<td>26.521</td>
+</tr>
+<tr>
+<td>录入数据</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>INSERT INTO test.<code>UC_USER_1</code>(   ID,   <code>USER_NAME</code>,   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>,   <code>MOBILE</code>,   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> ) SELECT       NULL,    CONCAT(‘110’,<code>USER_NAME</code>,8),   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>, CONCAT(‘110’,TRIM(<code>MOBILE</code>)),   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> FROM <code>test</code>.<code>UC_USER_1</code> LIMIT 100;</td>
+<td>0.534</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>INSERT INTO test.<code>UC_USER_PK_VARCHAR_1</code>(    ID,   <code>USER_NAME</code>,   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>,   <code>MOBILE</code>,   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> ) SELECT         UUID(),   CONCAT(‘110’,<code>USER_NAME</code>,8),   <code>USER_PWD</code>,   <code>BIRTHDAY</code>,   <code>NAME</code>,   <code>USER_ICON</code>,   <code>SEX</code>,   <code>NICKNAME</code>,   <code>STAT</code>,   <code>USER_MALL</code>,   <code>LAST_LOGIN_DATE</code>,   <code>LAST_LOGIN_IP</code>,   <code>SRC_OPEN_USER_ID</code>,   <code>EMAIL</code>, CONCAT(‘110’,TRIM(<code>MOBILE</code>)),   <code>IS_DEL</code>,   <code>IS_EMAIL_CONFIRMED</code>,   <code>IS_PHONE_CONFIRMED</code>,   <code>CREATER</code>,   <code>CREATE_DATE</code>,   <code>UPDATE_DATE</code>,   <code>PWD_INTENSITY</code>,   <code>MOBILE_TGC</code>,   <code>MAC</code>,   <code>SOURCE</code>,   <code>ACTIVATE</code>,   <code>ACTIVATE_TYPE</code> FROM <code>test</code>.<code>UC_USER_1</code> LIMIT 100;</td>
+<td>1.716</td>
+</tr>
+</tbody>
+</table>
+<h2 id="备份和恢复-1"><a href="#备份和恢复-1" class="headerlink" title="备份和恢复"></a>备份和恢复</h2><p>备份和恢复，自增ID性能优于UUID</p>
+<table>
+<thead>
+<tr>
+<th><strong>主键类型</strong></th>
+<th><strong>SQL语句</strong></th>
+<th><strong>执行时间 (秒)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mysql dump备份</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>time mysqldump -utim -ptimgood -h192.168.121.63 test UC_USER_1&gt; UC_USER_1.sql</td>
+<td>0m50.548s</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>time mysqldump -utim -ptimgood -h192.168.121.63 test UC_USER_PK_VARCHAR_1&gt; UC_USER_PK_VARCHAR_1.sql</td>
+<td>0m58.590s</td>
+</tr>
+<tr>
+<td><strong>MySQL恢复</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>自增ID</td>
+<td>time mysql -utim -ptimgood -h192.168.121.63 test &lt; UC_USER_1.sql</td>
+<td>17m30.822s</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>time mysql -utim -ptimgood -h192.168.121.63 test &lt; UC_USER_PK_VARCHAR_1.sql</td>
+<td>23m6.360s</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="1000W总结"><a href="#1000W总结" class="headerlink" title="1000W总结"></a>1000W总结</h2><p><strong>在1000W记录表的测试下：</strong></p>
+<ol>
+<li>普通单条或者20条左右的记录检索，自增主键效率是uuid主键的2到3倍；</li>
+<li>但是范围查询特别是上百成千条的记录查询，自增id的效率要大于uuid；</li>
+<li>在范围查询做统计汇总的时候，自增id主键的效率是uuid主键1.5到2倍；</li>
+<li>在存储上面，自增id所占的存储空间是uuid的1/2；</li>
+<li>在写入上面，自增ID主键的效率是UUID主键的3到10倍，相差比较明显，特别是update小范围之内的数据上面。</li>
+<li>在备份恢复上，自增ID主键稍微优于UUID。</li>
+</ol>
+<h1 id="MySQL分布式架构的取舍"><a href="#MySQL分布式架构的取舍" class="headerlink" title="MySQL分布式架构的取舍"></a>MySQL分布式架构的取舍</h1><p>分布式架构，意味着需要多个实例中保持一个表的主键的唯一性。这个时候普通的单表自增ID主键就不太合适，因为多个mysql实例上会遇到主键全局唯一性问题。</p>
+<h2 id="自增ID主键-步长，适合中等规模的分布式场景"><a href="#自增ID主键-步长，适合中等规模的分布式场景" class="headerlink" title="自增ID主键+步长，适合中等规模的分布式场景"></a>自增ID主键+步长，适合中等规模的分布式场景</h2><p>在每个集群节点组的master上面，设置（auto_increment_increment），让目前每个集群的起始点错开 1，步长选择大于将来基本不可能达到的切分集群数，达到将 ID 相对分段的效果来满足全局唯一的效果。</p>
+<p><strong><font color="red">优点是：实现简单，后期维护简单，对应用透明。</font></strong></p>
+<p><strong><font color="red">缺点是：第一次设置相对较为复杂，因为要针对未来业务的发展而计算好足够的步长;</font></strong></p>
+<p><strong>规划：</strong></p>
+<p>比如计划总共N个节点组，那么第i个节点组的my.cnf的配置为：</p>
+<p>auto_increment_offset  i</p>
+<p>auto_increment_increment  N</p>
+<p>假如规划48个节点组，N为48，现在配置第8个节点组，这个i为8，第8个节点组的my.cnf里面的配置为：</p>
+<p>auto_increment_offset  8</p>
+<p>auto_increment_increment  48</p>
+<h2 id="UUID，适合小规模的分布式环境"><a href="#UUID，适合小规模的分布式环境" class="headerlink" title="UUID，适合小规模的分布式环境"></a>UUID，适合小规模的分布式环境</h2><p>对于InnoDB这种聚集主键类型的引擎来说，数据会按照主键进行排序，由于UUID的无序性，InnoDB会产生巨大的IO压力，而且由于索引和数据存储在一起，字符串做主键会造成存储空间增大一倍。</p>
+<p>在存储和检索的时候，innodb会对主键进行物理排序，这对auto_increment_int是个好消息，因为后一次插入的主键位置总是在最后。但是对uuid来说，这却是个坏消息，因为uuid是杂乱无章的，每次插入的主键位置是不确定的，可能在开头，也可能在中间，在进行主键物理排序的时候，势必会造成大量的 IO操作影响效率，在数据量不停增长的时候，特别是数据量上了千万记录的时候，读写性能下降的非常厉害。</p>
+<p><strong><font color="red">优点：搭建比较简单，不需要为主键唯一性的处理。</font></strong></p>
+<p><strong><font color="red">缺点：占用两倍的存储空间（在云上光存储一块就要多花2倍的钱），后期读写性能下降厉害。</font></strong></p>
+<h2 id="雪花算法自造全局自增ID，适合大数据环境的分布式场景"><a href="#雪花算法自造全局自增ID，适合大数据环境的分布式场景" class="headerlink" title="雪花算法自造全局自增ID，适合大数据环境的分布式场景"></a>雪花算法自造全局自增ID，适合大数据环境的分布式场景</h2><p>由twitter公布的开源的分布式id算法snowflake（Java版本）</p>
+<p><strong>IdWorker.java:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">package com.demo.elk;</span><br><span class="line">import org.slf4j.Logger; </span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line"> </span><br><span class="line">public class IdWorker &#123;</span><br><span class="line">   </span><br><span class="line">    protected static final Logger LOG = LoggerFactory.getLogger(IdWorker.class);</span><br><span class="line">    </span><br><span class="line">    private long workerId;</span><br><span class="line">    private long datacenterId;</span><br><span class="line">    private long sequence = 0L;</span><br><span class="line"> </span><br><span class="line">    private long twepoch = 1288834974657L;</span><br><span class="line"> </span><br><span class="line">    private long workerIdBits = 5L;</span><br><span class="line">    private long datacenterIdBits = 5L;</span><br><span class="line">    private long maxWorkerId = -1L ^ (-1L &lt;&lt; workerIdBits);</span><br><span class="line">    private long maxDatacenterId = -1L ^ (-1L &lt;&lt; datacenterIdBits);</span><br><span class="line">    private long sequenceBits = 12L;</span><br><span class="line"> </span><br><span class="line">    private long workerIdShift = sequenceBits;</span><br><span class="line">    private long datacenterIdShift = sequenceBits + workerIdBits;</span><br><span class="line">    private long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;</span><br><span class="line">    private long sequenceMask = -1L ^ (-1L &lt;&lt; sequenceBits);</span><br><span class="line"> </span><br><span class="line">    private long lastTimestamp = -1L;</span><br><span class="line"> </span><br><span class="line">    public IdWorker(long workerId, long datacenterId) &#123;</span><br><span class="line">        // sanity check for workerId</span><br><span class="line">        if (workerId &gt; maxWorkerId || workerId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;worker Id can&apos;t be greater than %d or less than 0&quot;, maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        if (datacenterId &gt; maxDatacenterId || datacenterId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;datacenter Id can&apos;t be greater than %d or less than 0&quot;, maxDatacenterId));</span><br><span class="line">        &#125;</span><br><span class="line">        this.workerId = workerId;</span><br><span class="line">        this.datacenterId = datacenterId;</span><br><span class="line">        LOG.info(String.format(&quot;worker starting. timestamp left shift %d, datacenter id bits %d, worker id bits %d, sequence bits %d, workerid %d&quot;, timestampLeftShift, datacenterIdBits, workerIdBits, sequenceBits, workerId));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public synchronized long nextId() &#123;</span><br><span class="line">        long timestamp = timeGen();</span><br><span class="line"> </span><br><span class="line">        if (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">            LOG.error(String.format(&quot;clock is moving backwards.  Rejecting requests until %d.&quot;, lastTimestamp));</span><br><span class="line">            throw new RuntimeException(String.format(&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;, lastTimestamp - timestamp));</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        if (lastTimestamp == timestamp) &#123;</span><br><span class="line">            sequence = (sequence + 1) &amp; sequenceMask;</span><br><span class="line">            if (sequence == 0) &#123;</span><br><span class="line">                timestamp = tilNextMillis(lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            sequence = 0L;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        lastTimestamp = timestamp;</span><br><span class="line"> </span><br><span class="line">        return ((timestamp - twepoch) &lt;&lt; timestampLeftShift) | (datacenterId &lt;&lt; datacenterIdShift) | (workerId &lt;&lt; workerIdShift) | sequence;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    protected long tilNextMillis(long lastTimestamp) &#123;</span><br><span class="line">        long timestamp = timeGen();</span><br><span class="line">        while (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        return timestamp;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    protected long timeGen() &#123;</span><br><span class="line">        return System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试生成ID的测试类，IdWorkerTest.java：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package com.demo.elk;</span><br><span class="line"> </span><br><span class="line">import java.util.HashSet;</span><br><span class="line">import java.util.Set;</span><br><span class="line"> </span><br><span class="line">public class IdWorkerTest &#123;</span><br><span class="line">          </span><br><span class="line">    static class IdWorkThread implements Runnable &#123;</span><br><span class="line">        private Set&lt;Long&gt; set;</span><br><span class="line">        private IdWorker idWorker;</span><br><span class="line"> </span><br><span class="line">        public IdWorkThread(Set&lt;Long&gt; set, IdWorker idWorker) &#123;</span><br><span class="line">            this.set = set;</span><br><span class="line">            this.idWorker = idWorker;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        public void run() &#123;</span><br><span class="line">            while (true) &#123;</span><br><span class="line">                long id = idWorker.nextId();</span><br><span class="line">                System.out.println(&quot;            real id:&quot; + id);</span><br><span class="line">                if (!set.add(id)) &#123;</span><br><span class="line">                    System.out.println(&quot;duplicate:&quot; + id);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Set&lt;Long&gt; set = new HashSet&lt;Long&gt;();</span><br><span class="line">        final IdWorker idWorker1 = new IdWorker(0, 0);</span><br><span class="line">        final IdWorker idWorker2 = new IdWorker(1, 0);</span><br><span class="line">        Thread t1 = new Thread(new IdWorkThread(set, idWorker1));</span><br><span class="line">        Thread t2 = new Thread(new IdWorkThread(set, idWorker2));</span><br><span class="line">        t1.setDaemon(true);</span><br><span class="line">        t2.setDaemon(true);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(30000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><strong>（1）单实例或者单节点组：</strong></p>
+<p>经过500W、1000W的单机表测试，自增ID相对UUID来说，自增ID主键性能高于UUID，磁盘存储费用比UUID节省一半的钱。所以在单实例上或者单节点组上，使用自增ID作为首选主键。</p>
+<p><strong>（2）分布式架构场景：</strong></p>
+<ul>
+<li>20个节点组下的小型规模的分布式场景，为了快速实现部署，可以采用多花存储费用、牺牲部分性能而使用UUID主键快速部署；</li>
+<li>20到200个节点组的中等规模的分布式场景，可以采用自增ID+步长的较快速方案。</li>
+<li>200以上节点组的大数据下的分布式场景，可以借鉴类似twitter雪花算法构造的全局自增ID作为主键。</li>
+</ul>
+<p>参考链接：<a href="http://blog.csdn.net/mchdba/article/details/52336203" target="_blank" rel="noopener">http://blog.csdn.net/mchdba/article/details/52336203</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.312Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" target="_blank" rel="external">https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uuid/">uuid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自增id/">自增id</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&title=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&title=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/12/23/Mysql_数据库死锁问题处理.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mysql 数据库死锁问题处理方案</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/12/05/留存用户统计.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Mysql 留存用户统计</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&title=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&title=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 使用自增id和uuid作为主键的优劣比较》 — Junxin's Blog&url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3awW7bMBAE0P7/T6dAjw0sz+ySTg5Pp0ByTT4WENez/PMnvr7+Xc9Pv3/m+/1Xd56/J5nD6sLDw8MbTf3V1U7reYrtTJJlejMuHh4e3jXe84v4+dXfbiFnF/fN6Hh4eHg/yksK3+QVnyxN+xQPDw/v9/PamGBfduPh4eH9Nl5S1CYTnRXEp+aAh4eH9xne5qX8U39f7O/h4eHhLbrqyas/2QbakOLYbPHw8PAu8GZDzg5OzZZjhl+tKB4eHt4jr/3Z3063fdqO+Kb4xsPDw7vAy0ve2Z7zDIt2rTLAfTNzPDw8vGu8WVNqthD5FJPlizYGPDw8vAVvFgqcKojzzSP/tuj/Cg8PD+8oL49Q8+Hz0jmPj6NvxsPDw7vA2zTAZttMe8igXZoiX8HDw8M7xJvVpcnU8zuzzeblHTw8PLxrvE3Zmrej8rFmW1f0uwEPDw/vKK89FtB22M420uqNAQ8PD+8Qr41Qk7b9nreJNvDw8PA+w2sL5SRimL3685kkS4+Hh4d3ljdrfbVxah5wJJ9Ptis8PDy8T/Lq/aSMIdoAdxMi4+Hh4d3gtY3/vDi+HTrk5TgeHh7eDd7zK7vFtMV0wmhJxckIPDw8vDUvb9UnJXheQM++/8ChKzw8PLwRry2s8wFmm8Es8qhPRuDh4eGNeEmM26YabajRbhvFkS88PDy8D/I2Be4+dMjnEAW4eHh4eEd5s9I2P2h1diMZxrh4eHh4R3lf5dU2q2bT3cS7RUmNh4eHN+LNhskj13azyQ97zbYxPDw8vFO8WSSRv7KT9lh7p4iY8fDw8K7x2lb9vaMGmxJ81anDw8PDu8C71xjbHCl480k8PDy8X8PL/+2+bZbcf4nEw8PDu8bL44Y2xm0PS21ijgNZCx4eHl6XLdS/6GfJQNvKaovyY4EFHh4e3v9P/wIt1ivwLYk34wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

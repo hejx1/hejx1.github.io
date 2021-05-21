@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JAVA位运算符的应用积累 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JDK,java">
+    <meta name="description" content="概述位运算是以二进制位为单位进行的运算，其操作数和运算结果都是整型值。位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’，右移’&amp;gt;&amp;gt;’，左移’&amp;lt;&amp;lt;’，0填充的右移’&amp;gt;&amp;gt;&amp;gt;’位运算的位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’与逻辑运算的相应操作的真值表完全相同，其差别只是位运算操作的操作数和运算结果都是二进制整数，而逻辑运算相应操作的操作">
+<meta name="keywords" content="JDK,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA位运算符的应用积累">
+<meta property="og:url" content="https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="概述位运算是以二进制位为单位进行的运算，其操作数和运算结果都是整型值。位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’，右移’&amp;gt;&amp;gt;’，左移’&amp;lt;&amp;lt;’，0填充的右移’&amp;gt;&amp;gt;&amp;gt;’位运算的位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’与逻辑运算的相应操作的真值表完全相同，其差别只是位运算操作的操作数和运算结果都是二进制整数，而逻辑运算相应操作的操作">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://smilexin.cn/img/posts/java/wys1.png">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA位运算符的应用积累">
+<meta name="twitter:description" content="概述位运算是以二进制位为单位进行的运算，其操作数和运算结果都是整型值。位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’，右移’&amp;gt;&amp;gt;’，左移’&amp;lt;&amp;lt;’，0填充的右移’&amp;gt;&amp;gt;&amp;gt;’位运算的位与’&amp;amp;’，位或’|’，位非’~’，位异或’^’与逻辑运算的相应操作的真值表完全相同，其差别只是位运算操作的操作数和运算结果都是二进制整数，而逻辑运算相应操作的操作">
+<meta name="twitter:image" content="https://smilexin.cn/img/posts/java/wys1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JAVA位运算符的应用积累</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JAVA位运算符的应用积累</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-26
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#应用积累"><span class="post-toc-number">2.</span> <span class="post-toc-text">应用积累</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类型集合"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">类型集合</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JAVA位运算符的应用积累"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JAVA位运算符的应用积累</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-26 00:00:00" datetime="2017-07-25T16:00:00.000Z"  itemprop="datePublished">2017-07-26</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>位运算是以二进制位为单位进行的运算，其操作数和运算结果都是整型值。<br>位与’&amp;’，位或’|’，位非’~’，位异或’^’，右移’&gt;&gt;’，左移’&lt;&lt;’，0填充的右移’&gt;&gt;&gt;’<br>位运算的位与’&amp;’，位或’|’，位非’~’，位异或’^’与逻辑运算的相应操作的真值表完全相同，其差别只是位运算操作的操作数和运算结果都是二进制整数，而逻辑运算相应操作的操作数和运算结果都是逻辑值boolean型。 </p>
+<p><img src="/img/posts/java/wys1.png" alt="image"></p>
+<h1 id="应用积累"><a href="#应用积累" class="headerlink" title="应用积累"></a>应用积累</h1><h2 id="类型集合"><a href="#类型集合" class="headerlink" title="类型集合"></a>类型集合</h2><p>当某一个对象拥有多种权限或行为时,我们常规的做法是在对象里建立一个集合来存储对象的多种权限或行为。其实这里我们可以使用位运算符的”位与”来实现这种需求。具体代码如下：</p>
+<p><strong>需要注意的是我这里使用的int存储行为值，因为int的最大值为2的32次方，所以我的行为类型值得大小不能超过1 &lt;&lt; 32</strong></p>
+<p>Activity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> *</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017-07-26 17:45</span><br><span class="line"> **/</span><br><span class="line">public abstract class Activity &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 是否具有指定类型</span><br><span class="line">     * @param activitys 所有行为</span><br><span class="line">     * @param activity 要检查拥有的行为</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static boolean checkHasActivityType(int activitys,int activity) &#123;</span><br><span class="line">        // 位与( &amp; )</span><br><span class="line">        // 位与：第一个操作数的的第n位于第二个操作数的第n位如果都是1，那么结果的第n为也为1，否则为0</span><br><span class="line">        return (activitys &amp; activity) != 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MaJiangActivity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * 麻将行为</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017-07-26 17:30</span><br><span class="line"> **/</span><br><span class="line">public class MaJiangActivity extends Activity&#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 过</span><br><span class="line">     * 需要注意的是因为我这里使用的是int所以最大行为值不能超过 1 &lt;&lt; 32</span><br><span class="line">     */</span><br><span class="line">    public static int Pass = 1;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 碰牌</span><br><span class="line">     */</span><br><span class="line">    public static int Peng = 1 &lt;&lt; 1;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 明杠</span><br><span class="line">     */</span><br><span class="line">    public static int MingGang = 1 &lt;&lt; 2;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 暗杠</span><br><span class="line">     */</span><br><span class="line">    public static int AnGang = 1 &lt;&lt; 3;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 巴杠</span><br><span class="line">     */</span><br><span class="line">    public static int BaGang = 1 &lt;&lt; 4;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 得到用户所拥有的行为</span><br><span class="line">     * @return 玩家所拥有的行为集合</span><br><span class="line">     */</span><br><span class="line">    public static int getUserActivity()&#123;</span><br><span class="line">        int userActivity = 0; // 玩家拥有的行为,可能为多个</span><br><span class="line">        boolean canBaGang = true;</span><br><span class="line">        if (canBaGang) userActivity += MaJiangActivity.BaGang;</span><br><span class="line">        boolean canAnGang = true;</span><br><span class="line">        if (canAnGang) userActivity += MaJiangActivity.AnGang;</span><br><span class="line">        return userActivity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 程序入口</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int userActivity = getUserActivity();</span><br><span class="line">        if(Activity.checkHasActivityType(userActivity,MaJiangActivity.AnGang))&#123;</span><br><span class="line">            // 检查用户是否具有暗杠行为</span><br><span class="line">            System.out.println(&quot;具有暗杠行为...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        if(!Activity.checkHasActivityType(userActivity,MaJiangActivity.Pass))&#123;</span><br><span class="line">            // 检查用户是否不具有过的行为</span><br><span class="line">            System.out.println(&quot;不具有过行为...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.309Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/07/26/JAVA位运算符的应用积累.html" target="_blank" rel="external">https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&title=《JAVA位运算符的应用积累》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&title=《JAVA位运算符的应用积累》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JAVA位运算符的应用积累》 — Junxin's Blog&url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/31/memcached_过期数据删除机制.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">memcached 过期数据删除机制</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/13/JDK8_新特性之lambda表达式.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JDK8 新特性之lambda表达式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&title=《JAVA位运算符的应用积累》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&title=《JAVA位运算符的应用积累》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JAVA位运算符的应用积累》 — Junxin's Blog&url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/26/JAVA位运算符的应用积累.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3a0U7kMBAEQP7/p+9eT0IJ3TM2B1LlCWWD12WkeOjxx0d8/fnn+nz/6ZmnO58/fRr5/ZljFx4eHt5i6k/Dvd9/GrNdiPdx3ufzuAR4eHh413jt0PkWkrzQ8yVulxUPDw/vt/Dycjz/djw8PLzfy2ujhxsbDB4eHt5P4OXlbF4o5xtMEtRez1rw8PDwYt7ZKX7Pz1f6e3h4eHjrrnrSDJuNM2un1WPi4eHhXeCdalDlQW0RIrweWcgjDDw8PLwbvDycfWe0S5PHE5uwGA8PD+8sb9a8P4VJRm6bcMUugYeHh3eUt2n/J+V1G2S0YDw8PLx7vPyFnr/WZ4xZVHGgGYaHh4e3hrUBa/7K3kTGs8YbHh4e3g3e5oXbtqza+20b7DHGxcPDw/sWXv71SaTbbiot74sGGB4eHt5R3qzYnZXRyRGBTcwx3Mfw8PDwRrzZQaj803wqs79M3eXDw8PDW/BmbfvkyWTSs8NYxfaAh4eHd5nXTquNVmdNr1WogYeHh3eBlwcKbYjQYvawx1nh4eHhXeDtB2pL8DbAzUcbnnTAw8PDK3n7QrkNgvOf8+tx5nh4eHjfzpu1uDYbQBE0JFsUHh4e3lFeXp62//zn7bHN8YUvlgYPDw/vAm820CwUaH93tl0VKTUeHh7eId5sY2gnlwcQbVAS5dN4eHh4R3lnYbPoIQEUc8bDw8O7xmtD1bwFNWv/b9pgwzMOeHh4eAFvHze0AWu7WO3W8kUDDA8PD2/N2xxpSkred3xSQOfLmpfjeHh4eHvefjMo6vdF7trGGXh4eHi3eW1Umn993vifLc0XT+Lh4eH9GF5y3KqddL795BsGHh4e3s/h7ReiDXyHB7Dw8PDwrvFmhe+9onxWcBcnI/Dw8PAWvP8QrQZF+TvgQE8PDw8Pb8L7Cx3/nHEk1+OQAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

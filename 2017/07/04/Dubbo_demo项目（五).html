@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Dubbo demo项目 (五) 启动Dubbo服务 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Dubbo">
+    <meta name="description" content="尝试启动现在已经基本上搭建完成了 Dubbo 业务中心,但是如果想要正常的使用 Dubbo 还需要对整体的代码进行调试 定义一个 Dubbo 服务的启动程序类：ProviderStartup 1234567891011121314151617package cn.hejx.service.impl.demo;import com.alibaba.dubbo.container.Main;/** *">
+<meta name="keywords" content="Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo demo项目 (五) 启动Dubbo服务">
+<meta property="og:url" content="https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="尝试启动现在已经基本上搭建完成了 Dubbo 业务中心,但是如果想要正常的使用 Dubbo 还需要对整体的代码进行调试 定义一个 Dubbo 服务的启动程序类：ProviderStartup 1234567891011121314151617package cn.hejx.service.impl.demo;import com.alibaba.dubbo.container.Main;/** *">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-30T02:44:33.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo demo项目 (五) 启动Dubbo服务">
+<meta name="twitter:description" content="尝试启动现在已经基本上搭建完成了 Dubbo 业务中心,但是如果想要正常的使用 Dubbo 还需要对整体的代码进行调试 定义一个 Dubbo 服务的启动程序类：ProviderStartup 1234567891011121314151617package cn.hejx.service.impl.demo;import com.alibaba.dubbo.container.Main;/** *">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Dubbo demo项目 (五) 启动Dubbo服务</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Dubbo demo项目 (五) 启动Dubbo服务</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-03T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-04
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#尝试启动"><span class="post-toc-number">1.</span> <span class="post-toc-text">尝试启动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#排除错误"><span class="post-toc-number">2.</span> <span class="post-toc-text">排除错误</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题处理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">问题处理</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#调试完成-成功启动"><span class="post-toc-number">3.</span> <span class="post-toc-text">调试完成,成功启动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查看zookeeper信息"><span class="post-toc-number">4.</span> <span class="post-toc-text">查看zookeeper信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#这里附上修改后的service-pom-xml配置文件"><span class="post-toc-number">5.</span> <span class="post-toc-text">这里附上修改后的service/pom.xml配置文件</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Dubbo_demo项目（五)"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Dubbo demo项目 (五) 启动Dubbo服务</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-04 00:00:00" datetime="2017-07-03T16:00:00.000Z"  itemprop="datePublished">2017-07-04</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="尝试启动"><a href="#尝试启动" class="headerlink" title="尝试启动"></a>尝试启动</h1><p>现在已经基本上搭建完成了 Dubbo 业务中心,但是如果想要正常的使用 Dubbo 还需要对整体的代码进行调试</p>
+<p>定义一个 Dubbo 服务的启动程序类：ProviderStartup</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package cn.hejx.service.impl.demo;</span><br><span class="line"></span><br><span class="line">import com.alibaba.dubbo.container.Main;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by 追风少年</span><br><span class="line"> * service 启动入口</span><br><span class="line"> * @email doubihah@foxmail.com</span><br><span class="line"> * @create 2017-07-03 10:07</span><br><span class="line"> **/</span><br><span class="line">public class ProviderStartup &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Main.main(args);    // 启动dubbo服务</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>能够这样启动的主要的原因在于项目之中已经按照 Dubbo 的默认要求编写了 META-INF</li>
+<li>“Main.main(args)” 在读取的时候会自动的找到指定目录,进行配置文件的加载</li>
+</ul>
+<h1 id="排除错误"><a href="#排除错误" class="headerlink" title="排除错误"></a>排除错误</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">log4j:WARN No appenders could be found for logger (com.alibaba.dubbo.common.logger.LoggerFactory).</span><br><span class="line">log4j:WARN Please initialize the log4j system properly.</span><br><span class="line">log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.</span><br><span class="line">org.springframework.beans.factory.BeanDefinitionStoreException: Unexpected exception parsing XML document from file [E:\IdeaProjects\dubbodemo\service\target\classes\META-INF\spring\spring-common.xml]; nested exception is java.lang.IllegalStateException: Context namespace element &apos;component-scan&apos; and its parser class [org.springframework.context.annotation.ComponentScanBeanDefinitionParser] are only available on JDK 1.5 and higher</span><br><span class="line">	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:420)</span><br><span class="line">	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:342)</span><br><span class="line">	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:310)</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:143)</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:178)</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:149)</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:212)</span><br><span class="line">	at org.springframework.context.support.AbstractXmlApplicationContext.loadBeanDefinitions(AbstractXmlApplicationContext.java:113)</span><br><span class="line">	at org.springframework.context.support.AbstractXmlApplicationContext.loadBeanDefinitions(AbstractXmlApplicationContext.java:80)</span><br><span class="line">	at org.springframework.context.support.AbstractRefreshableApplicationContext.refreshBeanFactory(AbstractRefreshableApplicationContext.java:123)</span><br><span class="line">	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:422)</span><br><span class="line">	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:352)</span><br><span class="line">	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:139)</span><br><span class="line">	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:93)</span><br><span class="line">	at com.alibaba.dubbo.container.spring.SpringContainer.start(SpringContainer.java:50)</span><br><span class="line">	at com.alibaba.dubbo.container.Main.main(Main.java:80)</span><br><span class="line">	at cn.hejx.service.impl.demo.ProviderStartup.main(ProviderStartup.java:14)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)</span><br><span class="line">Caused by: java.lang.IllegalStateException: Context namespace element &apos;component-scan&apos; and its parser class [org.springframework.context.annotation.ComponentScanBeanDefinitionParser] are only available on JDK 1.5 and higher</span><br><span class="line">	at org.springframework.context.config.ContextNamespaceHandler$1.parse(ContextNamespaceHandler.java:65)</span><br><span class="line">	at org.springframework.beans.factory.xml.NamespaceHandlerSupport.parse(NamespaceHandlerSupport.java:69)</span><br><span class="line">	at org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseCustomElement(BeanDefinitionParserDelegate.java:1297)</span><br><span class="line">	at org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseCustomElement(BeanDefinitionParserDelegate.java:1287)</span><br><span class="line">	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.parseBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:135)</span><br><span class="line">	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.registerBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:92)</span><br><span class="line">	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.registerBeanDefinitions(XmlBeanDefinitionReader.java:507)</span><br><span class="line">	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:398)</span><br><span class="line">	... 21 more</span><br></pre></td></tr></table></figure>
+<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[org.springframework.context.annotation.ComponentScanBeanDefinitionParser] are only available on JDK 1.5 and higher</span><br></pre></td></tr></table></figure>
+<p>控制台显示ComponentScanBeanDefinitionParser应该运行在 jdk1.5 或者更高级别,现在我们对整个项目的依赖包进行排查</p>
+<p>由于我使用的是 IntelliJ IDEA 进行开发</p>
+<ol>
+<li>该工具有个Maven Projects窗口，一般在右侧能够找到，如果没有可以从菜单栏打开：View&gt;Tool Windows&gt;Maven Projects</li>
+<li>选择要分析的maven module(idea的module相当于eclipse的project),右击show dependencies,会出来该module的全部依赖关系图，非常清晰细致</li>
+<li>在图里选中一个artifact,则所有依赖该artifact的地方都会一起连带出来突出显示，如果有不同版本的也会标记出来。这样该artifact在该工程里是如何被直接或间接引入的进来也就明朗了</li>
+<li>如果有冲突的版本，可以右击该版本的节点然后Exclude，对应的pom.xml就已经成功修改了。(IntelliJ IDEA对于文件的修改都是实时保存的，无须Ctrl+S)</li>
+</ol>
+<p>问题原因：由于 Dubbo 的依赖程序库本身有自己依赖的 spring 的 jar 包,所以需要对重复的包做一个排除操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; &lt;!-- 导入Dubbo开发包 --&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;dubbo&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt;</span><br><span class="line">    &lt;exclusions&gt;</span><br><span class="line">        &lt;exclusion&gt;</span><br><span class="line">            &lt;artifactId&gt;spring&lt;/artifactId&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">        &lt;/exclusion&gt;</span><br><span class="line">    &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>项目中已经配置了日志组件,但是这个日志并没有正常的显示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">log4j:WARN No appenders could be found for logger (com.alibaba.dubbo.common.logger.LoggerFactory).</span><br><span class="line">log4j:WARN Please initialize the log4j system properly.</span><br><span class="line">log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.</span><br><span class="line">[2017-07-03 10:57:23] Dubbo service server started!</span><br><span class="line"></span><br><span class="line">Process finished with exit code 1</span><br></pre></td></tr></table></figure>
+<p>经检查发现在 Zookeeper 里面进行下载的时候也会出现log4j,slf4j组件,需要继续追加排除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; &lt;!-- 导入Zookeeper开发包 --&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;$&#123;zookeeper.version&#125;&lt;/version&gt;</span><br><span class="line">    &lt;exclusions&gt;</span><br><span class="line">        &lt;exclusion&gt;</span><br><span class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">        &lt;/exclusion&gt;</span><br><span class="line">        &lt;exclusion&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">        &lt;/exclusion&gt;</span><br><span class="line">    &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="调试完成-成功启动"><a href="#调试完成-成功启动" class="headerlink" title="调试完成,成功启动"></a>调试完成,成功启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">2017-07-03 14:06:56  | INFO  | main | cn.hejx.service.impl.demo.ProviderStartup | info ..............</span><br><span class="line">2017-07-03 14:06:56  | ERROR | main | cn.hejx.service.impl.demo.ProviderStartup | error msg</span><br><span class="line">2017-07-03 14:06:56  | INFO  | main | com.alibaba.dubbo.common.logger.LoggerFactory | using logger: com.alibaba.dubbo.common.logger.slf4j.Slf4jLoggerAdapter</span><br><span class="line">2017-07-03 14:06:56  | INFO  | main | com.alibaba.dubbo.container.Main |  [DUBBO] Use container type([spring]) to run dubbo serivce., dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">七月 03, 2017 2:06:56 下午 org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh</span><br><span class="line">信息: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1bce4f0a: startup date [Mon Jul 03 14:06:56 CST 2017]; root of context hierarchy</span><br><span class="line">七月 03, 2017 2:06:57 下午 org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions</span><br><span class="line">信息: Loading XML bean definitions from file [E:\IdeaProjects\dubbodemo\service\target\classes\META-INF\spring\spring-common.xml]</span><br><span class="line">七月 03, 2017 2:06:57 下午 org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions</span><br><span class="line">信息: Loading XML bean definitions from file [E:\IdeaProjects\dubbodemo\service\target\classes\META-INF\spring\spring-dubbo.xml]</span><br><span class="line">七月 03, 2017 2:06:57 下午 org.springframework.context.support.PropertySourcesPlaceholderConfigurer loadProperties</span><br><span class="line">信息: Loading properties file from file [E:\IdeaProjects\dubbodemo\service\target\classes\config\dubbo.properties]</span><br><span class="line">2017-07-03 14:06:58  | INFO  | main | com.alibaba.dubbo.config.AbstractConfig |  [DUBBO] The service ready on spring started. service: cn.hejx.remoteapi.IMessage, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:58  | INFO  | main | com.alibaba.dubbo.config.AbstractConfig |  [DUBBO] Export dubbo service cn.hejx.remoteapi.IMessage to local registry, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:58  | INFO  | main | com.alibaba.dubbo.config.AbstractConfig |  [DUBBO] Export dubbo service cn.hejx.remoteapi.IMessage to url dubbo://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:58  | INFO  | main | com.alibaba.dubbo.config.AbstractConfig |  [DUBBO] Register dubbo service cn.hejx.remoteapi.IMessage url dubbo://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev to registry registry://192.168.2.233:2181/com.alibaba.dubbo.registry.RegistryService?application=hejx-service&amp;dubbo=2.5.3&amp;pid=8928&amp;registry=zookeeper&amp;timestamp=1499062018617, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.remoting.transport.AbstractServer |  [DUBBO] Start NettyServer bind /0.0.0.0:19372, export /192.168.2.100:19372, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.registry.zookeeper.ZookeeperRegistry |  [DUBBO] Load registry store file C:\Users\Administrator\.dubbo\dubbo-registry-192.168.2.233.cache, data: &#123;cn.hejx.remoteapi.IMessage:dev=empty://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;category=configurators&amp;check=false&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=7128&amp;revision=dev&amp;side=provider&amp;timestamp=1499062000651&amp;version=dev&#125;, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | ZkClient-EventThread-16-192.168.2.233:2181 | org.I0Itec.zkclient.ZkEventThread | Starting ZkClient event thread.</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:zookeeper.version=3.4.9-1757313, built on 08/23/2016 06:50 GMT</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:host.name=PC-20170423KMDT</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.version=1.8.0_131</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.vendor=Oracle Corporation</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.home=C:\Program Files\Java\jdk1.8.0_131\jre</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.class.path=C:\Program Files\Java\jdk1.8.0_131\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_131\jre\lib\rt.jar;E:\IdeaProjects\dubbodemo\service\target\classes;E:\IdeaProjects\dubbodemo\remoteapi\target\classes;C:\Users\Administrator\.m2\repository\com\alibaba\dubbo\2.5.3\dubbo-2.5.3.jar;C:\Users\Administrator\.m2\repository\org\jboss\netty\netty\3.2.5.Final\netty-3.2.5.Final.jar;C:\Users\Administrator\.m2\repository\org\apache\zookeeper\zookeeper\3.4.9\zookeeper-3.4.9.jar;C:\Users\Administrator\.m2\repository\jline\jline\0.9.94\jline-0.9.94.jar;C:\Users\Administrator\.m2\repository\io\netty\netty\3.10.5.Final\netty-3.10.5.Final.jar;C:\Users\Administrator\.m2\repository\com\101tec\zkclient\0.10\zkclient-0.10.jar;C:\Users\Administrator\.m2\repository\ch\qos\logback\logback-core\1.2.3\logback-core-1.2.3.jar;C:\Users\Administrator\.m2\repository\ch\qos\logback\logback-classic\1.2.3\logback-classic-1.2.3.jar;C:\Users\Administrator\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\Administrator\.m2\repository\commons-beanutils\commons-beanutils\1.9.3\commons-beanutils-1.9.3.jar;C:\Users\Administrator\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Administrator\.m2\repository\commons-collections\commons-collections\3.2.2\commons-collections-3.2.2.jar;C:\Users\Administrator\.m2\repository\org\apache\commons\commons-lang3\3.5\commons-lang3-3.5.jar;C:\Users\Administrator\.m2\repository\io\netty\netty-all\4.1.9.Final\netty-all-4.1.9.Final.jar;C:\Users\Administrator\.m2\repository\org\javassist\javassist\3.21.0-GA\javassist-3.21.0-GA.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-core\4.3.5.RELEASE\spring-core-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-context\4.3.5.RELEASE\spring-context-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-expression\4.3.5.RELEASE\spring-expression-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-context-support\4.3.5.RELEASE\spring-context-support-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-beans\4.3.5.RELEASE\spring-beans-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-aop\4.3.5.RELEASE\spring-aop-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\springframework\spring-aspects\4.3.5.RELEASE\spring-aspects-4.3.5.RELEASE.jar;C:\Users\Administrator\.m2\repository\org\aspectj\aspectjweaver\1.8.9\aspectjweaver-1.8.9.jar;D:\Program Files (x86)\JetBrains\IntelliJ IDEA 2016.3.4\lib\idea_rt.jar</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.library.path=C:\Program Files\Java\jdk1.8.0_131\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_131\bin;C:\Program Files\Java\jdk1.8.0_131\jre\bin;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Program Files\TortoiseSVN\bin;D:\apache-maven-3.3.9\bin;D:\Program Files (x86)\Git\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;;.</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.io.tmpdir=C:\Users\ADMINI~1\AppData\Local\Temp\</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:java.compiler=&lt;NA&gt;</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:os.name=Windows 7</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:os.arch=amd64</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:os.version=6.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:user.name=Administrator</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:user.home=C:\Users\Administrator</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Client environment:user.dir=E:\IdeaProjects\dubbodemo</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.apache.zookeeper.ZooKeeper | Initiating client connection, connectString=192.168.2.233:2181 sessionTimeout=30000 watcher=org.I0Itec.zkclient.ZkClient@4bc222e</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | org.I0Itec.zkclient.ZkClient | Waiting for keeper state SyncConnected</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main-SendThread(192.168.2.233:2181) | org.apache.zookeeper.ClientCnxn | Opening socket connection to server 192.168.2.233/192.168.2.233:2181. Will not attempt to authenticate using SASL (unknown error)</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main-SendThread(192.168.2.233:2181) | org.apache.zookeeper.ClientCnxn | Socket connection established to 192.168.2.233/192.168.2.233:2181, initiating session</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main-SendThread(192.168.2.233:2181) | org.apache.zookeeper.ClientCnxn | Session establishment complete on server 192.168.2.233/192.168.2.233:2181, sessionid = 0x15d065f7a61001e, negotiated timeout = 30000</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main-EventThread | org.I0Itec.zkclient.ZkClient | zookeeper state changed (SyncConnected)</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.registry.zookeeper.ZookeeperRegistry |  [DUBBO] Register: dubbo://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.registry.zookeeper.ZookeeperRegistry |  [DUBBO] Subscribe: provider://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;category=configurators&amp;check=false&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.registry.zookeeper.ZookeeperRegistry |  [DUBBO] Notify urls for subscribe url provider://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;category=configurators&amp;check=false&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev, urls: [empty://192.168.2.100:19372/cn.hejx.remoteapi.IMessage?anyhost=true&amp;application=hejx-service&amp;category=configurators&amp;check=false&amp;default.timeout=3000&amp;dubbo=2.5.3&amp;interface=cn.hejx.remoteapi.IMessage&amp;methods=echo&amp;pid=8928&amp;revision=dev&amp;side=provider&amp;timestamp=1499062018653&amp;version=dev], dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">2017-07-03 14:06:59  | INFO  | main | com.alibaba.dubbo.container.Main |  [DUBBO] Dubbo SpringContainer started!, dubbo version: 2.5.3, current host: 127.0.0.1</span><br><span class="line">[2017-07-03 14:06:59] Dubbo service server started!</span><br></pre></td></tr></table></figure>
+<h1 id="查看zookeeper信息"><a href="#查看zookeeper信息" class="headerlink" title="查看zookeeper信息"></a>查看zookeeper信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zkCli.sh -server 192.168.2.233</span><br><span class="line">[zk: 192.168.2.233(CONNECTED) 3] ls /</span><br><span class="line">[dubbo, zookeeper]</span><br><span class="line">[zk: 192.168.2.233(CONNECTED) 4] ls /dubbo</span><br><span class="line">[cn.hejx.remoteapi.IMessage]</span><br><span class="line">[zk: 192.168.2.233(CONNECTED) 5]</span><br></pre></td></tr></table></figure>
+<p>当业务中心注册成功以后会自动的在 zookeeper 里面保存有相应的 dubbo 的远程服务接口信息</p>
+<h1 id="这里附上修改后的service-pom-xml配置文件"><a href="#这里附上修改后的service-pom-xml配置文件" class="headerlink" title="这里附上修改后的service/pom.xml配置文件"></a>这里附上修改后的service/pom.xml配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;dubbo-demo&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;cn.hejx&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;service&lt;/artifactId&gt;</span><br><span class="line">    &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line">    &lt;name&gt;service&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;profiles.dir&gt;src/main/profiles&lt;/profiles.dir&gt;</span><br><span class="line">        &lt;maven.jar.plugin.version&gt;3.0.2&lt;/maven.jar.plugin.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!-- 导入项目之中要使用的公共接口项目 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;cn.hejx&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;remoteapi&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;remoteapi.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt; &lt;!-- 导入Dubbo开发包 --&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;dubbo&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;spring&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt; &lt;!-- 导入Zookeeper开发包 --&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;zookeeper.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.101tec&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;zkclient&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;zkclient.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 导入所有要使用到的日志组件 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;logback-core&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;logback.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;logback.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;slf4j.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 导入 commons 组件包 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;commons.beanutils.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;commons-lang3.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;io.netty&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;netty-all&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;netty.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.javassist&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;javassist&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;javassist.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 导入Spring相关配置包 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-aspects&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置 profile 文件 --&gt;</span><br><span class="line">    &lt;profiles&gt;</span><br><span class="line">        &lt;profile&gt;</span><br><span class="line">            &lt;id&gt;dev&lt;/id&gt;</span><br><span class="line">            &lt;properties&gt;</span><br><span class="line">                &lt;profile.dir&gt;$&#123;profiles.dir&#125;/dev&lt;/profile.dir&gt;</span><br><span class="line">            &lt;/properties&gt;</span><br><span class="line">            &lt;activation&gt;</span><br><span class="line">                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;</span><br><span class="line">            &lt;/activation&gt;</span><br><span class="line">        &lt;/profile&gt;</span><br><span class="line">        &lt;profile&gt;</span><br><span class="line">            &lt;id&gt;beta&lt;/id&gt;</span><br><span class="line">            &lt;properties&gt;</span><br><span class="line">                &lt;profile.dir&gt;$&#123;profiles.dir&#125;/beta&lt;/profile.dir&gt;</span><br><span class="line">            &lt;/properties&gt;</span><br><span class="line">            &lt;activation&gt;</span><br><span class="line">                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;</span><br><span class="line">            &lt;/activation&gt;</span><br><span class="line">        &lt;/profile&gt;</span><br><span class="line">        &lt;profile&gt;</span><br><span class="line">            &lt;id&gt;product&lt;/id&gt;</span><br><span class="line">            &lt;properties&gt;</span><br><span class="line">                &lt;profile.dir&gt;$&#123;profiles.dir&#125;/product&lt;/profile.dir&gt;</span><br><span class="line">            &lt;/properties&gt;</span><br><span class="line">            &lt;activation&gt;</span><br><span class="line">                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;</span><br><span class="line">            &lt;/activation&gt;</span><br><span class="line">        &lt;/profile&gt;</span><br><span class="line">    &lt;/profiles&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;finalName&gt;service&lt;/finalName&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">                &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;directory&gt;$&#123;profile.dir&#125;&lt;/directory&gt;</span><br><span class="line">                &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;maven.jar.plugin.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-30T02:44:33.306Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2017/07/04/Dubbo_demo项目（五).html" target="_blank" rel="external">https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&title=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&title=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/13/JDK8_新特性之lambda表达式.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JDK8 新特性之lambda表达式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/03/Dubbo_demo项目（三).html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Dubbo demo项目 (三) 搭建业务中心项目</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&title=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&title=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dubbo demo项目 (五) 启动Dubbo服务》 — Junxin's Blog&url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html&via=https://smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/04/Dubbo_demo项目（五).html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPUlEQVR42u3ay5LCMAxEUf7/p80WCux0twJVlm9WUwOT+GSh0evxkK/xcimfjsn1+qn7lBsuGDBgbMsYy2t90NkdlDvX7wADBozTGLMItj70+j7rb+qM9dlgwIABQ2Hoh9BJMGDAgFFnuCXuGqyQYMCAAaPeIHOPm4XyG2pxGDBgbMjQu+7///kn8w0YMGBsxRjmlQVZJeC644S3v4IBA0Zrhh7g3FRPv6f++4uyGQYMGMcwsoLTDbv6Soc+YIABA0ZXhtJEywJi5UXoQ4K3DBcGDBhNGeui0U0KlaI0K2Wl5BIGDBhNGXpI1RM+9xCVhTAYMGCcwMgSQRepf99NH0v5LAwYMLZiZC37LKRmaxbushoMGDA6Mdz0K5s8KEHTbfx92RmBAQNGa0bW6K+3+7MXNF2zgAEDRmuG29bP1rayVdcwk4UBA0Y7RlayjuWlFKKluetnEQsDBoymDH0M+YvenrvGcRFjYcCA0ZThDguzh1WGCvbOCAwYMNox9HRQSQQrAdddtjCqcxgwYLRg2OtW5nhSD7huoXsxHoABA0ZThj5c1IvPSqPNeMUwYMA4hlEJuFmzTH/6xV/BgAGjKWOYl8vIMErh+mUwAAMGjKaMSrGqP3h9FHecUPpXAQMGjG0ZetM/K4DdcJwljjBgwDiBEa41yCEySz2NrhoMGDBgRANIPbm8oZEHAwYMGMLy1r0vQklApZ0RGDBgNGJkDbV6UequbkyfCAMGjNYMt3SszxmyQxsFLQwYMPownsFevCqGfwY4AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
