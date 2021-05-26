@@ -38,19 +38,19 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="并发,JDK,线程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Executor 线程池详解">
-<meta property="og:url" content="https://smilexin.cn/2018/05/16/Executor 线程池详解.html">
+<meta property="og:url" content="https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="new Thread的弊端 每次 new Thread 都会新建对象，性能差 通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的 缺少更多功能，如更多执行、">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://smilexin.cn/img/posts/executor/1.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/executor/2.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/executor/3.png">
-<meta property="og:image" content="https://smilexin.cn/img/posts/executor/4.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/executor/1.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/executor/2.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/executor/3.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/executor/4.png">
 <meta property="og:updated_time" content="2021-04-30T02:44:33.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Executor 线程池详解">
 <meta name="twitter:description" content="new Thread的弊端 每次 new Thread 都会新建对象，性能差 通过 new Thread 创建的线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多的系统资源导致死机或者OOM（out of memory 内存溢出），这种问题的原因不是因为单纯的new一个Thread，而是可能因为程序的bug或者设计上的缺陷导致不断new Thread造成的 缺少更多功能，如更多执行、">
-<meta name="twitter:image" content="https://smilexin.cn/img/posts/executor/1.png">
+<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/executor/1.png">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -367,12 +367,12 @@ var _hmt = _hmt || [];
 
 
         
-        原文链接：<a href="/2018/05/16/Executor 线程池详解.html" target="_blank" rel="external">https://smilexin.cn/2018/05/16/Executor 线程池详解.html</a>
+        原文链接：<a href="/2018/05/16/Executor 线程池详解.html" target="_blank" rel="external">https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html</a>
         
     </div>
     
     <footer>
-        <a href="https://smilexin.cn">
+        <a href="https://blog.smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -398,7 +398,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -408,22 +408,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -571,7 +571,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -581,22 +581,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&title=《Executor 线程池详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Executor 线程池详解》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/16/Executor 线程池详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -607,7 +607,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3awY6DMAxF0f7/TzNStxXhPhtGwrlZjVoKnCzeJLE/HzyO71h/fvyM9PPfa24eMmTIeC2D3I4/fv3b2nMRVYYMGRswSJhyEk9F8jn6ByBDhgwZywevX6U2NTJkyJDRCVx+TboolCFDhow1o7aZTI/n0rB+ZC8uQ4aMFzLSwsB//v1gfUOGDBkvYRylcRaanF2L19PfypAhYzSDvFAaxP0iwXr5iGJXhgwZoxlBwIXFADJNfCIuAleGDBmDGPwo/4kywHpqgg2tDBkyNmN0DsI6cbyO5osttAwZMrZhpBvOWjTX2sgu2jJkyJCxDYMfn6WbVb6g5EEfbGJlyJAxgpEu4NZxuV7qddrFZMiQsTODv2jncJ8sCtPA/aTZLEOGjJcz+jFa26AGBYCzO8uQIWM0I23tqh391yYipsqQIWMzBt9e8nDs3BM1dsiQIWMo48Cj1grGQ5wDZMiQsTODRGeKCbag4QLxtL4hQ4aMcQxepKyVJ9MJqmFkyJCxA4MD+IEab62oFVOL8yFDhoyXM3hjBPmWLP5qh3cXgStDhoyhjNqyr9OEUWu2QG1qMmTIGMc4wpEuH0ng8payeFEoQ4aMEQw+eGimxcgnniVDhox5jLTNghx+8aAsHq6lnSMyZMgYwei8Cik91ooNvKQqQ4YMGbwlIr2GlD/RfWTIkCEjXA6mgXtDk5kMGTI2YHRaLgj7ruYzGTJk7MlID+vTIuhdv0oP42TIkDGC8QdG/kHPjk9OiAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpElEQVR42u3aS27DMAwFwNz/0u22QGHn8aPUBcaroHEtTQKIDMnXK76+Lq6f797/b/46WXH5wsPDw1va+u/l82Xu70+eX93P5d7w8PDwjvHyAz3f4tWdW2vdPwcPDw/vObz7+7eCR/KR4eHh4f0vXl4aqIaKhISHh4f3BF6vULu1xTyQHKy14OHh4cW8/HB/zusj/T08PDy8cVc9P9yvCq/JPdURhMJu8fDw8A7wqunspFDbC0ULK+Lh4eEdXrEaBpLDvTfO1Sv+vvnC8PDw8A7w5ozqE/Ln5GNbCx05PDw8vGIwyJfvNb2Sd6shJBodwMPDw1vlzUcEegNV1aGBZpTDw8PDW+L1mlt5Sl1Nf/PAkLTE8PDw8E7w5u3/vPmUJO6TEavL1fHw8PBWefPtVtPc6j1JCv4m7uHh4eEd5lWLEfMCRK8NFoUTPDw8vAO8pD3f+8vkzklJ4vI7xMPDw1vi9drzeY8pKfJWRwEKLTQ8PDy8A7wecj6GVU24RyMOeHh4eId5vfZVNXhUm2qTMIOHh4d3jlctnk7YvcJHL4Tg4eHhfYaXJNm90m1vxGoSQvDw8PB2ebuJ8tfgapZoqw0wPDw8vDFvkjr3yr7JdpMib5Ky4+Hh4Z3jVR9a3e6kxZXsoZp84+Hh4c15SVm2WjLIt9VLu1/V2IKHh4d3jJf/yN8tMUyCBx4eHt5f8ZLlJ8NP+dhBoayQgPHw8PBWeZM2VfXI7pUw7r+GN+/i4eHhHeCdbkTlE1B5O62ZWOPh4eGt8ibt+YUy69LRfxkS8PDw8I7xyjWMOJHNj/jJh9KsUuPh4eF9hDcZNcgLFvO94eHh4T2N1yNVW2W9QS48PDy8z/Dywalewl1dfRKo8PDw8E7zej/45y2rLdLChYeHh5fyvgHS8w0BqxtGeQAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="何俊鑫,博客,Junxin,blog,Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Junxin&#39;s Blog">
-<meta property="og:url" content="https://smilexin.cn/page/6/index.html">
+<meta property="og:url" content="https://blog.smilexin.cn/page/6/index.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="A good memory is not as good as a rotten keyboard.">
 <meta property="og:locale" content="zh-CN">
@@ -312,6 +312,55 @@ Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-memcached_内存分配机制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
+这种空闲且无法再利用的内存现象，称为++内存的碎片化++
+memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
+Slab Allocation
+首先，像一般的内存池一样,  从操作系统...
+    
+
+        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-memcached_过期数据删除机制"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -347,55 +396,6 @@ Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置
     
 
         <a href="/2017/07/31/memcached_过期数据删除机制.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
-    
-
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -550,6 +550,52 @@ Slab Allocation
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（四)"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（四).html">Dubbo demo项目 (四) 定义业务中心配置文件</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        业务实现类实现remoteapi中的IMessage接口
+定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少...
+    
+
+        <a href="/2017/07/03/Dubbo_demo项目（四).html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Dubbo_demo项目（三)"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -589,52 +635,6 @@ Slab Allocation
     
 
         <a href="/2017/07/03/Dubbo_demo项目（三).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（四)"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（四).html">Dubbo demo项目 (四) 定义业务中心配置文件</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        业务实现类实现remoteapi中的IMessage接口
-定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少...
-    
-
-        <a href="/2017/07/03/Dubbo_demo项目（四).html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -700,7 +700,7 @@ Slab Allocation
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/page/6/&title=Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/page/6/&title=Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -710,22 +710,22 @@ Slab Allocation
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/page/6/&title=Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/page/6/&title=Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/page/6/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/page/6/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Junxin's Blog&url=https://smilexin.cn/page/6/&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Junxin's Blog&url=https://blog.smilexin.cn/page/6/&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/page/6/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/page/6/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -736,7 +736,7 @@ Slab Allocation
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByklEQVR42u3aQY7DIAwF0N7/0pntSKOQbzuk7eixqhraPFhYtuH1isfxZ5w97c2/eeDi4o65x3L8nrPGrf/t7L25ARcX93lu/ndnv0rC2XqRawMuLu63cNffVxeGi4v7jdx1PYKLi/v/uEk6khczeWdjY62Gi4s74OYv2Pd5S38XFxe3xT1aIwlGSeJSfi8uLu4j3GrQSQ5NkzSotxG4uLjPcKsN0CQpSRZTLYde+f7h4uKOuZNXns2ZXO0aFUW4uLg3cXsJTRJoepexyikOLi7uNm61+FkHu3sPVwqTcHFxb+L2zizmC+i1X3FxcZ/kVguS3kWN6v5dlEC4uLibub0rU/nTfFOajRJcXNwN3KT4yYulQibVK35wcXE3c6tFTj5/fsh6GsJwcXE3c8v9kqC8mbRaIg8uLu5mbu9i1uQQpYq+OBPGxcXdwM2bF9VGxuTo9GIxuLi4m7lHcRT2ICh7yqkSLi7uI9xJQ7N3wSI/2xmhcXFxx9xq23TebK2GOVxc3Hdx7zp8rbJGtRouLu4HcPMA12uaRG0aXFzcD+PmZVKvQNqS4uDi4g64vTQl+SZZWCE44uLiPsKthqdqkzRhbenv4uLidrg/xTKLsmpNrdYAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABz0lEQVR42u3ay47CMAwF0P7/T3e2SDDl2k4KSCcrBIGcsrDix3HE63xYj+88v77+1vOnx46Fi4s75p6XK9/TO6v8+7i4uDdyrwPNfz+d73w+JQ+FuLi4v8W9PrL3wLi4uL/IrQasaiqFi4v7Pdwk+bkudvTSp425Gi4u7q46RnRZmb/eUt/FxcVtcc/iqoatvNESnY6Li3sLNw8oZ2vlyU9hJy4u7mbudXjKSx7zAYvoRFxc3Bu51dDTK17krZfCjQwXF3cDd1VDNG/HVh8v6v/g4uJu4yYXlOpw1fwxCg0VXFzcpdxVCU/1H8oLqdFdCRcXdxE3h+YjGvmePBS+yNVwcXG3cSdhaDKikTdu3+RquLi4G7iT55sMZCT7y01WXFzcRdxeG6OXxlQnM9+USnFxcTdzqwWR6sqvPkkjBxcX91Pcajk1KXzMd+Li4n6K2xuiyoc2quWVQu8XFxd3EfcsruogRfW70V0JFxd3M7eawFQHJvKS69rCCi4u7pw7CUC9604vKcLFxb2f2yt09oJdNfnBxcX9LW4SjKrJ0lF9Glxc3K/h5sXQeeFjQSDDxcVtcaut03lQqzZmcHFx7+T2hqsmDZJJCQYXF3cz9w82XdhX+clTzgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

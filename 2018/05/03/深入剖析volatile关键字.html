@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="并发,JDK">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入剖析volatile关键字">
-<meta property="og:url" content="https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html">
+<meta property="og:url" content="https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义  保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的 禁止进行指令重排序  先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!stop">
 <meta property="og:locale" content="zh-CN">
@@ -250,12 +250,12 @@ var _hmt = _hmt || [];
 
 
         
-        原文链接：<a href="/2018/05/03/深入剖析volatile关键字.html" target="_blank" rel="external">https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html</a>
+        原文链接：<a href="/2018/05/03/深入剖析volatile关键字.html" target="_blank" rel="external">https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html</a>
         
     </div>
     
     <footer>
-        <a href="https://smilexin.cn">
+        <a href="https://blog.smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -281,7 +281,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -291,22 +291,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入剖析volatile关键字》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入剖析volatile关键字》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -454,7 +454,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -464,22 +464,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&title=《深入剖析volatile关键字》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入剖析volatile关键字》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入剖析volatile关键字》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/03/深入剖析volatile关键字.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -490,7 +490,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7cMBAEQP//0wmQU4J4td0zojYBSifBK0gsHjh0D7++4uvHr+vV/e9/SZ6/vv/7za++ctuFh4eHNxr69etekfJBtINLpiz6Oh4eHt4xXlIMckBeMK4nNJnuNxY8PDy8j/LarXay0LcTgYeHh/d/8fKFO5+g60KymW48PDy807x8g9su98kUtL8eyVrw8PDwupR11QB7/v7R/h4eHh5euYhvisR+sjYXHh4e3gleHrkmG9xZM2wWBOfBLh4eHt4JXrsjnR2WymOFzXGEgoqHh4c34s02x/kQNyHvLJJ4+R8DHh4e3q28fOj5hrt9sj0oEG3T8fDw8A7w2sFttsKzQGF1IAAPDw/vAG/TiJr16GeT1Vrw8PDwnuFtYoVZkDGLHooChoeHh3eMt9/mzlplbfRQN+rw8PDwjvHyT14PPQ9wZ7HvDSk1Hh4e3k282TGp5PP5UDbHDt6EEXh4eHi38pIQdkbatNaS2AIPDw/vU7y86ZVviNuGWRv1FuEvHh4e3gHeLEjdNKWSkHcTK7+pfnh4eHjrN+eRQdt8ysPZdiNeHD7Aw8PDO8DLPzl73f75uzbxeHh4eOd4szhgNiltGZiVEzw8PLxnePlmerNpzr/VhstfyYWHh4c34m0OBORts/yIQE6K3oCHh4d3mJf/S1+c5yqD4LbB9mYS8fDw8A7w6kfL2Ddf4tsWWk7Fw8PDu5c3e2lbBvbvbK8/6h4eHh7eI7y6GR+XimRC81/fTCgeHh7eAV691MYhQl4AZozrezw8PLzTvHzJnuGTwKKNj4dZCx4eHt6tvNmxgFnAutku1202PDw8vI/y8kJy7yGDVVHBw8PD+8d47UGETZyR874JI/Dw8PAO8PLm0x6fY9pWHB4eHt4zvBMNsLaE5OHsiUNaeHh4eDHvJ7NrDQHkLhdNAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3aQY7bQAwEQP//08kDstZ2kzOGA5ROhiDZUzqIdHNer/j48+Z4vub53nffkHzn4QMPDw/v0NKfl/jv+eRB5J+Te5NHhoeHh3eP9+6N+nzNO2SCb3+rvQYPDw/ve3jP1z+3vwk1eXx4eHh4/y+vbbXbMjN7xHh4eHif4bUhwibMTZaVtN2HsxY8PDy8mJdPkb7n85X5Hh4eHt56qp4UiaipHT24A6vFw8PDu8DLF7Rptdv2uo2GfxnF4eHh4R3l7ePUJD54vvdUWPzDvXh4eHgXeM+v6XYpm9f9Zkvrqy6FeHh4eHPerFFOBmA5ezZai+IMPDw8vAu8tlRsxmb7iGETFuPh4eGd4rWv2mRBefHIi0py5pfdZHh4eHiHeG38uhmAtaWiLQbF1gE8PDy8Q7wWkDe7bQPdNvdRYcDDw8M7xMt/uEUmV556iG/vxcPDw7vAywOC/IXeRrftQKvedIWHh4d3gdeSkhY8CWHbhn442cPDw8O7wEt+rKgwZSSRD9hmmwzw8PDwzvI+M9RfDf7LcOSHrAUPDw/vKG8zgmrD39l35ozZY8LDw8Ob8fLIID/TbiDYBxDRnjI8PDy8Ne9U/Jovpd1MMNugUM/K8PDw8GJeG0DMBlF5EJxHFQkbDw8P7zO89s9/+8puC8w+LMbDw8P7DK99fbeD/7YYrNJoPDw8vI/w8uXOCkbbds/CYjw8PLzbvPzzjFrHr6PR12tTkfDw8PDiAVh+bMLZti2ebT74YesAHh4e3lFefrRR7yzIOFW08PDw8G7zZkvMF9SOuDaF4VhKjYeHhxfw9i/lWeu8P6JNV3h4eHhfw5uNyvJBV7K2KMzFw8PD+wLe/kzSgueP5nBLjYeHh3cojJhtw5oFwZsoGQ8PD+82b/+Hvw159411VBLw8PDwzvP+AuhGxTrMAVpEAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

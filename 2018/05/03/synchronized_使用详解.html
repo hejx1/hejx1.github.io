@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="并发,JDK,同步锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="synchronized 使用详解">
-<meta property="og:url" content="https://smilexin.cn/2018/05/03/synchronized_使用详解.html">
+<meta property="og:url" content="https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="synchronized 是什么？线程安全是并发编程中的重要关注点，应该注意到的是，造成线程安全问题的主要诱因有两点，一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。因此为了解决这个问题，我们可能需要这样一个方案，当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访">
 <meta property="og:locale" content="zh-CN">
@@ -268,12 +268,12 @@ var _hmt = _hmt || [];
 
 
         
-        原文链接：<a href="/2018/05/03/synchronized_使用详解.html" target="_blank" rel="external">https://smilexin.cn/2018/05/03/synchronized_使用详解.html</a>
+        原文链接：<a href="/2018/05/03/synchronized_使用详解.html" target="_blank" rel="external">https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html</a>
         
     </div>
     
     <footer>
-        <a href="https://smilexin.cn">
+        <a href="https://blog.smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -299,7 +299,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -309,22 +309,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -472,7 +472,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -482,22 +482,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&title=《synchronized 使用详解》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《synchronized 使用详解》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/03/synchronized_使用详解.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -508,7 +508,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aQXbCMAwFwNz/0nTbTcyX7PQ19mTFg0A0XgjL0nXF12d45ff//nT8reuJCwMD47WMJMQ89Lt3xr+QP/c2BgwMjAMY47DGDx6/U82N+S9gYGBgrGX0QsfAwMDoMfJA8yXopWwMDIzTGKsOyMalbLJYj9fiGBgYL2Tkp+5///qR/gYGBsarGJ/iVd3qzSTcQlQYGBhbM/IElweab9167NunYGBgbMrI02hepubH/UlrISqMMTAwjmesTazVJBtFiIGBcQCjV4ImybTKyxsSGBgYpzGq28HqPclJfjU1f6nCMTAwtmOM0+78MER1+DUfisXAwDiB8VxjID8+m2k5PN7fwMDA+AeM8kBD60AtT+vJkd9tCxMDA+MAxhVfOTIvRPO2xJciFgMDYztGrwHQe+RMG6Cw0BgYGJsyeoMO+T0zsHz4AwMDY29G9bC+WqAmQeTla2HfioGBsRFj/ri/WgyvKoCn/jcwMDBezsi3cb0Qq4duhckRDAyMrRnV5mU+wtUbCyuXzRgYGMcw5mEz1GpjAAMD4zRGr7lYTZe9+6NNJwYGxqaMT/HqtRlmtpjRUmJgYGzNmAkrGRGrfpo0JBa0OTEwMF7ISEJMCtQ87VYHOJatNAYGxssZvWGLeXxvUAMDAwOjx8j3nqtapBgYGBg9Rv46325GJAwMjAMYSXBrD/qri/IFjIGBsTWjWjomSXbmKC1vJ2BgYBzA+AE99kupetJNdAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACxElEQVR42u3aS1LEMAwFwLn/peEAg8OTZAFFdVbU/OLOwhZPer3i6+Pten/9+fP5dfrl97tcu/Dw8PDGS58wTu++L/G03Op6nteAh4eHt8c73eb0mWfS8+8ksOc1JGvGw8PD+zu8aDt+rG8Tas7Gw8PD+0+86rZ+qxzHw8PD+xle8s9/tXTOS/A8+FjMWvDw8PBiXq8U/t2/V/p7eHh4eOOuenJI3J1fyI+WaLV4eHh4C7xb0cDzGMHdAYLqOvHw8PDu8nq36b1bjV+r419f/BoeHh7eAq/6hd5Ia3XTz4+Q6NjAw8PDu8qb3yBvblVL52pj7Pi/Ah4eHt5V3miYKR4pqJbp+YOL7oiHh4d3lZePMU026N4AVh4Hf9Pfw8PDw1vjJdt6dYOuFuv5oRK9joeHh7fAq4439cDzVlZvGAsPDw9vg5cUqfOieTI6kB8/x8kIPDw8vKu8yeDUpEmWFNZ5OFIYusLDw8P7EV4+dFV9KLei29e824aHh4dX5OUBax7C9iKJ/HCqhiZ4eHh4d3m9NljvcfRi3OrrUUqNh4eH1+KVI9Hi8FM+ZLBxwODh4eFt8PKtP3+3GnlMHkd+mOHh4eHd4lXL4rzlX40VqiNW0bfw8PDw1njVjb66iSelcLXlFj0CPDw8vAVeXv7O44M8IK4W7tWRLDw8PLw5r7plJxt3frRUQ+FqmY6Hh4e3zevFDflQVG9zn5TseHh4eHu8alSa37gX+Ja7dkkbDA8PD2/M+yhe8xI5DxomrbVjSo2Hh4c35s1HpvLppuSTyYPLv4uHh4e3x+u15ycHQx7gXjgY8PDw8NZ4+aacDxDMx7mq34qyFjw8PLxf4vWWXm105Ws7fh4PDw/vD/DyxlVvZKoXLn8zdIWHh4e3wEu+nMe4yXKTqLcafxwPBjw8PLyrvF5MUD02ekMJvTYbHh4e3hrvEwT7St+SShs7AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

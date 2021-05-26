@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="并发,高并发,Atomic,计数器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AtomicLong与LongAdder的区别">
-<meta property="og:url" content="https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html">
+<meta property="og:url" content="https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。 LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。 其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值，当前">
 <meta property="og:locale" content="zh-CN">
@@ -218,12 +218,12 @@ var _hmt = _hmt || [];
 
 
         
-        原文链接：<a href="/2018/05/02/AtomicLong与LongAdder的区别.html" target="_blank" rel="external">https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html</a>
+        原文链接：<a href="/2018/05/02/AtomicLong与LongAdder的区别.html" target="_blank" rel="external">https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html</a>
         
     </div>
     
     <footer>
-        <a href="https://smilexin.cn">
+        <a href="https://blog.smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -249,7 +249,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -259,22 +259,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -422,7 +422,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -432,22 +432,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&title=《AtomicLong与LongAdder的区别》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AtomicLong与LongAdder的区别》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/05/02/AtomicLong与LongAdder的区别.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -458,7 +458,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3ay27CUAwFQP7/p1up25bk+HGBSsOqKoF4vMg1th+P+PX187p+9/fr2Wd/X3P9bUkMoxceHh5eK/RJiNeB5qRnV17/5yYSPDw8vGO85Ja9oK9vnyQ0PyTw8PDwPo2XBHd95VZZj4eHh/dfeFVq0h+YH054eHh47+IlzYi8zE1SkASaxLPWa8HDw8OLeZNy9l1/H5zv4eHh4Q2m6tUDo3cY5O+WI8TDw8M7wEuGWFsrWfm71YWtm8jx8PDwjvGqo6ZJ+yC5b29N4Y/vwcPDw3sJr4fM275b61zR8YaHh4d3mFddn0oOg17bIm+FPHpZx8PDwxvwtg6D6pLBVloLLRU8PDy8MW/SPkjK5aRhMdkEuCmp8fDw8I7x8uWqrfJ6PoQr/1bAw8PDW+IloedN3slAq3r3QjMXDw8Pb5XXG1Pl6wL587maguhnAB4eHt4xXjXc6vpUdSQ2WTvAw8PDexdvEmL+0N9tiCy0cfHw8PDiqVN16NUbdPWGbUkr5OZ6PDw8vFVetekwGVz1iubq+lfUa8HDw8Mb8F5TLueP+0lqniYCDw8P74W8+fJTuXFQjCFC4uHh4a3ymo/a+P/zxOVFf/Mr8PDw8Aa8vBSuwvK1g+ra1k0K8PDw8A7wekVzdXBVTUq+mDVpK+Ph4eHNeXlhnS9C7Rb0eTP30TuR8PDw8GJe8pCtLktN1gXy1ETv4uHh4R3jJWVrr3lRLZd7w7Dy3gEeHh7eAVh+GEwmUPNW8tPY8PDw8A7westV1aWo6i3nDRE8PDy807z8MJhnK/9UcpxEScTDw8M7xquGUm3RJt/WK4tvrsfDw8P7GF6+dlBNSnXuf3M9Hh4e3lt5eVu293yeDNvw8PDwXs/rLVcVmgKD9E1ayXh4eHgneFtDqa30VRu4yTGDh4eHt8T7Bgv6NcqM7VktAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3aQW4cMQwEQP//0841gLGz3aTkbICa0wD2yCodJLrFr6/4+X7x/P3Tn+/P3/4c59VXr0Y+9uDh4eEdmvrPoZ+n/sxL3vOFKBYLDw8P7xrv1Y6ab/f5EfK8xT+Pls8ZDw8P79N4s3K5pbblNR4eHt5n8vJtfQabRR54eHh4v8/bBLV5DDFbsja8wMPDw7vNy2+RPuf9yv0eHh4e3vpWPYkV9hf8bbFezBYPDw/vAq8tZ/OGqiSE3YQRxTzx8PDwjvLaTb+NcduWrNloL8fEw8PDu8Db/F+f/3Q2Wn61dixrwcPDw1tMOv9Xvy2mk2K9He1NDIGHh4d3gZdPaNaQ2h4MbVNC/RkeHh7egtfGB7PGrHaLzw+M+gIMDw8P7xAv33w3TQb5mLNI4s1RgYeHh3eIl2/Nefm7KcHzpUziDDw8PLzf4c2urPIJ5e95w8Gbzgg8PDy8o7xZqbppxmpjiDaMwMPDw7vNawdqw9a8IWD2O28KfTw8PLxrvJZ949osL9mT3gA8PDy8e7wZrC27c1gbED/PHw8PD+82L48Y8tBhP7nNAYOHh4d3j5cX0LNjYxbjFv1iz7+Dh4eHd42XfJZfhuXHRh5w5OU7Hh4e3j1ecZkU/Mn2UGmPk/qYwcPDw7vAS6bYls45e3OpVi8cHh4e3lFevtHPIoNZ9LAvtfHw8PD+Fa8NcPfNAbPWqzfFNB4eHt41XhsTnD0AZs+b+ePh4eEd5X2Xz6YgzhdxE91GF2B4eHh4C94skM0XIlmOJMzN31dnCx4eHl7Mmx0Gz9v9qTJ91i5QnH54eHh4C16+WZ+aSls052FEtGZ4eHh4v87bhAgJY3YNhoeHh/e/8L5Hz6ZxoWilxcPDw7vGSz5ui+P2wiw/DOqDAQ8PD+8ob9XYFMcQSeDblukHYHh4eHgd7w+Hz+4DLyMgDwAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

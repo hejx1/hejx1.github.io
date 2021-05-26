@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
 <meta name="keywords" content="memcached">
 <meta property="og:type" content="article">
 <meta property="og:title" content="memcached 过期数据删除机制">
-<meta property="og:url" content="https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html">
+<meta property="og:url" content="https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="memcached过期数据删除机制 当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息 当某个新值去占用它的位置时，当成空chunk来占用 当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了  即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性失效。">
 <meta property="og:locale" content="zh-CN">
@@ -223,12 +223,12 @@ var _hmt = _hmt || [];
 
 
         
-        原文链接：<a href="/2017/07/31/memcached_过期数据删除机制.html" target="_blank" rel="external">https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html</a>
+        原文链接：<a href="/2017/07/31/memcached_过期数据删除机制.html" target="_blank" rel="external">https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html</a>
         
     </div>
     
     <footer>
-        <a href="https://smilexin.cn">
+        <a href="https://blog.smilexin.cn">
             <img src="/img/avatar.jpg" alt="何俊鑫">
             何俊鑫
         </a>
@@ -254,7 +254,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -264,22 +264,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -302,18 +302,18 @@ var _hmt = _hmt || [];
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/07/31/Redis集群概念.html" id="post-prev" class="post-nav-link">
+      <a href="/2017/07/31/memcached_内存分配机制.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Redis 集群概念</h4>
+        <h4 class="title">memcached 内存分配机制</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/07/31/memcached_内存分配机制.html" id="post-next" class="post-nav-link">
+      <a href="/2017/07/26/JAVA位运算符的应用积累.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">memcached 内存分配机制</h4>
+        <h4 class="title">JAVA位运算符的应用积累</h4>
       </a>
     </div>
   
@@ -427,7 +427,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -437,22 +437,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&title=《memcached 过期数据删除机制》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《memcached 过期数据删除机制》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/07/31/memcached_过期数据删除机制.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -463,7 +463,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3aQZIiMQwEQP7/6dnrXhqqJHuCicg+EdDQTh9sUfLrFV8/D9fTp+0v/H9Pfv+xCw8PD+/Q0POHPd35Hv/0+j04HzMeHh7ebd7mp2dDSbaE9++8HzMeHh7e9/DyMrrdftoiHg8PD++v8PLF/VTwMSvB8fDw8G7z2rgh3zzeT0obBF/MWvDw8PC6CjZarL/n9ZX+Hh4eHt66qz5brPNpamH1aPHw8PAu8NphtYcMZiX7fvrw8PDwbvOS8DQ5OpA8bL8xtJ/i4eHhneXNyui8RM6jjVkT7nVqN8PDw8NbZJ4JPoft21qblhseHh7eb/LyI02bAwf5lLWFOx4eHt5v8vIQNg8d8snaxyKrGBcPDw+v5LWPn0W3CWm/aeHh4eHd4+WbQV5Y5wV0HgcPJxQPDw/vAq8tTPPYdBbg5m25YpfDw8PDO8pr/97PgoBNIy05ZPD4Dh4eHt4FXvu1duHeHwLIy/1ie8DDw8Nb8NpBnAoj2jA3P1LwIYbAw8PDW/Nmi3VS7OaFdd3yb6cPDw8P7xqvLXzbFtfsuEDOePw1PDw8vMu8ZIibuKFthrVHwT5sDHh4eHiHeKf67K/RdSqAKCJdPDw8vAWvLWfbxXoW8m4iEjw8PLzbvDwYvbEjbcr3+jfx8PDwjvL2bad8uJs7h0/Ew8PDu8bLF/dj0Wo5cW2TDA8PD+82r12y2+J7FkBsAmI8PDy8G7yf8poV1qc2m3oq8fDw8C7wNg3+TYSRt7Xa7w63Ezw8PLySN9sMNgt6ElIkh8CizQYPDw/vGi9f0PNIog1kr4QpeHh4eF/A2xTWefs/P6L6YZvBw8PD+wLerN80OyLwnhFNLh4eHt413uxg6J7UNrfq0hwPDw/vAq/9w99GrnksOwuLjx3PwsPDw/vM+wd0mCvwxsl3ewAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3a0W7bMAwF0P7/T2/AngYMSe8lJacDjp+MVnZ0FEBUSH59xdevP9er+7+vV0/9+/fkPe/ff+zCw8PDG0391ZVPNJnEbIoJ++Wn4+Hh4V3jzYLB+5Gb4JEEjGj58PDw8D7Kyxn1JIIxeHh4eP8jL5/ELADM7vHw8PA+xUuSEe1mnYzPx1zPteDh4eHFvH0B7Pn7R+t7eHh4eHFISK5ki8+37/xTornh4eHhXeC9n9yp8n+yEO2BuwgYeHh4eEd5SVE/L/y3yYLNL4BomfDw8PAu8PK0aZsmOJui3RTe8PDw8J7hbZoA8iPyLHkxTObi4eHh3TqpHqC+n1B+3y5HkXfBw8PDO8rLD6/JorQp4LY8lv8XDw8P7wav3fTzItYM1oaoY98SHh4e3oi0aZbah4dZPgEPDw/vGd7+sXZkm9jdlOXw8PDw7vHOtlXlizVLK9RP4eHh4R3l5dv0rIGgLWXNAsk33xseHh7eUV5e0GqTC0nY2Cxo3saKh4eHd5bXplM3dbZZM9YqCOHh4eHdOt/WR+G8PDYrm7VH53rR8fDw8Ba82WNJmmBTwW9Tty/H4OHh4V3gJUPzwNCW/2dJ5GHDFh4eHt5R3r7tadOGlS9u+zXg4eHh3eOtUqJBiqENKvumBDw8PLxneO2hti3zt8fiWWr4WP0NDw8Pb9EQ0KYP2oJZm9pIwN/8YsDDw8M7xMsPuzeuU0kNPDw8vNu8zWY9Cx55yb/9FDw8PLxneLP6e/6iPMzMimT7pDMeHh7ejNcmBfJQsWm92qdF8PDw8G7z8k15lvxtGwXaZMQ3gQEPDw/vo7zZxt2W/9s34OHh4f1M3mbS+TF9c3zHw8PDe5I3K3rN2kzfH4LzMBCFGTw8PLwLvE1jUz7dfEOftSAMmwbw8PDwOt5vCewNAaL2zQEAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

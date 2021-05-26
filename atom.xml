@@ -5,9 +5,9 @@
   <subtitle>A good memory is not as good as a rotten keyboard.</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://smilexin.cn/"/>
+  <link href="https://blog.smilexin.cn/"/>
   <updated>2021-05-26T01:43:37.393Z</updated>
-  <id>https://smilexin.cn/</id>
+  <id>https://blog.smilexin.cn/</id>
   
   <author>
     <name>何俊鑫</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>我的健身记录贴</title>
-    <link href="https://smilexin.cn/2021/05/25/%E6%88%91%E7%9A%84%E5%81%A5%E8%BA%AB%E8%AE%B0%E5%BD%95%E8%B4%B4.html"/>
-    <id>https://smilexin.cn/2021/05/25/我的健身记录贴.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/25/%E6%88%91%E7%9A%84%E5%81%A5%E8%BA%AB%E8%AE%B0%E5%BD%95%E8%B4%B4.html"/>
+    <id>https://blog.smilexin.cn/2021/05/25/我的健身记录贴.html</id>
     <published>2021-05-24T16:00:00.000Z</published>
     <updated>2021-05-26T01:43:37.393Z</updated>
     
@@ -36,14 +36,14 @@
     </summary>
     
     
-      <category term="健身" scheme="https://smilexin.cn/tags/%E5%81%A5%E8%BA%AB/"/>
+      <category term="健身" scheme="https://blog.smilexin.cn/tags/%E5%81%A5%E8%BA%AB/"/>
     
   </entry>
   
   <entry>
     <title>windows使用NVM管理nodejs版本</title>
-    <link href="https://smilexin.cn/2021/05/21/windows%E4%BD%BF%E7%94%A8NVM%E7%AE%A1%E7%90%86nodejs%E7%89%88%E6%9C%AC.html"/>
-    <id>https://smilexin.cn/2021/05/21/windows使用NVM管理nodejs版本.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/21/windows%E4%BD%BF%E7%94%A8NVM%E7%AE%A1%E7%90%86nodejs%E7%89%88%E6%9C%AC.html"/>
+    <id>https://blog.smilexin.cn/2021/05/21/windows使用NVM管理nodejs版本.html</id>
     <published>2021-05-20T16:00:00.000Z</published>
     <updated>2021-05-21T03:22:14.605Z</updated>
     
@@ -59,18 +59,18 @@
     </summary>
     
     
-      <category term="nodejs" scheme="https://smilexin.cn/tags/nodejs/"/>
+      <category term="nodejs" scheme="https://blog.smilexin.cn/tags/nodejs/"/>
     
   </entry>
   
   <entry>
     <title>Markdown 常用语法</title>
-    <link href="https://smilexin.cn/2021/05/12/Markdown%20%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95.html"/>
-    <id>https://smilexin.cn/2021/05/12/Markdown 常用语法.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/12/Markdown%20%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95.html"/>
+    <id>https://blog.smilexin.cn/2021/05/12/Markdown 常用语法.html</id>
     <published>2021-05-11T16:00:00.000Z</published>
     <updated>2021-05-14T12:23:54.116Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Markdown 是一种轻量级标记语言，它用简洁的语法代替排版，使我们专心于码字。它的目标是实现易读易写，成为一种适用于网络的书写语言。同时，Markdown支持嵌入<code>html</code>标签。</p><blockquote><p>注意：Markdown使用#、+、*等符号来标记， 符号后面必须跟上 至少1个 空格才有效！</p></blockquote><h1 id="Markdown的常用语法"><a href="#Markdown的常用语法" class="headerlink" title="Markdown的常用语法"></a>Markdown的常用语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>用<code>#</code>标记</p><p>在 标题开头 加上1~6个<code>#</code>，依次代表一级标题、二级标题….六级标题</p><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>Markdown 支持有序列表和无序列表。</p><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>无序列表使用<code>-</code>、<code>+</code>和<code>*</code>作为列表标记：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- Red</span><br><span class="line">- Green</span><br><span class="line">- Blue</span><br><span class="line"></span><br><span class="line">* Red</span><br><span class="line">* Green</span><br><span class="line">* Blue</span><br><span class="line"></span><br><span class="line">+ Red</span><br><span class="line">+ Green</span><br><span class="line">+ Blue</span><br></pre></td></tr></table></figure><p>效果如下</p><ul><li>Red</li><li>Green</li><li>Blue</li></ul><ul><li>Red</li><li>Green</li><li>Blue</li></ul><ul><li>Red</li><li>Green</li><li>Blue</li></ul><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>有序列表则使用数字加英文句点.来表示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. Red</span><br><span class="line">2. Green</span><br><span class="line">3. Blue</span><br></pre></td></tr></table></figure></p><p>效果如下</p><ol><li>Red</li><li>Green</li><li>Blue</li></ol><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用以<code>&gt;</code>来表示，引用中支持多级引用、标题、列表、代码块、分割线等常规语法。</p><p>常见的引用写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; 这是一段引用    //在`&gt;`后面有 1 个空格</span><br><span class="line">&gt; </span><br><span class="line">&gt;     这是引用的代码块形式    //在`&gt;`后面有 5 个空格</span><br><span class="line">&gt;     </span><br><span class="line">&gt; 代码例子：</span><br><span class="line">&gt;   </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&gt; 一级引用</span><br><span class="line">&gt; &gt; 二级引用</span><br><span class="line">&gt; &gt; &gt; 三级引用</span><br><span class="line"></span><br><span class="line">&gt; #### 这是一个四级标题</span><br><span class="line">&gt; </span><br><span class="line">&gt; 1. 这是第一行列表项</span><br><span class="line">&gt; 2. 这是第二行列表项</span><br></pre></td></tr></table></figure></p><p>效果如下：</p><blockquote><p>这是一段引用    //在<code>&gt;</code>后面有 1 个空格</p><pre><code>这是引用的代码块形式    //在`&gt;`后面有 5 个空格</code></pre><p>代码例子：</p><pre><code>protected void onCreate(Bundle savedInstanceState) {    super.onCreate(savedInstanceState);    setContentView(R.layout.activity_main);}</code></pre></blockquote><blockquote><p>一级引用</p><blockquote><p>二级引用</p><blockquote><p>三级引用</p></blockquote></blockquote></blockquote><blockquote><h4 id="这是一个四级标题"><a href="#这是一个四级标题" class="headerlink" title="这是一个四级标题"></a>这是一个四级标题</h4><ol><li>这是第一行列表项</li><li>这是第二行列表项</li></ol></blockquote><h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>两个<code>*</code>或-代表加粗，一个<code>*</code>或<code>-</code>代表斜体，<code>~~</code>代表删除。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">**加粗文本** 或者 __加粗文本__</span><br><span class="line"></span><br><span class="line">*斜体文本*  或者_斜体文本_</span><br><span class="line"></span><br><span class="line">~~删除文本~~</span><br></pre></td></tr></table></figure></p><p>效果如下：<br><strong>加粗文本</strong> 或者 <strong>加粗文本</strong></p><p><em>斜体文本</em>  或者<em>斜体文本</em></p><p><del>删除文本</del></p><h2 id="图片与链接"><a href="#图片与链接" class="headerlink" title="图片与链接"></a>图片与链接</h2><p>图片与链接的语法很像，区别在一个 ! 号。二者格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">图片：![]()    ![图片文本(可忽略)](图片地址)</span><br><span class="line"></span><br><span class="line">链接：[]()     [链接文本](链接地址)</span><br></pre></td></tr></table></figure></p><p>链接又分为行内式、参考式和 自动链接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">这是行内式链接：[Junxin&apos;s Blog](https://smilexin.cn/)。</span><br><span class="line"></span><br><span class="line">这是参考式链接：[Junxin&apos;s Blog][url]，其中url为链接标记，可置于文中任意位置。</span><br><span class="line"></span><br><span class="line">[url]: https://smilexin.cn// &quot;Junxin&apos;s Blog&quot;</span><br><span class="line"></span><br><span class="line">链接标记格式为：[链接标记文本]:  链接地址  链接title(可忽略)</span><br><span class="line"></span><br><span class="line">这是自动链接：直接使用`&lt;&gt;`括起来&lt;https://smilexin.cn/&gt;</span><br><span class="line"></span><br><span class="line">这是图片：![][avatar]</span><br><span class="line"></span><br><span class="line">[avatar]: https://connorlin.github.io/images/avatar.jpg</span><br></pre></td></tr></table></figure></p><p>效果如下：</p><p>这是行内式链接：<a href="https://smilexin.cn/">Junxin’s Blog</a>。</p><p>这是参考式链接：<a href="https://smilexin.cn//" title="Junxin&#39;s Blog">Junxin’s Blog</a>，其中url为链接标记，可置于文中任意位置。</p><p>链接标记格式为：[链接标记文本]:  链接地址  链接title(可忽略)</p><p>这是自动链接：直接使用<code>&lt;&gt;</code>括起来<a href="https://smilexin.cn/">https://smilexin.cn/</a></p><p>这是图片：<img src="https://smilexin.cn/img/avatar.jpg" alt=""></p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>代码分为行内代码和代码块。</p><ul><li>行内代码使用 `代码` 标识，可嵌入文字中</li><li>代码块使用4个空格或```标识</li></ul><p>```<br>这里是代码<br>```</p><p>代码语法高亮在 ```后面加上空格和语言名称即可<br>``` 语言<br>//注意语言前面有空格<br>这里是代码<br>```</p><p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这是行内代码`onCreate(Bundle savedInstanceState)`的例子。</span><br><span class="line"></span><br><span class="line">这是代码块和语法高亮：</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">// 注意java前面有空格</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>效果如下：<br>这是行内代码<code>onCreate(Bundle savedInstanceState)</code>的例子。</p><p>这是代码块和语法高亮：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意java前面有空格</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格对齐格式</p><ul><li>居左：<code>:----</code></li><li>居中：<code>:----:</code>或<code>-----</code></li><li>居右：<code>----:</code><br>例子：</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|标题|标题|标题|</span><br><span class="line">|:---|:---:|---:|</span><br><span class="line">|居左测试文本|居中测试文本|居右测试文本|</span><br><span class="line">|居左测试文本1|居中测试文本2|居右测试文本3|</span><br><span class="line">|居左测试文本11|居中测试文本22|居右测试文本33|</span><br><span class="line">|居左测试文本111|居中测试文本222|居右测试文本333|</span><br></pre></td></tr></table></figure><p>效果如下：<br>|标题|标题|标题|<br>|:—|:—:|—:|<br>|居左测试文本|居中测试文本|居右测试文本|<br>|居左测试文本1|居中测试文本2|居右测试文本3|<br>|居左测试文本11|居中测试文本22|居右测试文本33|<br>|居左测试文本111|居中测试文本222|居右测试文本333|</p><h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>在一行中用三个以上的<code>*</code>、<code>-</code>、<code>_</code>来建立一个分隔线，行内不能有其他东西。也可以在符号间插入空格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br><span class="line"></span><br><span class="line">* * *</span><br></pre></td></tr></table></figure></p><p>效果均为一条分割线：</p><hr><hr><hr><hr><h1 id="Markdown常用的Html标签"><a href="#Markdown常用的Html标签" class="headerlink" title="Markdown常用的Html标签"></a>Markdown常用的Html标签</h1><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;font face=&quot;微软雅黑&quot; color=&quot;red&quot; size=&quot;6&quot;&gt;字体及字体颜色和大小&lt;/font&gt;</span><br><span class="line">&lt;font color=&quot;#0000ff&quot;&gt;字体颜色&lt;/font&gt;</span><br></pre></td></tr></table></figure><p>效果如下：</p><p><font face="微软雅黑" color="red" size="6">字体及字体颜色和大小</font></p><p><font color="#0000ff">字体颜色</font></p><h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用html标签`&lt;br/&gt;`&lt;br/&gt;换行</span><br></pre></td></tr></table></figure><p>效果如下：<br>使用html标签<code>&lt;br/&gt;</code><br>第二行</p><h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;u&gt;下划线文本&lt;/u&gt;</span><br></pre></td></tr></table></figure><p>效果如下：<br><u>下划线文本</u></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Markdown 是一种轻量级标记语言，它用简洁的语法代替排版，使我们专心于码字。它的目标是实现易读易写，成为一种适用于网络的书写语言。同时，Markdown支持嵌入<code>html</code>标签。</p><blockquote><p>注意：Markdown使用#、+、*等符号来标记， 符号后面必须跟上 至少1个 空格才有效！</p></blockquote><h1 id="Markdown的常用语法"><a href="#Markdown的常用语法" class="headerlink" title="Markdown的常用语法"></a>Markdown的常用语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>用<code>#</code>标记</p><p>在 标题开头 加上1~6个<code>#</code>，依次代表一级标题、二级标题….六级标题</p><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>Markdown 支持有序列表和无序列表。</p><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>无序列表使用<code>-</code>、<code>+</code>和<code>*</code>作为列表标记：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- Red</span><br><span class="line">- Green</span><br><span class="line">- Blue</span><br><span class="line"></span><br><span class="line">* Red</span><br><span class="line">* Green</span><br><span class="line">* Blue</span><br><span class="line"></span><br><span class="line">+ Red</span><br><span class="line">+ Green</span><br><span class="line">+ Blue</span><br></pre></td></tr></table></figure><p>效果如下</p><ul><li>Red</li><li>Green</li><li>Blue</li></ul><ul><li>Red</li><li>Green</li><li>Blue</li></ul><ul><li>Red</li><li>Green</li><li>Blue</li></ul><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>有序列表则使用数字加英文句点.来表示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. Red</span><br><span class="line">2. Green</span><br><span class="line">3. Blue</span><br></pre></td></tr></table></figure></p><p>效果如下</p><ol><li>Red</li><li>Green</li><li>Blue</li></ol><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用以<code>&gt;</code>来表示，引用中支持多级引用、标题、列表、代码块、分割线等常规语法。</p><p>常见的引用写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; 这是一段引用    //在`&gt;`后面有 1 个空格</span><br><span class="line">&gt; </span><br><span class="line">&gt;     这是引用的代码块形式    //在`&gt;`后面有 5 个空格</span><br><span class="line">&gt;     </span><br><span class="line">&gt; 代码例子：</span><br><span class="line">&gt;   </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&gt; 一级引用</span><br><span class="line">&gt; &gt; 二级引用</span><br><span class="line">&gt; &gt; &gt; 三级引用</span><br><span class="line"></span><br><span class="line">&gt; #### 这是一个四级标题</span><br><span class="line">&gt; </span><br><span class="line">&gt; 1. 这是第一行列表项</span><br><span class="line">&gt; 2. 这是第二行列表项</span><br></pre></td></tr></table></figure></p><p>效果如下：</p><blockquote><p>这是一段引用    //在<code>&gt;</code>后面有 1 个空格</p><pre><code>这是引用的代码块形式    //在`&gt;`后面有 5 个空格</code></pre><p>代码例子：</p><pre><code>protected void onCreate(Bundle savedInstanceState) {    super.onCreate(savedInstanceState);    setContentView(R.layout.activity_main);}</code></pre></blockquote><blockquote><p>一级引用</p><blockquote><p>二级引用</p><blockquote><p>三级引用</p></blockquote></blockquote></blockquote><blockquote><h4 id="这是一个四级标题"><a href="#这是一个四级标题" class="headerlink" title="这是一个四级标题"></a>这是一个四级标题</h4><ol><li>这是第一行列表项</li><li>这是第二行列表项</li></ol></blockquote><h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>两个<code>*</code>或-代表加粗，一个<code>*</code>或<code>-</code>代表斜体，<code>~~</code>代表删除。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">**加粗文本** 或者 __加粗文本__</span><br><span class="line"></span><br><span class="line">*斜体文本*  或者_斜体文本_</span><br><span class="line"></span><br><span class="line">~~删除文本~~</span><br></pre></td></tr></table></figure></p><p>效果如下：<br><strong>加粗文本</strong> 或者 <strong>加粗文本</strong></p><p><em>斜体文本</em>  或者<em>斜体文本</em></p><p><del>删除文本</del></p><h2 id="图片与链接"><a href="#图片与链接" class="headerlink" title="图片与链接"></a>图片与链接</h2><p>图片与链接的语法很像，区别在一个 ! 号。二者格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">图片：![]()    ![图片文本(可忽略)](图片地址)</span><br><span class="line"></span><br><span class="line">链接：[]()     [链接文本](链接地址)</span><br></pre></td></tr></table></figure></p><p>链接又分为行内式、参考式和 自动链接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">这是行内式链接：[Junxin&apos;s Blog](https://smilexin.cn/)。</span><br><span class="line"></span><br><span class="line">这是参考式链接：[Junxin&apos;s Blog][url]，其中url为链接标记，可置于文中任意位置。</span><br><span class="line"></span><br><span class="line">[url]: https://smilexin.cn// &quot;Junxin&apos;s Blog&quot;</span><br><span class="line"></span><br><span class="line">链接标记格式为：[链接标记文本]:  链接地址  链接title(可忽略)</span><br><span class="line"></span><br><span class="line">这是自动链接：直接使用`&lt;&gt;`括起来&lt;https://smilexin.cn/&gt;</span><br><span class="line"></span><br><span class="line">这是图片：![][avatar]</span><br><span class="line"></span><br><span class="line">[avatar]: https://connorlin.github.io/images/avatar.jpg</span><br></pre></td></tr></table></figure></p><p>效果如下：</p><p>这是行内式链接：<a href="https://smilexin.cn/" target="_blank" rel="noopener">Junxin’s Blog</a>。</p><p>这是参考式链接：<a href="https://smilexin.cn//" title="Junxin&#39;s Blog" target="_blank" rel="noopener">Junxin’s Blog</a>，其中url为链接标记，可置于文中任意位置。</p><p>链接标记格式为：[链接标记文本]:  链接地址  链接title(可忽略)</p><p>这是自动链接：直接使用<code>&lt;&gt;</code>括起来<a href="https://smilexin.cn/" target="_blank" rel="noopener">https://smilexin.cn/</a></p><p>这是图片：<img src="https://smilexin.cn/img/avatar.jpg" alt=""></p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>代码分为行内代码和代码块。</p><ul><li>行内代码使用 `代码` 标识，可嵌入文字中</li><li>代码块使用4个空格或```标识</li></ul><p>```<br>这里是代码<br>```</p><p>代码语法高亮在 ```后面加上空格和语言名称即可<br>``` 语言<br>//注意语言前面有空格<br>这里是代码<br>```</p><p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这是行内代码`onCreate(Bundle savedInstanceState)`的例子。</span><br><span class="line"></span><br><span class="line">这是代码块和语法高亮：</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">// 注意java前面有空格</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>效果如下：<br>这是行内代码<code>onCreate(Bundle savedInstanceState)</code>的例子。</p><p>这是代码块和语法高亮：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意java前面有空格</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格对齐格式</p><ul><li>居左：<code>:----</code></li><li>居中：<code>:----:</code>或<code>-----</code></li><li>居右：<code>----:</code><br>例子：</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|标题|标题|标题|</span><br><span class="line">|:---|:---:|---:|</span><br><span class="line">|居左测试文本|居中测试文本|居右测试文本|</span><br><span class="line">|居左测试文本1|居中测试文本2|居右测试文本3|</span><br><span class="line">|居左测试文本11|居中测试文本22|居右测试文本33|</span><br><span class="line">|居左测试文本111|居中测试文本222|居右测试文本333|</span><br></pre></td></tr></table></figure><p>效果如下：<br>|标题|标题|标题|<br>|:—|:—:|—:|<br>|居左测试文本|居中测试文本|居右测试文本|<br>|居左测试文本1|居中测试文本2|居右测试文本3|<br>|居左测试文本11|居中测试文本22|居右测试文本33|<br>|居左测试文本111|居中测试文本222|居右测试文本333|</p><h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>在一行中用三个以上的<code>*</code>、<code>-</code>、<code>_</code>来建立一个分隔线，行内不能有其他东西。也可以在符号间插入空格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br><span class="line"></span><br><span class="line">* * *</span><br></pre></td></tr></table></figure></p><p>效果均为一条分割线：</p><hr><hr><hr><hr><h1 id="Markdown常用的Html标签"><a href="#Markdown常用的Html标签" class="headerlink" title="Markdown常用的Html标签"></a>Markdown常用的Html标签</h1><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;font face=&quot;微软雅黑&quot; color=&quot;red&quot; size=&quot;6&quot;&gt;字体及字体颜色和大小&lt;/font&gt;</span><br><span class="line">&lt;font color=&quot;#0000ff&quot;&gt;字体颜色&lt;/font&gt;</span><br></pre></td></tr></table></figure><p>效果如下：</p><p><font face="微软雅黑" color="red" size="6">字体及字体颜色和大小</font></p><p><font color="#0000ff">字体颜色</font></p><h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用html标签`&lt;br/&gt;`&lt;br/&gt;换行</span><br></pre></td></tr></table></figure><p>效果如下：<br>使用html标签<code>&lt;br/&gt;</code><br>第二行</p><h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;u&gt;下划线文本&lt;/u&gt;</span><br></pre></td></tr></table></figure><p>效果如下：<br><u>下划线文本</u></p>]]></content>
     
     <summary type="html">
     
@@ -82,14 +82,14 @@
     </summary>
     
     
-      <category term="Markdown" scheme="https://smilexin.cn/tags/Markdown/"/>
+      <category term="Markdown" scheme="https://blog.smilexin.cn/tags/Markdown/"/>
     
   </entry>
   
   <entry>
     <title>谁动了我的 Linux？history 命令详解！</title>
-    <link href="https://smilexin.cn/2021/05/12/%E8%B0%81%E5%8A%A8%E4%BA%86%E6%88%91%E7%9A%84%20Linux.html"/>
-    <id>https://smilexin.cn/2021/05/12/谁动了我的 Linux.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/12/%E8%B0%81%E5%8A%A8%E4%BA%86%E6%88%91%E7%9A%84%20Linux.html"/>
+    <id>https://blog.smilexin.cn/2021/05/12/谁动了我的 Linux.html</id>
     <published>2021-05-11T16:00:00.000Z</published>
     <updated>2021-05-12T02:42:24.310Z</updated>
     
@@ -106,14 +106,14 @@
     </summary>
     
     
-      <category term="Linux" scheme="https://smilexin.cn/tags/Linux/"/>
+      <category term="Linux" scheme="https://blog.smilexin.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>IDEA 代码补全操作技巧</title>
-    <link href="https://smilexin.cn/2021/05/11/IDEA%20%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7.html"/>
-    <id>https://smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/11/IDEA%20%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7.html"/>
+    <id>https://blog.smilexin.cn/2021/05/11/IDEA 代码补全操作技巧.html</id>
     <published>2021-05-10T16:00:00.000Z</published>
     <updated>2021-05-11T10:02:50.304Z</updated>
     
@@ -131,14 +131,14 @@
     </summary>
     
     
-      <category term="IDEA" scheme="https://smilexin.cn/tags/IDEA/"/>
+      <category term="IDEA" scheme="https://blog.smilexin.cn/tags/IDEA/"/>
     
   </entry>
   
   <entry>
     <title>Nginx 配置详解</title>
-    <link href="https://smilexin.cn/2021/05/11/Nginx%20%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html"/>
-    <id>https://smilexin.cn/2021/05/11/Nginx 配置详解.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/11/Nginx%20%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html"/>
+    <id>https://blog.smilexin.cn/2021/05/11/Nginx 配置详解.html</id>
     <published>2021-05-10T16:00:00.000Z</published>
     <updated>2021-05-11T02:47:50.614Z</updated>
     
@@ -155,14 +155,14 @@
     </summary>
     
     
-      <category term="Nginx" scheme="https://smilexin.cn/tags/Nginx/"/>
+      <category term="Nginx" scheme="https://blog.smilexin.cn/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>VMware 克隆虚拟机</title>
-    <link href="https://smilexin.cn/2021/05/10/VMware%20%E5%85%8B%E9%9A%86%E8%99%9A%E6%8B%9F%E6%9C%BA.html"/>
-    <id>https://smilexin.cn/2021/05/10/VMware 克隆虚拟机.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/10/VMware%20%E5%85%8B%E9%9A%86%E8%99%9A%E6%8B%9F%E6%9C%BA.html"/>
+    <id>https://blog.smilexin.cn/2021/05/10/VMware 克隆虚拟机.html</id>
     <published>2021-05-09T16:00:00.000Z</published>
     <updated>2021-05-10T09:53:36.753Z</updated>
     
@@ -178,16 +178,16 @@
     </summary>
     
     
-      <category term="VMware" scheme="https://smilexin.cn/tags/VMware/"/>
+      <category term="VMware" scheme="https://blog.smilexin.cn/tags/VMware/"/>
     
-      <category term="虚拟机" scheme="https://smilexin.cn/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+      <category term="虚拟机" scheme="https://blog.smilexin.cn/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
   </entry>
   
   <entry>
     <title>使用Docker快速搭建代理服务器</title>
-    <link href="https://smilexin.cn/2021/05/10/%E4%BD%BF%E7%94%A8Docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.html"/>
-    <id>https://smilexin.cn/2021/05/10/使用Docker快速搭建代理服务器.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/10/%E4%BD%BF%E7%94%A8Docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.html"/>
+    <id>https://blog.smilexin.cn/2021/05/10/使用Docker快速搭建代理服务器.html</id>
     <published>2021-05-09T16:00:00.000Z</published>
     <updated>2021-05-20T07:38:15.659Z</updated>
     
@@ -203,16 +203,16 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://smilexin.cn/tags/Docker/"/>
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
     
-      <category term="Privoxy" scheme="https://smilexin.cn/tags/Privoxy/"/>
+      <category term="Privoxy" scheme="https://blog.smilexin.cn/tags/Privoxy/"/>
     
   </entry>
   
   <entry>
     <title>Linux（Centos版本）快速安装Docker</title>
-    <link href="https://smilexin.cn/2021/05/09/Linux%EF%BC%88Centos%E7%89%88%E6%9C%AC%EF%BC%89%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85Docker.html"/>
-    <id>https://smilexin.cn/2021/05/09/Linux（Centos版本）快速安装Docker.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/09/Linux%EF%BC%88Centos%E7%89%88%E6%9C%AC%EF%BC%89%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85Docker.html"/>
+    <id>https://blog.smilexin.cn/2021/05/09/Linux（Centos版本）快速安装Docker.html</id>
     <published>2021-05-08T16:00:00.000Z</published>
     <updated>2021-05-09T02:18:02.466Z</updated>
     
@@ -229,16 +229,16 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://smilexin.cn/tags/Docker/"/>
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
     
-      <category term="Linux" scheme="https://smilexin.cn/tags/Linux/"/>
+      <category term="Linux" scheme="https://blog.smilexin.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Docker 常用命令</title>
-    <link href="https://smilexin.cn/2021/05/08/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"/>
-    <id>https://smilexin.cn/2021/05/08/Docker 常用命令.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/08/Docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"/>
+    <id>https://blog.smilexin.cn/2021/05/08/Docker 常用命令.html</id>
     <published>2021-05-07T16:00:00.000Z</published>
     <updated>2021-05-09T02:29:17.238Z</updated>
     
@@ -256,14 +256,14 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://smilexin.cn/tags/Docker/"/>
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>Linux 指定目录扩容</title>
-    <link href="https://smilexin.cn/2021/05/08/Linux%20%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E6%89%A9%E5%AE%B9.html"/>
-    <id>https://smilexin.cn/2021/05/08/Linux 指定目录扩容.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/08/Linux%20%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E6%89%A9%E5%AE%B9.html"/>
+    <id>https://blog.smilexin.cn/2021/05/08/Linux 指定目录扩容.html</id>
     <published>2021-05-07T16:00:00.000Z</published>
     <updated>2021-05-09T02:21:33.635Z</updated>
     
@@ -279,16 +279,16 @@
     </summary>
     
     
-      <category term="Linux" scheme="https://smilexin.cn/tags/Linux/"/>
+      <category term="Linux" scheme="https://blog.smilexin.cn/tags/Linux/"/>
     
-      <category term="阿里云" scheme="https://smilexin.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
+      <category term="阿里云" scheme="https://blog.smilexin.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
   </entry>
   
   <entry>
     <title>Linux常用命令</title>
-    <link href="https://smilexin.cn/2021/05/07/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"/>
-    <id>https://smilexin.cn/2021/05/07/Linux 常用命令.html</id>
+    <link href="https://blog.smilexin.cn/2021/05/07/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"/>
+    <id>https://blog.smilexin.cn/2021/05/07/Linux 常用命令.html</id>
     <published>2021-05-06T16:00:00.000Z</published>
     <updated>2021-05-07T03:48:07.378Z</updated>
     
@@ -304,14 +304,14 @@
     </summary>
     
     
-      <category term="Linux" scheme="https://smilexin.cn/tags/Linux/"/>
+      <category term="Linux" scheme="https://blog.smilexin.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Docker 部署MongoDB</title>
-    <link href="https://smilexin.cn/2020/04/17/Docker%20%E9%83%A8%E7%BD%B2MongoDB.html"/>
-    <id>https://smilexin.cn/2020/04/17/Docker 部署MongoDB.html</id>
+    <link href="https://blog.smilexin.cn/2020/04/17/Docker%20%E9%83%A8%E7%BD%B2MongoDB.html"/>
+    <id>https://blog.smilexin.cn/2020/04/17/Docker 部署MongoDB.html</id>
     <published>2020-04-16T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.305Z</updated>
     
@@ -328,16 +328,16 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://smilexin.cn/tags/Docker/"/>
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
     
-      <category term="MongoDB" scheme="https://smilexin.cn/tags/MongoDB/"/>
+      <category term="MongoDB" scheme="https://blog.smilexin.cn/tags/MongoDB/"/>
     
   </entry>
   
   <entry>
     <title>Golang 环境安装</title>
-    <link href="https://smilexin.cn/2020/03/29/Golang%20%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"/>
-    <id>https://smilexin.cn/2020/03/29/Golang 环境安装.html</id>
+    <link href="https://blog.smilexin.cn/2020/03/29/Golang%20%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"/>
+    <id>https://blog.smilexin.cn/2020/03/29/Golang 环境安装.html</id>
     <published>2020-03-28T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.309Z</updated>
     
@@ -353,14 +353,14 @@
     </summary>
     
     
-      <category term="Golang" scheme="https://smilexin.cn/tags/Golang/"/>
+      <category term="Golang" scheme="https://blog.smilexin.cn/tags/Golang/"/>
     
   </entry>
   
   <entry>
     <title>ActiveMQ的消息重试机制</title>
-    <link href="https://smilexin.cn/2018/09/01/ActiveMQ_%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html"/>
-    <id>https://smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html</id>
+    <link href="https://blog.smilexin.cn/2018/09/01/ActiveMQ_%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html"/>
+    <id>https://blog.smilexin.cn/2018/09/01/ActiveMQ_消息重试机制.html</id>
     <published>2018-08-31T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.304Z</updated>
     
@@ -377,14 +377,14 @@
     </summary>
     
     
-      <category term="ActiveMQ" scheme="https://smilexin.cn/tags/ActiveMQ/"/>
+      <category term="ActiveMQ" scheme="https://blog.smilexin.cn/tags/ActiveMQ/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot 配置加密</title>
-    <link href="https://smilexin.cn/2018/08/17/SpringBoot%20%E9%85%8D%E7%BD%AE%E5%8A%A0%E5%AF%86.html"/>
-    <id>https://smilexin.cn/2018/08/17/SpringBoot 配置加密.html</id>
+    <link href="https://blog.smilexin.cn/2018/08/17/SpringBoot%20%E9%85%8D%E7%BD%AE%E5%8A%A0%E5%AF%86.html"/>
+    <id>https://blog.smilexin.cn/2018/08/17/SpringBoot 配置加密.html</id>
     <published>2018-08-16T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.316Z</updated>
     
@@ -400,24 +400,24 @@
     </summary>
     
     
-      <category term="网络安全" scheme="https://smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+      <category term="网络安全" scheme="https://blog.smilexin.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
-      <category term="SpringBoot" scheme="https://smilexin.cn/tags/SpringBoot/"/>
+      <category term="SpringBoot" scheme="https://blog.smilexin.cn/tags/SpringBoot/"/>
     
-      <category term="jasypt" scheme="https://smilexin.cn/tags/jasypt/"/>
+      <category term="jasypt" scheme="https://blog.smilexin.cn/tags/jasypt/"/>
     
-      <category term="加密" scheme="https://smilexin.cn/tags/%E5%8A%A0%E5%AF%86/"/>
+      <category term="加密" scheme="https://blog.smilexin.cn/tags/%E5%8A%A0%E5%AF%86/"/>
     
-      <category term="配置" scheme="https://smilexin.cn/tags/%E9%85%8D%E7%BD%AE/"/>
+      <category term="配置" scheme="https://blog.smilexin.cn/tags/%E9%85%8D%E7%BD%AE/"/>
     
-      <category term="配置文件加解密" scheme="https://smilexin.cn/tags/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%A7%A3%E5%AF%86/"/>
+      <category term="配置文件加解密" scheme="https://blog.smilexin.cn/tags/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%A7%A3%E5%AF%86/"/>
     
   </entry>
   
   <entry>
     <title>layui 表单数据回显问题处理</title>
-    <link href="https://smilexin.cn/2018/08/16/layui%20%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86.html"/>
-    <id>https://smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html</id>
+    <link href="https://blog.smilexin.cn/2018/08/16/layui%20%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86.html"/>
+    <id>https://blog.smilexin.cn/2018/08/16/layui 表单数据回显问题处理.html</id>
     <published>2018-08-15T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.316Z</updated>
     
@@ -434,14 +434,14 @@
     </summary>
     
     
-      <category term="layui" scheme="https://smilexin.cn/tags/layui/"/>
+      <category term="layui" scheme="https://blog.smilexin.cn/tags/layui/"/>
     
   </entry>
   
   <entry>
     <title>thymeleaf 常用标签</title>
-    <link href="https://smilexin.cn/2018/08/16/thymeleaf%20%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE.html"/>
-    <id>https://smilexin.cn/2018/08/16/thymeleaf 常用标签.html</id>
+    <link href="https://blog.smilexin.cn/2018/08/16/thymeleaf%20%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE.html"/>
+    <id>https://blog.smilexin.cn/2018/08/16/thymeleaf 常用标签.html</id>
     <published>2018-08-15T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.318Z</updated>
     
@@ -458,14 +458,14 @@
     </summary>
     
     
-      <category term="thymeleaf" scheme="https://smilexin.cn/tags/thymeleaf/"/>
+      <category term="thymeleaf" scheme="https://blog.smilexin.cn/tags/thymeleaf/"/>
     
   </entry>
   
   <entry>
     <title>ElasticSearch 安装</title>
-    <link href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html"/>
-    <id>https://smilexin.cn/2018/08/12/ElasticSearch 安装.html</id>
+    <link href="https://blog.smilexin.cn/2018/08/12/ElasticSearch%20%E5%AE%89%E8%A3%85.html"/>
+    <id>https://blog.smilexin.cn/2018/08/12/ElasticSearch 安装.html</id>
     <published>2018-08-11T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.307Z</updated>
     
@@ -483,16 +483,16 @@
     </summary>
     
     
-      <category term="ElasticSearch" scheme="https://smilexin.cn/tags/ElasticSearch/"/>
+      <category term="ElasticSearch" scheme="https://blog.smilexin.cn/tags/ElasticSearch/"/>
     
-      <category term="全文搜索" scheme="https://smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+      <category term="全文搜索" scheme="https://blog.smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
     
   </entry>
   
   <entry>
     <title>ElasticSearch 集群部署</title>
-    <link href="https://smilexin.cn/2018/08/12/ElasticSearch%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html"/>
-    <id>https://smilexin.cn/2018/08/12/ElasticSearch 集群部署.html</id>
+    <link href="https://blog.smilexin.cn/2018/08/12/ElasticSearch%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html"/>
+    <id>https://blog.smilexin.cn/2018/08/12/ElasticSearch 集群部署.html</id>
     <published>2018-08-11T16:00:00.000Z</published>
     <updated>2021-04-30T02:44:33.308Z</updated>
     
@@ -508,9 +508,9 @@
     </summary>
     
     
-      <category term="ElasticSearch" scheme="https://smilexin.cn/tags/ElasticSearch/"/>
+      <category term="ElasticSearch" scheme="https://blog.smilexin.cn/tags/ElasticSearch/"/>
     
-      <category term="全文搜索" scheme="https://smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+      <category term="全文搜索" scheme="https://blog.smilexin.cn/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
     
   </entry>
   
