@@ -318,55 +318,6 @@ Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
-    
-
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-memcached_过期数据删除机制"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -402,6 +353,55 @@ Slab Allocation
     
 
         <a href="/2017/07/31/memcached_过期数据删除机制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-memcached_内存分配机制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
+这种空闲且无法再利用的内存现象，称为++内存的碎片化++
+memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
+Slab Allocation
+首先，像一般的内存池一样,  从操作系统...
+    
+
+        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
