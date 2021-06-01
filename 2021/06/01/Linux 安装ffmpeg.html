@@ -33,25 +33,25 @@ var _hmt = _hmt || [];
     
     
     
-    <title>Linux 定时删除以前的日志文件 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>Linux 安装ffmpeg | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="运维,Linux,shell">
-    <meta name="description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
-<meta name="keywords" content="运维,Linux,shell">
+    <meta name="keywords" content="Linux,ffmpeg">
+    <meta name="description" content="安装ffmpeg首先去官网下载源码包 http://ffmpeg.org/download.html#releases 我这里下载的是ffmpeg-4.4.tar.gz，下载之后上传至Linux准备安装。 解压安装包，然后进到ffmpeg文件目录下面：1234tar -xjvf ffmpeg-4.4.tar.gzcd ffmpeg-4.4./configure --enable-shared --">
+<meta name="keywords" content="Linux,ffmpeg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux 定时删除以前的日志文件">
-<meta property="og:url" content="https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html">
+<meta property="og:title" content="Linux 安装ffmpeg">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
+<meta property="og:description" content="安装ffmpeg首先去官网下载源码包 http://ffmpeg.org/download.html#releases 我这里下载的是ffmpeg-4.4.tar.gz，下载之后上传至Linux准备安装。 解压安装包，然后进到ffmpeg文件目录下面：1234tar -xjvf ffmpeg-4.4.tar.gzcd ffmpeg-4.4./configure --enable-shared --">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-04-30T02:44:33.311Z">
+<meta property="og:updated_time" content="2021-06-01T08:44:56.154Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux 定时删除以前的日志文件">
-<meta name="twitter:description" content="问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。 实现策略使用crontab,每天凌晨删除以前的日志文件 编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/*/n">
+<meta name="twitter:title" content="Linux 安装ffmpeg">
+<meta name="twitter:description" content="安装ffmpeg首先去官网下载源码包 http://ffmpeg.org/download.html#releases 我这里下载的是ffmpeg-4.4.tar.gz，下载之后上传至Linux准备安装。 解压安装包，然后进到ffmpeg文件目录下面：1234tar -xjvf ffmpeg-4.4.tar.gzcd ffmpeg-4.4./configure --enable-shared --">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Linux 定时删除以前的日志文件</div>
+        <div class="flex-col header-title ellipsis">Linux 安装ffmpeg</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -154,11 +154,11 @@ var _hmt = _hmt || [];
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Linux 定时删除以前的日志文件</h1>
+        <h1 class="title">Linux 安装ffmpeg</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-08-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2018-08-03
+                <time datetime="2021-05-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-06-01
 </time>
 
 
@@ -177,18 +177,18 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题场景"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题场景</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实现策略"><span class="post-toc-number">2.</span> <span class="post-toc-text">实现策略</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#编写shell脚本"><span class="post-toc-number">3.</span> <span class="post-toc-text">编写shell脚本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定时执行"><span class="post-toc-number">4.</span> <span class="post-toc-text">定时执行</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装ffmpeg"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装ffmpeg</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Linux 定时删除以前的日志文件"
+<article id="post-Linux 安装ffmpeg"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Linux 定时删除以前的日志文件</h1>
+        <h1 class="post-card-title">Linux 安装ffmpeg</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-08-03 00:00:00" datetime="2018-08-02T16:00:00.000Z"  itemprop="datePublished">2018-08-03</time>
+            <time class="post-time" title="2021-06-01 00:00:00" datetime="2021-05-31T16:00:00.000Z"  itemprop="datePublished">2021-06-01</time>
 
             
 
@@ -201,11 +201,12 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h1><p>磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。</p>
-<h1 id="实现策略"><a href="#实现策略" class="headerlink" title="实现策略"></a>实现策略</h1><p>使用crontab,每天凌晨删除以前的日志文件</p>
-<h1 id="编写shell脚本"><a href="#编写shell脚本" class="headerlink" title="编写shell脚本"></a>编写shell脚本</h1><p>auto-del-180-days-ago-log.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#description: Auto remove 6 months ago log file</span><br><span class="line"># 删除180天前的nohup文件</span><br><span class="line">find /data/appjar/*/nohup -mtime +180 -name &quot;nohup_*&quot; -exec rm &#123;&#125; \;</span><br><span class="line"># 删除180天前的log文件</span><br><span class="line">find /data/appjar/*/log -mtime +180 -name &quot;*.log&quot; -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure></p>
-<p>命令解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 这里的文件名需要根据应用的实际备份脚本生成的文件名称进行筛选</span><br><span class="line">find 对应目录 -mtime +天数 -name &quot;文件名&quot; -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure></p>
-<h1 id="定时执行"><a href="#定时执行" class="headerlink" title="定时执行"></a>定时执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -e # 设置定时任务计划</span><br><span class="line"># 每天凌晨1点执行备份</span><br><span class="line">0 1 * * * sh /usr/script/auto-del-180-days-ago-log.sh</span><br></pre></td></tr></table></figure>
+            <h1 id="安装ffmpeg"><a href="#安装ffmpeg" class="headerlink" title="安装ffmpeg"></a>安装ffmpeg</h1><p>首先去官网下载源码包 <a href="http://ffmpeg.org/download.html#releases" target="_blank" rel="noopener">http://ffmpeg.org/download.html#releases</a></p>
+<p>我这里下载的是ffmpeg-4.4.tar.gz，下载之后上传至Linux准备安装。</p>
+<p>解压安装包，然后进到ffmpeg文件目录下面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -xjvf ffmpeg-4.4.tar.gz</span><br><span class="line">cd ffmpeg-4.4</span><br><span class="line">./configure --enable-shared --prefix=/usr/local/ffmpeg    //自己想要存放的地方</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<p><strong>可能会报如下的错误：yasm/nasm 包不存在或者很旧</strong></p>
+<p>出现这个错误需要安装yasm。下载地址：<a href="http://yasm.tortall.net/Download.html" target="_blank" rel="noopener">http://yasm.tortall.net/Download.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf yasm-1.3.0.tar.gz</span><br><span class="line">cd yasm-1.3.0/</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<p>编译参数都是默认的，直接安装到系统中即可，安装成功之后继续回到ffmpeg解压后的目录，执行下面命令编译并安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --enable-shared --prefix=/mydir/ffmpeg    //自己想要存放的地方</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -214,12 +215,12 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-04-30T02:44:33.311Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+    最后更新时间：<time datetime="2021-06-01T08:44:56.154Z" itemprop="dateUpdated">2021-06-01 16:44:56</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2018/08/03/Linux 定时删除以前的日志文件.html" target="_blank" rel="external">https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html</a>
+        原文链接：<a href="/2021/06/01/Linux 安装ffmpeg.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html</a>
         
     </div>
     
@@ -240,7 +241,7 @@ var _hmt = _hmt || [];
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
 
 
             
@@ -250,7 +251,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&title=《Linux 安装ffmpeg》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -260,22 +261,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&title=《Linux 安装ffmpeg》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 定时删除以前的日志文件》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 安装ffmpeg》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -295,21 +296,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/08/07/SpringBoot 定时任务.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">SpringBoot 定时任务</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/07/30/url中jsessionid问题处理.html" id="post-next" class="post-nav-link">
+      <a href="/2021/05/25/我的健身记录贴.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">URL中jsessionid问题处理</h4>
+        <h4 class="title">我的健身记录贴</h4>
       </a>
     </div>
   
@@ -423,7 +417,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&title=《Linux 安装ffmpeg》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -433,22 +427,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&title=《Linux 定时删除以前的日志文件》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&title=《Linux 安装ffmpeg》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 定时删除以前的日志文件》 — Junxin's Blog&url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 安装ffmpeg》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2018/08/03/Linux 定时删除以前的日志文件.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/01/Linux 安装ffmpeg.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -459,7 +453,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3cQW7jMBAEwPz/01lgT7tI7HTPkI4PpZOhyBKLB3HcQ+TjIz4+/x5fz/x7PD//6K+P7pCM4diBh4eHNxp6/sgEkwy3BTx/7qMJxcPDw7vHS26Xfyt/6f8wuC/X1IsHHh4e3q/y2mI3P/+cnS82eHh4eO/Gy1/TSbHbDhcPDw/v3XhJKdy+vvdLQh4WH8ha8PDw8GJeG7C+w+eL/T08PDy8RVc9L4vz5SSPa9vF4Jtv4eHh4V3gJY+chRTtZqyk6TUr4vHw8PBu8JIvJ49pm2fthoB8yh6C8fDw8I7yZgHrjYUk34aVn8fDw8O7wZvFB/tG1771VRTWeHh4eBfK6KSonZXO7cu9naBiZwQeHh7eBV7exHr+an5+zSzgaCcRDw8P7yxv36CaDXoWPdQLGB4eHt4FXh4NbMroBF8Hsu3SgoeHh3eI1xbHeaXalun7thkeHh7ea3ht6yuPA5IrE0ACLtY9PDw8vEO8/DWdX5O/ym8EFquh4+Hh4XUjXP0T5w07L6PzBQYPDw/vBm8TFuSlbTtN+9giylrw8PDwFrxZVDprd7VldDsePDw8vFfyZkd+h7a6ny0h/33Gw8PDeyHvMzhmMUF+fR3RPgoj8PDw8I7ykkJ2Fi7kd97n0D+0x/Dw8PAu8NrtAsn5duPUbLNXvvDg4eHh3eDlJW9e+LYbpzaTWO+JwMPDw1vw8jj11Faq9rsHfjHg4eHhXeDl4WwbpOah8Ka1Vnfe8PDw8Ea8z/LYLB6z2KKNJL7ZOoCHh4d3lLffXDWbglNRbz5ZeHh4eGd57baA2QaCNqrIJ6VufeHh4eEd4iWv8lNbBGahxqx1h4eHh/c+vDw1bQv0Nhpe/RrAw8PDu8xrA4XNndvm3EMLHh4e3jVeux0qWTDaNtWVphceHh7eC/vp7UDbAOJsaT7s7OHh4eF1vD+2BLtgcPC0XgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS27DMAwFwNz/0uk2QGH7kXSKWhqtgnwsTRYEKfL1itf7Y32+8/vTo3X+tPP3b1sYGBiPZSTbn7+THzp/cnUXDAyMHRhHEez8O3kAPfo0D+sXZ8bAwMCIGeehM0kBMTAwMOaMnHdXeYyBgYGRF7G9pLBX9H6xFsfAwHggIw+Lf//6K/0NDAyMRzHexTVP75LytXwqDAyMpRl5gMtTxl4jMymqL3bBwMDYgDEZg8jZObgKw8DA2I0xCcHJxVlvIOPiaRgYGIsy7t1mXojmDYkv/lsYGBj/jJH/OG9S5ild9Q+6eCYGBsY2jCT85UG5V8RWE1AMDIy1Gb225SQ4JocuB2UMDIylGfmVVl6C3tskKJTcGBgYGzDyZsAkdM4L4MPTYmBgLM2objYZDps0JwrjFxgYGEsz5ldyyRF7iWa+LwYGxqqMeXtgErLnqScGBsY+jGrilR8leV1tNhwGXAwMjEUZvUmN8vDWaaFbHeNo5rMYGBgPZFQTsnwso3eganMUAwNjH0Z1JCtvLk6ao81EEAMDY2nG5KK/dxnXSyWjlgAGBsYSjHdxTX5VLWUL9TcGBsbSjN6wxb0XapM0cTQzgoGB8ShGdUirdyV3WyaLgYGxMWMy1lANkZO076KUxcDAwGglkdVBimabAQMDA6M1sJVcolWPfnPAxcDAeBSj2gzoge8qejEwMHZj5AlfL4z2wnTSzcDAwNiA8QMuu+Tzcs6whQAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
