@@ -50,7 +50,7 @@ var _hmt = _hmt || [];
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://blog.smilexin.cn/img/posts/rancher/skywalking_oap_server_config.png">
 <meta property="og:image" content="https://blog.smilexin.cn/img/posts/rancher/skywalking_ui_config.png">
-<meta property="og:updated_time" content="2021-06-16T07:23:52.726Z">
+<meta property="og:updated_time" content="2021-06-16T10:05:04.173Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Rancher部署Skywalking">
 <meta name="twitter:description" content="skywalking-oap-server 存储：elasticsearch 7.x 镜像：apache/skywalking-oap-server:8.6.0-es7 collector.backend_service：hostip:30001">
@@ -234,7 +234,7 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:./agent/skywalking-agent.jar -jar .\app1.jar --app2Address=http://localhost:9001</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>agent 需要修改的配置项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 命名空间，用于隔离跨进程传播的header。如果进行了配置，header将为HeaderName:Namespace</span><br><span class="line"># agent.namespace=$&#123;SW_AGENT_NAMESPACE:default-namespace&#125;</span><br><span class="line"># 在SkyWalking UI中展示的服务名。建议：为每个服务设置个唯一的名字，服务的多个服务实例为同样的服务名</span><br><span class="line">agent.service_name=$&#123;SW_AGENT_NAME:app1&#125;</span><br><span class="line"># 接收skywalking trace数据的后端地址</span><br><span class="line">collector.backend_service=$&#123;SW_AGENT_COLLECTOR_BACKEND_SERVICES:192.168.1.101:30644&#125;</span><br></pre></td></tr></table></figure></p>
+<p>agent 需要修改的配置项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 命名空间，用于隔离跨进程传播的header。如果进行了配置，header将为HeaderName:Namespace</span><br><span class="line"># agent.namespace=$&#123;SW_AGENT_NAMESPACE:default-namespace&#125;</span><br><span class="line"># 在SkyWalking UI中展示的服务名。建议：为每个服务设置个唯一的名字，服务的多个服务实例为同样的服务名</span><br><span class="line">agent.service_name=$&#123;SW_AGENT_NAME:app1&#125;</span><br><span class="line"># 接收skywalking trace数据的后端地址</span><br><span class="line">collector.backend_service=$&#123;SW_AGENT_COLLECTOR_BACKEND_SERVICES:192.168.1.101:30644&#125;</span><br><span class="line"># 收集SpringMVC请求参数</span><br><span class="line">plugin.springmvc.collect_http_params=true</span><br><span class="line"># 请求参数收集的最大字符长度, 配置过大会影响性能.</span><br><span class="line">plugin.http.http_params_length_threshold=1024</span><br></pre></td></tr></table></figure></p>
 <h2 id="Java-Agent配置方式"><a href="#Java-Agent配置方式" class="headerlink" title="Java Agent配置方式"></a>Java Agent配置方式</h2><p>agent配置有多种姿势，上面修改 agent.config 文件中的值，只是其中一种。下面专门探讨agent支持的配置方式。</p>
 <ul>
 <li><p>系统属性(-D)<br>使用 -Dskywalking. + agent.config配置文件中的key 即可。例如：<br>agent.config 文件中有一个属性名为 agent.service_name ，那么如果使用系统属性的方式，则可以写成</p>
@@ -259,7 +259,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-06-16T07:23:52.726Z" itemprop="dateUpdated">2021-06-16 15:23:52</time>
+    最后更新时间：<time datetime="2021-06-16T10:05:04.173Z" itemprop="dateUpdated">2021-06-16 18:05:04</time>
 </span><br>
 
 
