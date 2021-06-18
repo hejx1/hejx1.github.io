@@ -50,7 +50,7 @@ var _hmt = _hmt || [];
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://blog.smilexin.cn/img/posts/rancher/skywalking_oap_server_config.png">
 <meta property="og:image" content="https://blog.smilexin.cn/img/posts/rancher/skywalking_ui_config.png">
-<meta property="og:updated_time" content="2021-06-16T10:05:04.173Z">
+<meta property="og:updated_time" content="2021-06-17T08:04:23.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Rancher部署Skywalking">
 <meta name="twitter:description" content="skywalking-oap-server 存储：elasticsearch 7.x 镜像：apache/skywalking-oap-server:8.6.0-es7 collector.backend_service：hostip:30001">
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-oap-server"><span class="post-toc-number">1.</span> <span class="post-toc-text">skywalking-oap-server</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-ui"><span class="post-toc-number">2.</span> <span class="post-toc-text">skywalking-ui</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-agent"><span class="post-toc-number">3.</span> <span class="post-toc-text">skywalking-agent</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java-Agent配置方式"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Java Agent配置方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优先级"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">优先级</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-oap-server"><span class="post-toc-number">1.</span> <span class="post-toc-text">skywalking-oap-server</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-ui"><span class="post-toc-number">2.</span> <span class="post-toc-text">skywalking-ui</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#skywalking-agent"><span class="post-toc-number">3.</span> <span class="post-toc-text">skywalking-agent</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java-Agent配置方式"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Java Agent配置方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优先级"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">优先级</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#服务之间调用"><span class="post-toc-number">4.</span> <span class="post-toc-text">服务之间调用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用-SkyWalking-和-Envoy-访问日志服务对服务网格进行观察"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用 SkyWalking 和 Envoy 访问日志服务对服务网格进行观察</span></a></li></ol>
         </nav>
     </aside>
 
@@ -251,6 +251,8 @@ var _hmt = _hmt || [];
 <h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><blockquote>
 <p>代理选项 &gt; 系统属性（-D） &gt; 系统环境变量 &gt; 配置文件</p>
 </blockquote>
+<h1 id="服务之间调用"><a href="#服务之间调用" class="headerlink" title="服务之间调用"></a>服务之间调用</h1><p><strong>注意：服务之间的调用，需要用spring提供的restTemplate，不要直接用apache的httpclient工具包</strong></p>
+<h1 id="使用-SkyWalking-和-Envoy-访问日志服务对服务网格进行观察"><a href="#使用-SkyWalking-和-Envoy-访问日志服务对服务网格进行观察" class="headerlink" title="使用 SkyWalking 和 Envoy 访问日志服务对服务网格进行观察"></a>使用 SkyWalking 和 Envoy 访问日志服务对服务网格进行观察</h1><p><a href="http://skywalking.apache.org/zh/observe-service-mesh-with-skywalking-and-envoy-access-log-service/" target="_blank" rel="noopener">http://skywalking.apache.org/zh/observe-service-mesh-with-skywalking-and-envoy-access-log-service/</a></p>
 
         </div>
 
@@ -259,7 +261,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-06-16T10:05:04.173Z" itemprop="dateUpdated">2021-06-16 18:05:04</time>
+    最后更新时间：<time datetime="2021-06-17T08:04:23.496Z" itemprop="dateUpdated">2021-06-17 16:04:23</time>
 </span><br>
 
 
@@ -340,7 +342,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2021/06/18/基于Docker搭建MySQL主从复制.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">基于Docker搭建MySQL主从复制</h4>
+      </a>
+    </div>
   
 
   
