@@ -40,18 +40,18 @@ var _hmt = _hmt || [];
     
     
     <meta name="keywords" content="Docker,Mysql">
-    <meta name="description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec -it mysql-slave01 mysqld">
+    <meta name="description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec mysql-slave01 mysqldump -t -">
 <meta name="keywords" content="Docker,Mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Docker的MySQL常用备份及恢复命令">
 <meta property="og:url" content="https://blog.smilexin.cn/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec -it mysql-slave01 mysqld">
+<meta property="og:description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec mysql-slave01 mysqldump -t -">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-06-18T09:24:43.256Z">
+<meta property="og:updated_time" content="2021-06-21T02:43:54.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Docker的MySQL常用备份及恢复命令">
-<meta name="twitter:description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec -it mysql-slave01 mysqld">
+<meta name="twitter:description" content="创建备份文件的目录1mkdir -p /home/mysql_bak 备份数据备份mydb1数据库中所有的表结构及数据1docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &amp;gt; /home/mysql_bak/mydb1.sql 只导出数据不导出结构1docker exec mysql-slave01 mysqldump -t -">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#备份数据"><span class="post-toc-number">1.</span> <span class="post-toc-text">备份数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份mydb1数据库中所有的表结构及数据"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">备份mydb1数据库中所有的表结构及数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#只导出数据不导出结构"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">只导出数据不导出结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#只导出结构不导出数据"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">只导出结构不导出数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导出特定表结构"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">导出特定表结构</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#恢复数据"><span class="post-toc-number">2.</span> <span class="post-toc-text">恢复数据</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#备份数据"><span class="post-toc-number">1.</span> <span class="post-toc-text">备份数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份mydb1数据库中所有的表结构及数据"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">备份mydb1数据库中所有的表结构及数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#只导出数据不导出结构"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">只导出数据不导出结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#只导出结构不导出数据"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">只导出结构不导出数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导出特定表结构"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">导出特定表结构</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#恢复数据"><span class="post-toc-number">2.</span> <span class="post-toc-text">恢复数据</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题解决：使用-crontab-执行脚本备份数据为空"><span class="post-toc-number">3.</span> <span class="post-toc-text">问题解决：使用 crontab 执行脚本备份数据为空</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure"><span class="post-toc-number">4.</span> <span class="post-toc-text">问题解决：Warning: Using apassword on the command line interface can be insecure.</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方法"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">解决方法</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -202,11 +202,17 @@ var _hmt = _hmt || [];
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>创建备份文件的目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/mysql_bak</span><br></pre></td></tr></table></figure></p>
-<h1 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h1><h2 id="备份mydb1数据库中所有的表结构及数据"><a href="#备份mydb1数据库中所有的表结构及数据" class="headerlink" title="备份mydb1数据库中所有的表结构及数据"></a>备份mydb1数据库中所有的表结构及数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure>
-<h2 id="只导出数据不导出结构"><a href="#只导出数据不导出结构" class="headerlink" title="只导出数据不导出结构"></a>只导出数据不导出结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -t -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_data.sql</span><br></pre></td></tr></table></figure>
-<h2 id="只导出结构不导出数据"><a href="#只导出结构不导出数据" class="headerlink" title="只导出结构不导出数据"></a>只导出结构不导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump --opt -d -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_struct.sql</span><br></pre></td></tr></table></figure>
-<h2 id="导出特定表结构"><a href="#导出特定表结构" class="headerlink" title="导出特定表结构"></a>导出特定表结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 sys_user &gt; /home/mysql_bak/sys_user.sql</span><br></pre></td></tr></table></figure>
+<h1 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h1><h2 id="备份mydb1数据库中所有的表结构及数据"><a href="#备份mydb1数据库中所有的表结构及数据" class="headerlink" title="备份mydb1数据库中所有的表结构及数据"></a>备份mydb1数据库中所有的表结构及数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure>
+<h2 id="只导出数据不导出结构"><a href="#只导出数据不导出结构" class="headerlink" title="只导出数据不导出结构"></a>只导出数据不导出结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -t -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_data.sql</span><br></pre></td></tr></table></figure>
+<h2 id="只导出结构不导出数据"><a href="#只导出结构不导出数据" class="headerlink" title="只导出结构不导出数据"></a>只导出结构不导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump --opt -d -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_struct.sql</span><br></pre></td></tr></table></figure>
+<h2 id="导出特定表结构"><a href="#导出特定表结构" class="headerlink" title="导出特定表结构"></a>导出特定表结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 sys_user &gt; /home/mysql_bak/sys_user.sql</span><br></pre></td></tr></table></figure>
 <h1 id="恢复数据"><a href="#恢复数据" class="headerlink" title="恢复数据"></a>恢复数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker cp /home/mysql_bak/mydb1.sql mysql-slave01:/root/</span><br><span class="line">docker exec -it mysql-slave01 /bin/bash</span><br><span class="line">mysql -uroot -p kitty_backup &lt; /root/mydb1.sql</span><br></pre></td></tr></table></figure>
+<h1 id="问题解决：使用-crontab-执行脚本备份数据为空"><a href="#问题解决：使用-crontab-执行脚本备份数据为空" class="headerlink" title="问题解决：使用 crontab 执行脚本备份数据为空"></a>问题解决：使用 crontab 执行脚本备份数据为空</h1><p>先看备份脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure></p>
+<p>乍一看上去是没问题的，但是crontab定时执行的时候dump出来的文件大小始终是0，后来发现去掉-it就可以了，按照文档解释-t是分配一个伪终端,但是crontab执行的时候实际是不需要的</p>
+<h1 id="问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure"><a href="#问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure" class="headerlink" title="问题解决：Warning: Using apassword on the command line interface can be insecure."></a>问题解决：Warning: Using apassword on the command line interface can be insecure.</h1><p>mysql -u root -pPASSWORD 或 mysqldump -u root -pPASSWORD 都会输出这样的警告信息.</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在MYSQL配置文件 <code>my.cnf</code> 里增加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi my.cnf</span><br><span class="line"></span><br><span class="line">[mysqldump]</span><br><span class="line"></span><br><span class="line">user=your_backup_user_name</span><br><span class="line"></span><br><span class="line">password=your_backup_password</span><br></pre></td></tr></table></figure></p>
+<p>修改完配置文件后, 只需要执行mysqldump 脚本就可以了;备份脚本中不需要涉及用户名密码相关信息;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01-3307 mysqldump test2 &gt; /home/mysqlbak/test2_data.sql</span><br></pre></td></tr></table></figure></p>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -214,7 +220,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-06-18T09:24:43.256Z" itemprop="dateUpdated">2021-06-18 17:24:43</time>
+    最后更新时间：<time datetime="2021-06-21T02:43:54.785Z" itemprop="dateUpdated">2021-06-21 10:43:54</time>
 </span><br>
 
 
@@ -295,21 +301,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2021/06/18/基于Docker搭建MySQL主从复制.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">基于Docker搭建MySQL主从复制</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2021/06/16/使用Rancher部署Skywalking.html" id="post-next" class="post-nav-link">
+      <a href="/2021/06/18/基于Docker搭建MySQL主从复制.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">使用Rancher部署Skywalking</h4>
+        <h4 class="title">基于Docker搭建MySQL主从复制</h4>
       </a>
     </div>
   
