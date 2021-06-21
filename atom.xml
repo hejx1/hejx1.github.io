@@ -18,8 +18,8 @@
   
   <entry>
     <title>ElasticSearch之修改shards数</title>
-    <link href="https://blog.smilexin.cn/2021/06/21/ElasticSearch%E4%B9%8B%E4%BF%AE%E6%94%B9shards%E6%95%B02.html"/>
-    <id>https://blog.smilexin.cn/2021/06/21/ElasticSearch之修改shards数2.html</id>
+    <link href="https://blog.smilexin.cn/2021/06/21/ElasticSearch%E4%B9%8B%E4%BF%AE%E6%94%B9shards%E6%95%B0.html"/>
+    <id>https://blog.smilexin.cn/2021/06/21/ElasticSearch之修改shards数.html</id>
     <published>2021-06-20T16:00:00.000Z</published>
     <updated>2021-06-21T06:17:42.510Z</updated>
     
@@ -43,6 +43,31 @@
   </entry>
   
   <entry>
+    <title>基于Docker的MySQL常用备份及恢复命令</title>
+    <link href="https://blog.smilexin.cn/2021/06/18/%E5%9F%BA%E4%BA%8EDocker%E7%9A%84MySQL%E5%B8%B8%E7%94%A8%E5%A4%87%E4%BB%BD%E5%8F%8A%E6%81%A2%E5%A4%8D%E5%91%BD%E4%BB%A4.html"/>
+    <id>https://blog.smilexin.cn/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html</id>
+    <published>2021-06-17T16:00:00.000Z</published>
+    <updated>2021-06-21T02:43:54.785Z</updated>
+    
+    <content type="html"><![CDATA[<p>创建备份文件的目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/mysql_bak</span><br></pre></td></tr></table></figure></p><h1 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h1><h2 id="备份mydb1数据库中所有的表结构及数据"><a href="#备份mydb1数据库中所有的表结构及数据" class="headerlink" title="备份mydb1数据库中所有的表结构及数据"></a>备份mydb1数据库中所有的表结构及数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure><h2 id="只导出数据不导出结构"><a href="#只导出数据不导出结构" class="headerlink" title="只导出数据不导出结构"></a>只导出数据不导出结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -t -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_data.sql</span><br></pre></td></tr></table></figure><h2 id="只导出结构不导出数据"><a href="#只导出结构不导出数据" class="headerlink" title="只导出结构不导出数据"></a>只导出结构不导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump --opt -d -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_struct.sql</span><br></pre></td></tr></table></figure><h2 id="导出特定表结构"><a href="#导出特定表结构" class="headerlink" title="导出特定表结构"></a>导出特定表结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 sys_user &gt; /home/mysql_bak/sys_user.sql</span><br></pre></td></tr></table></figure><h1 id="恢复数据"><a href="#恢复数据" class="headerlink" title="恢复数据"></a>恢复数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker cp /home/mysql_bak/mydb1.sql mysql-slave01:/root/</span><br><span class="line">docker exec -it mysql-slave01 /bin/bash</span><br><span class="line">mysql -uroot -p kitty_backup &lt; /root/mydb1.sql</span><br></pre></td></tr></table></figure><h1 id="问题解决：使用-crontab-执行脚本备份数据为空"><a href="#问题解决：使用-crontab-执行脚本备份数据为空" class="headerlink" title="问题解决：使用 crontab 执行脚本备份数据为空"></a>问题解决：使用 crontab 执行脚本备份数据为空</h1><p>先看备份脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure></p><p>乍一看上去是没问题的，但是crontab定时执行的时候dump出来的文件大小始终是0，后来发现去掉-it就可以了，按照文档解释-t是分配一个伪终端,但是crontab执行的时候实际是不需要的</p><h1 id="问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure"><a href="#问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure" class="headerlink" title="问题解决：Warning: Using apassword on the command line interface can be insecure."></a>问题解决：Warning: Using apassword on the command line interface can be insecure.</h1><p>mysql -u root -pPASSWORD 或 mysqldump -u root -pPASSWORD 都会输出这样的警告信息.</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在MYSQL配置文件 <code>my.cnf</code> 里增加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi my.cnf</span><br><span class="line"></span><br><span class="line">[mysqldump]</span><br><span class="line"></span><br><span class="line">user=your_backup_user_name</span><br><span class="line"></span><br><span class="line">password=your_backup_password</span><br></pre></td></tr></table></figure></p><p>修改完配置文件后, 只需要执行mysqldump 脚本就可以了;备份脚本中不需要涉及用户名密码相关信息;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01-3307 mysqldump test2 &gt; /home/mysqlbak/test2_data.sql</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;创建备份文件的目录&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code
+      
+    
+    </summary>
+    
+    
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
+    
+      <category term="Mysql" scheme="https://blog.smilexin.cn/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于Docker搭建MySQL主从复制</title>
     <link href="https://blog.smilexin.cn/2021/06/18/%E5%9F%BA%E4%BA%8EDocker%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.html"/>
     <id>https://blog.smilexin.cn/2021/06/18/基于Docker搭建MySQL主从复制.html</id>
@@ -59,31 +84,6 @@
                 &lt;div class=&quot;img-lightbox&quot;&gt;
                     &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
                    
-      
-    
-    </summary>
-    
-    
-      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
-    
-      <category term="Mysql" scheme="https://blog.smilexin.cn/tags/Mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于Docker的MySQL常用备份及恢复命令</title>
-    <link href="https://blog.smilexin.cn/2021/06/18/%E5%9F%BA%E4%BA%8EDocker%E7%9A%84MySQL%E5%B8%B8%E7%94%A8%E5%A4%87%E4%BB%BD%E5%8F%8A%E6%81%A2%E5%A4%8D%E5%91%BD%E4%BB%A4.html"/>
-    <id>https://blog.smilexin.cn/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html</id>
-    <published>2021-06-17T16:00:00.000Z</published>
-    <updated>2021-06-21T02:43:54.785Z</updated>
-    
-    <content type="html"><![CDATA[<p>创建备份文件的目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/mysql_bak</span><br></pre></td></tr></table></figure></p><h1 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h1><h2 id="备份mydb1数据库中所有的表结构及数据"><a href="#备份mydb1数据库中所有的表结构及数据" class="headerlink" title="备份mydb1数据库中所有的表结构及数据"></a>备份mydb1数据库中所有的表结构及数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure><h2 id="只导出数据不导出结构"><a href="#只导出数据不导出结构" class="headerlink" title="只导出数据不导出结构"></a>只导出数据不导出结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -t -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_data.sql</span><br></pre></td></tr></table></figure><h2 id="只导出结构不导出数据"><a href="#只导出结构不导出数据" class="headerlink" title="只导出结构不导出数据"></a>只导出结构不导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump --opt -d -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1_struct.sql</span><br></pre></td></tr></table></figure><h2 id="导出特定表结构"><a href="#导出特定表结构" class="headerlink" title="导出特定表结构"></a>导出特定表结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 sys_user &gt; /home/mysql_bak/sys_user.sql</span><br></pre></td></tr></table></figure><h1 id="恢复数据"><a href="#恢复数据" class="headerlink" title="恢复数据"></a>恢复数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker cp /home/mysql_bak/mydb1.sql mysql-slave01:/root/</span><br><span class="line">docker exec -it mysql-slave01 /bin/bash</span><br><span class="line">mysql -uroot -p kitty_backup &lt; /root/mydb1.sql</span><br></pre></td></tr></table></figure><h1 id="问题解决：使用-crontab-执行脚本备份数据为空"><a href="#问题解决：使用-crontab-执行脚本备份数据为空" class="headerlink" title="问题解决：使用 crontab 执行脚本备份数据为空"></a>问题解决：使用 crontab 执行脚本备份数据为空</h1><p>先看备份脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql</span><br></pre></td></tr></table></figure></p><p>乍一看上去是没问题的，但是crontab定时执行的时候dump出来的文件大小始终是0，后来发现去掉-it就可以了，按照文档解释-t是分配一个伪终端,但是crontab执行的时候实际是不需要的</p><h1 id="问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure"><a href="#问题解决：Warning-Using-apassword-on-the-command-line-interface-can-be-insecure" class="headerlink" title="问题解决：Warning: Using apassword on the command line interface can be insecure."></a>问题解决：Warning: Using apassword on the command line interface can be insecure.</h1><p>mysql -u root -pPASSWORD 或 mysqldump -u root -pPASSWORD 都会输出这样的警告信息.</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在MYSQL配置文件 <code>my.cnf</code> 里增加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi my.cnf</span><br><span class="line"></span><br><span class="line">[mysqldump]</span><br><span class="line"></span><br><span class="line">user=your_backup_user_name</span><br><span class="line"></span><br><span class="line">password=your_backup_password</span><br></pre></td></tr></table></figure></p><p>修改完配置文件后, 只需要执行mysqldump 脚本就可以了;备份脚本中不需要涉及用户名密码相关信息;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec mysql-slave01-3307 mysqldump test2 &gt; /home/mysqlbak/test2_data.sql</span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;创建备份文件的目录&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code
       
     
     </summary>
