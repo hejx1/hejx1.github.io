@@ -454,10 +454,14 @@ socks5代理启动socks5代理服务器123docker run -d -p 1080:1080 n...
 
     
         Docker常用命令记录，方便查询
-获取镜像
-docker search [OPTIONS] 镜像名12# 查找stars数不低于10的centos镜像docker search -f stars=10 centos
+拷贝文件074af74c669d 是容器id,也可以换成容器名称,可以使用 docker ps -a 查看
 
-1234# 查看本地的镜像$ docker images# 如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：$ d...
+从容器中拷贝文件到宿主机
+1sudo docker cp 074af74c669d:/etc/data.xls  /tmp
+
+从宿主机拷贝到容器
+1sudo docker cp /tmp/index.html 074af74c669d:/etc/
+...
     
 
         <a href="/2021/05/08/Docker 常用命令.html" class="post-more waves-effect waves-button">
