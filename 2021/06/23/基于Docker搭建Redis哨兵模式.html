@@ -48,7 +48,7 @@ var _hmt = _hmt || [];
 <meta property="og:site_name" content="Junxin&#39;s Blog">
 <meta property="og:description" content="生产环境使用三台服务器搭建redis哨兵集群，3个redis实例（1主2从）+ 3个哨兵实例。生产环境能够保证在哨兵存活两台的情况下，只有一台redis能够继续提供服务（一主两从三哨兵） 集群信息   宿主机IP port 类型 isMaster 镜像版本 容器名称     192.168.1.100 6379 Redis TRUE redis:alpine3.13 redis-node1   1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-06-23T03:57:32.875Z">
+<meta property="og:updated_time" content="2021-06-23T06:08:04.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Docker搭建Redis哨兵模式">
 <meta name="twitter:description" content="生产环境使用三台服务器搭建redis哨兵集群，3个redis实例（1主2从）+ 3个哨兵实例。生产环境能够保证在哨兵存活两台的情况下，只有一台redis能够继续提供服务（一主两从三哨兵） 集群信息   宿主机IP port 类型 isMaster 镜像版本 容器名称     192.168.1.100 6379 Redis TRUE redis:alpine3.13 redis-node1   1">
@@ -244,7 +244,7 @@ var _hmt = _hmt || [];
 <td>Sentinel</td>
 <td>-</td>
 <td>redis:alpine3.13</td>
-<td>redis-node1</td>
+<td>redis_sentinel1</td>
 </tr>
 <tr>
 <td>192.168.1.101</td>
@@ -252,7 +252,7 @@ var _hmt = _hmt || [];
 <td>Sentinel</td>
 <td>-</td>
 <td>redis:alpine3.13</td>
-<td>redis-node2</td>
+<td>redis_sentinel2</td>
 </tr>
 <tr>
 <td>192.168.1.102</td>
@@ -260,7 +260,7 @@ var _hmt = _hmt || [];
 <td>Sentinel</td>
 <td>-</td>
 <td>redis:alpine3.13</td>
-<td>redis-node3</td>
+<td>redis_sentinel3</td>
 </tr>
 </tbody>
 </table>
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
 <h2 id="redis-node3"><a href="#redis-node3" class="headerlink" title="redis-node3"></a>redis-node3</h2><p><strong>node3同node2操作一致</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@node-2 ~]# docker exec -it redis-node3 /bin/sh</span><br><span class="line">/data # redis-cli -a Alixin@123</span><br><span class="line">Warning: Using a password with &apos;-a&apos; or &apos;-u&apos; option on the command line interface may not be safe.</span><br><span class="line">127.0.0.1:6379&gt; SLAVEOF 192.168.1.100 6379</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:192.168.1.100</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:238</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">replica_announced:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:d3d275d21d1a7a3930497fc37c30ef40c9c26369</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:238</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:225</span><br><span class="line">repl_backlog_histlen:14</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure></p>
 <h1 id="配置哨兵"><a href="#配置哨兵" class="headerlink" title="配置哨兵"></a>配置哨兵</h1><p>建立sentinel.conf配置文件,内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster 192.168.1.100 6379  2</span><br><span class="line">daemonize yes</span><br><span class="line">sentinel auth-pass mymaster Admin@123</span><br><span class="line">sentinel down-after-milliseconds mymaster 10000</span><br><span class="line">logfile &quot;/data/log.txt&quot;</span><br><span class="line">port 26379</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><code>sentinel monior mymaster 192.168.1.100 6379 2</code> 监听名为mymaster（名字随便起）的主服务 ip为 192.168.1.100 端口为6379</li>
+<li><code>sentinel monior mymaster 192.168.1.100 6379 2</code> 监听名为mymaster（名字随便起）的主服务 ip为 192.168.1.100 端口为6379 sentinel通过投票后认为mater宕机的数量，此处为至少2个</li>
 <li><code>daemonize yes</code> 以守护进程方式运行</li>
 <li><code>sentinel auth-pass mymaster &lt;password&gt;</code> 验证主redis密码</li>
 <li><code>sentinel down-after-milliseconds mymaster 10000</code> 超过10秒没有响应认为下线</li>
@@ -300,7 +300,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-06-23T03:57:32.875Z" itemprop="dateUpdated">2021-06-23 11:57:32</time>
+    最后更新时间：<time datetime="2021-06-23T06:08:04.430Z" itemprop="dateUpdated">2021-06-23 14:08:04</time>
 </span><br>
 
 
