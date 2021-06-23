@@ -49,7 +49,7 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="EMQ X 消息服务器简介EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。 Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。 MQTT 是轻量的 (Lightweight)、发布订">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://blog.smilexin.cn/img/posts/emqx/emqx-dashboard.png">
-<meta property="og:updated_time" content="2021-06-23T10:01:57.127Z">
+<meta property="og:updated_time" content="2021-06-23T10:08:07.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Docker搭建 EMQ X 集群">
 <meta name="twitter:description" content="EMQ X 消息服务器简介EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。 Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。 MQTT 是轻量的 (Lightweight)、发布订">
@@ -179,7 +179,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#EMQ-X-消息服务器简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">EMQ X 消息服务器简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动集群节点"><span class="post-toc-number">2.</span> <span class="post-toc-text">启动集群节点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置集群"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置集群</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-102"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">192.168.1.102</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-100"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">192.168.1.100</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#端口说明"><span class="post-toc-number">4.</span> <span class="post-toc-text">端口说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用-Dashboard-查看集群状态"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用 Dashboard 查看集群状态</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#负载均衡"><span class="post-toc-number">6.</span> <span class="post-toc-text">负载均衡</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#节点挂掉的情况"><span class="post-toc-number">7.</span> <span class="post-toc-text">节点挂掉的情况</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#EMQ-X-消息服务器简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">EMQ X 消息服务器简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动集群节点"><span class="post-toc-number">2.</span> <span class="post-toc-text">启动集群节点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置集群"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置集群</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-102"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">192.168.1.102</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-100"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">192.168.1.100</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#端口说明"><span class="post-toc-number">4.</span> <span class="post-toc-text">端口说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用-Dashboard-查看集群状态"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用 Dashboard 查看集群状态</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#负载均衡"><span class="post-toc-number">6.</span> <span class="post-toc-text">负载均衡</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Nginx-负载均衡"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">Nginx 负载均衡</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#节点挂掉的情况"><span class="post-toc-number">7.</span> <span class="post-toc-text">节点挂掉的情况</span></a></li></ol>
         </nav>
     </aside>
 
@@ -254,7 +254,33 @@ var _hmt = _hmt || [];
                 </div>
                 <div class="image-caption"></div>
             </figure>
-<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>参考文档：<a href="https://docs.emqx.cn/broker/v4.3/tutorial/deploy.html#%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84" target="_blank" rel="noopener">https://docs.emqx.cn/broker/v4.3/tutorial/deploy.html#%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84</a></p>
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>参考文档：<a href="https://docs.emqx.cn/broker/v4.3/tutorial/deploy.html#私有网络部署" target="_blank" rel="noopener">https://docs.emqx.cn/broker/v4.3/tutorial/deploy.html#私有网络部署</a></p>
+<h2 id="Nginx-负载均衡"><a href="#Nginx-负载均衡" class="headerlink" title="Nginx 负载均衡"></a>Nginx 负载均衡</h2><p>Nginx 产品作为 EMQ X 集群 LB，并终结 SSL 连接:</p>
+<ol>
+<li>创建 EMQ X 节点集群，例如:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>IP 地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>emqx1</td>
+<td>192.168.0.2</td>
+</tr>
+<tr>
+<td>emqx2</td>
+<td>192.168.0.3</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>配置 /etc/nginx/nginx.conf，示例:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">stream &#123;</span><br><span class="line">  upstream stream_backend &#123;</span><br><span class="line">      zone tcp_servers 64k;</span><br><span class="line">      hash $remote_addr;</span><br><span class="line">      server 192.168.0.2:1883 max_fails=2 fail_timeout=30s;</span><br><span class="line">      server 192.168.0.3:1883 max_fails=2 fail_timeout=30s;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  server &#123;</span><br><span class="line">      listen 8883 ssl;</span><br><span class="line">      status_zone tcp_server;</span><br><span class="line">      proxy_pass stream_backend;</span><br><span class="line">      proxy_buffer_size 4k;</span><br><span class="line">      ssl_handshake_timeout 15s;</span><br><span class="line">      ssl_certificate     /etc/emqx/certs/cert.pem;</span><br><span class="line">      ssl_certificate_key /etc/emqx/certs/key.pem;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <h1 id="节点挂掉的情况"><a href="#节点挂掉的情况" class="headerlink" title="节点挂掉的情况"></a>节点挂掉的情况</h1><p>节点挂掉再启动会自动加入集群</p>
 
         </div>
@@ -264,7 +290,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-06-23T10:01:57.127Z" itemprop="dateUpdated">2021-06-23 18:01:57</time>
+    最后更新时间：<time datetime="2021-06-23T10:08:07.925Z" itemprop="dateUpdated">2021-06-23 18:08:07</time>
 </span><br>
 
 
