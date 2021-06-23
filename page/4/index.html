@@ -171,6 +171,54 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-nohup日志过大的处理策略"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-07-24 00:00:00" datetime="2018-07-23T16:00:00.000Z"  itemprop="datePublished">2018-07-24</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/07/24/nohup日志过大的处理策略.html">nohup 日志过大的处理策略</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅…
+解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件
+实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。
+...
+    
+
+        <a href="/2018/07/24/nohup日志过大的处理策略.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/部署/">部署</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-SpringBoot jar包部署实践"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -582,56 +630,6 @@ ReentrantLock与synchronized的区别
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-深入剖析volatile关键字"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/03/深入剖析volatile关键字.html">深入剖析volatile关键字</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义
-
-保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的
-禁止进行指令重排序
-
-先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!s...
-    
-
-        <a href="/2018/05/03/深入剖析volatile关键字.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
 
     </div>
     
