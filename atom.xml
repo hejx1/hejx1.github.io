@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.smilexin.cn/"/>
-  <updated>2021-06-23T06:08:04.430Z</updated>
+  <updated>2021-06-23T09:23:19.471Z</updated>
   <id>https://blog.smilexin.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于Docker搭建 EMQ X 集群</title>
+    <link href="https://blog.smilexin.cn/2021/06/23/%E5%9F%BA%E4%BA%8EDocker%E6%90%AD%E5%BB%BA%20EMQ%20X%20%E9%9B%86%E7%BE%A4.html"/>
+    <id>https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html</id>
+    <published>2021-06-22T16:00:00.000Z</published>
+    <updated>2021-06-23T09:23:19.471Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="EMQ-X-消息服务器简介"><a href="#EMQ-X-消息服务器简介" class="headerlink" title="EMQ X 消息服务器简介"></a>EMQ X 消息服务器简介</h1><p>EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。</p><p>Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。</p><p>MQTT 是轻量的 (Lightweight)、发布订阅模式 (PubSub) 的物联网消息协议。</p><p>EMQ X 设计目标是实现高可靠，并支持承载海量物联网终端的MQTT连接，支持在海量物联网设备间低延时消息路由:</p><ol><li>稳定承载大规模的 MQTT 客户端连接，单服务器节点支持50万到100万连接。</li><li>分布式节点集群，快速低延时的消息路由，单集群支持1000万规模的路由。</li><li>消息服务器内扩展，支持定制多种认证方式、高效存储消息到后端数据库。</li><li>完整物联网协议支持，MQTT、MQTT-SN、CoAP、LwM2M、WebSocket 或私有协议支持。</li></ol><ul><li>官方网站：<a href="https://mqttx.app/zh/docs" target="_blank" rel="noopener">https://mqttx.app/zh/docs</a></li><li>官方文档：<a href="https://docs.emqx.cn/broker/v4.3" target="_blank" rel="noopener">https://docs.emqx.cn/broker/v4.3</a></li></ul><h1 id="启动集群节点"><a href="#启动集群节点" class="headerlink" title="启动集群节点"></a>启动集群节点</h1><ul><li><p>192.168.1.100</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name emqx-node1 --restart=always --network host \</span><br><span class="line">    -e EMQX_LISTENER__TCP__EXTERNAL=1883 \</span><br><span class="line">-e EMQX_NAME=emqx \</span><br><span class="line">-e EMQX_HOST=192.168.1.100 \</span><br><span class="line">-e EMQX_CLUSTER__NAME=emqxcl \</span><br><span class="line">    -e EMQX_LOADED_PLUGINS=&quot;emqx_auth_mysql&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__LOGIN=&quot;admin&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=&quot;admin@123&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__SERVER=&quot;192.168.1.5:3306&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__USERNAME=&quot;emqx&quot; \</span><br><span class="line">-e EMQX_AUTH__MYSQL__PASSWORD=&quot;C75dbppywAUEL2c8&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__DATABASE=&quot;emqx&quot; \</span><br><span class="line">-e EMQX_AUTH__MYSQL__PASSWORD_HASH=plain \</span><br><span class="line">    emqx/emqx:4.3.3</span><br></pre></td></tr></table></figure></li><li><p>192.168.1.102</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name emqx-node2 --restart=always --network host \</span><br><span class="line">    -e EMQX_LISTENER__TCP__EXTERNAL=1883 \</span><br><span class="line">-e EMQX_NAME=emqx \</span><br><span class="line">-e EMQX_HOST=192.168.1.102 \</span><br><span class="line">-e EMQX_CLUSTER__NAME=emqxcl \</span><br><span class="line">-e EMQX_DASHBOARD__DEFAULT_USER__LOGIN=&quot;admin&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=&quot;admin@123&quot; \</span><br><span class="line">    -e EMQX_LOADED_PLUGINS=&quot;emqx_auth_mysql&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__SERVER=&quot;192.168.1.5:3306&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__USERNAME=&quot;emqx&quot; \</span><br><span class="line">-e EMQX_AUTH__MYSQL__PASSWORD=&quot;C75dbppywAUEL2c8&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__DATABASE=&quot;emqx&quot; \</span><br><span class="line">-e EMQX_AUTH__MYSQL__PASSWORD_HASH=plain \</span><br><span class="line">    emqx/emqx:4.3.3</span><br></pre></td></tr></table></figure></li></ul><p><strong>比较需要注意的是–network选择host就不需要使用<code>-p</code>暴露端口了,容器的端口会默认暴露在宿主机。</strong>这样和直接部署在主机上一样，但是同时又利用了docker的限制资源的能力，算是投机取巧吧，linux貌似可以直接限制进程的资源使用。</p><h1 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h1><blockquote><p>注意：集群节点必须在同一个网段，否则添加节点会错误。不同节点之间访问需要在防火墙开启端口</p></blockquote><h2 id="192-168-1-102"><a href="#192-168-1-102" class="headerlink" title="192.168.1.102"></a>192.168.1.102</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it emqx-node2 sh</span><br><span class="line">/opt/emqx $ cd bin/</span><br><span class="line">/opt/emqx/bin $ ./emqx_ctl cluster join emqx@192.168.1.100</span><br><span class="line">=CRITICAL REPORT==== 23-Jun-2021::08:37:01.907458 ===</span><br><span class="line">[EMQ X] emqx shutdown for join</span><br><span class="line">Join the cluster successfully.</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br><span class="line">/opt/emqx/bin $ emqx_ctl cluster status</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br></pre></td></tr></table></figure><ul><li><code>emqx_ctl cluster join emqx@192.168.1.100</code> 加入集群</li><li><code>emqx_ctl cluster status</code> 查看集群状态</li></ul><h2 id="192-168-1-100"><a href="#192-168-1-100" class="headerlink" title="192.168.1.100"></a>192.168.1.100</h2><p>进入 <code>192.168.1.100</code> 查看集群状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# docker exec -it emqx-node1 sh</span><br><span class="line">/opt/emqx $ ./bin/emqx_ctl cluster status</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br></pre></td></tr></table></figure></p><h1 id="端口说明"><a href="#端口说明" class="headerlink" title="端口说明"></a>端口说明</h1><ul><li>1883: MQTT 协议端口</li><li>8883: MQTT/SSL 端口</li><li>8083: MQTT/WebSocket 端口</li><li>8080: HTTP API 端口</li><li>18083: Dashboard 管理控制台端口</li></ul><h1 id="使用-Dashboard-查看集群状态"><a href="#使用-Dashboard-查看集群状态" class="headerlink" title="使用 Dashboard 查看集群状态"></a>使用 Dashboard 查看集群状态</h1><ul><li>url: <a href="http://192.168.1.100:18083" target="_blank" rel="noopener">http://192.168.1.100:18083</a></li><li>user:admin</li><li>pwd:admin@123</li></ul><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/posts/emqx/emqx-dashboard.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><h1 id="节点挂掉的情况"><a href="#节点挂掉的情况" class="headerlink" title="节点挂掉的情况"></a>节点挂掉的情况</h1><p>节点挂掉再启动会自动加入集群</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;EMQ-X-消息服务器简介&quot;&gt;&lt;a href=&quot;#EMQ-X-消息服务器简介&quot; class=&quot;headerlink&quot; title=&quot;EMQ X 消息服务器简介&quot;&gt;&lt;/a&gt;EMQ X 消息服务器简介&lt;/h1&gt;&lt;p&gt;EMQ X (Erlang/Enterprise/E
+      
+    
+    </summary>
+    
+    
+      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
+    
+      <category term="mqtt" scheme="https://blog.smilexin.cn/tags/mqtt/"/>
+    
+      <category term="EMQX" scheme="https://blog.smilexin.cn/tags/EMQX/"/>
+    
+  </entry>
   
   <entry>
     <title>基于Docker搭建Redis哨兵模式</title>
@@ -487,32 +514,6 @@
     
     
       <category term="Linux" scheme="https://blog.smilexin.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker 部署MongoDB</title>
-    <link href="https://blog.smilexin.cn/2020/04/17/Docker%20%E9%83%A8%E7%BD%B2MongoDB.html"/>
-    <id>https://blog.smilexin.cn/2020/04/17/Docker 部署MongoDB.html</id>
-    <published>2020-04-16T16:00:00.000Z</published>
-    <updated>2021-04-30T02:44:33.305Z</updated>
-    
-    <content type="html"><![CDATA[<p>MongoDB 是一款较为常用的NOSQL 数据库，结合 Docker 使用，能实现轻松配置部署、迁移，本文以下为简要介绍如何在 Docker 中部署并使用 MongoDB</p><h1 id="MongoDB-Docker-镜像安装"><a href="#MongoDB-Docker-镜像安装" class="headerlink" title="MongoDB Docker 镜像安装"></a>MongoDB Docker 镜像安装</h1><p>MongoDB 提供官方镜像，下载安装镜像方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br></pre></td></tr></table></figure></p><p>以上命令为安装 MongoDB 最新版本的镜像。(需配置国内的镜像源)</p><h1 id="MongoDB-Docker-容器创建"><a href="#MongoDB-Docker-容器创建" class="headerlink" title="MongoDB Docker 容器创建"></a>MongoDB Docker 容器创建</h1><p>MongoDB Docker 容器创建主要关心的就是数据文件的存储问题，这个可以使用容器的 volume 功能来解决</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 17017:27017 -v &lt;LocalDirectoryPath&gt;:/data/db --name mongodb -d mongo --auth</span><br></pre></td></tr></table></figure><p>在上面的命令中，几个命令参数的详细解释如下：<br>-p 17017:27017 容器内部服务端口为27017, 映射到主机的17017端口<br>-v 为设置容器的挂载目录，这里是将<localdirectorypath>即本机中的目录挂载到容器中的/data/db中，作为 mongodb 的存储目录<br>–name 为设置该容器的名称为 mongodb<br>-d 设置容器以守护进程方式运行<br>–auth 开启权限验证</localdirectorypath></p><h1 id="配置容器"><a href="#配置容器" class="headerlink" title="配置容器"></a>配置容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 进入容器</span><br><span class="line">docker exec -it mongodb /bin/bash</span><br><span class="line"># 安装vim</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install vim</span><br><span class="line"># 修改 mongo 配置文件</span><br><span class="line">vim /etc/mongod.conf.orig</span><br></pre></td></tr></table></figure><p>将其中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bindIp: 127.0.0.1</span><br></pre></td></tr></table></figure></p><p>注释掉 # bindIp: 127.0.0.1<br>或者改成 bindIp: 0.0.0.0<br>即可开启远程连接</p><h1 id="MongoDB权限配置"><a href="#MongoDB权限配置" class="headerlink" title="MongoDB权限配置"></a>MongoDB权限配置</h1><p>创建超级管理员</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createUser(&#123; user: &apos;admin&apos;, pwd: &apos;adminPwd&apos;, roles: [ &quot;root&quot; ] &#125;);</span><br></pre></td></tr></table></figure><h2 id="MongoDB-内置角色"><a href="#MongoDB-内置角色" class="headerlink" title="MongoDB 内置角色"></a>MongoDB 内置角色</h2><p>root    超级管理员<br>readAnyDatabase    任何数据库的只读权限<br>userAdminAnyDatabase    任何数据库的读写权限<br>userAdminAnyDatabase    任何数据库用户的管理权限<br>dbAdminAnyDatabase    任何数据库的管理权限</p><h1 id="开关MongoDB"><a href="#开关MongoDB" class="headerlink" title="开关MongoDB"></a>开关MongoDB</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有在运行的容器信息</span><br><span class="line">docker ps</span><br><span class="line"># 启动 mongodb 容器</span><br><span class="line">docker start mongodb</span><br><span class="line"># 关闭 mongodb 容器</span><br><span class="line">docker stop mongodb</span><br></pre></td></tr></table></figure><h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>这样我们就可以愉快的使用Docker运行MongoDB了</p><p>MongoDB Address: localhost:17017</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;MongoDB 是一款较为常用的NOSQL 数据库，结合 Docker 使用，能实现轻松配置部署、迁移，本文以下为简要介绍如何在 Docker 中部署并使用 MongoDB&lt;/p&gt;
-&lt;h1 id=&quot;MongoDB-Docker-镜像安装&quot;&gt;&lt;a href=&quot;#MongoDB
-      
-    
-    </summary>
-    
-    
-      <category term="Docker" scheme="https://blog.smilexin.cn/tags/Docker/"/>
-    
-      <category term="MongoDB" scheme="https://blog.smilexin.cn/tags/MongoDB/"/>
     
   </entry>
   

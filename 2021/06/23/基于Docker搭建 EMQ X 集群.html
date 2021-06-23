@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>基于Docker搭建 EMQ X 集群 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Docker,mqtt,EMQX">
+    <meta name="description" content="EMQ X 消息服务器简介EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。 Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。 MQTT 是轻量的 (Lightweight)、发布订">
+<meta name="keywords" content="Docker,mqtt,EMQX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Docker搭建 EMQ X 集群">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="EMQ X 消息服务器简介EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。 Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。 MQTT 是轻量的 (Lightweight)、发布订">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/emqx/emqx-dashboard.png">
+<meta property="og:updated_time" content="2021-06-23T09:23:19.471Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Docker搭建 EMQ X 集群">
+<meta name="twitter:description" content="EMQ X 消息服务器简介EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。 Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。 MQTT 是轻量的 (Lightweight)、发布订">
+<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/emqx/emqx-dashboard.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">基于Docker搭建 EMQ X 集群</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">基于Docker搭建 EMQ X 集群</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-06-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-06-23
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#EMQ-X-消息服务器简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">EMQ X 消息服务器简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动集群节点"><span class="post-toc-number">2.</span> <span class="post-toc-text">启动集群节点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置集群"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置集群</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-102"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">192.168.1.102</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#192-168-1-100"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">192.168.1.100</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#端口说明"><span class="post-toc-number">4.</span> <span class="post-toc-text">端口说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用-Dashboard-查看集群状态"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用 Dashboard 查看集群状态</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#节点挂掉的情况"><span class="post-toc-number">6.</span> <span class="post-toc-text">节点挂掉的情况</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-基于Docker搭建 EMQ X 集群"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">基于Docker搭建 EMQ X 集群</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-06-23 00:00:00" datetime="2021-06-22T16:00:00.000Z"  itemprop="datePublished">2021-06-23</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="EMQ-X-消息服务器简介"><a href="#EMQ-X-消息服务器简介" class="headerlink" title="EMQ X 消息服务器简介"></a>EMQ X 消息服务器简介</h1><p>EMQ X (Erlang/Enterprise/Elastic MQTT Broker) 是基于 Erlang/OTP 平台开发的开源物联网 MQTT 消息服务器。</p>
+<p>Erlang/OTP是出色的软实时 (Soft-Realtime)、低延时 (Low-Latency)、分布式 (Distributed)的语言平台。</p>
+<p>MQTT 是轻量的 (Lightweight)、发布订阅模式 (PubSub) 的物联网消息协议。</p>
+<p>EMQ X 设计目标是实现高可靠，并支持承载海量物联网终端的MQTT连接，支持在海量物联网设备间低延时消息路由:</p>
+<ol>
+<li>稳定承载大规模的 MQTT 客户端连接，单服务器节点支持50万到100万连接。</li>
+<li>分布式节点集群，快速低延时的消息路由，单集群支持1000万规模的路由。</li>
+<li>消息服务器内扩展，支持定制多种认证方式、高效存储消息到后端数据库。</li>
+<li>完整物联网协议支持，MQTT、MQTT-SN、CoAP、LwM2M、WebSocket 或私有协议支持。</li>
+</ol>
+<ul>
+<li>官方网站：<a href="https://mqttx.app/zh/docs" target="_blank" rel="noopener">https://mqttx.app/zh/docs</a></li>
+<li>官方文档：<a href="https://docs.emqx.cn/broker/v4.3" target="_blank" rel="noopener">https://docs.emqx.cn/broker/v4.3</a></li>
+</ul>
+<h1 id="启动集群节点"><a href="#启动集群节点" class="headerlink" title="启动集群节点"></a>启动集群节点</h1><ul>
+<li><p>192.168.1.100</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name emqx-node1 --restart=always --network host \</span><br><span class="line">    -e EMQX_LISTENER__TCP__EXTERNAL=1883 \</span><br><span class="line">	-e EMQX_NAME=emqx \</span><br><span class="line">	-e EMQX_HOST=192.168.1.100 \</span><br><span class="line">	-e EMQX_CLUSTER__NAME=emqxcl \</span><br><span class="line">    -e EMQX_LOADED_PLUGINS=&quot;emqx_auth_mysql&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__LOGIN=&quot;admin&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=&quot;admin@123&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__SERVER=&quot;192.168.1.5:3306&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__USERNAME=&quot;emqx&quot; \</span><br><span class="line">	-e EMQX_AUTH__MYSQL__PASSWORD=&quot;C75dbppywAUEL2c8&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__DATABASE=&quot;emqx&quot; \</span><br><span class="line">	-e EMQX_AUTH__MYSQL__PASSWORD_HASH=plain \</span><br><span class="line">    emqx/emqx:4.3.3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>192.168.1.102</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name emqx-node2 --restart=always --network host \</span><br><span class="line">    -e EMQX_LISTENER__TCP__EXTERNAL=1883 \</span><br><span class="line">	-e EMQX_NAME=emqx \</span><br><span class="line">	-e EMQX_HOST=192.168.1.102 \</span><br><span class="line">	-e EMQX_CLUSTER__NAME=emqxcl \</span><br><span class="line">	-e EMQX_DASHBOARD__DEFAULT_USER__LOGIN=&quot;admin&quot; \</span><br><span class="line">    -e EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=&quot;admin@123&quot; \</span><br><span class="line">    -e EMQX_LOADED_PLUGINS=&quot;emqx_auth_mysql&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__SERVER=&quot;192.168.1.5:3306&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__USERNAME=&quot;emqx&quot; \</span><br><span class="line">	-e EMQX_AUTH__MYSQL__PASSWORD=&quot;C75dbppywAUEL2c8&quot; \</span><br><span class="line">    -e EMQX_AUTH__MYSQL__DATABASE=&quot;emqx&quot; \</span><br><span class="line">	-e EMQX_AUTH__MYSQL__PASSWORD_HASH=plain \</span><br><span class="line">    emqx/emqx:4.3.3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>比较需要注意的是–network选择host就不需要使用<code>-p</code>暴露端口了,容器的端口会默认暴露在宿主机。</strong>这样和直接部署在主机上一样，但是同时又利用了docker的限制资源的能力，算是投机取巧吧，linux貌似可以直接限制进程的资源使用。</p>
+<h1 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h1><blockquote>
+<p>注意：集群节点必须在同一个网段，否则添加节点会错误。不同节点之间访问需要在防火墙开启端口</p>
+</blockquote>
+<h2 id="192-168-1-102"><a href="#192-168-1-102" class="headerlink" title="192.168.1.102"></a>192.168.1.102</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it emqx-node2 sh</span><br><span class="line">/opt/emqx $ cd bin/</span><br><span class="line">/opt/emqx/bin $ ./emqx_ctl cluster join emqx@192.168.1.100</span><br><span class="line">=CRITICAL REPORT==== 23-Jun-2021::08:37:01.907458 ===</span><br><span class="line">[EMQ X] emqx shutdown for join</span><br><span class="line">Join the cluster successfully.</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br><span class="line">/opt/emqx/bin $ emqx_ctl cluster status</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>emqx_ctl cluster join emqx@192.168.1.100</code> 加入集群</li>
+<li><code>emqx_ctl cluster status</code> 查看集群状态</li>
+</ul>
+<h2 id="192-168-1-100"><a href="#192-168-1-100" class="headerlink" title="192.168.1.100"></a>192.168.1.100</h2><p>进入 <code>192.168.1.100</code> 查看集群状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# docker exec -it emqx-node1 sh</span><br><span class="line">/opt/emqx $ ./bin/emqx_ctl cluster status</span><br><span class="line">Cluster status: #&#123;running_nodes =&gt; [&apos;emqx@192.168.1.100&apos;,&apos;emqx@192.168.1.102&apos;],</span><br><span class="line">                  stopped_nodes =&gt; []&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="端口说明"><a href="#端口说明" class="headerlink" title="端口说明"></a>端口说明</h1><ul>
+<li>1883: MQTT 协议端口</li>
+<li>8883: MQTT/SSL 端口</li>
+<li>8083: MQTT/WebSocket 端口</li>
+<li>8080: HTTP API 端口</li>
+<li>18083: Dashboard 管理控制台端口</li>
+</ul>
+<h1 id="使用-Dashboard-查看集群状态"><a href="#使用-Dashboard-查看集群状态" class="headerlink" title="使用 Dashboard 查看集群状态"></a>使用 Dashboard 查看集群状态</h1><ul>
+<li>url: <a href="http://192.168.1.100:18083" target="_blank" rel="noopener">http://192.168.1.100:18083</a></li>
+<li>user:admin</li>
+<li>pwd:admin@123</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/emqx/emqx-dashboard.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="节点挂掉的情况"><a href="#节点挂掉的情况" class="headerlink" title="节点挂掉的情况"></a>节点挂掉的情况</h1><p>节点挂掉再启动会自动加入集群</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-06-23T09:23:19.471Z" itemprop="dateUpdated">2021-06-23 17:23:19</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/06/23/基于Docker搭建 EMQ X 集群.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EMQX/">EMQX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mqtt/">mqtt</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&title=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&title=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/06/23/基于Docker搭建Redis哨兵模式.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">基于Docker搭建Redis哨兵模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&title=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&title=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于Docker搭建 EMQ X 集群》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/23/基于Docker搭建 EMQ X 集群.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3awY7bMAwE0P3/n94CPRVoE89QVFMUz6dFmth6OljskF9f8fX98/r1798/yb//6pvvP3l1h4ULDw8Pb7T0V9fWEmfff7WJyZrx8PDwbvN2D4NkQVvUh9/i4eHhfZT3fqH3YHh4eHj/E689Nk7yEjw8PLx/jZeEEe+//x6zW0ZfyVrw8PDwYt7JS/lTf1/v7+Hh4eGNuurJq799ysloQr1aPDw8vAu8NmadvaxnJW97DBT/Y8DDw8Nb4iW1aNvoSqKK/F/zw+APBwMeHh7eKi8pfPOwIB8ayMcRlrNqPDw8vFXeeatpliW3gwhJzYyHh4d3gze7aTte0O70bCVre4aHh4cXZ6cnra98JCt5xbfbGoXFeHh4eKu8trXfvtbbNlgbVTw8HQ8PD2+V14azbRts1vjPw9+HUQY8PDy8C7yT3DcPEdrfnhfoD0g8PDy8C7xZQHC+Qe1G50/Hw8PD2+K1A6DvX8p5Yywpytt44g9Px8PDw7vAO2lotY88CRTyIvshccHDw8M75rXxaw7IX/273byHBhgeHh7eEi+/2lGA8wNgNpSAh4eH9/d5bcu/DSNOxhSK0BkPDw/vGm+3aG7jiTwUro8fPDw8vGu8vLnVMvKYY7ZNxY3w8PDwlngJMrnRVpAx2+iHchwPDw9vldeOBeTHwFbxncOGDTA8PDy8A16+iPwl/v7zvGSftcTw8PDwbvCSh83GBdqieasNFv0KDw8P74D3XV6zZn+73PZZRcqCh4eHd8ybDVe1y8rL31nMcdQew8PDwxvx8sMgDyNOBgXaGYB6dAAPDw9videWtsni8qj35EB6+BUeHh7eR3knNfvJ6FV7pA0PBjw8PLwP8WYHyUk0HGXVeHh4eBd4bRhxEmq0L/d8O16W1Hh4eHirvFkokGDy++R3nhXfeHh4eEu8H/Huu2CSVQGVAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
