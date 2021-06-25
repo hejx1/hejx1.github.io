@@ -621,7 +621,7 @@ Dub...
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Redis_持久化"
+            <article id="post-Redis集群概念"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -637,7 +637,7 @@ Dub...
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/Redis_持久化.html">Redis 持久化</a>
+      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
     </h3>
   
 
@@ -647,13 +647,12 @@ Dub...
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        Redis 持久化Redis 提供了多种不同级别的持久化方式:一种是RDB,另一种是AOF
-
-RDB 持久化可以在指定的时间间隔内生成数据集的时间点快照(point-in-time snapshot)
-AOF 持久化记录服务器执行的所有写操作命令，并在服务器启动时，通过重新执行这些命令来还原数据集。 AOF 文件中的命令全部以 Redis 协议的格式来保存，新命令会被追加到文件的末尾。 Re...
+        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
+redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
     
 
-        <a href="/2017/07/31/Redis_持久化.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
