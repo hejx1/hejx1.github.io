@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-Redis_持久化"
+            <article id="post-Redis集群概念"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -187,7 +187,7 @@ var _hmt = _hmt || [];
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/Redis_持久化.html">Redis 持久化</a>
+      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
     </h3>
   
 
@@ -197,13 +197,12 @@ var _hmt = _hmt || [];
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        Redis 持久化Redis 提供了多种不同级别的持久化方式:一种是RDB,另一种是AOF
-
-RDB 持久化可以在指定的时间间隔内生成数据集的时间点快照(point-in-time snapshot)
-AOF 持久化记录服务器执行的所有写操作命令，并在服务器启动时，通过重新执行这些命令来还原数据集。 AOF 文件中的命令全部以 Redis 协议的格式来保存，新命令会被追加到文件的末尾。 Re...
+        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
+redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
     
 
-        <a href="/2017/07/31/Redis_持久化.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -211,55 +210,6 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
-    
-
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
 
     </div>
     
@@ -303,6 +253,55 @@ Slab Allocation
     
 
         <a href="/2017/07/31/memcached_过期数据删除机制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-memcached_内存分配机制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
+这种空闲且无法再利用的内存现象，称为++内存的碎片化++
+memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
+Slab Allocation
+首先，像一般的内存池一样,  从操作系统...
+    
+
+        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -557,6 +556,54 @@ Slab Allocation
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（一）"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（一）.html">Dubbo demo项目 (一) 定义父项规则</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        定义父项规则在本次的开发之中，如果想要实现一个Dubbo项目的编写，需要有三个项目：远程接口、业务实现、客户端，为了保证整个项目的整体风格一致，以及所有开发包的版本的统一管理，需要定义一个父项目，在这个项目里面主要的目的是定义一些基础的插件，以及版本的属性信息，同时其他的项目里面都要求继承这个项目。
+所有项目的搭建使用的是Maven的方式管理
+
+创建一个parent项目，这个项目作为整个的公...
+    
+
+        <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Dubbo_demo项目（二)"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -591,54 +638,6 @@ remoteapi为了方便进行管理，暂时将远程的业务接口项目定义�
     
 
         <a href="/2017/06/30/Dubbo_demo项目（二).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（一）"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（一）.html">Dubbo demo项目 (一) 定义父项规则</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        定义父项规则在本次的开发之中，如果想要实现一个Dubbo项目的编写，需要有三个项目：远程接口、业务实现、客户端，为了保证整个项目的整体风格一致，以及所有开发包的版本的统一管理，需要定义一个父项目，在这个项目里面主要的目的是定义一些基础的插件，以及版本的属性信息，同时其他的项目里面都要求继承这个项目。
-所有项目的搭建使用的是Maven的方式管理
-
-创建一个parent项目，这个项目作为整个的公...
-    
-
-        <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
