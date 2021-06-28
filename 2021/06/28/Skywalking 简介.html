@@ -33,30 +33,28 @@ var _hmt = _hmt || [];
     
     
     
-    <title>Mysql 数据库死锁问题处理方案 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>Skywalking 简介 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Mysql">
-    <meta name="description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="keywords" content="Mysql">
+    <meta name="keywords" content="Skywalking">
+    <meta name="description" content="Skywalking是什么？分布式系统的应用程序性能监视工具，专为微服务、云原生架构和基于容器（Docker、K8s、Mesos）架构而设计。 提供分布式追踪、服务网格遥测分析、度量聚合和可视化一体化解决方案。 Skywalking有哪些功能？ 多种监控手段。可以通过语言探针和 service mesh 获得监控是数据。 多个语言自动探针。包括 Java，.NET Core 和 Node.JS。">
+<meta name="keywords" content="Skywalking">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql 数据库死锁问题处理方案">
-<meta property="og:url" content="https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html">
+<meta property="og:title" content="Skywalking 简介">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
+<meta property="og:description" content="Skywalking是什么？分布式系统的应用程序性能监视工具，专为微服务、云原生架构和基于容器（Docker、K8s、Mesos）架构而设计。 提供分布式追踪、服务网格遥测分析、度量聚合和可视化一体化解决方案。 Skywalking有哪些功能？ 多种监控手段。可以通过语言探针和 service mesh 获得监控是数据。 多个语言自动探针。包括 Java，.NET Core 和 Node.JS。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/2.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/3.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/4.png">
-<meta property="og:updated_time" content="2021-04-30T02:44:33.312Z">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/skywalking/skywalking-jiagou.jpg">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/skywalking/skywalking-env.jpg">
+<meta property="og:updated_time" content="2021-06-28T01:26:46.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql 数据库死锁问题处理方案">
-<meta name="twitter:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
+<meta name="twitter:title" content="Skywalking 简介">
+<meta name="twitter:description" content="Skywalking是什么？分布式系统的应用程序性能监视工具，专为微服务、云原生架构和基于容器（Docker、K8s、Mesos）架构而设计。 提供分布式追踪、服务网格遥测分析、度量聚合和可视化一体化解决方案。 Skywalking有哪些功能？ 多种监控手段。可以通过语言探针和 service mesh 获得监控是数据。 多个语言自动探针。包括 Java，.NET Core 和 Node.JS。">
+<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/skywalking/skywalking-jiagou.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -137,7 +135,7 @@ var _hmt = _hmt || [];
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mysql 数据库死锁问题处理方案</div>
+        <div class="flex-col header-title ellipsis">Skywalking 简介</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -159,11 +157,11 @@ var _hmt = _hmt || [];
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="title">Skywalking 简介</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-12-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-12-23
+                <time datetime="2021-06-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-06-28
 </time>
 
 
@@ -182,18 +180,18 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#先查找死锁病因"><span class="post-toc-number">1.</span> <span class="post-toc-text">先查找死锁病因</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#把内容复制出来-里面有查询id"><span class="post-toc-number">2.</span> <span class="post-toc-text">把内容复制出来,里面有查询id</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拿着query-id-去查相应的sql语句"><span class="post-toc-number">3.</span> <span class="post-toc-text">拿着query id,去查相应的sql语句</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Skywalking是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">Skywalking是什么？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Skywalking有哪些功能？"><span class="post-toc-number">2.</span> <span class="post-toc-text">Skywalking有哪些功能？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Skywalking-整体架构"><span class="post-toc-number">3.</span> <span class="post-toc-text">Skywalking 整体架构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SkyWalking-单机环境"><span class="post-toc-number">4.</span> <span class="post-toc-text">SkyWalking 单机环境</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SkyWalking-UI-介绍"><span class="post-toc-number">5.</span> <span class="post-toc-text">SkyWalking UI 介绍</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Mysql_数据库死锁问题处理"
+<article id="post-Skywalking 简介"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="post-card-title">Skywalking 简介</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-12-23 00:00:00" datetime="2017-12-22T16:00:00.000Z"  itemprop="datePublished">2017-12-23</time>
+            <time class="post-time" title="2021-06-28 00:00:00" datetime="2021-06-27T16:00:00.000Z"  itemprop="datePublished">2021-06-28</time>
 
             
 
@@ -206,38 +204,41 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="先查找死锁病因"><a href="#先查找死锁病因" class="headerlink" title="先查找死锁病因"></a>先查找死锁病因</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engine innodb status;</span><br></pre></td></tr></table></figure>
-<figure class="image-bubble">
+            <h1 id="Skywalking是什么？"><a href="#Skywalking是什么？" class="headerlink" title="Skywalking是什么？"></a>Skywalking是什么？</h1><p>分布式系统的应用程序性能监视工具，专为微服务、云原生架构和基于容器（Docker、K8s、Mesos）架构而设计。</p>
+<p>提供分布式追踪、服务网格遥测分析、度量聚合和可视化一体化解决方案。</p>
+<h1 id="Skywalking有哪些功能？"><a href="#Skywalking有哪些功能？" class="headerlink" title="Skywalking有哪些功能？"></a>Skywalking有哪些功能？</h1><ul>
+<li>多种监控手段。可以通过语言探针和 service mesh 获得监控是数据。</li>
+<li>多个语言自动探针。包括 Java，.NET Core 和 Node.JS。</li>
+<li>轻量高效。无需大数据平台，和大量的服务器资源。</li>
+<li>模块化。UI、存储、集群管理都有多种机制可选。</li>
+<li>支持告警。</li>
+<li>优秀的可视化解决方案。</li>
+</ul>
+<h1 id="Skywalking-整体架构"><a href="#Skywalking-整体架构" class="headerlink" title="Skywalking 整体架构"></a>Skywalking 整体架构</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/1.png" alt="" title="">
+                    <img src="/img/posts/skywalking/skywalking-jiagou.jpg" alt="Skywalking架构图" title="">
                 </div>
-                <div class="image-caption"></div>
+                <div class="image-caption">Skywalking架构图</div>
             </figure>
-<h1 id="把内容复制出来-里面有查询id"><a href="#把内容复制出来-里面有查询id" class="headerlink" title="把内容复制出来,里面有查询id"></a>把内容复制出来,里面有查询id</h1><figure class="image-bubble">
+<p>整个架构，分成上、下、左、右四部分：</p>
+<blockquote>
+<p>考虑到让描述更简单，我们舍弃掉 Metric 指标相关，而着重在 Tracing 链路相关功能。</p>
+</blockquote>
+<ul>
+<li>上部分 Agent ：负责从应用中，收集链路信息，发送给 SkyWalking OAP 服务器。目前支持 SkyWalking、Zikpin、Jaeger 等提供的 Tracing 数据信息。而我们目前采用的是，SkyWalking Agent 收集 SkyWalking Tracing 数据，传递给服务器。</li>
+<li>下部分 SkyWalking OAP ：负责接收 Agent 发送的 Tracing 数据信息，然后进行分析(Analysis Core) ，存储到外部存储器( Storage )，最终提供查询( Query )功能。</li>
+<li>右部分 Storage ：Tracing 数据存储。目前支持 ES、MySQL、Sharding Sphere、TiDB、H2 多种存储器。而我们目前采用的是 ES ，主要考虑是 SkyWalking 开发团队自己的生产环境采用 ES 为主。</li>
+<li>左部分 SkyWalking UI ：负责提供控台，查看链路等等。</li>
+</ul>
+<h1 id="SkyWalking-单机环境"><a href="#SkyWalking-单机环境" class="headerlink" title="SkyWalking 单机环境"></a>SkyWalking 单机环境</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/2.png" alt="" title="">
+                    <img src="/img/posts/skywalking/skywalking-env.jpg" alt="Skywalking单机环境" title="">
                 </div>
-                <div class="image-caption"></div>
+                <div class="image-caption">Skywalking单机环境</div>
             </figure>
-<h1 id="拿着query-id-去查相应的sql语句"><a href="#拿着query-id-去查相应的sql语句" class="headerlink" title="拿着query id,去查相应的sql语句"></a>拿着query id,去查相应的sql语句</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/3.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>Info里就是sql</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/4.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>红线框选的就是造成死锁的sql语句</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>根据此sql可以查出死锁的表，如果死锁在这个表，那么就需要去审查这张表相关的业务逻辑的代码。查明死锁的原因！</p>
+<h1 id="SkyWalking-UI-介绍"><a href="#SkyWalking-UI-介绍" class="headerlink" title="SkyWalking UI 介绍"></a>SkyWalking UI 介绍</h1><p><a href="https://blog.csdn.net/lizz861109/article/details/107535100" target="_blank" rel="noopener">https://blog.csdn.net/lizz861109/article/details/107535100</a></p>
 
         </div>
 
@@ -246,12 +247,12 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-04-30T02:44:33.312Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+    最后更新时间：<time datetime="2021-06-28T01:26:46.240Z" itemprop="dateUpdated">2021-06-28 09:26:46</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/12/23/Mysql_数据库死锁问题处理.html" target="_blank" rel="external">https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html</a>
+        原文链接：<a href="/2021/06/28/Skywalking 简介.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html</a>
         
     </div>
     
@@ -272,7 +273,7 @@ var _hmt = _hmt || [];
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skywalking/">Skywalking</a></li></ul>
 
 
             
@@ -282,7 +283,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&title=《Skywalking 简介》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -292,22 +293,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&title=《Skywalking 简介》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Skywalking 简介》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -327,21 +328,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/03/12/websocket应用示例.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">websocket 应用示例</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" id="post-next" class="post-nav-link">
+      <a href="/2021/06/23/基于Docker搭建Redis哨兵模式.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mysql 使用自增id和uuid作为主键的优劣比较</h4>
+        <h4 class="title">基于Docker搭建Redis哨兵模式</h4>
       </a>
     </div>
   
@@ -455,7 +449,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&title=《Skywalking 简介》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -465,22 +459,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&title=《Skywalking 简介》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Skywalking 简介》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/06/28/Skywalking 简介.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -491,7 +485,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpElEQVR42u3aUU7EMAwFwL3/peEAqNtnO66KNP1CLLSeINXhxZ9PfP38ub5//+rT7/dJnv7ZuPDw8PDGpSeMq4cl4CtSvgRJzXh4eHjbvKtCk1KS5pG84pMGk9eMh4eH9x5edQP9/Z69NoOHh4f3f3lJiJC0mSoJDw8P7w28asyaPLjaTpI8djFrwcPDw4t5+SnSe75eOd/Dw8PDG5+qT2LZ/EU/2WrfVIuHh4e3wDtVyvzTHFOtEw8PD+8sbxIi5IxJqDGpBA8PD2+DVy2rsJEtpgSnjs0KPQ0PDw+vxcvHpJLRgWQMqxox5It70xLw8PDw1njRJrX4M/OgoRcT4+Hh4T3Dm2+sJ8X1oo3L9oCHh4e3wPt+0zzkrR6bVSPaUcCBh4eHt8w7NRRVHTvohRTR0uDh4eEd5fUCiOrBf74pr770y383PDw8vEO83uF9tf/0Io9JHouHh4f3DK+38a2GsMky5fgon8DDw8Nb4CUjU9VgYv6UySgDHh4e3h6vWm7voCuBVY+7bu6Gh4eHt8Y7VcSpo7K8wdw8EQ8PD2+Nl9x6Y7CgGmRURw3w8PDwNni94//q2NZkACsfX8DDw8N7hpcf//fYpwatqhvxwuri4eHhFXnVA6rkt/JN9tmhhMtq8fDw8JZ5k5d7OSYoBrXNFoWHh4f3CK+6kc3jjHwJ8vvf/Knw8PDw1nhJk5gEvr2hhN4wFh4eHt4e76d4VUOKaiDbiz9uJiPw8PDwjvJG/aRYVu/IbbKxxsPDw9vj9SLaJHSobprzhSgsIh4eHt4ab/7g3ua414SSmAMPDw/vPbzqz0wGsOZLj4eHh/cGXm8UYPK71W06Hh4e3jO8JIzoxQGTSCJfspvGgIeHh3eUN/mHPx8L6L3cq0FG88LDw8NLeb8E23OoUmGKnQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACFUlEQVR42u3aS27DMAwFwNz/0u42QBHlUXQLWBytgtaxNFkQ/Oj1itf1ttZ/v36tzttuXhgYGI9lXMuVPJNvvH7/p8/RjhgYGAMYn7ZcP1M9RPLdZF8MDAyM5HDRq4uJZmsvDAwMjLgcXX8reR4DAwOjU8RWN1tv3C+eMTAw5jDyZO7/P//JfAMDA+NRjKu4OiE1eXLzVBgYGEczqoldp+m2Ti6rbTsMDIzJjDw45kFzL0yXRw4YGBiHMvLrp3kDbq9J17kuhoGBMYeRlJHV7ZOfox+yMTAwzmZ0mmJ7ITX5EaunwsDAmMbYC5HrsJgDqlQMDIxpjLxo7A8+72rhRYMBDAyMhzOS1+UlbrXQ7V9Nw8DAmMbIE8RO8ZmTCskoBgbG0YxqaLsrNawOA267RYKBgfFAxt72ndK0OuwspIYYGBiHMjo99rwdtneNIw/TGBgY0xh5MpcXtHvhMgnrXy5eYGBgHMpIErt7g3V/CIGBgTGBkTe5qqGzeo2jU9ZiYGBMYORjgGp5mbf+87Hox4CLgYExgLGXMlb/298XAwNjDmPv2kQ14UvaanupIQYGxgRGJ9jlyOqx9kpfDAyMsxnVwyWN/mqwLmSyGBgYgxl7BWe1ZO1PVr+UshgYGBiNAF29PFEdrGJgYGD0216d8B018jAwMAYwkgC6B8vL0TxlxMDAmMbohMsEvHeI6ggBAwPjUMYPyY7bGWKIPEMAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

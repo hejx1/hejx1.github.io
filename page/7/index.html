@@ -219,6 +219,53 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
         </li>
     
         <li class="post-list-item fade">
+            <article id="post-Redis集群概念"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/31/Redis集群概念.html">Redis 集群概念</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位
+redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 ke...
+    
+
+        <a href="/2017/07/31/Redis集群概念.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-memcached_内存分配机制"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -590,55 +637,6 @@ Slab Allocation
     
 
         <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（二)"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（二).html">Dubbo demo项目 (二) 定义远程服务接口</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        定义远程服务接口远程服务接口实际上指的就是业务接口，但是对于整个项目里面由于需要考虑到开发版本的问题，所以针对于我们的业务接口也需要继承 parent 项目中的相关约定
-remoteapi为了方便进行管理，暂时将远程的业务接口项目定义为 remoteapi
-
-建立一个Maven的快速启动项目，项目的整体包名：cn.hejx.remoteapi
-修改 pom.xml 配置文件，让其去继承 pa...
-    
-
-        <a href="/2017/06/30/Dubbo_demo项目（二).html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
