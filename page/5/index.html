@@ -600,7 +600,7 @@ LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-websocket应用示例"
+            <article id="post-websocket简介"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -616,7 +616,7 @@ LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分�
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/12/websocket应用示例.html">websocket 应用示例</a>
+      <a class="post-title-link" href="/2018/03/12/websocket简介.html">websocket 简介</a>
     </h3>
   
 
@@ -626,12 +626,13 @@ LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分�
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        websocket 应用这篇文章主要来介绍一下在java项目中，特别是java web项目中websocket的应用。
-场景：我做了一个商城系统，跟大多数商城系统，分为客户端和后台，客户端供客户浏览，下单，购买，后台主要管理商品，处理订单，发货等。我现在要实现的功能是，当客户端有客户下单，并且支付完成以后，主动推送消息给后台，让后台的人知道，好去处理发货等事宜。
-首先，我们要知道websoc...
+        websocket 简介在我们做web项目的过程中，经常需要做的一个模块是消息模块。典型的场景：一个商城系统的后台管理，我想实现如果前台有客户下单，后台就会接到消息，以便尽快发货处理。
+要实现上述的功能，我们有几种备选的方案。
+方案1.使用ajax短轮询，比如每隔1分钟去请求一次服务器，让服务器去数据库去查询，看看有无新的未处理的订单，然后返回给客户端。
+方案2.长轮询，长轮询的原理与上述类...
     
 
-        <a href="/2018/03/12/websocket应用示例.html" class="post-more waves-effect waves-button">
+        <a href="/2018/03/12/websocket简介.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
