@@ -171,6 +171,53 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-ReentrantLock与synchronized的区别"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-10 00:00:00" datetime="2018-05-09T16:00:00.000Z"  itemprop="datePublished">2018-05-10</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/10/ReentrantLock与synchronized的区别.html">ReentrantLock与synchronized的区别</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        ReentrantLockjava中有两类锁，一类是Synchronized，而另一类就是J.U.C中提供的锁。ReentrantLock与Synchronized都是可重入锁,本质上都是lock与unlock的操作。接下来介绍三种J.U.C中的锁，其中使用ReentrantLock与使用synchronized对比介绍。
+ReentrantLock与synchronized的区别
+可重入性...
+    
+
+        <a href="/2018/05/10/ReentrantLock与synchronized的区别.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步锁/">同步锁</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-synchronized_使用详解"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -592,54 +639,6 @@ LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protobuf/">protobuf</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-websocket简介"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-12 00:00:00" datetime="2018-03-11T16:00:00.000Z"  itemprop="datePublished">2018-03-12</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/12/websocket简介.html">websocket 简介</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        websocket 简介在我们做web项目的过程中，经常需要做的一个模块是消息模块。典型的场景：一个商城系统的后台管理，我想实现如果前台有客户下单，后台就会接到消息，以便尽快发货处理。
-要实现上述的功能，我们有几种备选的方案。
-方案1.使用ajax短轮询，比如每隔1分钟去请求一次服务器，让服务器去数据库去查询，看看有无新的未处理的订单，然后返回给客户端。
-方案2.长轮询，长轮询的原理与上述类...
-    
-
-        <a href="/2018/03/12/websocket简介.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/websocket/">websocket</a></li></ul>
 
     </div>
     
