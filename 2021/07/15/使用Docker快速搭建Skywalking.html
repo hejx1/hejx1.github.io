@@ -33,25 +33,25 @@ var _hmt = _hmt || [];
     
     
     
-    <title>ElasticSearch 命令笔记 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>使用Docker快速搭建Skywalking | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="ElasticSearch">
-    <meta name="description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
-<meta name="keywords" content="ElasticSearch">
+    <meta name="keywords" content="Docker,Skywalking">
+    <meta name="description" content="部署 elasticsearch镜像：elasticsearch:7.13.21234docker run -d --name=es7 -m 4000m \-p 9200:9200 -p 9300:9300 \-e &amp;quot;ES_JAVA_OPTS=-Xms3500m -Xmx3500m&amp;quot; \-e &amp;quot;discovery.type=single-node&amp;quot; elas">
+<meta name="keywords" content="Docker,Skywalking">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ElasticSearch 命令笔记">
-<meta property="og:url" content="https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html">
+<meta property="og:title" content="使用Docker快速搭建Skywalking">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
+<meta property="og:description" content="部署 elasticsearch镜像：elasticsearch:7.13.21234docker run -d --name=es7 -m 4000m \-p 9200:9200 -p 9300:9300 \-e &amp;quot;ES_JAVA_OPTS=-Xms3500m -Xmx3500m&amp;quot; \-e &amp;quot;discovery.type=single-node&amp;quot; elas">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-07-05T07:46:48.022Z">
+<meta property="og:updated_time" content="2021-07-15T07:24:54.971Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ElasticSearch 命令笔记">
-<meta name="twitter:description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
+<meta name="twitter:title" content="使用Docker快速搭建Skywalking">
+<meta name="twitter:description" content="部署 elasticsearch镜像：elasticsearch:7.13.21234docker run -d --name=es7 -m 4000m \-p 9200:9200 -p 9300:9300 \-e &amp;quot;ES_JAVA_OPTS=-Xms3500m -Xmx3500m&amp;quot; \-e &amp;quot;discovery.type=single-node&amp;quot; elas">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">ElasticSearch 命令笔记</div>
+        <div class="flex-col header-title ellipsis">使用Docker快速搭建Skywalking</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -154,11 +154,11 @@ var _hmt = _hmt || [];
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">ElasticSearch 命令笔记</h1>
+        <h1 class="title">使用Docker快速搭建Skywalking</h1>
         <h5 class="subtitle">
             
-                <time datetime="2021-07-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2021-07-05
+                <time datetime="2021-07-14T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-07-15
 </time>
 
 
@@ -177,18 +177,18 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">1.</span> <span class="post-toc-text">删除索引</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署-elasticsearch"><span class="post-toc-number">1.</span> <span class="post-toc-text">部署 elasticsearch</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署-skywalking-oap-server"><span class="post-toc-number">2.</span> <span class="post-toc-text">部署 skywalking-oap-server</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#部署-skywalking-ui"><span class="post-toc-number">3.</span> <span class="post-toc-text">部署 skywalking-ui</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-ElasticSearch 命令笔记"
+<article id="post-使用Docker快速搭建Skywalking"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">ElasticSearch 命令笔记</h1>
+        <h1 class="post-card-title">使用Docker快速搭建Skywalking</h1>
         <div class="post-meta">
-            <time class="post-time" title="2021-07-05 00:00:00" datetime="2021-07-04T16:00:00.000Z"  itemprop="datePublished">2021-07-05</time>
+            <time class="post-time" title="2021-07-15 00:00:00" datetime="2021-07-14T16:00:00.000Z"  itemprop="datePublished">2021-07-15</time>
 
             
 
@@ -201,9 +201,13 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h1><ul>
-<li>删除 ‘sw_’ 开头的所有索引<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE &apos;http://192.168.1.5:9200/sw_*&apos;</span><br></pre></td></tr></table></figure></li>
+            <h1 id="部署-elasticsearch"><a href="#部署-elasticsearch" class="headerlink" title="部署 elasticsearch"></a>部署 elasticsearch</h1><p>镜像：elasticsearch:7.13.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=es7 -m 4000m \</span><br><span class="line">-p 9200:9200 -p 9300:9300 \</span><br><span class="line">-e &quot;ES_JAVA_OPTS=-Xms3500m -Xmx3500m&quot; \</span><br><span class="line">-e &quot;discovery.type=single-node&quot; elasticsearch:7.13.2</span><br></pre></td></tr></table></figure></p>
+<h1 id="部署-skywalking-oap-server"><a href="#部署-skywalking-oap-server" class="headerlink" title="部署 skywalking-oap-server"></a>部署 skywalking-oap-server</h1><ul>
+<li>存储；elasticsearch 7.x</li>
+<li>镜像：apache/skywalking-oap-server:8.6.0-es7<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --name oap --restart always -d \</span><br><span class="line">-e TZ=Asia/Shanghai \</span><br><span class="line">-p 12800:12800 \</span><br><span class="line">-p 11800:11800 \</span><br><span class="line">--link es7:es7 \</span><br><span class="line">-e SW_STORAGE=elasticsearch7 \</span><br><span class="line">-e SW_STORAGE_ES_CLUSTER_NODES=es7:9200 \</span><br><span class="line">apache/skywalking-oap-server:8.6.0-es7</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<h1 id="部署-skywalking-ui"><a href="#部署-skywalking-ui" class="headerlink" title="部署 skywalking-ui"></a>部署 skywalking-ui</h1><p>镜像：apache/skywalking-ui:8.6.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name skywalking-ui \</span><br><span class="line">-e TZ=Asia/Shanghai \</span><br><span class="line">-p 8080:8080 \</span><br><span class="line">--link oap:oap \</span><br><span class="line">-e SW_OAP_ADDRESS=oap:12800 \</span><br><span class="line">apache/skywalking-ui:8.6.0</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -212,12 +216,12 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-07-05T07:46:48.022Z" itemprop="dateUpdated">2021-07-05 15:46:48</time>
+    最后更新时间：<time datetime="2021-07-15T07:24:54.971Z" itemprop="dateUpdated">2021-07-15 15:24:54</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2021/07/05/ElasticSearch 命令笔记.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html</a>
+        原文链接：<a href="/2021/07/15/使用Docker快速搭建Skywalking.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html</a>
         
     </div>
     
@@ -238,7 +242,7 @@ var _hmt = _hmt || [];
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skywalking/">Skywalking</a></li></ul>
 
 
             
@@ -248,7 +252,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&title=《ElasticSearch 命令笔记》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&title=《使用Docker快速搭建Skywalking》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -258,22 +262,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&title=《ElasticSearch 命令笔记》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&title=《使用Docker快速搭建Skywalking》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 命令笔记》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用Docker快速搭建Skywalking》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -293,21 +297,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2021/07/15/使用Docker快速搭建Skywalking.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">使用Docker快速搭建Skywalking</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2021/06/28/Skywalking 简介.html" id="post-next" class="post-nav-link">
+      <a href="/2021/07/05/ElasticSearch 命令笔记.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Skywalking 简介</h4>
+        <h4 class="title">ElasticSearch 命令笔记</h4>
       </a>
     </div>
   
@@ -421,7 +418,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&title=《ElasticSearch 命令笔记》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&title=《使用Docker快速搭建Skywalking》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -431,22 +428,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&title=《ElasticSearch 命令笔记》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&title=《使用Docker快速搭建Skywalking》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ElasticSearch 命令笔记》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用Docker快速搭建Skywalking》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/07/15/使用Docker快速搭建Skywalking.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -457,7 +454,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3awW4bMQwE0Pz/T7dAb0W69gwpJSnw9mTEjsynABJD8uMjfn79eT6/fvpMstrrdT6/m69fP3h4eHij0J+efOmEPduap3hex4yHh4d3m9eG9fpwn62TXxXFNuHh4eF9Ky8JpU3Q88/g4eHh/Y+8HD9bYfYaDw8P77t4STGiZSSl2M3GHa614OHh4cW8TQPsu15/UX8PDw8Pr+yq54fv05E9u1SSd6MI8fDw8C7w2lZWHu6pJDtpvL2JHA8PD+8oLx912uOTsM4OvOLh4eHd5s3KqWcLr7Oy7JtkGg8PD+8oLx91mh3rbej7Bls97YWHh4d3gZcfxJsBqdfljHb78PDw8O7xkqM5Dy7fmrxEm6fOj/09PDw8vKO8NtxT25GUZfOm2nBqDA8PD2/EmxUIVgf0orWWb9mbmTI8PDy8Ba8t5ubJcd7snyXiqw3Cw8PDW/D2KXI+NJAHmq/8JvnGw8PDu8Z7vVzbsjp1R+2jwsPDw7vNa9tU+fXQPrPS7ePoAB4eHt4FXn70t22zBNBuaNHnwsPDw7vAm406zVLtdgxrtk1F/RgPDw/vEG92WOflhjZFbiP8x5p4eHh4F3htEG3anTex9qFHn8TDw8M7ymuDSCadNkNUbbGj6Krh4eHhLXh1Y2n0X39+GcyGrt6UcfHw8PCO8toQ2ybWZkBh0zbDw8PDu8fLh582g1On/g7JBfA4OoCHh4d3lDcbfto0/veFj+jBw8PDO8rbHPebsm97neRJ9l8/wcPDw7vAm10es+5SXRdZXDyruxEPDw8v4LWXQZ5e58XZds3ku/Dw8PBu89pDeZYEJ7dTe4MNJyPw8PDwvpw3S7Xb62czWICHh4f3E3h5KrwpZ+SXULTdeHh4eNd4eVNqVRoovzchfey/Bg8PD2/UPW8bUW0pNj/QZ6n2sf4eHh4e3qvf+g2sCMU6kMfIIQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3awW7CMBAEUP7/p9trpSowsxsXKr2cEAlOXg72Mt7HIz6+fhzJ91dnf3++Ovv7mqu73HDg4eHhLR79ariv4Jg9dPsM+fV4eHh4p3lXM+pm6Nm03j7Pi9/i4eHhfQwvr2DbMr0tzfHw8PD+C68NEZ6PMAsy8PDw8N7La4OANsxtf/v8myNZCx4eHl7MawOCT/h8ZH8PDw8Pb72rPtuI2ocOtz0tHh4e3gFePuHmAUTCbsOITeCLh4eHd4KXBKNtu0Ab6bavrG4swMPDw7uV17ZD3Vv45uBi06s4jYeHh9fxZptMbfmbl9ftlS/Gx8PDwzvGy4vjtmjOX0e7FEWLGR4eHt4BXtsc0Ja57dnn0UOyJEQxLh4eHt6at9lkmhW+OaZ9ZY/NKoSHh4c3SjvbWw4L3MWGWd3WgIeHh/cnvLYtYB9V5EtC2/6Fh4eHd4KXl7B5AZ0vGG3ckIyMh4eHd443WwDyEjyPbmcRRpGy4OHh4R3gzdqk8pBiM9qwEQEPDw/vAG/zh7+dpttyvA1/X7wIPDw8vFt5eVE7C3nbV5CU7MVihoeHh3eAt1pPFoFFHjG0d79vucTDw8PrZst99JBM6O3CUIcReHh4eLfyhhtLoyK4pbZBcLFS4eHh4S14LbI9m29f5Z/rhQcPDw/vMC+fgtvAd3/k0Uax84aHh4d3gJffct9q0G6zRaEwHh4e3p/w8k2mPIYYTuvlU0UlNR4eHt6Cty9q8322fStAMn7UTYaHh4e34LWTb94slXzfjtO2FODh4eGd483C05a9aQ5YLQx4eHh4x3izbqV2myqPNo5nLXh4eHhv4u1r+fwus3YHPDw8vE/jtfHEiVatetcODw8P7yZe+xDPx2kbBfLlpI2D8fDw8E7w2j/8bbHbBrLD0nm/v4eHh4f3+i7fFPJ9guLEuagAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
