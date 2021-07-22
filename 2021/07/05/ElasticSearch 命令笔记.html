@@ -40,18 +40,18 @@ var _hmt = _hmt || [];
     
     
     <meta name="keywords" content="ElasticSearch">
-    <meta name="description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
+    <meta name="description" content="启动elastichd1docker run -p 9800:9800 -d  containerize/elastichd 删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
 <meta name="keywords" content="ElasticSearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ElasticSearch 命令笔记">
 <meta property="og:url" content="https://blog.smilexin.cn/2021/07/05/ElasticSearch 命令笔记.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
+<meta property="og:description" content="启动elastichd1docker run -p 9800:9800 -d  containerize/elastichd 删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-07-05T07:46:48.022Z">
+<meta property="og:updated_time" content="2021-07-21T07:10:16.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch 命令笔记">
-<meta name="twitter:description" content="删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
+<meta name="twitter:description" content="启动elastichd1docker run -p 9800:9800 -d  containerize/elastichd 删除索引 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &amp;apos;http://192.168.1.5:9200/sw_*&amp;apos;">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">1.</span> <span class="post-toc-text">删除索引</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动elastichd"><span class="post-toc-number">1.</span> <span class="post-toc-text">启动elastichd</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">2.</span> <span class="post-toc-text">删除索引</span></a></li></ol>
         </nav>
     </aside>
 
@@ -201,7 +201,8 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h1><ul>
+            <h1 id="启动elastichd"><a href="#启动elastichd" class="headerlink" title="启动elastichd"></a>启动elastichd</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 9800:9800 -d  containerize/elastichd</span><br></pre></td></tr></table></figure>
+<h1 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h1><ul>
 <li>删除 ‘sw_’ 开头的所有索引<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE &apos;http://192.168.1.5:9200/sw_*&apos;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
@@ -212,7 +213,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-07-05T07:46:48.022Z" itemprop="dateUpdated">2021-07-05 15:46:48</time>
+    最后更新时间：<time datetime="2021-07-21T07:10:16.757Z" itemprop="dateUpdated">2021-07-21 15:10:16</time>
 </span><br>
 
 

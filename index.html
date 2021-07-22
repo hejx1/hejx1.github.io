@@ -242,7 +242,8 @@ var _hmt = _hmt || [];
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        删除索引
+        启动elastichd1docker run -p 9800:9800 -d  containerize/elastichd
+删除索引
 删除 ‘sw_’ 开头的所有索引1curl -XDELETE &apos;http://192.168.1.5:9200/sw_*&apos;
 
 
