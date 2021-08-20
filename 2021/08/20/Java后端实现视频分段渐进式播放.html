@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Java后端实现视频分段渐进式播放 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java">
+    <meta name="description" content="概述最近在做公司的视频业务，涉及到大的视频文件的上传和播放。针对大文件，无论是上传和下载都需要分片处理，不能像以前处理小图片一样直接将整个文件流上传到服务器，服务器也不能直接响应整个文件给客户端。 这篇文章，主要记录一下，服务端如何将一个大的视频文件做切分，分段响应给客户端，让浏览器可以渐进式的播放。 为什么需要分段播放？如果一个视频文件很大，例如一部1GB的电影，服务端直接将整个文件响应给客户端">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java后端实现视频分段渐进式播放">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="概述最近在做公司的视频业务，涉及到大的视频文件的上传和播放。针对大文件，无论是上传和下载都需要分片处理，不能像以前处理小图片一样直接将整个文件流上传到服务器，服务器也不能直接响应整个文件给客户端。 这篇文章，主要记录一下，服务端如何将一个大的视频文件做切分，分段响应给客户端，让浏览器可以渐进式的播放。 为什么需要分段播放？如果一个视频文件很大，例如一部1GB的电影，服务端直接将整个文件响应给客户端">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/java/2020111722100492.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/java/20201117221111574.png">
+<meta property="og:updated_time" content="2021-08-20T05:49:42.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java后端实现视频分段渐进式播放">
+<meta name="twitter:description" content="概述最近在做公司的视频业务，涉及到大的视频文件的上传和播放。针对大文件，无论是上传和下载都需要分片处理，不能像以前处理小图片一样直接将整个文件流上传到服务器，服务器也不能直接响应整个文件给客户端。 这篇文章，主要记录一下，服务端如何将一个大的视频文件做切分，分段响应给客户端，让浏览器可以渐进式的播放。 为什么需要分段播放？如果一个视频文件很大，例如一部1GB的电影，服务端直接将整个文件响应给客户端">
+<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/java/2020111722100492.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java后端实现视频分段渐进式播放</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java后端实现视频分段渐进式播放</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-08-19T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-08-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为什么需要分段播放？"><span class="post-toc-number">2.</span> <span class="post-toc-text">为什么需要分段播放？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Http请求头Range"><span class="post-toc-number">3.</span> <span class="post-toc-text">Http请求头Range</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码部分"><span class="post-toc-number">4.</span> <span class="post-toc-text">代码部分</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#播放视频"><span class="post-toc-number">5.</span> <span class="post-toc-text">播放视频</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Java后端实现视频分段渐进式播放"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java后端实现视频分段渐进式播放</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-08-20 00:00:00" datetime="2021-08-19T16:00:00.000Z"  itemprop="datePublished">2021-08-20</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>最近在做公司的视频业务，涉及到大的视频文件的上传和播放。针对大文件，无论是上传和下载都需要分片处理，不能像以前处理小图片一样直接将整个文件流上传到服务器，服务器也不能直接响应整个文件给客户端。</p>
+<p>这篇文章，主要记录一下，服务端如何将一个大的视频文件做切分，分段响应给客户端，让浏览器可以渐进式的播放。</p>
+<h1 id="为什么需要分段播放？"><a href="#为什么需要分段播放？" class="headerlink" title="为什么需要分段播放？"></a>为什么需要分段播放？</h1><p>如果一个视频文件很大，例如一部1GB的电影，服务端直接将整个文件响应给客户端是会抛异常的，浏览器也没办法一下子接收这么大的文件，视频播放会出问题。</p>
+<p>其次，直接响应一个完整的视频，无疑会浪费服务器的带宽，用户点击播放，很少会完整的观看完视频，可能看一下片头不感兴趣就不看了，亦或是想直接快进到高潮部分，跳过前面的情节等等，服务端应该根据用户的需求，只响应用户真正需要的视频片段就可以了。</p>
+<p><strong>服务器带宽是很珍贵的稀缺资源，应该尽可能的节约。</strong></p>
+<h1 id="Http请求头Range"><a href="#Http请求头Range" class="headerlink" title="Http请求头Range"></a>Http请求头Range</h1><p><code>Range</code>请求头是HTTP1.1才加入的，它为并行下载以及断点续传提供了技术支持。<br>如下是一个HTTP请求头示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Accept: */*</span><br><span class="line">Accept-Encoding: identity;q=1, *;q=0</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Host: localhost:8080</span><br><span class="line">Range: bytes=0-1024</span><br></pre></td></tr></table></figure></p>
+<p>Range请求头的意思是告诉服务端，这次请求客户端只需要资源的第0-1024个字节的区间数据，服务端只需要响应这部分数据就可以了。</p>
+<p>使用<code>&lt;video&gt;</code>标签的<code>src</code>属性指向服务器链接，当服务器响应的HTTP状态码为206时，浏览器会自动开启分段式播放，在每次的HTTP请求头中自动加入Range请求头，服务端只需要根据前端传过来的Range信息截取视频的指定区间来响应即可。</p>
+<h1 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VideoController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@GetMapping</span>(<span class="string">"play"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">		response.reset();</span><br><span class="line">		File file = <span class="keyword">new</span> File(<span class="string">"/Users/panchanghe/Downloads/北极狗.BD.1080p.国英双语中字.mkv"</span>);</span><br><span class="line">		<span class="keyword">long</span> fileLength = file.length();</span><br><span class="line">		<span class="comment">// 随机读文件</span></span><br><span class="line">		RandomAccessFile randomAccessFile = <span class="keyword">new</span> RandomAccessFile(file, <span class="string">"r"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取从那个字节开始读取文件</span></span><br><span class="line">		String rangeString = request.getHeader(<span class="string">"Range"</span>);</span><br><span class="line">		<span class="keyword">long</span> range=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span> (rangeString != <span class="keyword">null</span>) &#123;</span><br><span class="line">			range = Long.valueOf(rangeString.substring(rangeString.indexOf(<span class="string">"="</span>) + <span class="number">1</span>, rangeString.indexOf(<span class="string">"-"</span>)));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//获取响应的输出流</span></span><br><span class="line">		OutputStream outputStream = response.getOutputStream();</span><br><span class="line">		<span class="comment">//设置内容类型</span></span><br><span class="line">		response.setHeader(<span class="string">"Content-Type"</span>, <span class="string">"video/mp4"</span>);</span><br><span class="line">		<span class="comment">//返回码需要为206，代表只处理了部分请求，响应了部分数据</span></span><br><span class="line">		response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 移动访问指针到指定位置</span></span><br><span class="line">		randomAccessFile.seek(range);</span><br><span class="line">		<span class="comment">// 每次请求只返回1MB的视频流</span></span><br><span class="line">		<span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">		<span class="keyword">int</span> len = randomAccessFile.read(bytes);</span><br><span class="line">		<span class="comment">//设置此次相应返回的数据长度</span></span><br><span class="line">		response.setContentLength(len);</span><br><span class="line">		<span class="comment">//设置此次相应返回的数据范围</span></span><br><span class="line">		response.setHeader(<span class="string">"Content-Range"</span>, <span class="string">"bytes "</span>+range+<span class="string">"-"</span>+(fileLength-<span class="number">1</span>)+<span class="string">"/"</span>+fileLength);</span><br><span class="line">		<span class="comment">// 将这1MB的视频流响应给客户端</span></span><br><span class="line">		outputStream.write(bytes, <span class="number">0</span>, len);</span><br><span class="line">		outputStream.close();</span><br><span class="line">		randomAccessFile.close();</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"返回数据区间:【"</span>+range+<span class="string">"-"</span>+(range+len)+<span class="string">"】"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="播放视频"><a href="#播放视频" class="headerlink" title="播放视频"></a>播放视频</h1><p>在浏览器中直接键入播放地址，视频的请求过程是这样的：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/java/2020111722100492.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>后端控制台输出：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/java/20201117221111574.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>利用文件分段下载的特点，除了可以做视频的渐进式播放，还有很多其他的用处。<br>例如：文件的断点续传、文件多线程并发下载等</p>
+<blockquote>
+<p>参考博文：<a href="https://blog.csdn.net/qq_32099833/article/details/109703883" target="_blank" rel="noopener">https://blog.csdn.net/qq_32099833/article/details/109703883</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-08-20T05:49:42.143Z" itemprop="dateUpdated">2021-08-20 13:49:42</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/08/20/Java后端实现视频分段渐进式播放.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&title=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&title=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/07/15/使用Docker快速搭建Skywalking.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用Docker快速搭建Skywalking</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&title=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&title=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java后端实现视频分段渐进式播放》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/08/20/Java后端实现视频分段渐进式播放.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACw0lEQVR42u3aQW4bMRAEQP3/0zaQkwFbSvcMGTlA7Umwxd0tHshRDx+P+Pr4c33//PUvX6/X9/n+zfbvhy88PDy80as/u57xkld5PRH7KU6eiIeHh3ePl28G+Sbx+v4tOLknHh4e3m/jvf5mvtw/m5R8mvDw8PD+F17+qz/fQvaf8fDw8N7FS8KI6Md/Gd22ocPFrAUPDw9v/j5FEPCuz/+ov4eHh4dXdtXzraItefPWWr4Z/DAKDw8P7wLvVDu/DRryUe20rjpseHh4eAGvXfrzV0nuk4QIyainYDw8PLwLvKiBVEaxs+NW+WTNomE8PDy8e7y85Z8v2W0Rv9kqVpk0Hh4eXvD9dllvYW1Rngcc0Sg8PDy8C7xZtNoW37MiOy/B//JfPDw8vMu8PKRImlKzQwD5/aMJwsPDw7vAmx1pal8omaY8IkmQeHh4eDd4+eJ7NiCYPSWf1ke7t+Dh4eHFvGQhnpW2s81m0x5LgmM8PDy8PS+JCWYvPTtMcLbEx8PDw7vBm0Wim2BiP2qYsuDh4eEd5bVhRNva3xxKyH8BRNsDHh4e3lFeG5vODhwkh1ZnBxGK6cDDw8Nb8/IHtN+ZbRjtthEdV8XDw8M7ytvEqW1Rm28zwwMBSSSBh4eHt+C1Daoc38bE+RKfB8R4eHh4N3jtodX85fYxx7GIBA8PD+8CL4kAkqW5reXzRT8p+h/7x+Ph4eHFvLbt9LqwzsviTRmdF/R4eHh4t3nJ6to2q2blbxvdPh2Fh4eHd5T3UV6bqnUfK9TxBx4eHt4F3mY/2TTPkkgiH3UAjIeHh1fyks0gDxQ2sW9Cqgt0PDw8vGu8TbPqVOSaF/HFKDw8PLxfwJu1tTbHDjbbEh4eHt57eZuWf95aSyaoaJvh4eHhXePNmlKzcnkWggw3GDw8PLwLvLYB1iJPNbTakh0PDw/vAu8Tdo43K9A0PhEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
