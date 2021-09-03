@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>手把手教你使用JWT | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="jwt,token">
+    <meta name="description" content="JWT 简介JSON Web Token 简称 JWT 用于无法产生cookie的项目（App/微信小程序 ） 同时解决了分布式中session共享的问题（登陆信息以非对称加密的形式存在客户端中，只消耗cpu以及网络io，自然解决了分布式session共享） JWT 规定了7个官方字段，提供使用。  iss (issuer)：发布者 sub (subject)：主题 iat (Issued At)">
+<meta name="keywords" content="jwt,token">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手教你使用JWT">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="JWT 简介JSON Web Token 简称 JWT 用于无法产生cookie的项目（App/微信小程序 ） 同时解决了分布式中session共享的问题（登陆信息以非对称加密的形式存在客户端中，只消耗cpu以及网络io，自然解决了分布式session共享） JWT 规定了7个官方字段，提供使用。  iss (issuer)：发布者 sub (subject)：主题 iat (Issued At)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-03T07:36:20.057Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手把手教你使用JWT">
+<meta name="twitter:description" content="JWT 简介JSON Web Token 简称 JWT 用于无法产生cookie的项目（App/微信小程序 ） 同时解决了分布式中session共享的问题（登陆信息以非对称加密的形式存在客户端中，只消耗cpu以及网络io，自然解决了分布式session共享） JWT 规定了7个官方字段，提供使用。  iss (issuer)：发布者 sub (subject)：主题 iat (Issued At)">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">手把手教你使用JWT</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">手把手教你使用JWT</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-09-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-09-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JWT-简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">JWT 简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JWT的构成"><span class="post-toc-number">2.</span> <span class="post-toc-text">JWT的构成</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前端解析-Payload"><span class="post-toc-number">3.</span> <span class="post-toc-text">前端解析 Payload</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#后端代码"><span class="post-toc-number">4.</span> <span class="post-toc-text">后端代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入依赖"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">引入依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JwtOperator工具类"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">JwtOperator工具类</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-手把手教你使用JWT"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">手把手教你使用JWT</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-09-03 00:00:00" datetime="2021-09-02T16:00:00.000Z"  itemprop="datePublished">2021-09-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="JWT-简介"><a href="#JWT-简介" class="headerlink" title="JWT 简介"></a>JWT 简介</h1><p>JSON Web Token 简称 JWT</p>
+<p>用于无法产生cookie的项目（App/微信小程序 ）</p>
+<p>同时解决了分布式中session共享的问题（登陆信息以非对称加密的形式存在客户端中，只消耗cpu以及网络io，自然解决了分布式session共享）</p>
+<p>JWT 规定了7个官方字段，提供使用。</p>
+<ul>
+<li>iss (issuer)：发布者</li>
+<li>sub (subject)：主题</li>
+<li>iat (Issued At)：生成签名的时间</li>
+<li>exp (expiration time)：签名过期时间</li>
+<li>aud (audience)：观众，相当于接受者</li>
+<li>nbf (Not Before)：生效时间</li>
+<li>jti (JWT ID)：编号</li>
+</ul>
+<p>当然也有现成框架，就不需要自己重新造轮子进行封装了，目前比较流行的jwt框架有两个<code>jjwt</code>和<code>auth0</code>。其中jjwt对中文的支持比较差，推荐使用auth0。</p>
+<h1 id="JWT的构成"><a href="#JWT的构成" class="headerlink" title="JWT的构成"></a>JWT的构成</h1><p>JWT是由三段信息构成的，将这三段信息文本用.链接一起就构成了JWT字符串。</p>
+<p>第一部分我们称它为头部（header),第二部分我们称其为载荷（payload, 携带的数据)，第三部分是签证（signature).</p>
+<h1 id="前端解析-Payload"><a href="#前端解析-Payload" class="headerlink" title="前端解析 Payload"></a>前端解析 Payload</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 先用Base64解码，再用URLDecode解码</span><br><span class="line">URLDecode.decode(Base64.decode(payload))</span><br></pre></td></tr></table></figure>
+<h1 id="后端代码"><a href="#后端代码" class="headerlink" title="后端代码"></a>后端代码</h1><h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;com.auth0&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;java-jwt&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;3.18.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JwtOperator工具类"><a href="#JwtOperator工具类" class="headerlink" title="JwtOperator工具类"></a>JwtOperator工具类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.auth0.jwt.JWT;</span><br><span class="line"><span class="keyword">import</span> com.auth0.jwt.algorithms.Algorithm;</span><br><span class="line"><span class="keyword">import</span> com.auth0.jwt.interfaces.Claim;</span><br><span class="line"><span class="keyword">import</span> com.auth0.jwt.interfaces.DecodedJWT;</span><br><span class="line"><span class="keyword">import</span> com.auth0.jwt.interfaces.JWTVerifier;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hejx</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JwtOperator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 秘钥</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;jwt.secretStr:CGuxxx&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String secret;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 有效期，单位秒</span></span><br><span class="line"><span class="comment">     * - 14 days: 1209600</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;jwt.expireTime:1209600&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> expireTime;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;jwt.iss:auth0&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String iss;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从token中获取claim</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> token token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> claim</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Map&lt;String, Claim&gt; <span class="title">getClaimsFromToken</span><span class="params">(String token)</span> </span>&#123;</span><br><span class="line">        Algorithm algorithm = Algorithm.HMAC256(<span class="keyword">this</span>.secret);</span><br><span class="line">        JWTVerifier verifier = JWT.require(algorithm)</span><br><span class="line">                .withIssuer(iss) <span class="comment">// 匹配指定的token发布者 auth0</span></span><br><span class="line">                .build();</span><br><span class="line">        DecodedJWT jwt = verifier.verify(token);</span><br><span class="line">        Map&lt;String, Claim&gt; claims = jwt.getClaims();</span><br><span class="line">        <span class="keyword">return</span> claims;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算token的过期时间</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 过期时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Date <span class="title">getExpireTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Date(System.currentTimeMillis() + <span class="keyword">this</span>.expireTime * <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generate token</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> payloadClaims</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> jwt</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">generateToken</span><span class="params">(Map&lt;String, Object&gt; payloadClaims)</span> </span>&#123;</span><br><span class="line">        Date expireTime = <span class="keyword">this</span>.getExpireTime();</span><br><span class="line">        Algorithm algorithm = Algorithm.HMAC256(<span class="keyword">this</span>.secret);</span><br><span class="line">        String token = JWT.create()</span><br><span class="line">                .withIssuer(iss)</span><br><span class="line">                .withExpiresAt(expireTime)</span><br><span class="line">                .withPayload(payloadClaims)</span><br><span class="line">                .sign(algorithm);</span><br><span class="line">        <span class="keyword">return</span> token;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-03T07:36:20.057Z" itemprop="dateUpdated">2021-09-03 15:36:20</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/09/03/手把手教你使用JWT.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jwt/">jwt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/token/">token</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&title=《手把手教你使用JWT》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&title=《手把手教你使用JWT》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手把手教你使用JWT》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/09/02/游戏服务器端开发的一些建议.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">游戏服务器端开发的一些建议</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&title=《手把手教你使用JWT》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&title=《手把手教你使用JWT》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手把手教你使用JWT》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/09/03/手把手教你使用JWT.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3a0Y4aMQwFUP7/p7evlSqGe+2kpdKZJ7TAxCdIE6/t1yu+fn672k+2r5/v/Lpx4eHh4S1C//N6DjrB/BlWcrd29bc/AB4eHt413vODOFlsf5w8r5WviIeHh/dtvPY4yXPd/DN4eHh4/xcvDzr/S0vCw8PD+wZe/ohPHtNtiLO0+3CtBQ8PDy/m5V2k73l9pb+Hh4eHt+6q5w/ctgh7KtX+EC0eHh7eBV6bzu4Lu7NDaDPyhYeHh3eWl4e7CSIfqGoLxB82CA8PD+8f8eqG02MoSQLdJt9vwXh4eHgXePmXZ+MC+cGQtM2GY154eHh4R3ntwrPeU55ezw6YugGGh4eHt+DlobSJ8j4RT1avZ8rw8PDw1rz8MGiDbrdm0zB7m47j4eHhXePljfxZ6aFtYrUjCB9OPDw8PLxrvHakKWG025GPJkR3w8PDw7vAy9tLeXqdv7vB5NuHh4eHd4/XDlHl5YaktLF5N6pS4OHh4R3l5UWH2RZsml770gkeHh7eWV6etp4qE7Ql3fww+9Dfw8PDwzvEy4eZzram8iNnU6TAw8PDu8FLWvhtMp0HkZcVZqk5Hh4e3g3ejdu1x0mRHJcDDXh4eHi3ebMbtalzW3pox7P68jUeHh7ehPcc1ia4Tam3HSb4UMbFw8PDu8xLSqizMYI21U62/kPyjYeHh3eNNys6bAq+bakiL5Tg4eHh/R1eW8Bthwzy4sI+ZcfDw8O7x/spr2S3kqDzknH+K72djMDDw8M7yjt1tiRFiva7s4LvsNyMh4eHV/LywyAnzR7Qm0f/MLHGw8PDW/Bm9c+20TUsxW4Gs/Dw8PC+ktcWFPafL/6Oh4eH9zW8fIGk/T8bxjo8U4aHh4c3mudMml5toPmRkDfPilXw8PDwLvA2//C34OcNbQcIXqcuPDw8vJT3C+U05CkW+hJwAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

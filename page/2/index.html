@@ -171,6 +171,53 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-基于Docker的MySQL常用备份及恢复命令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-18 00:00:00" datetime="2021-06-17T16:00:00.000Z"  itemprop="datePublished">2021-06-18</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html">基于Docker的MySQL常用备份及恢复命令</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        创建备份文件的目录1mkdir -p /home/mysql_bak
+备份数据备份mydb1数据库中所有的表结构及数据1docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql
+只导出数据不导出结构1docker exec mysql-slave01 mysqldump -...
+    
+
+        <a href="/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-使用Rancher部署Skywalking"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -630,54 +677,6 @@ Http代理，反向代理：作为web服务器最常用的功能之一，尤其�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-VMware 克隆虚拟机"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-10 00:00:00" datetime="2021-05-09T16:00:00.000Z"  itemprop="datePublished">2021-05-10</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/10/VMware 克隆虚拟机.html">VMware 克隆虚拟机</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        修改hostname1$ sudo hostnamectl set-hostname &lt;newhostname&gt;
-这条命令会删除/etc/hostname文件中的主机名，然后替换为新的主机名。我们还需要更新/etc/hosts文件,追加newhostname的解析1127.0.0.1 &lt;newhostname&gt;
-
-/etc/hosts文件是用来将主机名映射为ip地址的...
-    
-
-        <a href="/2021/05/10/VMware 克隆虚拟机.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VMware/">VMware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
 
     </div>
     
