@@ -265,52 +265,6 @@ var _hmt = _hmt || [];
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（四)"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（四).html">Dubbo demo项目 (四) 定义业务中心配置文件</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        业务实现类实现remoteapi中的IMessage接口
-定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少...
-    
-
-        <a href="/2017/07/03/Dubbo_demo项目（四).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-Dubbo_demo项目（三)"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -365,11 +319,11 @@ var _hmt = _hmt || [];
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（二)"
+            <article id="post-Dubbo_demo项目（四)"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
+        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
 
         
 
@@ -381,7 +335,7 @@ var _hmt = _hmt || [];
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（二).html">Dubbo demo项目 (二) 定义远程服务接口</a>
+      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（四).html">Dubbo demo项目 (四) 定义业务中心配置文件</a>
     </h3>
   
 
@@ -391,14 +345,11 @@ var _hmt = _hmt || [];
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        定义远程服务接口远程服务接口实际上指的就是业务接口，但是对于整个项目里面由于需要考虑到开发版本的问题，所以针对于我们的业务接口也需要继承 parent 项目中的相关约定
-remoteapi为了方便进行管理，暂时将远程的业务接口项目定义为 remoteapi
-
-建立一个Maven的快速启动项目，项目的整体包名：cn.hejx.remoteapi
-修改 pom.xml 配置文件，让其去继承 pa...
+        业务实现类实现remoteapi中的IMessage接口
+定义 Message 接口实现类1234567891011121314151617181920package cn.hejx.service.impl;import cn.hejx.IMessage;import org.springframework.stereotype.Component;/** * Created by 追风少...
     
 
-        <a href="/2017/06/30/Dubbo_demo项目（二).html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/03/Dubbo_demo项目（四).html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -447,6 +398,55 @@ remoteapi为了方便进行管理，暂时将远程的业务接口项目定义�
     
 
         <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（二)"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（二).html">Dubbo demo项目 (二) 定义远程服务接口</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        定义远程服务接口远程服务接口实际上指的就是业务接口，但是对于整个项目里面由于需要考虑到开发版本的问题，所以针对于我们的业务接口也需要继承 parent 项目中的相关约定
+remoteapi为了方便进行管理，暂时将远程的业务接口项目定义为 remoteapi
+
+建立一个Maven的快速启动项目，项目的整体包名：cn.hejx.remoteapi
+修改 pom.xml 配置文件，让其去继承 pa...
+    
+
+        <a href="/2017/06/30/Dubbo_demo项目（二).html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
