@@ -171,6 +171,101 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Golang 环境安装"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2020-03-29 00:00:00" datetime="2020-03-28T16:00:00.000Z"  itemprop="datePublished">2020-03-29</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2020/03/29/Golang 环境安装.html">Golang 环境安装</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Go语言的安装可以在Go语言中文网进行下载对应系统版本的Go语言: https://studygolang.com/dl
+我这里下载的是 1.14.1 的版本
+环境配置123456# 使用go module管理依赖go env -w GO111MODULE=on# 配置国内镜像go env -w GOPROXY=https://goproxy.cn,direct# 安装goimports,g...
+    
+
+        <a href="/2020/03/29/Golang 环境安装.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-ActiveMQ_消息重试机制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-09-01 00:00:00" datetime="2018-08-31T16:00:00.000Z"  itemprop="datePublished">2018-09-01</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/09/01/ActiveMQ_消息重试机制.html">ActiveMQ的消息重试机制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        消费端处理失败时的消息重发机制
+处理失败 指的是MessageListener的onMessage方法里抛出RuntimeException。
+Message头里有两个相关字段：Redelivered默认为false，redeliveryCounter默认为0。
+消息先由broker发送给consumer，consumer调用listener，如果处理失败，本地redeliveryCount...
+    
+
+        <a href="/2018/09/01/ActiveMQ_消息重试机制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-SpringBoot 配置加密"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -540,100 +635,6 @@ node.master：这个属性表示节点是否具有成为主节点的资格  注�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-nohup日志过大的处理策略"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-07-24 00:00:00" datetime="2018-07-23T16:00:00.000Z"  itemprop="datePublished">2018-07-24</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/07/24/nohup日志过大的处理策略.html">nohup 日志过大的处理策略</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅…
-解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件
-实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。
-...
-    
-
-        <a href="/2018/07/24/nohup日志过大的处理策略.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/部署/">部署</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-SpringBoot jar包部署实践"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-07-02 00:00:00" datetime="2018-07-01T16:00:00.000Z"  itemprop="datePublished">2018-07-02</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/07/02/SpringBoot jar包部署实践.html">SpringBoot jar包部署实践</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前言为实现快速搭建和开发，项目以Springboot框架搭建，Springboot搭建的项目可以将项目直接打成jar包并运行，无需自己安装配置Tomcat或者其他服务器，是一种方便快捷的部署方式。
-使用maven打包项目123456789101112131415161718192021222324252627282930313233&lt;build&gt;    &lt;finalName...
-    
-
-        <a href="/2018/07/02/SpringBoot jar包部署实践.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/部署/">部署</a></li></ul>
 
     </div>
     

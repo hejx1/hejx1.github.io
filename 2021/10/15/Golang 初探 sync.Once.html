@@ -33,25 +33,25 @@ var _hmt = _hmt || [];
     
     
     
-    <title>Redis 集群概念 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>Golang 初探 sync.Once | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Redis">
-    <meta name="description" content="Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位 redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使">
-<meta name="keywords" content="Redis">
+    <meta name="keywords" content="Golang">
+    <meta name="description" content="描述sync.Once 是 Golang package 中使方法只执行一次的对象实现，作用与 init 函数类似，但也有所不同。  init 函数是在文件包首次被加载的时候执行，且只执行一次 sync.Once 是在代码运行中需要的时候执行，且只执行一次  Examples1234567891011121314151617181920212223242526272829303132333435p">
+<meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis 集群概念">
-<meta property="og:url" content="https://blog.smilexin.cn/2017/07/31/Redis集群概念.html">
+<meta property="og:title" content="Golang 初探 sync.Once">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位 redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使">
+<meta property="og:description" content="描述sync.Once 是 Golang package 中使方法只执行一次的对象实现，作用与 init 函数类似，但也有所不同。  init 函数是在文件包首次被加载的时候执行，且只执行一次 sync.Once 是在代码运行中需要的时候执行，且只执行一次  Examples1234567891011121314151617181920212223242526272829303132333435p">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-04-30T02:44:33.314Z">
+<meta property="og:updated_time" content="2021-10-15T08:11:37.093Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis 集群概念">
-<meta name="twitter:description" content="Redis集群redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位 redis-clusterredis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护nodeslotvalue Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使">
+<meta name="twitter:title" content="Golang 初探 sync.Once">
+<meta name="twitter:description" content="描述sync.Once 是 Golang package 中使方法只执行一次的对象实现，作用与 init 函数类似，但也有所不同。  init 函数是在文件包首次被加载的时候执行，且只执行一次 sync.Once 是在代码运行中需要的时候执行，且只执行一次  Examples1234567891011121314151617181920212223242526272829303132333435p">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Redis 集群概念</div>
+        <div class="flex-col header-title ellipsis">Golang 初探 sync.Once</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -154,11 +154,11 @@ var _hmt = _hmt || [];
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Redis 集群概念</h1>
+        <h1 class="title">Golang 初探 sync.Once</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-07-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-07-31
+                <time datetime="2021-10-14T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-10-15
 </time>
 
 
@@ -177,18 +177,18 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis集群"><span class="post-toc-number">1.</span> <span class="post-toc-text">Redis集群</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#redis-cluster"><span class="post-toc-number">2.</span> <span class="post-toc-text">redis-cluster</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#redis-cluster投票-容错"><span class="post-toc-number">3.</span> <span class="post-toc-text">redis-cluster投票:容错</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">描述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Examples"><span class="post-toc-number">2.</span> <span class="post-toc-text">Examples</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Redis集群概念"
+<article id="post-Golang 初探 sync.Once"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Redis 集群概念</h1>
+        <h1 class="post-card-title">Golang 初探 sync.Once</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-07-31 00:00:00" datetime="2017-07-30T16:00:00.000Z"  itemprop="datePublished">2017-07-31</time>
+            <time class="post-time" title="2021-10-15 00:00:00" datetime="2021-10-14T16:00:00.000Z"  itemprop="datePublished">2021-10-15</time>
 
             
 
@@ -201,18 +201,13 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="Redis集群"><a href="#Redis集群" class="headerlink" title="Redis集群"></a>Redis集群</h1><p>redis集群叫作redis-cluster,每个节点可以相互通信的,每个节点都是同等地位</p>
-<h1 id="redis-cluster"><a href="#redis-cluster" class="headerlink" title="redis-cluster"></a>redis-cluster</h1><p>redis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护node<->slot<->value</-></-></p>
-<p>Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使用 crc16 算法算出一个结果，然后把结果对 16384 求余数，这样每个 key 都会对应一个编号在 0-16383 之间的哈希槽，redis 会根据节点数量大致均等的将哈希槽映射到不同的节点。</p>
-<h1 id="redis-cluster投票-容错"><a href="#redis-cluster投票-容错" class="headerlink" title="redis-cluster投票:容错"></a>redis-cluster投票:容错</h1><p>当某一个节点向目标节点（这里假设目标节点为B节点）发送ping命令而没有得到响应则会对B节点产生怀疑,并将此怀疑广播给集群中的其他节点,其他节点都会向B节点发送ping命令检测B节点是否挂掉,只要集群中有半数以上认为B节点挂掉则就会认为B节点挂掉,若B节点没有备机则集群挂掉,因为槽不完整了，所以为了集群的高可用性,每个节点都应该有主备设施。</p>
-<ol>
-<li>投票过程是集群中所有master参与,如果半数以上master节点与master节点通信超过(cluster-node-timeout),认为当前master节点挂掉.</li>
-<li>什么时候整个集群不可用(cluster_state:fail)?</li>
-</ol>
+            <h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p><code>sync.Once</code> 是 Golang package 中使方法只执行一次的对象实现，作用与 <code>init</code> 函数类似，但也有所不同。</p>
 <ul>
-<li>a:如果集群任意master挂掉,且当前master没有slave（备机）.集群进入fail状态,也可以理解成集群的slot映射[0-16383]不完成时进入fail状态. ps : redis-3.0.0.rc1加入cluster-require-full-coverage参数,默认关闭,打开集群兼容部分失败.</li>
-<li>b:如果集群超过半数以上master挂掉，无论是否有slave集群进入fail状态.<br>  ps:当集群不可用时,所有对集群的操作做都不可用，收到((error) CLUSTERDOWN The cluster is down)错误</li>
+<li><code>init</code> 函数是在文件包首次被加载的时候执行，且只执行一次</li>
+<li><code>sync.Once</code> 是在代码运行中需要的时候执行，且只执行一次</li>
 </ul>
+<h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *A)</span> <span class="title">close</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	fmt.Println(<span class="string">"close() for A"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> OnceA <span class="keyword">struct</span> &#123;</span><br><span class="line">	once sync.Once</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *OnceA)</span> <span class="title">close</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	a.once.Do(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"close() for OnceA"</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := &amp;A&#123;&#125;</span><br><span class="line">	onceA := &amp;OnceA&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> a.<span class="built_in">close</span>()</span><br><span class="line">		<span class="keyword">go</span> onceA.<span class="built_in">close</span>()</span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(<span class="number">10</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">close() for OnceA</span><br><span class="line">close() for A</span><br><span class="line">close() for A</span><br><span class="line">close() for A</span><br><span class="line">close() for A</span><br><span class="line">close() for A</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -221,12 +216,12 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-04-30T02:44:33.314Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+    最后更新时间：<time datetime="2021-10-15T08:11:37.093Z" itemprop="dateUpdated">2021-10-15 16:11:37</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/07/31/Redis集群概念.html" target="_blank" rel="external">https://blog.smilexin.cn/2017/07/31/Redis集群概念.html</a>
+        原文链接：<a href="/2021/10/15/Golang 初探 sync.Once.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html</a>
         
     </div>
     
@@ -247,7 +242,7 @@ var _hmt = _hmt || [];
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
 
 
             
@@ -257,7 +252,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&title=《Redis 集群概念》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&title=《Golang 初探 sync.Once》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -267,22 +262,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&title=《Redis 集群概念》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&title=《Golang 初探 sync.Once》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis 集群概念》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang 初探 sync.Once》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -305,18 +300,18 @@ var _hmt = _hmt || [];
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/07/31/Redis_持久化.html" id="post-prev" class="post-nav-link">
+      <a href="/2021/10/15/Golang 初探 sync.Mutex.html" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Redis 持久化</h4>
+        <h4 class="title">Golang 初探 sync.Mutex</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/07/31/memcached_内存分配机制.html" id="post-next" class="post-nav-link">
+      <a href="/2021/10/14/Golang 高性能HTTP框架Gin的使用介绍.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">memcached 内存分配机制</h4>
+        <h4 class="title">Golang 高性能HTTP框架Gin的使用介绍</h4>
       </a>
     </div>
   
@@ -430,7 +425,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&title=《Redis 集群概念》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&title=《Golang 初探 sync.Once》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -440,22 +435,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&title=《Redis 集群概念》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&title=《Golang 初探 sync.Once》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis 集群概念》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang 初探 sync.Once》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/07/31/Redis集群概念.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/10/15/Golang 初探 sync.Once.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -466,7 +461,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAwEwPz/0+41QBpnSclpLY1OQVHYGh1okuLjEa/jaT3/5d3v1/X6tOQtkxcGBsZtGcfpevc/ybaqz88P5Zc3YmBgbMB49/pko0loTvDnvA97xsDAwAiCbzWlS3gYGBgYIwF38ib+6ruBgYFxK0ZeZCZlbfLi/CAm1+IYGBg3ZORp3Pd/X3K/gYGBcSvGUVy9hlqvVVfYFQYGxtKMPMCNtPvPE75ewMXAwNiNMdLuz4Ny72KgnCxiYGAsyui178+TuWrTP09Ay98NDAyMmzPmXlLmY175mGw51GJgYCzNqCZn1UGx6iXo5GkRDAyMJRjVBHHkCflgRxR8MTAwlmbMmmcYSuxi8OVjGRgYGP+S0Wt4VRPBcdiHvWFgYGzGyMvIvA3XC8eFt2NgYGzAuGJIKw+vvVEzDAyMfRgjF5x5My7faDKuUT0mDAyMNRjVR+enMqsMLte7GBgYizKqZW1+VdBLAfOwi4GBsQ+jdxlZTeZ66eD5AWFgYOzDqOZayaPz4Nu77Hz73cDAwFiUkT8uGoAotvXz0Dz03cDAwFiIMdKYa5agxbYgBgbGPoyjuKqJXT7+1Us9MTAwdmCMBLvqFseDcnNmBAMDYwlGNcgm6eDIoEbzQgIDA2MDxncuBnqBu1DKYmBgYBRL0JEUM79mwMDAwMhD5xWHUhjIwMDA2ICRbK5Xdo6E4EtqcQwMjBsy8tJxbpssT/uqf8fAwFiI8QOWkLwqs6y4/gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3ay44bMQwEwP3/n06AnALsetBNSnYC1JwMP2ZUOkh0i19f8fXrz/X9nb/f//6d799Mrvb+By48PDy80dCThyWvk+E+T9bmWT9MAR4eHt413vNmkAw3WdwTarI5JWPGw8PD+xd4CTUpxJ9/9VwV4+Hh4f1fvNljNvf/wL6Hh4eHF/NORQn5or8pvq9kLXh4eHgxbxMEfOr1xfM9PDw8vMWpelvmtlFCfrg1HC0eHh7eBV4Stu6L71no0EbALycaDw8P7wLvGTlbvvcHVzlymFXj4eHhLXhtGLo5oGph7RS/LKnx8PDwDvHan92OffNP8fDw8D7Fmy3oeYTahhqngonVfoWHh4f3yNu3PbXhbFumr7YiPDw8vAu8U7c7Wy7PwuJjMDw8PLxHXpv4tqFAW4JvYuWipMbDw8Nb8/Kmq3xjmEXDs+l+KcLDw8O7xmtj1qQgbsPZNqiNImM8PDy8y7x2mU6Gm5fjbeAbld14eHh4F3hJVHpqWG1E2zYTvBwJHh4e3lHe7Jg/X3vbu+UhRfR0PDw8vLfw8nK5LbvzEGQWBP/wPh4eHt413iwOyBf32RDbEOTlxoCHh4d3gZdvCZvjqNkhWXHc9dw6gIeHh3eZl5TFm7AgGegsnog2Bjw8PLyjvKSozeOGvJhupzj6G4CHh4f3Rt6+HyEvx/MyvY4/8PDw8C7wij/2i1I7n7h88ygCaDw8PLyjvLZQbg/129I5DymKfQ8PDw/vLby2valtFGhbuPKJiDYGPDw8vAUvv/K2gLYB695rPDw8vHu8dvlup2PTUDU7osPDw8N7D6+NG1pMEgrvI4n6AAwPDw/vMq9d9HPkpukqKqnx8PDwPsprC/E8As7DjmJS8PDw8K7x2oHmD86nJm/JKr6Dh4eHd4G3j2XzloLZUPJSe3jh4eHhpb/6DUFykpfC2dNRAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
