@@ -171,6 +171,59 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Docker 常用命令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-05-08 00:00:00" datetime="2021-05-07T16:00:00.000Z"  itemprop="datePublished">2021-05-08</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/05/08/Docker 常用命令.html">Docker 常用命令</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Docker常用命令记录，方便查询
+拷贝文件074af74c669d 是容器id,也可以换成容器名称,可以使用 docker ps -a 查看
+
+从容器中拷贝文件到宿主机
+1sudo docker cp 074af74c669d:/etc/data.xls  /tmp
+
+从宿主机拷贝到容器
+1sudo docker cp /tmp/index.html 074af74c669d:/etc/
+...
+    
+
+        <a href="/2021/05/08/Docker 常用命令.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Linux 指定目录扩容"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -579,56 +632,6 @@ node.master：这个属性表示节点是否具有成为主节点的资格  注�
     
 
         <a href="/2018/08/12/ElasticSearch 集群部署.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/全文搜索/">全文搜索</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-ElasticSearch 安装"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-12 00:00:00" datetime="2018-08-11T16:00:00.000Z"  itemprop="datePublished">2018-08-12</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/12/ElasticSearch 安装.html">ElasticSearch 安装</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        安装环境
-MacOS 10.13.6
-jdk 1.8+ # es5.x 之后jdk的依赖版本最低1.8
-nodejs v8.11.1 # es-head插件最低依赖 6.0
-
-安装Elasticsearch进入Elasticsearch官网找寻最新版本的ElasticSearch进行下载安装123456789# 进入指定目录cd /MyDownloads# 下载elasticsearchwg...
-    
-
-        <a href="/2018/08/12/ElasticSearch 安装.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>

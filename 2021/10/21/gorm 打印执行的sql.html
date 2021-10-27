@@ -33,30 +33,25 @@ var _hmt = _hmt || [];
     
     
     
-    <title>Mysql 数据库死锁问题处理方案 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <title>gorm 打印执行的sql | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Mysql">
-    <meta name="description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="keywords" content="Mysql">
+    <meta name="keywords" content="Golang,gorm">
+    <meta name="description" content="打印所有sql在打开连接时设置日志级别为Info123DB, err = gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;    Logger:logger.Default.LogMode(logger.Info),&amp;#125;) 打印单条sql在操作前加Debug(),相当于将临时将日志级别改为Info1234DB.Debug().Where(&quot;">
+<meta name="keywords" content="Golang,gorm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql 数据库死锁问题处理方案">
-<meta property="og:url" content="https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html">
+<meta property="og:title" content="gorm 打印执行的sql">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
+<meta property="og:description" content="打印所有sql在打开连接时设置日志级别为Info123DB, err = gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;    Logger:logger.Default.LogMode(logger.Info),&amp;#125;) 打印单条sql在操作前加Debug(),相当于将临时将日志级别改为Info1234DB.Debug().Where(&quot;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/2.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/3.png">
-<meta property="og:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/4.png">
-<meta property="og:updated_time" content="2021-04-30T02:44:33.312Z">
+<meta property="og:updated_time" content="2021-10-21T06:55:43.129Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql 数据库死锁问题处理方案">
-<meta name="twitter:description" content="先查找死锁病因1show engine innodb status;                                                                                                            把内容复制出来,里面有查询id">
-<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/mysql/死锁问题处理/1.png">
+<meta name="twitter:title" content="gorm 打印执行的sql">
+<meta name="twitter:description" content="打印所有sql在打开连接时设置日志级别为Info123DB, err = gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;    Logger:logger.Default.LogMode(logger.Info),&amp;#125;) 打印单条sql在操作前加Debug(),相当于将临时将日志级别改为Info1234DB.Debug().Where(&quot;">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -137,7 +132,7 @@ var _hmt = _hmt || [];
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mysql 数据库死锁问题处理方案</div>
+        <div class="flex-col header-title ellipsis">gorm 打印执行的sql</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -159,11 +154,11 @@ var _hmt = _hmt || [];
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="title">gorm 打印执行的sql</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-12-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-12-23
+                <time datetime="2021-10-20T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-10-21
 </time>
 
 
@@ -182,18 +177,18 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#先查找死锁病因"><span class="post-toc-number">1.</span> <span class="post-toc-text">先查找死锁病因</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#把内容复制出来-里面有查询id"><span class="post-toc-number">2.</span> <span class="post-toc-text">把内容复制出来,里面有查询id</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拿着query-id-去查相应的sql语句"><span class="post-toc-number">3.</span> <span class="post-toc-text">拿着query id,去查相应的sql语句</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#打印所有sql"><span class="post-toc-number">1.</span> <span class="post-toc-text">打印所有sql</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#打印单条sql"><span class="post-toc-number">2.</span> <span class="post-toc-text">打印单条sql</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#只打印慢查询"><span class="post-toc-number">3.</span> <span class="post-toc-text">只打印慢查询</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Mysql_数据库死锁问题处理"
+<article id="post-gorm 打印执行的sql"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mysql 数据库死锁问题处理方案</h1>
+        <h1 class="post-card-title">gorm 打印执行的sql</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-12-23 00:00:00" datetime="2017-12-22T16:00:00.000Z"  itemprop="datePublished">2017-12-23</time>
+            <time class="post-time" title="2021-10-21 00:00:00" datetime="2021-10-20T16:00:00.000Z"  itemprop="datePublished">2021-10-21</time>
 
             
 
@@ -206,39 +201,15 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="先查找死锁病因"><a href="#先查找死锁病因" class="headerlink" title="先查找死锁病因"></a>先查找死锁病因</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engine innodb status;</span><br></pre></td></tr></table></figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/1.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="把内容复制出来-里面有查询id"><a href="#把内容复制出来-里面有查询id" class="headerlink" title="把内容复制出来,里面有查询id"></a>把内容复制出来,里面有查询id</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/2.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="拿着query-id-去查相应的sql语句"><a href="#拿着query-id-去查相应的sql语句" class="headerlink" title="拿着query id,去查相应的sql语句"></a>拿着query id,去查相应的sql语句</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/3.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>Info里就是sql</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/posts/mysql/死锁问题处理/4.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>红线框选的就是造成死锁的sql语句</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>根据此sql可以查出死锁的表，如果死锁在这个表，那么就需要去审查这张表相关的业务逻辑的代码。查明死锁的原因！</p>
-
+            <h1 id="打印所有sql"><a href="#打印所有sql" class="headerlink" title="打印所有sql"></a>打印所有sql</h1><p>在打开连接时设置日志级别为Info<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB, err = gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;</span><br><span class="line">    Logger:logger.Default.LogMode(logger.Info),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h1 id="打印单条sql"><a href="#打印单条sql" class="headerlink" title="打印单条sql"></a>打印单条sql</h1><p>在操作前加<code>Debug()</code>,相当于将临时将日志级别改为Info<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DB.Debug().Where(<span class="string">"ID = ?"</span>, <span class="number">52</span>).First(&amp;newData)</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//[0.773ms] [rows:1] SELECT * FROM `User` WHERE ID = 52 ORDER BY `User`.`id` LIMIT 1</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="只打印慢查询"><a href="#只打印慢查询" class="headerlink" title="只打印慢查询"></a>只打印慢查询</h1><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">slowLogger := logger.New(</span><br><span class="line">	<span class="comment">//将标准输出作为Writer</span></span><br><span class="line">	log.New(os.Stdout, <span class="string">"\r\n"</span>, log.LstdFlags),</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	logger.Config&#123;</span><br><span class="line">		<span class="comment">//设定慢查询时间阈值为1ms</span></span><br><span class="line">		SlowThreshold: <span class="number">1</span> * time.Microsecond,   </span><br><span class="line">		<span class="comment">//设置日志级别，只有Warn和Info级别会输出慢查询日志</span></span><br><span class="line">		LogLevel: logger.Warn, </span><br><span class="line">	&#125;,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">DB, err = gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;</span><br><span class="line">	Logger:slowLogger,</span><br><span class="line">&#125;)</span><br><span class="line">    </span><br><span class="line"><span class="comment">//输出类似</span></span><br><span class="line"><span class="comment">//2021/05/14 11:36:28 /home/ballqiu/go/gorm/mydb.go:98 SLOW SQL &gt;= 1ms</span></span><br><span class="line"><span class="comment">//[2.996ms] [rows:1] INSERT INTO `User` (`name`,`age`,`is_admin`,`is_valid`,`login_time`) VALUES ('ball',0,true,false,'2021-05-14 11:36:28.436')</span></span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>默认的SlowThreshold为200ms</li>
+<li>如果你不想改变这个默认值，那么只需要将日志级别改为Warn即可只打印慢查询。</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB, err = gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;</span><br><span class="line">    Logger:logger.Default.LogMode(logger.Warn),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -246,12 +217,12 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-04-30T02:44:33.312Z" itemprop="dateUpdated">2021-04-30 10:44:33</time>
+    最后更新时间：<time datetime="2021-10-21T06:55:43.129Z" itemprop="dateUpdated">2021-10-21 14:55:43</time>
 </span><br>
 
 
         
-        原文链接：<a href="/2017/12/23/Mysql_数据库死锁问题处理.html" target="_blank" rel="external">https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html</a>
+        原文链接：<a href="/2021/10/21/gorm 打印执行的sql.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html</a>
         
     </div>
     
@@ -272,7 +243,7 @@ var _hmt = _hmt || [];
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gorm/">gorm</a></li></ul>
 
 
             
@@ -282,7 +253,7 @@ var _hmt = _hmt || [];
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&title=《gorm 打印执行的sql》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -292,22 +263,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&title=《gorm 打印执行的sql》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《gorm 打印执行的sql》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -327,21 +298,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/03/12/websocket应用示例.html" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">websocket 应用示例</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" id="post-next" class="post-nav-link">
+      <a href="/2021/10/20/Golang 获取异常堆栈信息.html" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mysql 使用自增id和uuid作为主键的优劣比较</h4>
+        <h4 class="title">Golang 获取异常堆栈信息</h4>
       </a>
     </div>
   
@@ -455,7 +419,7 @@ var _hmt = _hmt || [];
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&title=《gorm 打印执行的sql》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -465,22 +429,22 @@ var _hmt = _hmt || [];
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&title=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&title=《gorm 打印执行的sql》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql 数据库死锁问题处理方案》 — Junxin's Blog&url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《gorm 打印执行的sql》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html&via=https://blog.smilexin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2017/12/23/Mysql_数据库死锁问题处理.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/10/21/gorm 打印执行的sql.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -491,7 +455,7 @@ var _hmt = _hmt || [];
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpElEQVR42u3aUU7EMAwFwL3/peEAqNtnO66KNP1CLLSeINXhxZ9PfP38ub5//+rT7/dJnv7ZuPDw8PDGpSeMq4cl4CtSvgRJzXh4eHjbvKtCk1KS5pG84pMGk9eMh4eH9x5edQP9/Z69NoOHh4f3f3lJiJC0mSoJDw8P7w28asyaPLjaTpI8djFrwcPDw4t5+SnSe75eOd/Dw8PDG5+qT2LZ/EU/2WrfVIuHh4e3wDtVyvzTHFOtEw8PD+8sbxIi5IxJqDGpBA8PD2+DVy2rsJEtpgSnjs0KPQ0PDw+vxcvHpJLRgWQMqxox5It70xLw8PDw1njRJrX4M/OgoRcT4+Hh4T3Dm2+sJ8X1oo3L9oCHh4e3wPt+0zzkrR6bVSPaUcCBh4eHt8w7NRRVHTvohRTR0uDh4eEd5fUCiOrBf74pr770y383PDw8vEO83uF9tf/0Io9JHouHh4f3DK+38a2GsMky5fgon8DDw8Nb4CUjU9VgYv6UySgDHh4e3h6vWm7voCuBVY+7bu6Gh4eHt8Y7VcSpo7K8wdw8EQ8PD2+Nl9x6Y7CgGmRURw3w8PDwNni94//q2NZkACsfX8DDw8N7hpcf//fYpwatqhvxwuri4eHhFXnVA6rkt/JN9tmhhMtq8fDw8JZ5k5d7OSYoBrXNFoWHh4f3CK+6kc3jjHwJ8vvf/Knw8PDw1nhJk5gEvr2hhN4wFh4eHt4e76d4VUOKaiDbiz9uJiPw8PDwjvJG/aRYVu/IbbKxxsPDw9vj9SLaJHSobprzhSgsIh4eHt4ab/7g3ua414SSmAMPDw/vPbzqz0wGsOZLj4eHh/cGXm8UYPK71W06Hh4e3jO8JIzoxQGTSCJfspvGgIeHh3eUN/mHPx8L6L3cq0FG88LDw8NLeb8E23OoUmGKnQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3aMXLjQAwEQP//03bV1QUORGkG4MoKmpGKkpdsBtwxgK+v+Pj+d1x9/n0mWeH5mav1k6sMDzw8PLzRrV8dzxlX7OdXae/k+WN98Qjw8PDwjvHyzaDdPNr3drKRJPeMh4eH9wm856/pNi7n6yR4PDw8vM/nJdE2ibxtdMbDw8P7HN6mEDAr3c6ue7DWgoeHhxfz9g2w939+a38PDw8P79ZAnLT884JFEqOL+8TDw8M7wGvj8izyJqMDLSl/iHh4eHj38jYbQ9u4ygscs9GBusqCh4eHt+DNBptm5YPZt3mx+DJM4+Hh4d3Ea2Nre8k2Rs+i84vgjoeHh3eAl7z69yOnm42nHYotGmN4eHh4I15eVsh/067QDmwVWwIeHh7eYd6stb8BzOJ7sXXh4eHhHeO1S+e33pYV2mbbi7vCw8PDO8DbhOPZZTYhPh8Rw8PDwzvBa9tUm8JBG8fbkscNXTg8PDy8m3h5RL5rFDXZMKJ/APDw8PCO8fafZ22qdhAhL238P4OHh4d3jNeG5raFvynm5iH7wWp4eHh4B3h5YM0D7uwVn9cWZk07PDw8vLt4+TPYtPxnI1ntiMODB4GHh4d3mDcrHMwGAmYtt4iEh4eHd5i3v7lN0yuPy0mRAg8PD+89vOTVnBQa8nJGW55o//ZydAAPDw/vJt6JWLyqJY82jGRMFg8PD+8uXnL5ewu47QhsPswaDV3h4eHhrXl5kTS/zL2FjLxVFu14eHh4eGved3m0ZYK2pLvZqB58i4eHh3eANxsVrfecOEznD2XTbMPDw8Pb8/LI2770NzF9szEUwRoPDw9vwWubT7Mgmxdt2zIEHh4e3ufz2pGC2S/zcvPlmnh4eHh/ypvF6LaM256Jhgbw8PDwDvBmzaf8lZ23zfIVovIHHh4e3gHerAG2j86zrSV/EHh4eHgHeD8otdB1esNp5QAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
