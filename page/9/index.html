@@ -171,6 +171,107 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（五)"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-04 00:00:00" datetime="2017-07-03T16:00:00.000Z"  itemprop="datePublished">2017-07-04</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/04/Dubbo_demo项目（五).html">Dubbo demo项目 (五) 启动Dubbo服务</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        尝试启动现在已经基本上搭建完成了 Dubbo 业务中心,但是如果想要正常的使用 Dubbo 还需要对整体的代码进行调试
+定义一个 Dubbo 服务的启动程序类：ProviderStartup
+1234567891011121314151617package cn.hejx.service.impl.demo;import com.alibaba.dubbo.container.Main;/*...
+    
+
+        <a href="/2017/07/04/Dubbo_demo项目（五).html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（三)"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-07-03 00:00:00" datetime="2017-07-02T16:00:00.000Z"  itemprop="datePublished">2017-07-03</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/07/03/Dubbo_demo项目（三).html">Dubbo demo项目 (三) 搭建业务中心项目</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        业务中心
+业务中心是整个 Dubbo 的核心所在
+业务中心的搭建需要配置许多的开发包
+
+搭建业务中心的开发环境
+首先建立一个 service 的项目，作为业务中心的存在：cn.hejx.service
+修改 parent/pom.xml 配置文件导入所需要 Dubbo 的开发类库
+
+修改 parent/pom.xml 配置文件主要是新增开发包的属性配置
+1234567891011121314...
+    
+
+        <a href="/2017/07/03/Dubbo_demo项目（三).html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Dubbo_demo项目（四)"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -202,6 +303,54 @@ var _hmt = _hmt || [];
     
 
         <a href="/2017/07/03/Dubbo_demo项目（四).html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Dubbo_demo项目（一）"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（一）.html">Dubbo demo项目 (一) 定义父项规则</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        定义父项规则在本次的开发之中，如果想要实现一个Dubbo项目的编写，需要有三个项目：远程接口、业务实现、客户端，为了保证整个项目的整体风格一致，以及所有开发包的版本的统一管理，需要定义一个父项目，在这个项目里面主要的目的是定义一些基础的插件，以及版本的属性信息，同时其他的项目里面都要求继承这个项目。
+所有项目的搭建使用的是Maven的方式管理
+
+创建一个parent项目，这个项目作为整个的公...
+    
+
+        <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -251,54 +400,6 @@ remoteapi为了方便进行管理，暂时将远程的业务接口项目定义�
     
 
         <a href="/2017/06/30/Dubbo_demo项目（二).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Dubbo_demo项目（一）"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-06-30 00:00:00" datetime="2017-06-29T16:00:00.000Z"  itemprop="datePublished">2017-06-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/06/30/Dubbo_demo项目（一）.html">Dubbo demo项目 (一) 定义父项规则</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        定义父项规则在本次的开发之中，如果想要实现一个Dubbo项目的编写，需要有三个项目：远程接口、业务实现、客户端，为了保证整个项目的整体风格一致，以及所有开发包的版本的统一管理，需要定义一个父项目，在这个项目里面主要的目的是定义一些基础的插件，以及版本的属性信息，同时其他的项目里面都要求继承这个项目。
-所有项目的搭建使用的是Maven的方式管理
-
-创建一个parent项目，这个项目作为整个的公...
-    
-
-        <a href="/2017/06/30/Dubbo_demo项目（一）.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
