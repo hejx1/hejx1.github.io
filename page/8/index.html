@@ -613,7 +613,7 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-memcached_内存分配机制"
+            <article id="post-memcached_过期数据删除机制"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -629,7 +629,7 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/07/31/memcached_内存分配机制.html">memcached 内存分配机制</a>
+      <a class="post-title-link" href="/2017/07/31/memcached_过期数据删除机制.html">memcached 过期数据删除机制</a>
     </h3>
   
 
@@ -639,14 +639,15 @@ AOF 持久化记录服务器执行的所有写操作命令，并在服务器启�
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        内存的碎片化如果用C语言直接malloc,free 来向操作系统申请和释放内存时，在不断的申请和释放过程中，形成了一些很小的内存片段，无法再利用。
-这种空闲且无法再利用的内存现象，称为++内存的碎片化++
-memcached是如何缓解内存的碎片化的？memcached 用 Slab Allocation 机制来管理内存
-Slab Allocation
-首先，像一般的内存池一样,  从操作系统...
+        memcached过期数据删除机制
+当某一个值过期后，并没有从内存删除，因此stats统计时,curr_items有其信息
+当某个新值去占用它的位置时，当成空chunk来占用
+当 get 值时，判断是否过期，如果过期返回空，并且删除其信息，curr_items就减少了
+
+即：这个过期只是让用户看不到这个数据而已，并没有在过期的瞬间立即从内存删除。这个称为 lazy expiration，惰性...
     
 
-        <a href="/2017/07/31/memcached_内存分配机制.html" class="post-more waves-effect waves-button">
+        <a href="/2017/07/31/memcached_过期数据删除机制.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
