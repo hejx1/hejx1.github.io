@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>ffmpeg常用命令 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ffmpeg">
+    <meta name="description" content="视频转换比如一个avi文件，想转为mp4，或者一个mp4想转为ts。ffmpeg -i input.avi output.mp4ffmpeg -i input.mp4 output.ts 提取视频音频123456# 提取完整音频，默认mp4的audio codec是aac,如果不是，可以都转为最常见的aac。ffmpeg -i test.mp4 -acodec copy -vn output.aa">
+<meta name="keywords" content="ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg常用命令">
+<meta property="og:url" content="https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="视频转换比如一个avi文件，想转为mp4，或者一个mp4想转为ts。ffmpeg -i input.avi output.mp4ffmpeg -i input.mp4 output.ts 提取视频音频123456# 提取完整音频，默认mp4的audio codec是aac,如果不是，可以都转为最常见的aac。ffmpeg -i test.mp4 -acodec copy -vn output.aa">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-02-24T09:10:53.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ffmpeg常用命令">
+<meta name="twitter:description" content="视频转换比如一个avi文件，想转为mp4，或者一个mp4想转为ts。ffmpeg -i input.avi output.mp4ffmpeg -i input.mp4 output.ts 提取视频音频123456# 提取完整音频，默认mp4的audio codec是aac,如果不是，可以都转为最常见的aac。ffmpeg -i test.mp4 -acodec copy -vn output.aa">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ffmpeg常用命令</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ffmpeg常用命令</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2022-02-23T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2022-02-24
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#视频转换"><span class="post-toc-number">1.</span> <span class="post-toc-text">视频转换</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#提取视频音频"><span class="post-toc-number">2.</span> <span class="post-toc-text">提取视频音频</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#提取视频"><span class="post-toc-number">3.</span> <span class="post-toc-text">提取视频</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#视频剪切"><span class="post-toc-number">4.</span> <span class="post-toc-text">视频剪切</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#码率控制"><span class="post-toc-number">5.</span> <span class="post-toc-text">码率控制</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#视频编码格式转换"><span class="post-toc-number">6.</span> <span class="post-toc-text">视频编码格式转换</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#只提取视频ES数据"><span class="post-toc-number">7.</span> <span class="post-toc-text">只提取视频ES数据</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#过滤器的使用"><span class="post-toc-number">8.</span> <span class="post-toc-text">过滤器的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#将输入的1920x1080缩小到960x540输出"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">将输入的1920x1080缩小到960x540输出:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为视频添加水印logo"><span class="post-toc-number">8.2.</span> <span class="post-toc-text">为视频添加水印logo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#去掉视频的logo"><span class="post-toc-number">8.3.</span> <span class="post-toc-text">去掉视频的logo</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#截取视频图像"><span class="post-toc-number">9.</span> <span class="post-toc-text">截取视频图像</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ffmpeg常用命令"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ffmpeg常用命令</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2022-02-24 00:00:00" datetime="2022-02-23T16:00:00.000Z"  itemprop="datePublished">2022-02-24</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="视频转换"><a href="#视频转换" class="headerlink" title="视频转换"></a>视频转换</h1><p>比如一个avi文件，想转为mp4，或者一个mp4想转为ts。<br><code>ffmpeg -i input.avi output.mp4</code><br><code>ffmpeg -i input.mp4 output.ts</code></p>
+<h1 id="提取视频音频"><a href="#提取视频音频" class="headerlink" title="提取视频音频"></a>提取视频音频</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 提取完整音频，默认mp4的audio codec是aac,如果不是，可以都转为最常见的aac。</span><br><span class="line">ffmpeg -i test.mp4 -acodec copy -vn output.aac</span><br><span class="line"># 输出mp3</span><br><span class="line">ffmpeg -i test.mp4 -f mp3 -vn test.mp3</span><br><span class="line"># 输出指定时间段的音频</span><br><span class="line">ffmpeg -i mmgw2018_01.mp4 -ss 00:03:45 -t 00:00:45.0 -acodec copy -vn output.aac</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-i</code> 表示input，即输入文件</li>
+<li><code>-f</code> 表示format，即输出格式</li>
+<li><code>-vn</code> 表示vedio not，即输出不包含视频</li>
+<li><code>acodec copy</code> 使用已经在那里相同的音频流。</li>
+<li><code>ss</code> 选项指定开始时间戳，使用 <code>t</code> 选项指定编码持续时间，例如从3分钟45秒钟开始，持续45秒。时间戳必须采用 <code>hh:mm:ss.xxx</code> 格式或以秒为单位，如果你不指定 <code>t</code> 选项，它将会结束。</li>
+</ul>
+<h1 id="提取视频"><a href="#提取视频" class="headerlink" title="提取视频"></a>提取视频</h1><p><code>ffmpeg -i input.mp4 -vcodec copy -an output.mp4</code></p>
+<h1 id="视频剪切"><a href="#视频剪切" class="headerlink" title="视频剪切"></a>视频剪切</h1><p>下面的命令，可以从时间为00:00:15开始，截取5秒钟的视频。<br><code>ffmpeg -ss 00:00:15 -t 00:00:05 -i input.mp4 -vcodec copy -acodec copy output.mp4</code><br>-ss表示开始切割的时间，-t表示要切多少。上面就是从15秒开始，切5秒钟出来。</p>
+<h1 id="码率控制"><a href="#码率控制" class="headerlink" title="码率控制"></a>码率控制</h1><p>码率控制对于在线视频比较重要。因为在线视频需要考虑其能提供的带宽。</p>
+<p>那么，什么是码率？很简单：<br>bitrate = file size / duration<br>比如一个文件20.8M，时长1分钟，那么，码率就是：<br>biterate = 20.8M bit/60s = 20.8<em>1024</em>1024*8 bit/60s= 2831Kbps<br>一般音频的码率只有固定几种，比如是128Kbps，<br>那么，video的就是<br>video biterate = 2831Kbps -128Kbps = 2703Kbps。</p>
+<p>那么ffmpeg如何控制码率。<br>ffmpg控制码率有3种选择，-minrate -b:v -maxrate<br>-b:v主要是控制平均码率。<br>比如一个视频源的码率太高了，有10Mbps，文件太大，想把文件弄小一点，但是又不破坏分辨率。<br>ffmpeg -i input.mp4 -b:v 2000k output.mp4<br>上面把码率从原码率转成2Mbps码率，这样其实也间接让文件变小了。目测接近一半。<br>不过，ffmpeg官方wiki比较建议，设置b:v时，同时加上 -bufsize<br>-bufsize 用于设置码率控制缓冲器的大小，设置的好处是，让整体的码率更趋近于希望的值，减少波动。（简单来说，比如1 2的平均值是1.5， 1.49 1.51 也是1.5, 当然是第二种比较好）</p>
+<p><code>ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k output.mp4</code></p>
+<p><code>-minrate -maxrate</code>就简单了，在线视频有时候，希望码率波动，不要超过一个阈值，可以设置maxrate。<br><code>ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k -maxrate 2500k output.mp4</code></p>
+<h1 id="视频编码格式转换"><a href="#视频编码格式转换" class="headerlink" title="视频编码格式转换"></a>视频编码格式转换</h1><p>比如一个视频的编码是MPEG4，想用H264编码，咋办？<br><code>ffmpeg -i input.mp4 -vcodec h264 output.mp4</code><br>相反也一样<br><code>ffmpeg -i input.mp4 -vcodec mpeg4 output.mp4</code></p>
+<p>当然了，如果ffmpeg当时编译时，添加了外部的x265或者X264，那也可以用外部的编码器来编码。（不知道什么是X265，可以 Google一下，简单的说，就是她不包含在ffmpeg的源码里，是独立的一个开源代码，用于编码HEVC，ffmpeg编码时可以调用它。当然 了，ffmpeg自己也有编码器）<br><code>ffmpeg -i input.mp4 -c:v libx265 output.mp4</code><br><code>ffmpeg -i input.mp4 -c:v libx264 output.mp4</code></p>
+<h1 id="只提取视频ES数据"><a href="#只提取视频ES数据" class="headerlink" title="只提取视频ES数据"></a>只提取视频ES数据</h1><p><code>ffmpeg –i input.mp4 –vcodec copy –an –f m4v output.h264</code></p>
+<h1 id="过滤器的使用"><a href="#过滤器的使用" class="headerlink" title="过滤器的使用"></a>过滤器的使用</h1><h2 id="将输入的1920x1080缩小到960x540输出"><a href="#将输入的1920x1080缩小到960x540输出" class="headerlink" title="将输入的1920x1080缩小到960x540输出:"></a>将输入的1920x1080缩小到960x540输出:</h2><p><code>ffmpeg -i input.mp4 -vf scale=960:540 output.mp4</code></p>
+<blockquote>
+<p>ps: 如果540不写，写成-1，即scale=960:-1, 那也是可以的，ffmpeg会通知缩放滤镜在输出时保持原始的宽高比。</p>
+</blockquote>
+<h2 id="为视频添加水印logo"><a href="#为视频添加水印logo" class="headerlink" title="为视频添加水印logo"></a>为视频添加水印logo</h2><p>比如，我有这么一个图片 <code>iQIYI_logo.png</code></p>
+<p>想要贴到一个视频上，那可以用如下命令：<br>左上角：<br><code>./ffmpeg -i input.mp4 -i iQIYI_logo.png -filter_complex overlay output.mp4</code><br>右上角：<br><code>./ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=W-w output.mp4</code><br>左下角：<br><code>./ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=0:H-h output.mp4</code><br>右下角：<br><code>./ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=W-w:H-h output.mp4</code></p>
+<h2 id="去掉视频的logo"><a href="#去掉视频的logo" class="headerlink" title="去掉视频的logo"></a>去掉视频的logo</h2><p>语法：-vf delogo=x:y:w:h[:t[:show]]<br>x:y 离左上角的坐标<br>w:h logo的宽和高<br>t: 矩形边缘的厚度默认值4<br>show：若设置为1有一个绿色的矩形，默认值0。</p>
+<p><code>ffmpeg -i input.mp4 -vf delogo=0:0:220:90:100:1 output.mp4</code></p>
+<h1 id="截取视频图像"><a href="#截取视频图像" class="headerlink" title="截取视频图像"></a>截取视频图像</h1><p><code>ffmpeg -i input.mp4 -r 1 -q:v 2 -f image2 pic-%03d.jpeg</code><br>-r 表示每一秒几帧<br>-q:v表示存储jpeg的图像质量，一般2是高质量。<br>如此，ffmpeg会把input.mp4，每隔一秒，存一张图片下来。假设有60s，那会有60张。</p>
+<p>可以设置开始的时间，和你想要截取的时间。<br><code>ffmpeg -i input.mp4 -ss 00:00:20 -t 10 -r 1 -q:v 2 -f image2 pic-%03d.jpeg</code><br><code>-ss</code> 表示开始时间<br><code>-t</code> 表示共要多少时间。<br>如此，ffmpeg会从input.mp4的第20s时间开始，往下10s，即20~30s这10秒钟之间，每隔1s就抓一帧，总共会抓10帧。</p>
+<blockquote>
+<p>参考博文：<a href="https://www.cnblogs.com/frost-yen/p/5848781.html" target="_blank" rel="noopener">https://www.cnblogs.com/frost-yen/p/5848781.html</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2022-02-24T09:10:53.739Z" itemprop="dateUpdated">2022-02-24 17:10:53</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2022/02/24/ffmpeg常用命令.html" target="_blank" rel="external">https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&title=《ffmpeg常用命令》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&title=《ffmpeg常用命令》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ffmpeg常用命令》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2022/02/22/ffmpeg录制rtsp视频流.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ffmpeg录制rtsp视频流</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2022</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&title=《ffmpeg常用命令》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&title=《ffmpeg常用命令》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ffmpeg常用命令》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/02/24/ffmpeg常用命令.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3ay24CMQwF0P7/T9NtpYpwbYfFJGdWFQxhDpUsv35+4uv150pe+f/u+rT169suDAyMxzJeyyu5Z/2p3s+RPxsGBsY9jHcRLDl6fc8u0odnxsDAwFima3nAXX8vBgYGxl7GpOBMTsbAwMDoFbHJF/dK0zVjcy2OgYHxQMYkRH7776/MNzAwMB7F6LX7q+VrNdUrPxUGBsbRjDzAJWlcvkiR/DTl58HAwLiA0QuX1UCcjweqMAwMjJsZ69StV13mZxbux8DAOJRRTfWqy17JIuz8x8LAwLiB0VvPmqR01XXYwpoFBgbGcYxeIjh5d9JW+3A/BgbGBYzqIle17KyudJT7aRgYGIcyqgPFpGTtBc188Pm23YaBgXEZ49uDyV6RHE02MDAwDmVU68EP4a815swHmW9zWwwMjEMZ5WFhsABRHQAkg8/mzggGBsZBjLy51lvdyE+epJ4YGBh3MvK8a96qq55ZCLgYGBhHMCbrX5NwOSmGm/8HDAyMhzOSpC1fiZgE5VHvEAMD4wJG/tDVoWOeDvaCOAYGxj2Makq3q6zN23kfqnAMDIzjGK/iVU0l56VsRMXAwDiakV/50Un7bNLO6y2IYGBgPJ0xb7dV1ymSpn+13MXAwLiB0VuVmITIXtoXLVtgYGBcz6gWvfmnPoTUpCLHwMDA2BSU82FqYSEDAwPjAsak0V8NtdXxwOZaHAMD44GMvHTMU71du1ubh5oYGBjPY/wCD9+TYe6UTdoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcdn.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
