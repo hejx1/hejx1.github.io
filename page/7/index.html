@@ -171,6 +171,284 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-nohup日志过大的处理策略"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-07-24 00:00:00" datetime="2018-07-23T16:00:00.000Z"  itemprop="datePublished">2018-07-24</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/07/24/nohup日志过大的处理策略.html">nohup 日志过大的处理策略</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        问题场景使用nohup后台运行应用程序,会将控制台日志持续录入 nohup.out 文件,当应用程序运行一段时间后会产生大量的日志记录,造成nohup.out文件巨大,难以查阅…
+解决思路在服务不重启的情况下,把 nohup.out 文件按照日期或者文件大小来分成不同的文件
+实现策略使用crontab，每天凌晨把日志文件复制一份，然后清空原来的日志文件，让程序往清空的日志文件里继续写日志。
+...
+    
+
+        <a href="/2018/07/24/nohup日志过大的处理策略.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/部署/">部署</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-SpringBoot jar包部署实践"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-07-02 00:00:00" datetime="2018-07-01T16:00:00.000Z"  itemprop="datePublished">2018-07-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/07/02/SpringBoot jar包部署实践.html">SpringBoot jar包部署实践</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言为实现快速搭建和开发，项目以Springboot框架搭建，Springboot搭建的项目可以将项目直接打成jar包并运行，无需自己安装配置Tomcat或者其他服务器，是一种方便快捷的部署方式。
+使用maven打包项目123456789101112131415161718192021222324252627282930313233&lt;build&gt;    &lt;finalName...
+    
+
+        <a href="/2018/07/02/SpringBoot jar包部署实践.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/部署/">部署</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-SpringBoot 2.0 jpa多数据源配置"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-06-16 00:00:00" datetime="2018-06-15T16:00:00.000Z"  itemprop="datePublished">2018-06-16</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html">SpringBoot 2.0 jpa多数据源配置</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言随着Springboot升级到2.0，原来1.5.x的Jpa多数据源配置不能用了。在此记录一下Springboot2.0的jpa多数据源配置
+引入依赖首先，在pom.xml引入如下jar包
+12345678910111213&lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;    &lt;artifactId&...
+    
+
+        <a href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/druid/">druid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-高并发场景解决方案-应用拆分"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-20 00:00:00" datetime="2018-05-19T16:00:00.000Z"  itemprop="datePublished">2018-05-20</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/20/高并发场景解决方案-应用拆分.html">高并发场景解决方案-应用拆分</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系...
+    
+
+        <a href="/2018/05/20/高并发场景解决方案-应用拆分.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/应用拆分/">应用拆分</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-高并发场景解决方案-应用限流"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-18 00:00:00" datetime="2018-05-17T16:00:00.000Z"  itemprop="datePublished">2018-05-18</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/18/高并发场景解决方案-应用限流.html">高并发场景解决方案-应用限流</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        限流说明限流字面上的意思就是限制流量，实际上它是限制一段时间内允许通过的流量。就像你的宽带包了1个G的流量用完就没了，但是这里的流量不是大家平时说的1M，1G的这种流量单位，而是某个函数或者某个代码块执行的次数。因此我这里介绍的限流从根本上来说它是控制一段时间内某段代码执行的次数。
+举例说明之前我们介绍股票分时线的时候，说过开市期间所有股票的分时数据并没有把它们直接保存到数据库里，而是放在了...
+    
+
+        <a href="/2018/05/18/高并发场景解决方案-应用限流.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/限流/">限流</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Java多线程并发最佳实践"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-17 00:00:00" datetime="2018-05-16T16:00:00.000Z"  itemprop="datePublished">2018-05-17</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/17/Java多线程并发最佳实践.html">Java多线程并发最佳实践</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言编写并发代码是比较难，尽管Java语言提供了许多同步和并发支持，但是最终写出没有Bug的Java并发代码还是需要依靠个人的勤奋与专业知识。Java多线程并发最佳实践是一组实践的好点子，有助于你快速开发出优质的并发代码。如果你是新手，需要熟悉一些基本概念，再来阅读本文会更有针对性。
+使用本地变量(局部变量)应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作...
+    
+
+        <a href="/2018/05/17/Java多线程并发最佳实践.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Executor 线程池详解"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -352,296 +630,6 @@ ReentrantLock与synchronized的区别
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-深入剖析volatile关键字"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/03/深入剖析volatile关键字.html">深入剖析volatile关键字</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义
-
-保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的
-禁止进行指令重排序
-
-先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!s...
-    
-
-        <a href="/2018/05/03/深入剖析volatile关键字.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-AtomicLong与LongAdder的区别"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/02/AtomicLong与LongAdder的区别.html">AtomicLong与LongAdder的区别</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。
-LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。
-其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值...
-    
-
-        <a href="/2018/05/02/AtomicLong与LongAdder的区别.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Atomic/">Atomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计数器/">计数器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-并发与高并发的基本概念"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/02/并发与高并发的基本概念.html">并发与高并发的基本概念</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。
-高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处...
-    
-
-        <a href="/2018/05/02/并发与高并发的基本概念.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-RSA的公钥和私钥的使用详解"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-04-27 00:00:00" datetime="2018-04-26T16:00:00.000Z"  itemprop="datePublished">2018-04-27</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/04/27/RSA的公钥和私钥的使用详解.html">RSA的公钥和私钥的使用详解</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        什么是RSARSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。
-这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。
-使用场景
-签名
-
-使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但...
-    
-
-        <a href="/2018/04/27/RSA的公钥和私钥的使用详解.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-混合加密算法(RSA和DES)"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-04-27 00:00:00" datetime="2018-04-26T16:00:00.000Z"  itemprop="datePublished">2018-04-27</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/04/27/混合加密算法(RSA和DES).html">混合加密算法(RSA和DES)</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        混合加密的理由
-由于随着计算机系统能力的不断发展，DES的安全性比它刚出现时会弱得多，追溯历史破解DES的案例层出不穷，一台实际的机器可以在数天内破解DES是让某些人相信他们不能依赖DES的安全性的唯一方法。而相对于DES，RSA的安全性则相对高些，虽然破解RSA的案例也有，但其所付出的代价是相对大的(相对DES)，如今RSA的密钥也在升级，这说明破解RSA的难度也在增大。
-在RSA加解密算...
-    
-
-        <a href="/2018/04/27/混合加密算法(RSA和DES).html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-IDEA将已有项目添加到git"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-04-10 00:00:00" datetime="2018-04-09T16:00:00.000Z"  itemprop="datePublished">2018-04-10</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/04/10/IDEA将已有项目添加到git.html">IDEA将已有项目添加到git</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        场景介绍将本地正在开发的项目添加到远程Git仓库
-详细步骤
-在远程仓库创建项目,拿到项目的HTTP链接
-进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令
-
-123456789101112# 若本地项目不是git项目,则需要执行init进行初始化git项目git init# 给项目设置远程Gi...
-    
-
-        <a href="/2018/04/10/IDEA将已有项目添加到git.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
 
     </div>
     

@@ -171,6 +171,336 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-基于Docker搭建Redis哨兵模式"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-23 00:00:00" datetime="2021-06-22T16:00:00.000Z"  itemprop="datePublished">2021-06-23</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/23/基于Docker搭建Redis哨兵模式.html">基于Docker搭建Redis哨兵模式</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        生产环境使用三台服务器搭建redis哨兵集群，3个redis实例（1主2从）+ 3个哨兵实例。生产环境能够保证在哨兵存活两台的情况下，只有一台redis能够继续提供服务（一主两从三哨兵）
+
+Redis 的 Sentinel 文档：http://www.redis.cn/topics/sentinel.html
+
+集群信息
+
+
+宿主机IP
+port
+类型
+isMaster
+镜像版本
+容器名称
+...
+    
+
+        <a href="/2021/06/23/基于Docker搭建Redis哨兵模式.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-ElasticSearch之修改shards数"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-21 00:00:00" datetime="2021-06-20T16:00:00.000Z"  itemprop="datePublished">2021-06-21</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/21/ElasticSearch之修改shards数.html">ElasticSearch之修改shards数</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        今天突然发现开发环境的 SkywalkingUI 没有数据显示了
+通过查看skywalking-oap-server日志中发现大量的以下内容报错：
+
+[150]: index [sw_segment-20210621], type [_doc], id [5411d1d0da7d47408ca1b7e0fb6501eb.35.16242471306362196], message [Elas...
+    
+
+        <a href="/2021/06/21/ElasticSearch之修改shards数.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-基于Docker搭建MySQL主从复制"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-18 00:00:00" datetime="2021-06-17T16:00:00.000Z"  itemprop="datePublished">2021-06-18</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/18/基于Docker搭建MySQL主从复制.html">基于Docker搭建MySQL主从复制</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+数据库安装主从信息
+
+
+ip
+port
+类型
+镜像版本
+容器名称
+
+
+
+
+192.168.1.100
+3306
+主库
+8.0.25
+mysql-master-3306
+
+
+192....
+    
+
+        <a href="/2021/06/18/基于Docker搭建MySQL主从复制.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-基于Docker的MySQL常用备份及恢复命令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-18 00:00:00" datetime="2021-06-17T16:00:00.000Z"  itemprop="datePublished">2021-06-18</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html">基于Docker的MySQL常用备份及恢复命令</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        创建备份文件的目录1mkdir -p /home/mysql_bak
+备份数据备份mydb1数据库中所有的表结构及数据1docker exec mysql-slave01 mysqldump -uroot -p123456 mydb1 &gt; /home/mysql_bak/mydb1.sql
+只导出数据不导出结构1docker exec mysql-slave01 mysqldump -...
+    
+
+        <a href="/2021/06/18/基于Docker的MySQL常用备份及恢复命令.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-使用Rancher部署Skywalking"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-16 00:00:00" datetime="2021-06-15T16:00:00.000Z"  itemprop="datePublished">2021-06-16</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/16/使用Rancher部署Skywalking.html">使用Rancher部署Skywalking</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        skywalking-oap-server
+存储：elasticsearch 7.x
+镜像：apache/skywalking-oap-server:8.6.0-es7
+collector.backend_service：hostip:30001
+
+
+                
+                    
+                    
+            ...
+    
+
+        <a href="/2021/06/16/使用Rancher部署Skywalking.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rancher/">Rancher</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skywalking/">Skywalking</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Kubernetes下安装Skywalking"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-06-11 00:00:00" datetime="2021-06-10T16:00:00.000Z"  itemprop="datePublished">2021-06-11</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/06/11/Kubernetes下安装Skywalking.html">Kubernetes下安装Skywalking</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        环境介绍
+确保有一套运行正常的 Kubernetes 集群，本文默认为使用 Elasticsearch7 作为后端存储。
+确保你本地的 kubectl能够正常运行。
+
+Skywalking 介绍Skywalking 在大体上分为四大部分:
+
+oap-server: 无状态服务后端，主要负责处理核心逻辑，可以简单理解为一个标准 java web 项目。
+skywalking-ui: UI 前端...
+    
+
+        <a href="/2021/06/11/Kubernetes下安装Skywalking.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skywalking/">Skywalking</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Linux 安装ffmpeg"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -367,311 +697,6 @@ Markdown的常用语法标题用#标记
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/">Markdown</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-谁动了我的 Linux"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-12 00:00:00" datetime="2021-05-11T16:00:00.000Z"  itemprop="datePublished">2021-05-12</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/12/谁动了我的 Linux.html">谁动了我的 Linux？history 命令详解！</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        当我们频繁使用 Linux 命令行时，有效地使用历史记录，可以大大提高工作效率。
-在平时 Linux 操作过程中，很多命令是重复的，你一定不希望大量输入重复的命令。如果你是系统管理员，你可能需要对用户操作进行审计，管理好 Linux 命令历史记录显得非常重要。
-今天我们来介绍一下，在 Linux 使用 history 来减少重复命令的几个实用技巧。
-基本原理
-                ...
-    
-
-        <a href="/2021/05/12/谁动了我的 Linux.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-IDEA 代码补全操作技巧"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-11 00:00:00" datetime="2021-05-10T16:00:00.000Z"  itemprop="datePublished">2021-05-11</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/11/IDEA 代码补全操作技巧.html">IDEA 代码补全操作技巧</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        IDEA 有个很牛逼的功能，那就是代码补全，极大的方便了开发人员。
-下面是我比较常用的
-var 声明变量
-                
-                    
-                    
-                
-                
-            
-null 判空
-                
-             ...
-    
-
-        <a href="/2021/05/11/IDEA 代码补全操作技巧.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Nginx 配置详解"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-11 00:00:00" datetime="2021-05-10T16:00:00.000Z"  itemprop="datePublished">2021-05-11</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/11/Nginx 配置详解.html">Nginx 配置详解</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Nginx相关地址
-源码：https://trac.nginx.org/nginx/browser官网：http://www.nginx.org/
-
-Nginx常用功能
-Http代理，反向代理：作为web服务器最常用的功能之一，尤其是反向代理。
-
-这里我给来2张图，对正向代理与反响代理做个诠释，具体细节，大家可以翻阅下资料。
-
-                
-               ...
-    
-
-        <a href="/2021/05/11/Nginx 配置详解.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-VMware 克隆虚拟机"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-10 00:00:00" datetime="2021-05-09T16:00:00.000Z"  itemprop="datePublished">2021-05-10</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/10/VMware 克隆虚拟机.html">VMware 克隆虚拟机</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        修改hostname1$ sudo hostnamectl set-hostname &lt;newhostname&gt;
-这条命令会删除/etc/hostname文件中的主机名，然后替换为新的主机名。我们还需要更新/etc/hosts文件,追加newhostname的解析1127.0.0.1 &lt;newhostname&gt;
-
-/etc/hosts文件是用来将主机名映射为ip地址的...
-    
-
-        <a href="/2021/05/10/VMware 克隆虚拟机.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VMware/">VMware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-使用Docker快速搭建代理服务器"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-10 00:00:00" datetime="2021-05-09T16:00:00.000Z"  itemprop="datePublished">2021-05-10</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/10/使用Docker快速搭建代理服务器.html">使用Docker快速搭建代理服务器</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        快速使用http代理当前服务器有个第三方部署的服务只支持内网IP访问,我就需要在内网服务器上搭建一个HTTP代理服务进行访问该服务。
-启动HTTP代理服务1docker run --name myprivoxy -d -p 1080:8118 splazit/privoxy-alpine
-socks5代理启动socks5代理服务器123docker run -d -p 1080:1080 n...
-    
-
-        <a href="/2021/05/10/使用Docker快速搭建代理服务器.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Privoxy/">Privoxy</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Linux（Centos版本）快速安装Docker"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-05-09 00:00:00" datetime="2021-05-08T16:00:00.000Z"  itemprop="datePublished">2021-05-09</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/05/09/Linux（Centos版本）快速安装Docker.html">Linux（Centos版本）快速安装Docker</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        使用脚本安装 Docker
-使用 sudo 或 root 权限登录 Centos。
-确保 yum 包更新到最新。
-1$ yum -y update
-
-执行 Docker 安装脚本。
-12$ curl -fsSL https://get.docker.com -o get-docker.sh$ sudo sh get-docker.sh // 执行这个脚本会添加 docker.repo 源并安...
-    
-
-        <a href="/2021/05/09/Linux（Centos版本）快速安装Docker.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
 
     </div>
     

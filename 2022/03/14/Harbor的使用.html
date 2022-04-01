@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Harbor的使用 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Harbor,容器">
+    <meta name="description" content="Harbor 是什么？Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，可以用来构建企业内部的Docker镜像仓库。它在Docker的开源项目 Distribution 的基础上，添加了一些企业需要的功能特性，如镜像同步复制、漏洞扫描和权限管理等。  Harbor is an open source trusted cloud native registry proj">
+<meta name="keywords" content="Harbor,容器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harbor的使用">
+<meta property="og:url" content="https://blog.smilexin.cn/2022/03/14/Harbor的使用.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="Harbor 是什么？Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，可以用来构建企业内部的Docker镜像仓库。它在Docker的开源项目 Distribution 的基础上，添加了一些企业需要的功能特性，如镜像同步复制、漏洞扫描和权限管理等。  Harbor is an open source trusted cloud native registry proj">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-03-14T07:48:28.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Harbor的使用">
+<meta name="twitter:description" content="Harbor 是什么？Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，可以用来构建企业内部的Docker镜像仓库。它在Docker的开源项目 Distribution 的基础上，添加了一些企业需要的功能特性，如镜像同步复制、漏洞扫描和权限管理等。  Harbor is an open source trusted cloud native registry proj">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Harbor的使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Harbor的使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2022-03-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2022-03-14
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Harbor-是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">Harbor 是什么？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Live-Demo"><span class="post-toc-number">2.</span> <span class="post-toc-text">Live Demo</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#下载Harbor安装包"><span class="post-toc-number">3.</span> <span class="post-toc-text">下载Harbor安装包</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装docker-compose"><span class="post-toc-number">4.</span> <span class="post-toc-text">安装docker-compose</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装Harbor"><span class="post-toc-number">5.</span> <span class="post-toc-text">安装Harbor</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Harbor的使用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Harbor的使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2022-03-14 00:00:00" datetime="2022-03-13T16:00:00.000Z"  itemprop="datePublished">2022-03-14</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Harbor-是什么？"><a href="#Harbor-是什么？" class="headerlink" title="Harbor 是什么？"></a>Harbor 是什么？</h1><p>Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，可以用来构建企业内部的Docker镜像仓库。<br>它在Docker的开源项目 Distribution 的基础上，添加了一些企业需要的功能特性，如镜像同步复制、漏洞扫描和权限管理等。</p>
+<blockquote>
+<p>Harbor is an open source trusted cloud native registry project that stores, signs, and scans content. Harbor extends the open source Docker Distribution by adding the functionalities usually required by users such as security, identity and management. Having a registry closer to the build and run environment can improve the image transfer efficiency. Harbor supports replication of images between registries, and also offers advanced security features such as user management, access control and activity auditing.</p>
+</blockquote>
+<p>github地址: <a href="https://github.com/goharbor/harbor" target="_blank" rel="noopener">https://github.com/goharbor/harbor</a></p>
+<h1 id="Live-Demo"><a href="#Live-Demo" class="headerlink" title="Live Demo"></a>Live Demo</h1><p>url: <a href="https://demo.goharbor.io/" target="_blank" rel="noopener">https://demo.goharbor.io/</a><br>user: admin<br>pwd: Harbor12345</p>
+<h1 id="下载Harbor安装包"><a href="#下载Harbor安装包" class="headerlink" title="下载Harbor安装包"></a>下载Harbor安装包</h1><p>下载Harbor最新稳定版本的离线安装包，我这里使用的是 <strong>harbor-offline-installer-v2.5.0-rc1.tgz</strong><br>下载地址：<a href="https://github.com/goharbor/harbor/releases" target="_blank" rel="noopener">https://github.com/goharbor/harbor/releases</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/goharbor/harbor/releases/download/v2.5.0-rc1/harbor-offline-installer-v2.5.0-rc1.tgz</span><br></pre></td></tr></table></figure></p>
+<p>因为网络原因,我这边使用加速地址下载。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 原地址 </span><br><span class="line">wget https://github.com/goharbor/harbor/releases/download/v2.5.0-rc1/harbor-offline-installer-v2.5.0-rc1.tgz</span><br><span class="line"># 加速下载方法一 </span><br><span class="line">wget https://download.fastgit.org/goharbor/harbor/releases/download/v2.5.0-rc1/harbor-offline-installer-v2.5.0-rc1.tgz</span><br><span class="line"># 加速下载方法二 </span><br><span class="line">wget https://hub.fastgit.org/goharbor/harbor/releases/download/v2.5.0-rc1/harbor-offline-installer-v2.5.0-rc1.tgz</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h1><p>Harbor的安装需要依赖<code>docker-compose</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64</span><br><span class="line">mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
+<h1 id="安装Harbor"><a href="#安装Harbor" class="headerlink" title="安装Harbor"></a>安装Harbor</h1><p>解压安装包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf harbor-offline-installer-v2.5.0-rc1.tgz</span><br><span class="line">cd harbor</span><br></pre></td></tr></table></figure></p>
+<p>创建配置文件<code>cp harbor.yml.tmpl harbor.yml</code>并修改相应的配置 <code>vi harbor.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hostname: 192.168.80.6 # 修改hostname为节点ip地址</span><br><span class="line"></span><br><span class="line"># 不用HTTPS则需要注释所有HTTPS配置</span><br><span class="line">#https:</span><br><span class="line">  # https port for harbor, default is 443</span><br><span class="line">  #port: 443</span><br><span class="line">  # The path of cert and key files for nginx</span><br><span class="line">  #certificate: /your/certificate/path</span><br><span class="line">  #private_key: /your/private/key/path</span><br></pre></td></tr></table></figure>
+<p>执行安装脚本: <code>sh install.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 harbor]# sh install.sh </span><br><span class="line"></span><br><span class="line">[Step 0]: checking if docker is installed ...</span><br><span class="line"></span><br><span class="line">Note: docker version: 20.10.6</span><br><span class="line"></span><br><span class="line">[Step 1]: checking docker-compose is installed ...</span><br><span class="line"></span><br><span class="line">Note: docker-compose version: 2.3.3</span><br><span class="line"></span><br><span class="line">[Step 2]: loading Harbor images ...</span><br><span class="line">Loaded image: goharbor/chartmuseum-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-db:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-jobservice:v2.5.0</span><br><span class="line">Loaded image: goharbor/registry-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/notary-server-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/prepare:v2.5.0</span><br><span class="line">Loaded image: goharbor/redis-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/trivy-adapter-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-exporter:v2.5.0</span><br><span class="line">Loaded image: goharbor/nginx-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/notary-signer-photon:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-portal:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-core:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-log:v2.5.0</span><br><span class="line">Loaded image: goharbor/harbor-registryctl:v2.5.0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[Step 3]: preparing environment ...</span><br><span class="line"></span><br><span class="line">[Step 4]: preparing harbor configs ...</span><br><span class="line">prepare base dir is set to /root/harbor/harbor</span><br><span class="line">WARNING:root:WARNING: HTTP protocol is insecure. Harbor will deprecate http protocol in the future. Please make sure to upgrade to https</span><br><span class="line">Generated configuration file: /config/portal/nginx.conf</span><br><span class="line">Generated configuration file: /config/log/logrotate.conf</span><br><span class="line">Generated configuration file: /config/log/rsyslog_docker.conf</span><br><span class="line">Generated configuration file: /config/nginx/nginx.conf</span><br><span class="line">Generated configuration file: /config/core/env</span><br><span class="line">Generated configuration file: /config/core/app.conf</span><br><span class="line">Generated configuration file: /config/registry/config.yml</span><br><span class="line">Generated configuration file: /config/registryctl/env</span><br><span class="line">Generated configuration file: /config/registryctl/config.yml</span><br><span class="line">Generated configuration file: /config/db/env</span><br><span class="line">Generated configuration file: /config/jobservice/env</span><br><span class="line">Generated configuration file: /config/jobservice/config.yml</span><br><span class="line">Generated and saved secret to file: /data/secret/keys/secretkey</span><br><span class="line">Successfully called func: create_root_cert</span><br><span class="line">Generated configuration file: /compose_location/docker-compose.yml</span><br><span class="line">Clean up the input dir</span><br></pre></td></tr></table></figure>
+<p>到此安装完成，浏览器输入hostname配置的ip即可访问Harbor。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2022-03-14T07:48:28.736Z" itemprop="dateUpdated">2022-03-14 15:48:28</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2022/03/14/Harbor的使用.html" target="_blank" rel="external">https://blog.smilexin.cn/2022/03/14/Harbor的使用.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harbor/">Harbor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&title=《Harbor的使用》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&title=《Harbor的使用》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Harbor的使用》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2022/04/01/健身记录_202204.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">健身记录_202204</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2022/03/11/再见 Docker ！5分钟转型 Containerd !.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">再见 Docker ！5分钟转型 Containerd !</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2022</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&title=《Harbor的使用》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&title=《Harbor的使用》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Harbor的使用》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/03/14/Harbor的使用.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIElEQVR42u3aQW7DMAwEwPz/0+4DjDpL0i5qaXwqAlfV5LAVKX4+8XOcnvPn12+eV7v+K58nHgwMjNcyjssneSff1m/vn9/J94aBgbEP4zoW8+i8F1mIbAwMDIze0per3fv1YWBgYFwf5ub4G74yDAyMDRhJETtpkOXl6OO1OAYGxgsZedf9739+5H4DAwPjVYyj+CSNtvmVZHlXGBgYSzPygKu2++9qtyX7wcDA2I2RX0nOh8Oqwd08vWJgYGzASJr41WGyXjPuS2RjYGAszbgru5LA7QX3zT1CDAyMVzHyOKsGZb5+ToqmRTAwMJZj9Jpf1XZ/skIOrnTgMDAw1mFUMdUYfe4r+zLjhoGBsQQjLzLzd+ZNt2qbDwMDY21GNebyQnfyu1USBgbGDozqIa96TOxdiDbHLzAwMJZj9BaqlrvV4ra8BwwMjKUZ+baSg12v3J1cOZT7hRgYGK9l5KfIKjgP4l7rrVCRY2BgvJyRtL16R7oqeDQchoGBsRnjriK2Oq4xwmBgYGzMmGwrX633RWBgYOzGyAvUatT2YrdZhWNgYCzHOIpPvrnqsEV+zRAthIGBsRDjiWvO3njZ/NCJgYGxNiMJ2XxzeWjOj6EYGBi7MfLgm4xfTIrYwrAFBgbG9ozJqTMvkgtjFhgYGBjFwJ00y6qjHg/+38DAwPiXjKSIzT/pjZHl8YqBgbEbIy8dq0Hca6X1ghgDA2NRxg+q4pNhyarM5QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcdn.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

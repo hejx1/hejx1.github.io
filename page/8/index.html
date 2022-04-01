@@ -171,6 +171,296 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-深入剖析volatile关键字"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-03 00:00:00" datetime="2018-05-02T16:00:00.000Z"  itemprop="datePublished">2018-05-03</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/03/深入剖析volatile关键字.html">深入剖析volatile关键字</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        volatile关键字的两层语义一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义
+
+保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的
+禁止进行指令重排序
+
+先看一段代码，假如线程1先执行，线程2后执行：12345678//线程1boolean stop = false;while(!s...
+    
+
+        <a href="/2018/05/03/深入剖析volatile关键字.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-AtomicLong与LongAdder的区别"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/02/AtomicLong与LongAdder的区别.html">AtomicLong与LongAdder的区别</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        AtomicLongAtomicLong是依靠Unsafe通过CAS来保证Long类型操作的原子性。
+LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分离成一个数组，每个线程访问时通过hash等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。
+其中热点数据value会被分离成多个单元的cell，每个cell独自维护内部的值...
+    
+
+        <a href="/2018/05/02/AtomicLong与LongAdder的区别.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Atomic/">Atomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计数器/">计数器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-并发与高并发的基本概念"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/02/并发与高并发的基本概念.html">并发与高并发的基本概念</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。
+高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处...
+    
+
+        <a href="/2018/05/02/并发与高并发的基本概念.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-RSA的公钥和私钥的使用详解"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-27 00:00:00" datetime="2018-04-26T16:00:00.000Z"  itemprop="datePublished">2018-04-27</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/04/27/RSA的公钥和私钥的使用详解.html">RSA的公钥和私钥的使用详解</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        什么是RSARSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。
+这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。
+使用场景
+签名
+
+使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但...
+    
+
+        <a href="/2018/04/27/RSA的公钥和私钥的使用详解.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-混合加密算法(RSA和DES)"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-27 00:00:00" datetime="2018-04-26T16:00:00.000Z"  itemprop="datePublished">2018-04-27</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/04/27/混合加密算法(RSA和DES).html">混合加密算法(RSA和DES)</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        混合加密的理由
+由于随着计算机系统能力的不断发展，DES的安全性比它刚出现时会弱得多，追溯历史破解DES的案例层出不穷，一台实际的机器可以在数天内破解DES是让某些人相信他们不能依赖DES的安全性的唯一方法。而相对于DES，RSA的安全性则相对高些，虽然破解RSA的案例也有，但其所付出的代价是相对大的(相对DES)，如今RSA的密钥也在升级，这说明破解RSA的难度也在增大。
+在RSA加解密算...
+    
+
+        <a href="/2018/04/27/混合加密算法(RSA和DES).html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-IDEA将已有项目添加到git"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-10 00:00:00" datetime="2018-04-09T16:00:00.000Z"  itemprop="datePublished">2018-04-10</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/04/10/IDEA将已有项目添加到git.html">IDEA将已有项目添加到git</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        场景介绍将本地正在开发的项目添加到远程Git仓库
+详细步骤
+在远程仓库创建项目,拿到项目的HTTP链接
+进入到项目目录（IDEA使用Terminal窗口直接就是项目根目录），通过git shell （可以安装git for window） 执行 以下命令
+
+123456789101112# 若本地项目不是git项目,则需要执行init进行初始化git项目git init# 给项目设置远程Gi...
+    
+
+        <a href="/2018/04/10/IDEA将已有项目添加到git.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-IDEA使用protobuf的正确姿势"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -359,299 +649,6 @@ var _hmt = _hmt || [];
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Mysql_使用自增id和uuid的优劣比较"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-12-19 00:00:00" datetime="2017-12-18T16:00:00.000Z"  itemprop="datePublished">2017-12-19</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html">Mysql 使用自增id和uuid作为主键的优劣比较</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        测试缘由一个开发同事做了一个框架，里面主键是uuid，我跟他建议说mysql不要用uuid用自增主键，自增主键效率高，他说不一定高，我说innodb的索引特性导致了自增id做主键是效率最好的，为了拿实际的案例来说服他，所以准备做一个详细的测试。
-作为互联网公司，一定有用户表，而且用户表UC_USER基本会有百万记录，所以在这个表基础上准测试数据来进行测试
-​         测试过程是目前我...
-    
-
-        <a href="/2017/12/19/Mysql_使用自增id和uuid的优劣比较.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uuid/">uuid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自增id/">自增id</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-留存用户统计"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-12-05 00:00:00" datetime="2017-12-04T16:00:00.000Z"  itemprop="datePublished">2017-12-05</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/12/05/留存用户统计.html">Mysql 留存用户统计</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        需求统计用户的留存率，用户留存率可以得知用户的忠诚度的多少。
-留存率：从用户开始使用应用，经过一段时间后仍然继续使用应用的用户，被认为是留存用户；这部分用户占当时新增用户的比例则为留存率
-本次需要统计次日、7日、30日留存率
-实现方案建立留存率表，每天凌晨使用存储过程更新此表。
-已知元素:
-
-login_info: 登录日志表
-login_info.create_time:用户的注册时间
-l...
-    
-
-        <a href="/2017/12/05/留存用户统计.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/统计分析/">统计分析</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-装饰者模式"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-11-07 00:00:00" datetime="2017-11-06T16:00:00.000Z"  itemprop="datePublished">2017-11-07</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/11/07/装饰者模式.html">装饰者模式</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        装饰者模式我们即将再度探讨典型的继承滥用问题。你将在本文学到如何使用对象组合的方式，做到在运行时装饰类。为什么呢？一旦你熟悉了装饰的技巧，你将能够在不修改任何底层代码的情况下,给你的（或别人的）对象赋予新的职责。
-动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。
-认识装饰者模式我们已经了解利用继承无法完全解决问题，在星巴兹遇到的问题有：类数量爆炸、设计死板，以及...
-    
-
-        <a href="/2017/11/07/装饰者模式.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-观察者模式"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-11-07 00:00:00" datetime="2017-11-06T16:00:00.000Z"  itemprop="datePublished">2017-11-07</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/11/07/观察者模式.html">观察者模式</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        观察者模式有一个模式可以帮你的对象知悉现况，不会错过该对象感兴趣的事。对象甚至在运行时可决定是否要继续被通知。观察者模式是JDK中使用最多的模式之一，非常有用。我们也会一并介绍一对多关系，以及松耦合（对，没错,我们说耦合）。有了观察者，你将会消息灵通。
-认识观察者模式我们看看报纸和杂志的订阅是怎么回事：
-
-报社的业务就是出版报纸。
-向某家报社订阅报纸，只要他们有新报纸出版，就会给你送来。只要...
-    
-
-        <a href="/2017/11/07/观察者模式.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-MongoDB 简介"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-10-28 00:00:00" datetime="2017-10-27T16:00:00.000Z"  itemprop="datePublished">2017-10-28</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/10/28/MongoDB 简介.html">MongoDB 简介</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        MongoDB简介
-MongoDB是一个开源的，基于分布式的，面向文档存储的非关系型数据库。是非关系型数据库当中功能最丰富、最像关系数据库的。
-MongoDB由C++编写，其名字来源于”humongous”这个单词，其宗旨在于处理大量数据。
-MongoDB可以运行在Windows、unix、OSX、Solaris系统上，支持32位和64位应用，提供多种编程语言的驱动程序。
-MongoDB支持...
-    
-
-        <a href="/2017/10/28/MongoDB 简介.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Redis中的事务"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-10-02 00:00:00" datetime="2017-10-01T16:00:00.000Z"  itemprop="datePublished">2017-10-02</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/10/02/Redis中的事务.html">Redis中的事务</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Redis中的事务Redis支持简单的事务
-操作MysqlRedis开启start transactionmuitl语句普通sql普通命令失败rollback 回滚discard 取消成功commitexec
-
-注: rollback与discard 的区别如果已经成功执行了2条语句, 第3条语句出错.Rollback后,前2条的语句影响消失.Discard只是结束本次事务,前2条语句造成的...
-    
-
-        <a href="/2017/10/02/Redis中的事务.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
 
     </div>
     
