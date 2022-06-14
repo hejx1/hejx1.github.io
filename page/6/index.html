@@ -171,6 +171,52 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Linux 常用命令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-05-07 00:00:00" datetime="2021-05-06T16:00:00.000Z"  itemprop="datePublished">2021-05-07</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/05/07/Linux 常用命令.html">Linux常用命令</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        ln这是linux中一个非常重要命令。它的功能是为某一个文件在另外一个位置建立一个同步的链接，当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个需要的目录下都放一个相同的文件，我们只要在某个固定的目录，放上该文件，然后在其它的目录下用ln命令链接（link）它就可以，不必重复的占用磁盘空间。类似于windows里的快捷方式。
+命令格式1ln [参数][源文件或目录][目标文件或目录...
+    
+
+        <a href="/2021/05/07/Linux 常用命令.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Docker 部署MongoDB"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -589,53 +635,6 @@ node.master：这个属性表示节点是否具有成为主节点的资格  注�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/定时任务/">定时任务</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Linux 定时删除以前的日志文件"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-03 00:00:00" datetime="2018-08-02T16:00:00.000Z"  itemprop="datePublished">2018-08-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/03/Linux 定时删除以前的日志文件.html">Linux 定时删除以前的日志文件</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        问题场景磁盘空间有限,需要定时删除6个月之前的应用系统日志相关文件。
-实现策略使用crontab,每天凌晨删除以前的日志文件
-编写shell脚本auto-del-180-days-ago-log.sh123456#!/bin/sh#description: Auto remove 6 months ago log file# 删除180天前的nohup文件find /data/appjar/...
-    
-
-        <a href="/2018/08/03/Linux 定时删除以前的日志文件.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
 
     </div>
     
