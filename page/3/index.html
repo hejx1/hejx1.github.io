@@ -171,6 +171,56 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Golang TOML配置处理"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2021-10-19 00:00:00" datetime="2021-10-18T16:00:00.000Z"  itemprop="datePublished">2021-10-19</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2021/10/19/Golang TOML配置处理.html">Golang TOML配置处理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言一个项目通常是有很多配置的，比如PHP的php.ini文件、Nginx的server.conf文件，那么Golang的项目又适合使用怎样的配置文件呢？
+其实现在我们有很多选择，比如 JSON文件、INI文件、YAML文件和TOML文件等等。
+其中这些文件，对应的Golang处理库如下：
+
+encoding/json – 标准库中的包，可以处理JSON配置文件，缺点是不能加注释
+gcfg ...
+    
+
+        <a href="/2021/10/19/Golang TOML配置处理.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Golang 定时任务"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -222,11 +272,11 @@ Examples123456789101112131415161718...
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Golang TOML配置处理"
+            <article id="post-Golang 初探 sync.Once"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2021-10-19 00:00:00" datetime="2021-10-18T16:00:00.000Z"  itemprop="datePublished">2021-10-19</time>
+        <time class="post-time" title="2021-10-15 00:00:00" datetime="2021-10-14T16:00:00.000Z"  itemprop="datePublished">2021-10-15</time>
 
         
 
@@ -238,7 +288,7 @@ Examples123456789101112131415161718...
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/10/19/Golang TOML配置处理.html">Golang TOML配置处理</a>
+      <a class="post-title-link" href="/2021/10/15/Golang 初探 sync.Once.html">Golang 初探 sync.Once</a>
     </h3>
   
 
@@ -248,15 +298,15 @@ Examples123456789101112131415161718...
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        前言一个项目通常是有很多配置的，比如PHP的php.ini文件、Nginx的server.conf文件，那么Golang的项目又适合使用怎样的配置文件呢？
-其实现在我们有很多选择，比如 JSON文件、INI文件、YAML文件和TOML文件等等。
-其中这些文件，对应的Golang处理库如下：
+        描述sync.Once 是 Golang package 中使方法只执行一次的对象实现，作用与 init 函数类似，但也有所不同。
 
-encoding/json – 标准库中的包，可以处理JSON配置文件，缺点是不能加注释
-gcfg ...
+init 函数是在文件包首次被加载的时候执行，且只执行一次
+sync.Once 是在代码运行中需要的时候执行，且只执行一次
+
+Examples12345678910111213141516171819202122232425262728293031323334...
     
 
-        <a href="/2021/10/19/Golang TOML配置处理.html" class="post-more waves-effect waves-button">
+        <a href="/2021/10/15/Golang 初探 sync.Once.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -304,56 +354,6 @@ RWMutex 相对友好些，是经典的单写多读模型。在读锁占用的情
     
 
         <a href="/2021/10/15/Golang 初探 sync.Mutex.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Golang 初探 sync.Once"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2021-10-15 00:00:00" datetime="2021-10-14T16:00:00.000Z"  itemprop="datePublished">2021-10-15</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/10/15/Golang 初探 sync.Once.html">Golang 初探 sync.Once</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        描述sync.Once 是 Golang package 中使方法只执行一次的对象实现，作用与 init 函数类似，但也有所不同。
-
-init 函数是在文件包首次被加载的时候执行，且只执行一次
-sync.Once 是在代码运行中需要的时候执行，且只执行一次
-
-Examples12345678910111213141516171819202122232425262728293031323334...
-    
-
-        <a href="/2021/10/15/Golang 初探 sync.Once.html" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
