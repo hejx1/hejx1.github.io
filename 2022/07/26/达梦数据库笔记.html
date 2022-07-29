@@ -40,18 +40,18 @@ var _hmt = _hmt || [];
     
     
     <meta name="keywords" content="数据库,达梦数据库,国产数据库">
-    <meta name="description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SELECT * FROM books;-- 查询PERSON模式下的person表select * from PERSON.person; 获取数据表中的字段名、类型、长">
+    <meta name="description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
 <meta name="keywords" content="数据库,达梦数据库,国产数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="达梦数据库笔记">
 <meta property="og:url" content="https://blog.smilexin.cn/2022/07/26/达梦数据库笔记.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SELECT * FROM books;-- 查询PERSON模式下的person表select * from PERSON.person; 获取数据表中的字段名、类型、长">
+<meta property="og:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-07-26T08:02:57.221Z">
+<meta property="og:updated_time" content="2022-07-28T07:01:10.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="达梦数据库笔记">
-<meta name="twitter:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SELECT * FROM books;-- 查询PERSON模式下的person表select * from PERSON.person; 获取数据表中的字段名、类型、长">
+<meta name="twitter:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查询SQL"><span class="post-toc-number">1.</span> <span class="post-toc-text">查询SQL</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取数据表中的字段名、类型、长度"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取数据表中的字段名、类型、长度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#达梦常用数据类型汇总"><span class="post-toc-number">3.</span> <span class="post-toc-text">达梦常用数据类型汇总</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查询SQL"><span class="post-toc-number">1.</span> <span class="post-toc-text">查询SQL</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取数据表中的字段名、类型、长度"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取数据表中的字段名、类型、长度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#达梦常用数据类型汇总"><span class="post-toc-number">3.</span> <span class="post-toc-text">达梦常用数据类型汇总</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#添加唯一索引"><span class="post-toc-number">4.</span> <span class="post-toc-text">添加唯一索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">5.</span> <span class="post-toc-text">删除索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#表字段设置注释信息"><span class="post-toc-number">6.</span> <span class="post-toc-text">表字段设置注释信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#更新字段类型"><span class="post-toc-number">7.</span> <span class="post-toc-text">更新字段类型</span></a></li></ol>
         </nav>
     </aside>
 
@@ -202,12 +202,32 @@ var _hmt = _hmt || [];
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <h1 id="查询SQL"><a href="#查询SQL" class="headerlink" title="查询SQL"></a>查询SQL</h1><p>每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
-<p>查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 查询自己模式下的表</span><br><span class="line">SELECT * FROM books;</span><br><span class="line">-- 查询PERSON模式下的person表</span><br><span class="line">select * from PERSON.person;</span><br></pre></td></tr></table></figure></p>
+<p>查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询自己模式下的表</span></span><br><span class="line">SQL&gt; SELECT * FROM books;</span><br><span class="line"><span class="comment">-- 查询PERSON模式下的person表</span></span><br><span class="line">SQL&gt; select * from PERSON.person;</span><br></pre></td></tr></table></figure></p>
 <h1 id="获取数据表中的字段名、类型、长度"><a href="#获取数据表中的字段名、类型、长度" class="headerlink" title="获取数据表中的字段名、类型、长度"></a>获取数据表中的字段名、类型、长度</h1><p>DM数据库提供兼容大部分Oracle功能的系统数据字典，包含DBA_TABLES、DBA_TAB_COLUMNS、DBA_VIEWS、DBA_SOURCE等数据字典，方便用户查询表结构、视图、对象定义等相关信息。<br>①查询表/视图字段信息<br>USER_TAB_COLUMNS/ALL_TAB_COLUMNS/DBA_TAB_COLUMNS<br>DBA_TAB_COLUMNS显示数据库中所有表、视图或聚簇的列。表字段定义略。<br>ALL_TAB_COLUMNS显示当前用户能够访问的表、视图或聚簇的列。表结构同DBA_TAB_COLUMNS。<br>USER_TAB_COLUMNS显示当前用户所拥有的表、视图或聚簇的列。</p>
 <p>如使用DMHR用户查询其当前用户下EMPLOYEE表结构，查询SQL如参考如下:<br>select t.column_name, t.data_type, t.data_length, t.nullablefrom user_tab_columns t where table_name=’EMPLOYEE’;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 获取数据表中的字段名、类型、长度</span><br><span class="line">select COLUMN_NAME,DATA_TYPE,DATA_LENGTH,COLUMN_ID,TABLE_NAME,OWNER from ALL_TAB_COLUMNS WHERE OWNER=&apos;OTHER&apos; AND TABLE_NAME=&apos;ACCOUNT&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 获取数据表中的字段名、类型、长度</span></span><br><span class="line">SQL&gt; select COLUMN_NAME,DATA_TYPE,DATA_LENGTH,COLUMN_ID,TABLE_NAME,OWNER from ALL_TAB_COLUMNS WHERE OWNER='OTHER' AND TABLE_NAME='ACCOUNT';</span><br></pre></td></tr></table></figure>
 <h1 id="达梦常用数据类型汇总"><a href="#达梦常用数据类型汇总" class="headerlink" title="达梦常用数据类型汇总"></a>达梦常用数据类型汇总</h1><p>精确数值数据类型包括：NUMERIC、DECIMAL、DEC 类型、NUMBER 类型、INTEGER 类型、INT 类型、BIGINT 类型、TINYINT 类型、BYTE 类型、SMALLINT 类型。<br>近似数值类型包括：FLOAT 类型、DOUBLE 类型、REAL 类型、DOUBLE PRECISION 类型。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1.NUMERIC[精度，标度]:用于存储零、正负定点数。精度范围1至38</span><br><span class="line">2.NUMBER类型：跟NUMERIC相同</span><br><span class="line">3.DECIMAL/DEC类型：跟NUMERIC相似</span><br><span class="line">4.INTEGER/INT类型：用于存储有符号整数，精度为10</span><br><span class="line">5.BIGINT类型：用于存储有符号整数，精度为19，标度为0</span><br><span class="line">6.TINYINT类型：用于存储有符号整数，精度为3，标度为0。取值范围为：-128~+127。</span><br><span class="line">7.BYTE类型：与TINYINT相似，精度为3，标度为0。</span><br><span class="line">8.SMALLINT类型：用于存储有符号整数，精度为5，标度为0。</span><br><span class="line">9.BINARY类型：指定定长二进制数据。</span><br><span class="line">10.REAL类型：带二进制的浮点数。</span><br><span class="line">11.FLOAT类型：二进制精度的浮点数，精度最大不超过53。</span><br><span class="line">12.DOUBLE类型：同FLOAT相似，精度最大不超过53。</span><br><span class="line">13.DOUBLE PRECISION类型：该类型指明双精度浮点数，其二进制精度为53，十进制精度为15。</span><br><span class="line"> </span><br><span class="line">使用语法：NUMERIC[(精度 [, 标度])]，DECIMAL、DEC 类型、NUMBER 类型与 NUMERIC 的语法一致。</span><br><span class="line">NUMERIC(4,1) 定义了小数点前面 3 位和小数点后面 1 位，共 4 位的数字，范围在 -999.9 到 999.9。所有 NUMERIC 数据类型，如果其值超过精度，会返回一个出错信息，如果超过标度，则多余的位会被截断。</span><br></pre></td></tr></table></figure>
+<h1 id="添加唯一索引"><a href="#添加唯一索引" class="headerlink" title="添加唯一索引"></a>添加唯一索引</h1><p>索引可以是唯一的或非唯一的，唯一索引可以保证表上不会有两行数据在键列上具有相同的值，非唯一索引不会在键列上施加这个限制。使用<code>CREATE UNIQUE INDEX</code>语句来创建唯一索引</p>
+<ul>
+<li>索引名称：uk_idx_staff_id</li>
+<li>索引类型：UNIQUE</li>
+<li>操作表：”RONGCLOUD”.”WORK_RECORD”</li>
+<li>索引字段：staff_id</li>
+<li>表空间：RONGCLOUD<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; CREATE UNIQUE INDEX uk_idx_staff_id ON "RONGCLOUD"."WORK_RECORD" (staff_id) storage (on RONGCLOUD);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 表空间.索引名称</span><br><span class="line">DROP INDEX RONGCLOUD.uk_idx_staff_id;</span><br></pre></td></tr></table></figure>
+<h1 id="表字段设置注释信息"><a href="#表字段设置注释信息" class="headerlink" title="表字段设置注释信息"></a>表字段设置注释信息</h1><p>用户可以对于自己拥有的模式下的对象创建注释，可以针对整张表或视图做注释，也可以对于各列进行注释。<br>在DM中添加注释可以用注释语句：<code>COMMENT ON &lt;对象名称&gt; IS &lt;注释字符串&gt;</code></p>
+<ul>
+<li><p>为 RONGCLOUD 模式下的 WORK_RECORD 表的 STAFF_NAME 字段添加注释信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 为 RONGCLOUD 模式下的 WORK_RECORD 表的 STAFF_NAME 字段添加注释信息</span></span><br><span class="line">SQL&gt; COMMENT ON COLUMN "RONGCLOUD"."WORK_RECORD"."STAFF_NAME" IS '员工名称';</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为表添加注释信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; COMMENT ON TABLE RONGCLOUD.RY_USER IS '这是表注释';</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="更新字段类型"><a href="#更新字段类型" class="headerlink" title="更新字段类型"></a>更新字段类型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置RY_USER表的PHONE字段为varchar(11)</span><br><span class="line">alter table RONGCLOUD.RY_USER modify(PHONE varchar(11) )</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -215,7 +235,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-07-26T08:02:57.221Z" itemprop="dateUpdated">2022-07-26 16:02:57</time>
+    最后更新时间：<time datetime="2022-07-28T07:01:10.026Z" itemprop="dateUpdated">2022-07-28 15:01:10</time>
 </span><br>
 
 
@@ -296,7 +316,14 @@ var _hmt = _hmt || [];
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2022/07/29/SpringJPA的delete踩坑记录.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SpringJPA的delete踩坑记录</h4>
+      </a>
+    </div>
   
 
   
