@@ -171,6 +171,98 @@ var _hmt = _hmt || [];
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-SpringBoot 2.0 jpa多数据源配置"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-06-16 00:00:00" datetime="2018-06-15T16:00:00.000Z"  itemprop="datePublished">2018-06-16</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html">SpringBoot 2.0 jpa多数据源配置</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言随着Springboot升级到2.0，原来1.5.x的Jpa多数据源配置不能用了。在此记录一下Springboot2.0的jpa多数据源配置
+引入依赖首先，在pom.xml引入如下jar包
+12345678910111213&lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;    &lt;artifactId&...
+    
+
+        <a href="/2018/06/16/SpringBoot 2.0 jpa多数据源配置.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/druid/">druid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-高并发场景解决方案-应用拆分"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-05-20 00:00:00" datetime="2018-05-19T16:00:00.000Z"  itemprop="datePublished">2018-05-20</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/05/20/高并发场景解决方案-应用拆分.html">高并发场景解决方案-应用拆分</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言我们都知道单个服务器再优化它的处理都是有上限的，我们可以使用扩容以及使用缓存、消息队列等对程序进行优化，这些手段都可行但还不是全部。随着项目的需求完成的越来越多，应用自然会跟着越来越大，因此架构师就设计出了特别容易拓展的方案，从整体将一个应用拆分成多个应用。当然应用不是随便拆的，需要根据项目的实际情况进行拆分，一般大家会选择按照功能模块进行拆分，比如从一个大的交易系统里面单独拆出来订单系...
+    
+
+        <a href="/2018/05/20/高并发场景解决方案-应用拆分.html" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/应用拆分/">应用拆分</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-高并发场景解决方案-应用限流"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -541,102 +633,6 @@ LongAdderLongAdder的核心思想是将AtomicLong的内部核心数据value分�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Atomic/">Atomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计数器/">计数器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-并发与高并发的基本概念"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-05-02 00:00:00" datetime="2018-05-01T16:00:00.000Z"  itemprop="datePublished">2018-05-02</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/05/02/并发与高并发的基本概念.html">并发与高并发的基本概念</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        并发同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时“存在”的，只是每个线程都处于执行过程中的某个状态，如果程序运行在多核处理器上，此时程序中的每个线程都将分配到一个处理器核上，因此它们可以同时运行。
-高并发高并发（High Concurrency）是互联网分布式系统架构设计中必须考虑的因素之一，通常它是指，通过设计保证系统能够同时并行处...
-    
-
-        <a href="/2018/05/02/并发与高并发的基本概念.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-RSA的公钥和私钥的使用详解"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-04-27 00:00:00" datetime="2018-04-26T16:00:00.000Z"  itemprop="datePublished">2018-04-27</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/04/27/RSA的公钥和私钥的使用详解.html">RSA的公钥和私钥的使用详解</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        什么是RSARSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。公钥和私钥是对等的，使用其中一个加密数据另外一个都能够进行解密操作。
-这个时候我们就需要思考个问题什么时候使用公钥加密，什么时候使用私钥加密。
-使用场景
-签名
-
-使用私钥加密，公钥解密，用于让所有的公钥所有者验证私钥所有者的身份并且用来防止私钥所有者发布的内容被篡改。但...
-    
-
-        <a href="/2018/04/27/RSA的公钥和私钥的使用详解.html" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络安全/">网络安全</a></li></ul>
 
     </div>
     

@@ -40,18 +40,18 @@ var _hmt = _hmt || [];
     
     
     <meta name="keywords" content="数据库,达梦数据库,国产数据库">
-    <meta name="description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
+    <meta name="description" content="创建表空间12345678910111213141516--创建表空间，最简洁形式--仅指定数据文件路径，以及数据文件初始大小，单位为（MB）--注意大小仅为数字，不能带M符号CREATE TABLESPACE bookshop DATAFILE &apos;/opt/bookshop1.dbf&apos; SIZE 128;--以上创建表空间语句，自动指定如下属性：autoextend on    maxsize">
 <meta name="keywords" content="数据库,达梦数据库,国产数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="达梦数据库笔记">
 <meta property="og:url" content="https://blog.smilexin.cn/2022/07/26/达梦数据库笔记.html">
 <meta property="og:site_name" content="Junxin&#39;s Blog">
-<meta property="og:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
+<meta property="og:description" content="创建表空间12345678910111213141516--创建表空间，最简洁形式--仅指定数据文件路径，以及数据文件初始大小，单位为（MB）--注意大小仅为数字，不能带M符号CREATE TABLESPACE bookshop DATAFILE &apos;/opt/bookshop1.dbf&apos; SIZE 128;--以上创建表空间语句，自动指定如下属性：autoextend on    maxsize">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-07-28T07:01:10.026Z">
+<meta property="og:updated_time" content="2022-07-29T09:33:03.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="达梦数据库笔记">
-<meta name="twitter:description" content="查询SQL每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。 查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。1234-- 查询自己模式下的表SQL&amp;gt; SELECT * FROM books;-- 查询PERSON模式下的person表SQL&amp;gt; select * from PERSON.person;">
+<meta name="twitter:description" content="创建表空间12345678910111213141516--创建表空间，最简洁形式--仅指定数据文件路径，以及数据文件初始大小，单位为（MB）--注意大小仅为数字，不能带M符号CREATE TABLESPACE bookshop DATAFILE &apos;/opt/bookshop1.dbf&apos; SIZE 128;--以上创建表空间语句，自动指定如下属性：autoextend on    maxsize">
     
         <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
     
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查询SQL"><span class="post-toc-number">1.</span> <span class="post-toc-text">查询SQL</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取数据表中的字段名、类型、长度"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取数据表中的字段名、类型、长度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#达梦常用数据类型汇总"><span class="post-toc-number">3.</span> <span class="post-toc-text">达梦常用数据类型汇总</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#添加唯一索引"><span class="post-toc-number">4.</span> <span class="post-toc-text">添加唯一索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">5.</span> <span class="post-toc-text">删除索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#表字段设置注释信息"><span class="post-toc-number">6.</span> <span class="post-toc-text">表字段设置注释信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#更新字段类型"><span class="post-toc-number">7.</span> <span class="post-toc-text">更新字段类型</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#创建表空间"><span class="post-toc-number">1.</span> <span class="post-toc-text">创建表空间</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#查询SQL"><span class="post-toc-number">2.</span> <span class="post-toc-text">查询SQL</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取数据表中的字段名、类型、长度"><span class="post-toc-number">3.</span> <span class="post-toc-text">获取数据表中的字段名、类型、长度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#达梦常用数据类型汇总"><span class="post-toc-number">4.</span> <span class="post-toc-text">达梦常用数据类型汇总</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#添加唯一索引"><span class="post-toc-number">5.</span> <span class="post-toc-text">添加唯一索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除索引"><span class="post-toc-number">6.</span> <span class="post-toc-text">删除索引</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#表字段设置注释信息"><span class="post-toc-number">7.</span> <span class="post-toc-text">表字段设置注释信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#更新字段类型"><span class="post-toc-number">8.</span> <span class="post-toc-text">更新字段类型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Docker启动并持久化数据"><span class="post-toc-number">9.</span> <span class="post-toc-text">Docker启动并持久化数据</span></a></li></ol>
         </nav>
     </aside>
 
@@ -201,7 +201,9 @@ var _hmt = _hmt || [];
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="查询SQL"><a href="#查询SQL" class="headerlink" title="查询SQL"></a>查询SQL</h1><p>每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
+            <h1 id="创建表空间"><a href="#创建表空间" class="headerlink" title="创建表空间"></a>创建表空间</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建表空间，最简洁形式</span></span><br><span class="line"><span class="comment">--仅指定数据文件路径，以及数据文件初始大小，单位为（MB）</span></span><br><span class="line"><span class="comment">--注意大小仅为数字，不能带M符号</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLESPACE</span> bookshop <span class="keyword">DATAFILE</span> <span class="string">'/opt/bookshop1.dbf'</span> <span class="keyword">SIZE</span> <span class="number">128</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--以上创建表空间语句，自动指定如下属性：</span></span><br><span class="line">autoextend on    </span><br><span class="line">maxsize 33554431 </span><br><span class="line"><span class="keyword">CACHE</span> = <span class="keyword">NORMAL</span></span><br><span class="line">属性分别指：数据文件自动扩展，扩展最大大小，数据页的缓冲池名称</span><br><span class="line"></span><br><span class="line"><span class="comment">--创建表空间，指定非自动扩展</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLESPACE</span> bookshop <span class="keyword">DATAFILE</span> <span class="string">'/opt/bookshop1.dbf'</span> <span class="keyword">SIZE</span> <span class="number">128</span> <span class="keyword">autoextend</span> <span class="keyword">off</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--删除表空间</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> bookshop;</span><br></pre></td></tr></table></figure>
+<p>删除表空间时，改表空间上必须没有数据库对象，否则会删除失败</p>
+<h1 id="查询SQL"><a href="#查询SQL" class="headerlink" title="查询SQL"></a>查询SQL</h1><p>每个用户有一个默认的同名的模式，访问自己模式下的表、视图等，不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
 <p>查询当前用户模式下的表，无需加模式名。查询其他模式下的表需要加上模式名。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询自己模式下的表</span></span><br><span class="line">SQL&gt; SELECT * FROM books;</span><br><span class="line"><span class="comment">-- 查询PERSON模式下的person表</span></span><br><span class="line">SQL&gt; select * from PERSON.person;</span><br></pre></td></tr></table></figure></p>
 <h1 id="获取数据表中的字段名、类型、长度"><a href="#获取数据表中的字段名、类型、长度" class="headerlink" title="获取数据表中的字段名、类型、长度"></a>获取数据表中的字段名、类型、长度</h1><p>DM数据库提供兼容大部分Oracle功能的系统数据字典，包含DBA_TABLES、DBA_TAB_COLUMNS、DBA_VIEWS、DBA_SOURCE等数据字典，方便用户查询表结构、视图、对象定义等相关信息。<br>①查询表/视图字段信息<br>USER_TAB_COLUMNS/ALL_TAB_COLUMNS/DBA_TAB_COLUMNS<br>DBA_TAB_COLUMNS显示数据库中所有表、视图或聚簇的列。表字段定义略。<br>ALL_TAB_COLUMNS显示当前用户能够访问的表、视图或聚簇的列。表结构同DBA_TAB_COLUMNS。<br>USER_TAB_COLUMNS显示当前用户所拥有的表、视图或聚簇的列。</p>
 <p>如使用DMHR用户查询其当前用户下EMPLOYEE表结构，查询SQL如参考如下:<br>select t.column_name, t.data_type, t.data_length, t.nullablefrom user_tab_columns t where table_name=’EMPLOYEE’;</p>
@@ -228,6 +230,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h1 id="更新字段类型"><a href="#更新字段类型" class="headerlink" title="更新字段类型"></a>更新字段类型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置RY_USER表的PHONE字段为varchar(11)</span><br><span class="line">alter table RONGCLOUD.RY_USER modify(PHONE varchar(11) )</span><br></pre></td></tr></table></figure>
+<h1 id="Docker启动并持久化数据"><a href="#Docker启动并持久化数据" class="headerlink" title="Docker启动并持久化数据"></a>Docker启动并持久化数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  -v /home/dm_data:/opt/dmdbms/data  -it -p 5236:5236 -d --restart always --privileged=true --name dm8_01 dm8:v01 /bin/bash /startDm.sh</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -235,7 +238,7 @@ var _hmt = _hmt || [];
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-07-28T07:01:10.026Z" itemprop="dateUpdated">2022-07-28 15:01:10</time>
+    最后更新时间：<time datetime="2022-07-29T09:33:03.579Z" itemprop="dateUpdated">2022-07-29 17:33:03</time>
 </span><br>
 
 
