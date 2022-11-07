@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+<!-- Baidu Zhandian -->
+<meta name="baidu-site-verification" content="code-XSNMZ6nzJg" />
+<!-- End Baidu Zhandian -->
+
+
+
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bba72b854bc55f09037c354079ed388e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>SpringJPA适配达梦数据库 | Junxin&#39;s Blog | A good memory is not as good as a rotten keyboard.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="SpringJPA,数据库,达梦数据库">
+    <meta name="description" content="第一步：调整相关依赖123456789101112131415161718192021222324252627282930313233&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/a">
+<meta name="keywords" content="SpringJPA,数据库,达梦数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringJPA适配达梦数据库">
+<meta property="og:url" content="https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html">
+<meta property="og:site_name" content="Junxin&#39;s Blog">
+<meta property="og:description" content="第一步：调整相关依赖123456789101112131415161718192021222324252627282930313233&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/a">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-12T04:57:07.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringJPA适配达梦数据库">
+<meta name="twitter:description" content="第一步：调整相关依赖123456789101112131415161718192021222324252627282930313233&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/a">
+    
+        <link rel="alternate" type="application/atom+xml" title="Junxin&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">何俊鑫</h5>
+          <a href="mailto:doubihah@foxmail.com" title="doubihah@foxmail.com" class="mail">doubihah@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hejx1" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://gitee.com/aixiaodenanhai" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                码云
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SpringJPA适配达梦数据库</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">SpringJPA适配达梦数据库</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2022-08-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2022-08-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#第一步：调整相关依赖"><span class="post-toc-number">1.</span> <span class="post-toc-text">第一步：调整相关依赖</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#第二步：修改配置文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">第二步：修改配置文件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#第三步：调整主键ID生成策略"><span class="post-toc-number">3.</span> <span class="post-toc-text">第三步：调整主键ID生成策略</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-SpringJPA适配达梦数据库"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SpringJPA适配达梦数据库</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2022-08-12 00:00:00" datetime="2022-08-11T16:00:00.000Z"  itemprop="datePublished">2022-08-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="第一步：调整相关依赖"><a href="#第一步：调整相关依赖" class="headerlink" title="第一步：调整相关依赖"></a>第一步：调整相关依赖</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.7.2&lt;/version&gt;</span><br><span class="line">    &lt;exclusions&gt;</span><br><span class="line">        &lt;exclusion&gt;</span><br><span class="line">            &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;</span><br><span class="line">        &lt;/exclusion&gt;</span><br><span class="line">    &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;th.co.geniustree.springdata.jpa&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;specification-with-projections&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- 添加 dm8 jdbc jar 包依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.dameng&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;dm-jdbc&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.dameng&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;DmDialect-for-hibernate5.3&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;8.1.1.49&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;!--注意：只有这个版本的hibernate兼容达梦数据库 --&gt;</span><br><span class="line">    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.3.18.Final&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="第二步：修改配置文件"><a href="#第二步：修改配置文件" class="headerlink" title="第二步：修改配置文件"></a>第二步：修改配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url=jdbc:dm://ip:5236/</span><br><span class="line">spring.datasource.username=RONGCLOUD</span><br><span class="line">spring.datasource.password=RONGCLOUD_PWD</span><br><span class="line">spring.datasource.driver-class-name=dm.jdbc.driver.DmDriver</span><br><span class="line">spring.jpa.show-sql=true</span><br><span class="line">spring.jpa.hibernate.ddl-auto=none</span><br><span class="line">spring.jpa.open-in-view=false</span><br><span class="line"># 方言</span><br><span class="line">spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.DmDialect</span><br><span class="line">spring.jpa.database-platform=org.hibernate.dialect.DmDialect</span><br><span class="line">spring.jpa.properties.hibernate.hbm2ddl.auto=none</span><br><span class="line">spring.jpa.properties.hibernate.show_sql=true</span><br><span class="line"># 模式名称</span><br><span class="line">spring.jpa.properties.hibernate.default_schema=RONGCLOUD</span><br><span class="line">spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false</span><br><span class="line">spring.datasource.dbcp2.test-on-borrow=true</span><br><span class="line">spring.datasource.dbcp2.validation-query=SELECT 1</span><br></pre></td></tr></table></figure>
+<h1 id="第三步：调整主键ID生成策略"><a href="#第三步：调整主键ID生成策略" class="headerlink" title="第三步：调整主键ID生成策略"></a>第三步：调整主键ID生成策略</h1><p>调整相关主键id生成策略，尽量不依赖数据库提供的id生成方案。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2022-08-12T04:57:07.721Z" itemprop="dateUpdated">2022-08-12 12:57:07</time>
+</span><br>
+
+
+        
+        原文链接：<a href="/2022/08/12/SpringJPA适配达梦数据库.html" target="_blank" rel="external">https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.smilexin.cn">
+            <img src="/img/avatar.jpg" alt="何俊鑫">
+            何俊鑫
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringJPA/">SpringJPA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/达梦数据库/">达梦数据库</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&title=《SpringJPA适配达梦数据库》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&title=《SpringJPA适配达梦数据库》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringJPA适配达梦数据库》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2022/09/01/健身记录_202209.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">健身记录_202209</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2022/08/11/从 MySQL 迁移到 DM8.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">从 MySQL 迁移到 DM8</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- CHANGYAN BEGIN -->
+	<!--PC版-->
+	<div id="SOHUCS" ></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cyvtmihsK',
+	conf: 'prod_d5864dff0a37bf1ed7912f966f469bab'
+	});
+	</script>
+    <!-- CHANGYAN END -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢打赏.
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>何俊鑫 &copy; 2017 - 2022</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&title=《SpringJPA适配达梦数据库》 — Junxin's Blog&pic=https://blog.smilexin.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&title=《SpringJPA适配达梦数据库》 — Junxin's Blog&source=A good memory is not as good as a rotten keyboard." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringJPA适配达梦数据库》 — Junxin's Blog&url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html&via=https://blog.smilexin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.smilexin.cn/2022/08/12/SpringJPA适配达梦数据库.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3a22rkMBAE0Pz/TyevgWC7Si15Z+H4KcxF7uOApCn111d8ff+6rt5NvvX376t387tvuPDw8PAGpf+97ku5//xV0Tk7qefqM3h4eHineffT/f2k3GLy5Sd/ZJev4+Hh4X0A734inmDW2Hh4eHj/C28tB8ijjXabjoeHh/c+Lw8XkkHzcdYm/SNZCx4eHl7My6f4z/n7yPkeHh4e3vhUvV0kkmOqeVhcVIuHh4d3gJdPuGslrrVqJa0JRZ14eHh4L/KSg65zhU4eFh4eHt5pXj5QEsi2I7Rtqfk/AA8PD+8Eb+0Ifx775kdio4eOh4eHd4CXH/PPI93Jkf89qT4Gw8PDwxvw2vam9nGs3TdfGBaPvvDw8PAGvHyb2863+dKSF7p4nIaHh4e3lddO8XnY2jZmTY7NHtY9PDw8vGO8EwvA5JU8whil1Hh4eHhLvHa4tujk0eTLTBH74uHh4R3grR045RFDPkK7zIyaG/Dw8PA28b7Lax7d7gp/66waDw8Pb8xrg9pJK0B+oLW2dD30R+Dh4eFt4uVlTZqxkofVbqDzdgc8PDy8Xbw2ck2KS2KIYqcf1ImHh4f3Jm9tus+317u+my8nxS8GPDw8vE28tZhgbeObF9rGynh4eHinee3QxaQ8yEhawMPCg4eHh7eVl0exeblJ6LC2fc+XGTw8PLx3eHlc2wav+eOYNxw8/GLAw8PD28QrOguC7W/bQDC5e7Qw4OHh4W3irUWl7XY8byC4L7deMPDw8PAO8Nam/vYwLBmhjRuiGAIPDw/vGG8tPG1faR9HfiT2MA4eHh7eMV5743bb3U7r+WoWLQx4eHh4/5SXxwFJi9V8C/7weTw8PLwP4LWBxSSQXQuX8fDw8N7hrbVGTSb3yeeLDToeHh7eAd7kB/+JJoP5t/Dw8PCO8X4AX2dUudQPbtEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcdn.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
